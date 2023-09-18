@@ -1,0 +1,60 @@
+---
+title: "Atlas"
+output: html_document
+date: "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(jpeg)
+```
+
+
+```{r}
+atlas <- readJPEG('atlas.jpg')
+ncol(atlas)
+```
+```{r}
+r <- atlas[,,1]
+g <- atlas[,,2]
+b <- atlas[,,3]
+```
+
+```{r}
+atlas.r.svd <- svd(r)
+atlas.g.svd <- svd(g)
+atlas.b.svd <- svd(b)
+```
+
+
+```{r}
+rgb.svds <- list(atlas.r.svd, atlas.g.svd, atlas.b.svd)
+
+
+```
+
+```{r}
+for (j in c(3,50,100,145,288,430,573,715,858)) {
+  a <- sapply(rgb.svds, function(i) {
+    atlas.compress <- i$u[,1:j] %*% diag(i$d[1:j]) %*% t(i$v[,1:j])
+  }, simplify = 'array')
+  
+  writeJPEG(a, paste('compressed/atlas_compressed', '_svd_rank_', round(j,0), '.jpg', sep=''))
+}
+```
+
+
+
+
+
+
+
+```{r}
+knitr::include_graphics("compressed/atlas_compressed_svd_rank_3.jpg", "compressed/atlas_compressed_svd_rank_50.jpg",
+"compressed/atlas_compressed_svd_rank_858.jpg")
+```
+
