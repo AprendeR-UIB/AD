@@ -23,13 +23,6 @@ book:
   chapters:
     - index.qmd
     - 0.qmd
-    - 1.qmd
-    - 2.qmd
-    - 3.qmd
-    - 4.qmd
-    - 5.qmd
-    - 6.qmd
-    - 7.qmd
     - references.qmd
     
     
