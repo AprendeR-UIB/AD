@@ -242,7 +242,7 @@
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, breakable, interior hidden, borderline west={3pt}{0pt}{shadecolor}, boxrule=0pt, sharp corners]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[enhanced, boxrule=0pt, breakable, sharp corners, frame hidden, borderline west={3pt}{0pt}{shadecolor}, interior hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Tabla de contenidos}
 {
@@ -264,8 +264,12 @@ profesores del Grado.
 
 \bookmarksetup{startatroot}
 
+\hypertarget{introducciuxf3n-al-anuxe1lisis-multivariante-de-datos}{%
+\chapter{Introducción al Análisis Multivariante de
+Datos}\label{introducciuxf3n-al-anuxe1lisis-multivariante-de-datos}}
+
 \hypertarget{la-estaduxedstica-y-el-muxe9todo-cientuxedfico}{%
-\chapter{1. La estadística y el método
+\subsection{La estadística y el método
 científico}\label{la-estaduxedstica-y-el-muxe9todo-cientuxedfico}}
 
 \begin{itemize}
@@ -353,11 +357,11 @@ garantizar que la investigación científica sea rigurosa, confiable y
 basada en evidencia sólida.
 
 \hypertarget{gestiuxf3n-buxe1sica-de-datos}{%
-\section{2. Gestión básica de
+\subsection{Gestión básica de
 datos}\label{gestiuxf3n-buxe1sica-de-datos}}
 
 \hypertarget{introducciuxf3n}{%
-\subsection{2.1. Introducción}\label{introducciuxf3n}}
+\subsubsection{Introducción}\label{introducciuxf3n}}
 
 \begin{itemize}
 \item
@@ -437,7 +441,7 @@ la probabilidad de cometerlo, incluyendo la metodología que tendríamos
 que haber usado para tomar la muestra en primer lugar.
 
 \hypertarget{r-rstudio---posit-rmarkdowm---quarto}{%
-\subsection{2.2. R/ RStudio - Posit / RMarkdowm -
+\subsubsection{R/ RStudio - Posit / RMarkdowm -
 Quarto}\label{r-rstudio---posit-rmarkdowm---quarto}}
 
 Todas las técnicas que usaremos en la asignatura pueden ser
@@ -508,7 +512,7 @@ completa, pero:
 \end{itemize}
 
 \hypertarget{control-de-versiones-con-git-github}{%
-\subsection{2.3. Control de versiones con Git /
+\subsubsection{Control de versiones con Git /
 GitHub}\label{control-de-versiones-con-git-github}}
 
 \begin{itemize}
@@ -582,7 +586,7 @@ aprendizaje para distribuir y recopilar las entregas como repositorios.
 \end{itemize}
 
 \hypertarget{git-github-con-r}{%
-\subsection{2.4. Git / GitHub con R}\label{git-github-con-r}}
+\subsubsection{Git / GitHub con R}\label{git-github-con-r}}
 
 Veamos cómo configurar todo. Gran parte de lo que está aquí proviene del
 libro \href{https://happygitwithr.com/}{Happy Git and GitHub for the
@@ -727,7 +731,7 @@ En RStudio:
 \end{itemize}
 
 \hypertarget{conectar-rstudio-y-github}{%
-\subsection{2.5. Conectar RStudio y
+\subsubsection{Conectar RStudio y
 GitHub}\label{conectar-rstudio-y-github}}
 
 El proceso hasta ahora nos ha permitido usar Git localmente. Pero, ¿qué
@@ -780,7 +784,7 @@ En la consola de RStudio:
 \end{Shaded}
 
 \hypertarget{conectar-proyectos-de-rstudio-con-repositorios-de-github}{%
-\subsection{2.6. Conectar proyectos de RStudio con repositorios de
+\subsubsection{Conectar proyectos de RStudio con repositorios de
 GitHub}\label{conectar-proyectos-de-rstudio-con-repositorios-de-github}}
 
 Ahora que hemos conectado RStudio y GitHub, discutamos cómo hacer que
@@ -826,7 +830,7 @@ RStudio, tendréis que realizar los siguientes pasos:
 \end{itemize}
 
 \hypertarget{flujo-de-trabajo-general}{%
-\subsection{2.7. Flujo de trabajo
+\subsubsection{Flujo de trabajo
 general}\label{flujo-de-trabajo-general}}
 
 Ahora que hemos conectado RStudio y GitHub, podemos compartir nuestro
@@ -901,7 +905,7 @@ Volvemos a RStudio:
 ¡Ahora está todo configurado para usar Git y GitHub con RStudio!
 
 \hypertarget{los-datos-y-sus-tipos}{%
-\section{3. Los datos y sus tipos}\label{los-datos-y-sus-tipos}}
+\subsection{Los datos y sus tipos}\label{los-datos-y-sus-tipos}}
 
 En vuestro curso de Estadística estudiasteis algunas técnicas básicas de
 estadística descriptiva. Estas técnicas consisten en una serie de
@@ -1120,8 +1124,8 @@ repaséis los capítulos 10 al 14 correspondientes a la parte de
 Estadística descriptiva.
 
 \hypertarget{pruxe1ctica-1}{%
-\section{\texorpdfstring{4. {\emph{Práctica
-1}}:}{4. Práctica 1:}}\label{pruxe1ctica-1}}
+\subsection{\texorpdfstring{{\emph{Práctica
+1}}:}{Práctica 1:}}\label{pruxe1ctica-1}}
 
 \begin{itemize}
 \item
@@ -1193,12 +1197,12 @@ Estadística descriptiva.
 \end{itemize}
 
 \hypertarget{gramuxe1tica-limpia-y-coherente-con-tidyverse}{%
-\section{\texorpdfstring{5. Gramática limpia y coherente con
-\texttt{Tidyverse}}{5. Gramática limpia y coherente con Tidyverse}}\label{gramuxe1tica-limpia-y-coherente-con-tidyverse}}
+\subsection{\texorpdfstring{Gramática limpia y coherente con
+\texttt{Tidyverse}}{Gramática limpia y coherente con Tidyverse}}\label{gramuxe1tica-limpia-y-coherente-con-tidyverse}}
 
 \hypertarget{la-libreruxeda-tidyverse}{%
-\subsection{\texorpdfstring{5.1. La librería
-\texttt{Tidyverse}}{5.1. La librería Tidyverse}}\label{la-libreruxeda-tidyverse}}
+\subsubsection{\texorpdfstring{La librería
+\texttt{Tidyverse}}{La librería Tidyverse}}\label{la-libreruxeda-tidyverse}}
 
 \begin{figure}
 
@@ -1310,7 +1314,7 @@ el nombre de la función que deseamos utilizar, por ejemplo:
 (dplyr es una evolución del paquete plyr).
 
 \hypertarget{quuxe9-significa-tidy-data}{%
-\subsection{5.2. ¿Qué significa tidy
+\subsubsection{¿Qué significa tidy
 data?}\label{quuxe9-significa-tidy-data}}
 
 \begin{figure}
