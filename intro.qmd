@@ -40,7 +40,7 @@
 
 En resumen, la estadística es una herramienta esencial que ayuda a garantizar que la investigación científica sea rigurosa, confiable y basada en evidencia sólida.
 
-### Gestión básica de datos
+## Gestión básica de datos
 
 #### Introducción
 
@@ -68,7 +68,7 @@ La estadística inferencial entra en juego cuando se quiere obtener información
 
 Pero si quisiéramos conocer la altura media de los mallorquines entre 18 y 25 años, sería muy complicado medirlos a todos. Entonces, lo que haríamos sería tomar una muestra representativa de esta población, medirlos y a partir de sus alturas estimar dicha altura media. Naturalmente, lo más seguro es que de esta manera no obtuviéramos el valor exacto de la altura media de los mallorquines de 18 años, nos tendríamos que conformar con obtener una aproximación dentro de un cierto margen de error y determinar la probabilidad de acertar con nuestra estimación y este margen de error. La estadística inferencial es la que nos permite acotar el error que podamos haber cometido y calcular la probabilidad de cometerlo, incluyendo la metodología que tendríamos que haber usado para tomar la muestra en primer lugar.
 
-####  R/ RStudio - Posit / RMarkdowm - Quarto
+#### R/ RStudio - Posit / RMarkdowm - Quarto
 
 Todas las técnicas que usaremos en la asignatura pueden ser implementadas y/o desarrolladas en software libre como Python y R. Ambos se consideran lenguajes de programación esenciales para la ciencia de datos. Lo ideal sería dominar ambos para tener una base de programación completa, pero:
 
@@ -423,7 +423,7 @@ knitr::include_graphics("Figuras/pinguinos_madagascar.jpg")
 
 
 
-### Gramática limpia y coherente con `Tidyverse`
+###  Gramática limpia y coherente con `Tidyverse`
 
 #### La librería `Tidyverse`
 
@@ -449,15 +449,27 @@ knitr::include_graphics("Figuras/data-science.png")
 
 * Las librerías de tidyverse han venido a sustituir R base por su eficiencia y facilidad de programación para no informáticos. Casi todas las consultas  a páginas técnicas de R son o incluyen código de `tidyverse`.
 
-* **Paquetes de `tidyverse` base :**
+* **Paquetes del core de `tidyverse`:**
 
-  * `readr`: lectura de datos
-  * `tibble`: una clase 'tbl_df' que constituye un mejor formato que el data frame tradicional.
-  * `stringr`: paquete de funciones para texto
-  * `forcats`: paquete de funciones para factores
-  * `tidyr`:  arreglo y limpieza de datos 
-  * `dplyr`: manipulación de datos
-  * `ggplot2`:   visualización (gráficos)
+  * `ggplot2`: Permite crear gráficos de forma declarativa. Le introducimos los datos, le decimos cómo asignar variables a la estética, qué tipo de gráfico utilizar, y ggplot2 nos devolverá un gráfico más "elegante" y fácil de editar que los de R base.
+  
+  * `dplyr`: Gramática de manipulación de datos, un conjunto coherente de acciones que resuelven los retos más comunes como juntar datos y transformarlos.
+  
+  * `tidyr`:  Conjunto de funciones que ayudan a obtener datos ordenados. Los datos ordenados son datos con una forma consistente: en resumen, cada variable va en una columna, y cada fila es una unidad muestral.
+  
+  * `readr`: Proporciona una forma rápida y amigable de leer datos rectangulares (como csv, tsv). 
+  
+  * `purrr`: Mejora el conjunto de herramientas de programación funcional (PF) de R proporcionando un conjunto completo y coherente de herramientas para trabajar con funciones y vectores. Una vez dominados los conceptos básicos, purrr permite sustituir muchos bucles `for` por código más fácil de escribir y más expresivo.
+  
+  * `tibble`: Un formato más moderno que el data frame, manteniendo lo que en el tiempo ha demostrado ser eficaz, y desechando lo que no. 
+  
+  * `stringr`: Conjunto cohesivo de funciones diseñadas para hacer el trabajo con cadenas de texto lo más fácil posible. 
+
+
+  * `forcats`: Conjunto de herramientas útiles que resuelven problemas comunes con factores. R utiliza factores para manejar variables categóricas, variables que tienen un conjunto fijo y conocido de posibles valores.
+  
+  
+  
   * `purrr`: programación funcional (pipes)
 
 
@@ -571,23 +583,460 @@ penguins %>%
   )
 ```
 
-[Libro](https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos)
+
 
 * Si tenemos datos provenientes de distintas fuentes, seguramente tendremos que limpiarlos y juntarlos en un único tibble.
 
-<!-- ### 5.3. El operador de tuberías (pipe) `%>%`  -->
+#### El operador de tuberías (pipe) `%>%`
+
+* Los pipes básicos pasan un valor, atributo  u objeto (LHS: Left Hand Side) a la siguiente llamada de función (RHS: Right Hand Side) como **primer** argumento
+
+```{r, eval=F}
+x %>% f # equivalente a: f(x)
+x %>% f(y) # equivalente a: f(x, y)
+x %>% f %>% g %>% h # equivalente a: h(g(f(x)))
+```
 
 
-<!-- ### 5.4. Data frames  avanzados:  `tibbels` -->
+* Los pipes también se usan con marcadores de posición; en este caso, reenvian un valor u objeto (LHS) a la siguiente llamada de función (RHS) como **cualquier** argumento.
 
-<!-- ### 5.5.  Lectura de datos de texto rectangulares: `readr`  -->
 
-<!-- ### 5.6.  Ordenando datos no tidy: `tidyr`  -->
+```{r, eval=F}
+x %>% f(.) # equivalente a: x %>% f
+x %>% f(y, .) # equivalente a: f(y, x)
+x %>% f(y, z = .) # equivalente a: f(y, z = x)
+x %>% f(y = nrow(.),
+        z = ncol(.))  # equivalente a: f(x, y = nrow(x), z = ncol(x))
+```
 
-<!-- ### 5.7.  Manipulación de datos: `dplyr`  -->
 
-<!-- ### 5.8.  Visualización de datos: `ggplot2`  -->
+* Una secuencia de código que comienza con el marcador de posición (`.`) devuelve una función que puede utilizarse para aplicar posteriormente la tubería a valores concretos.
+
+
+```{r, eval=F}
+f <- . %>% cos %>% sin # equivalente a: f <- function(.) sin(cos(.))
+```
+```{r, eval=F}
+f(20) # equivalente a: la tubería 20 %>% cos %>% sin
+```
+
+ 
+* Para saber más sobre `%>%`, haced `vignette("magrittr")` en la consola de R.
+
+
+* Se puede obtener  `%>%`  en Rstudio desktop utilizando el atajo de teclado: **Ctrl + Shift  + M**.
+
+
+* [Ejemplo:]{style="color: blue;"} ¿Cuál es la masa corporal media, en gramos, de los pingüinos estudiados durante el año 2007?
+
+```{r}
+# Sin pipes
+mean(subset(penguins, year == 2007)$body_mass_g, na.rm = T)
+
+# Con pipes (tidyverse)
+resultado <- penguins %>% 
+  subset(year == 2007) %>% 
+  .$body_mass_g %>% 
+  mean(na.rm = T)
+```
+
+La respuesta a la pregunta formulada sería: "La masa corporal media, en gramos, de los pingüinos estudiados durante el año 2007 es `r round(resultado)` gramos".
+
+* Ventajas de usar pipes:
+
+  * El estilo secuencial  de las  tuberías mejora la lectura del código en comparación con las funciones anidadas.
+
+  * Hace innecesario almacenar los resultados intermedios.
+
+  * Es muy fácil añadir  o eliminar pasos (empalmes de tuberías) individuales en el "**pipeline**".
+
+
+
+* Las versiones recientes de R también tienen un operador de tuberías nativo (`|>`).
+
+
+```{r}
+mtcars |> head(2) #  es lo mismo que  head(mtcars, 2)
+mtcars |> subset(cyl == 4) |> nrow()  
+```
+
+
+#### Data frames  avanzados  `tibbels`
+
+EL paquete `tibble` proporciona un objeto de tipo data frame mejorado: `tbl_df`. Un `tibble` se puede crear de cuatro maneras diferentes.
+
+
+a. A partir de vectores columna:
+
+```{r}
+tibble(
+  x = c("a", "b"),
+  y = c(1, 2),
+  z = c(T, F)
+)
+```
+
+
+b. Escribiendo  en texto por columnas:
+
+```{r}
+tribble(
+  ~x, ~y, ~z,
+  "a", 1, T,
+  "b", 2, F
+)
+```
+
+
+c. Creando un `tibble` a partir de otro objeto  de las clases `matrix` o `data.frame`:
+
+```{r}
+data.frame(
+  x = c("a", "b"),
+  y = c(1, 2),
+  z = c(T, F)
+) %>% 
+as_tibble
+```
+
+
+d. Creando un `tibble` a partir de vectores con nombre:
+
+```{r}
+c(x = "a", y = "b", z = 1) %>%
+  enframe(name = "x", value = "y")
+```
+
+
+* **Diferencias entre tibble y data.frame**
+
+  * Un tibble nunca cambia el tipo de entrada. Ya no hay que preocuparse de que los caracteres se conviertan automáticamente en cadenas.
+  
+  * Un tibble puede tener columnas que son listas.
+
+  * Un tibble puede tener nombres de variables no estándar. Pueden  empezar por  un número o contener espacios. Para utilizarlo se refiere a estos en un backtick, por ejemplo,  `peso en Kg`.
+  
+  * Sólo recicla vectores de longitud 1.
+
+  * No tiene como atributo nombres de filas `row.names`.
+
+
+
+  * Por defecto, `tibble()` imprime sólo las diez primeras filas, todas las columnas que caben en la pantalla, y las clases de las columnas
+
+```{r}
+penguins
+# data.frame(penguins) recordad que esto imprime todo el data frame
+```
+
+
+  * `glimpse` nos da la versión transpuesta de `print()`
+
+```{r}
+penguins %>% glimpse
+```
+
+
+  * El subconjunto de un `tibble` (`[]`) siempre devuelve otro `tibble` y nunca un vector (en contraste con los objetos de un `data.frame`).
+
+
+```{r}
+data.frame(penguins) %>% .[, "species"] %>% class
+```
+
+
+```{r}
+penguins[, "species"] %>% class
+```
+
+
+  * El subconjunto de un data.frame  busca el nombre de la variable más parecida
+
+```{r}
+names(data.frame(penguins))
+head(data.frame(penguins)$spec)
+```
+
+  * `tibble` no permite la coincidencia parcial, es decir, siempre se debe proporcionar el nombre completo de la columna.
+
+```{r}
+head(penguins$spec)
+```
+
+```{r}
+head(penguins$species)
+```
+
+
+  * Las tibbles dan mejores mensajes `Warnings` y `Errors` para solucionar problemas.
+
+
+#### Lectura de datos de texto rectangulares `readr`  
+
+El paquete **`readr`** proporciona funciones de lectura y escritura para múltiples formatos de archivo:
+
+* `read_delim()`: archivos delimitados en general
+
+* `read_csv()`: archivos separados por comas
+
+* `read_csv2()`: archivos separados por punto y coma. En la mayoría de los países europeos, Microsoft Excel utiliza `;` como delimitador común
+
+* `read_tsv()`: archivos separados por tabulaciones
+
+* `read_fwf()`: archivos de ancho fijo
+
+* `read_table()`: archivos separados por espacios en blanco
+
+* `read_log()`: archivos de registro web
+
+
+
+* Convenientemente, las funciones `write_*()` funcionan de forma análoga. 
+
+* Se utiliza el paquete `readxl` para archivos de Excel,
+
+* El paquete `haven` para archivos de Stata, SAS y SPSS,
+
+* El paquete `googlesheets4` para Google Sheets 
+
+* El paquete `rvest` para archivos HTML. Esta es la librería de referencia en el contexto de la extracción de datos de la web con `R` 
+
+Para ilustrar el paquete `readr`, hemos creado previamente un archivo csv que contiene los datos de los pingüinos, utilizando  `write_csv(penguins, archivo = "datos/penguins.csv")`.
+
+
+```{r}
+data <- read_csv(file = "./datos/penguins.csv")
+```
+
+
+```{r}
+data <- read_csv(file = "./datos/penguins.csv", col_select = c(species, island))
+```
+
+
+```{r}
+data <- read_csv(file = "./datos/penguins.csv",
+                 col_names = paste("Var", 1:8, sep = "_"))
+```
+
+
+```{r}
+data <- read_csv(file = "./datos/penguins.csv", skip = 5)
+```
+
+
+* Observa que} la salida de cualquier función `read_*()` es un objeto `tibble`.
+
+
+* `readr` imprime las especificaciones de las columnas después de la importación. 
+
+* Por defecto, `readr` intenta inferir el tipo de columna (por ejemplo, `int`, `dbl`, `chr`, `fct`, `date`, `lgl`) a partir de las primeras 1.000 filas y analiza las columnas en consecuencia.
+
+* Una buena práctica es  especificar de forma explícita el formato de las columnas. 
+
+
+```{r, eval=F}
+read_csv(
+  archivo = "./datos/penguins.csv",
+  col_types = cols(
+    species = col_character(),
+    año = col_datetime(formato = "%Y"),
+    isla = col_skip())
+  )
+```
+
+
+* Analizar sólo las primeras 1.000 filas es eficiente, pero puede llevar a conjeturas erróneas:
+
+```{r, eval=F}
+read_csv(file = "./datos/penguins.csv", guess_max = 2000)
+```
+
+
+* Encuentra más información y funciones de `readr` en  la [hoja de trucos](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
+
+
+
+* A veces puedes tener problemas al leer datos de texto (tipo carácter): los signos especiales como ö, ä o ü pueden ser codificados de forma extraña como símbolos.  En esos casos debes controlar la codificación los datos en la función read_csv (por ejemplo, UTF-8)
+
+
+
+* Supongamos que deseamos dejar de utilizar los archivos `.xlsx` y `.csv` ya que no son capaces de almacenar de forma fiable los metadatos (por ejemplo, los tipos de datos).
+
+
+* Las funciones `write_rds()` y `read_rds()` (son warppers de `writeRDS` y `readRDS` del paquete base de R) proporcionan una buena alternativa para [serializar](https://en.wikipedia.org/wiki/Serialization) tus objetos `R` (por ejemplo, `tibbles`, modelos) y almacenarlos como archivos `.rds`.
+
+* Más info sobre [archivos rds](https://mgimond.github.io/ES218/Week02b.html#Export_to_a_Rds_file)
+
+
+```{r}
+penguins %>% 
+  write_rds(file = "./datos/penguins.rds")
+```
+
+```{r}
+penguins <- read_rds(file = "./datos/penguins.rds")
+```
+
+
+Nota que:
+
+* `write_rds()` solo puede utilizarse para guardar un objeto a la vez,
+
+* un archivo `.rds` cargado debe ser almacenado en una nueva variable, es decir, darle un nuevo nombre,
+
+* `read_rds()` ¡conserva los tipos de datos!
+
+
+#### Ordenando datos `tidyr`
+
+
+* Podemos cambiar el formato de una tabla de datos de largo a ancho y viceversa con las funciones: `pivot_longer()` y `pivot_wider()`.
+
+```{r, out.width="50%",fig.align='center',echo=FALSE}
+knitr::include_graphics("Figuras/pivotting.png") 
+```
+
+
+Tomamos la tabla de datos no tidy del Ejemplo 1 de estas notas y tratamos de estructurarla correctamente. La tabla es la hemos llamado `ejemplo1` y la presentamos a continuación:
+
+```{r, warning=FALSE, echo=FALSE}
+library(palmerpenguins)
+set.seed(123)
+
+ejemplo1 <-penguins %>% 
+  group_by(species, island) %>% 
+  summarise(n = n(), .groups = "drop") %>% 
+  pivot_wider(names_from = island, values_from = n) %>% 
+  unnest(cols = c(Biscoe, Dream, Torgersen))
+ejemplo1
+```
+
+Aplicamos la función `pivot_longer` para hacerla tidy:
+
+```{r}
+nueva <- ejemplo1 %>% 
+  pivot_longer(
+    cols = c(Biscoe, Dream, Torgersen),
+    names_to = "Isla", values_to = "Frecuencia"
+  )
+
+nueva
+```
+
+* La función `pivot_wider()` invierte el efecto de  `pivot_longer()`. Lo dejamos como [*Ejercicio*]{style="color: red;"}
+
+
+
+* Puedes encontrar más información acerca de `pivot_*()` en [Pivoting . tidyr ](https://tidyr.tidyverse.org/articles/pivot.html).
+
+
+
+* Otra cosa que podemos hacer es "agrupar"anidar" datos de manera que cada grupo se convierte en una sola fila en un data frame.
+
+```{r}
+nested_penguins <- penguins %>% 
+    nest(nested_data = 
+           c(island, bill_length_mm, 
+             bill_depth_mm,flipper_length_mm,
+             body_mass_g, sex))
+nested_penguins
+```
+
+
+- La función `nest()` genera datos anidados en un data frame con una fila por `species` y `year`.
+
+
+- Los datos anidados `nested_data` por columnas contienen `tibbles` con seis columnas cada uno y  un  número de observaciones que pueden ser distintos.
+
+
+- Los datos anidados son útiles si queremos aplicar funciones a cada subgrupo  de datos  (por ejemplo, comparar  estadísticos por especie).
+
+
+
+* Para deshacer las estructuras de datos anidados se puede usar la función `tidyr::unnest()`.
+```{r}
+nested_penguins %>% unnest(cols = c(nested_data)) 
+```
+
+
+
+* Dividir y combinar múltiples columnas en una sola.
+
+```{r}
+penguins %>% unite(col = "specie_sex",
+                   c(species, sex), sep = "_", remove = T)
+```
+
+
+* Separar una sola columna, que contiene varios valores, en varias columnas.
+```{r}
+penguins %>% separate(bill_length_mm, sep = 2, into = c("cm", "mm"))
+```
+
+
+* Separar una sola columna, que contiene varios valores, en varias filas.
+```{r}
+penguins %>% separate_rows(island, sep = "s", convert = T)
+```
+
+
+
+* **Manejo de los valores perdidos:** 
+
+Supongamos que tenemos una tibble y queremos hacer explícitos los valores perdidos.
+
+```{r, echo=F}
+incompl_penguins <- tibble(
+  species = c(rep("Adelie", 2), rep("Gentoo", 1), rep("Chinstrap", 1)),
+  year = c(2007, 2008, 2008, 2007),
+  measurement = c(rnorm(3, mean = 50, sd = 15), NA)
+)
+incompl_penguins
+```
+
+Para hacer explícitos los NAs:
+
+```{r}
+incompl_penguins %>% 
+  complete(species, year, fill = list(measurement = NA))
+```
+
+
+Para hacer implícitos los valores perdidos explícitos.
+```{r}
+incompl_penguins %>% 
+  drop_na(measurement)
+```
+
+
+* Reemplazar los valores que faltan por la entrada siguiente o anterior. 
+
+```{r}
+incompl_penguins %>% 
+  fill(measurement, .direction = "down")
+```
+
+
+* Reemplazar los valores que faltan por un valor predefinido.
+```{r}
+incompl_penguins %>%
+  replace_na(replace = list(measurement = mean(.$measurement, na.rm = T)))
+```
+
+
+
+* Más   información en [`tidyr` cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
+
+
+* Los argumentos de una función precedidos por un punto en el tidyverse pueden tener una de estas dos razones:
+
+  - la función es todavía prematura, es decir, los desarrolladores aún piensan en la mejor manera de implementar y nombrar la función
+
+  - la función se aplica regularmente dentro de otra función para no confundir los argumentos de la función entre la función interna y la externa
+
+<!-- ### 5.7.  Manipulación de datos `dplyr`  -->
+
+<!-- ### 5.8.  Visualización de datos `ggplot2`  -->
 
 <!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
-
-<!-- https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos.html#bienvenido-al-tidyverse -->

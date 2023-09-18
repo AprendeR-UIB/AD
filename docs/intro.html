@@ -173,10 +173,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#la-estadística-y-el-método-científico" id="toc-la-estadística-y-el-método-científico" class="nav-link active" data-scroll-target="#la-estadística-y-el-método-científico"><span class="header-section-number">1.0.1</span> La estadística y el método científico</a></li>
-  <li><a href="#gestión-básica-de-datos" id="toc-gestión-básica-de-datos" class="nav-link" data-scroll-target="#gestión-básica-de-datos"><span class="header-section-number">1.0.2</span> Gestión básica de datos</a></li>
-  <li><a href="#los-datos-y-sus-tipos" id="toc-los-datos-y-sus-tipos" class="nav-link" data-scroll-target="#los-datos-y-sus-tipos"><span class="header-section-number">1.0.3</span> Los datos y sus tipos</a></li>
-  <li><a href="#práctica-1" id="toc-práctica-1" class="nav-link" data-scroll-target="#práctica-1"><span class="header-section-number">1.0.4</span> <span style="color: red;"><em>Práctica 1</em></span>:</a></li>
-  <li><a href="#gramática-limpia-y-coherente-con-tidyverse" id="toc-gramática-limpia-y-coherente-con-tidyverse" class="nav-link" data-scroll-target="#gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.0.5</span> Gramática limpia y coherente con <code>Tidyverse</code></a></li>
+  <li><a href="#gestión-básica-de-datos" id="toc-gestión-básica-de-datos" class="nav-link" data-scroll-target="#gestión-básica-de-datos"><span class="header-section-number">1.1</span> Gestión básica de datos</a>
+  <ul class="collapse">
+  <li><a href="#los-datos-y-sus-tipos" id="toc-los-datos-y-sus-tipos" class="nav-link" data-scroll-target="#los-datos-y-sus-tipos"><span class="header-section-number">1.1.1</span> Los datos y sus tipos</a></li>
+  <li><a href="#práctica-1" id="toc-práctica-1" class="nav-link" data-scroll-target="#práctica-1"><span class="header-section-number">1.1.2</span> <span style="color: red;"><em>Práctica 1</em></span>:</a></li>
+  <li><a href="#gramática-limpia-y-coherente-con-tidyverse" id="toc-gramática-limpia-y-coherente-con-tidyverse" class="nav-link" data-scroll-target="#gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.1.3</span> Gramática limpia y coherente con <code>Tidyverse</code></a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/intro.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
@@ -232,10 +234,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>En resumen, la estadística es una herramienta esencial que ayuda a garantizar que la investigación científica sea rigurosa, confiable y basada en evidencia sólida.</p>
 </section>
-<section id="gestión-básica-de-datos" class="level3" data-number="1.0.2">
-<h3 data-number="1.0.2" class="anchored" data-anchor-id="gestión-básica-de-datos"><span class="header-section-number">1.0.2</span> Gestión básica de datos</h3>
-<section id="introducción" class="level4" data-number="1.0.2.1">
-<h4 data-number="1.0.2.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.0.2.1</span> Introducción</h4>
+<section id="gestión-básica-de-datos" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="gestión-básica-de-datos"><span class="header-section-number">1.1</span> Gestión básica de datos</h2>
+<section id="introducción" class="level4" data-number="1.1.0.1">
+<h4 data-number="1.1.0.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.1.0.1</span> Introducción</h4>
 <ul>
 <li><p>En estadística, siempre se empieza obteniendo unos <strong>datos</strong> sobre un grupo (relativamente pequeño) de individuos de una población. Bueno, en realidad, no se empieza obteniendo los datos, sino planificando cuidadosamente cómo se van a obtener, pero todo forma parte de la “obtención” de los datos.</p></li>
 <li><p>Se <strong>generaliza la información</strong> que se ha obtenido sobre este grupo de personas al total de la población.</p></li>
@@ -260,8 +262,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La estadística inferencial entra en juego cuando se quiere obtener información sobre una población y no se puede acceder a todos sus integrantes. Si por ejemplo queremos conocer la altura media de los estudiantes matriculados en esta asignatura de la UIB en este curso, en principio no necesitamos para nada la estadística inferencial. Sois pocos, os mediríamos a todos y calcularíamos la media. En todo caso, usaríamos técnicas de estadística descriptiva para arropar este valor representando la distribución de vuestras alturas de manera adecuada.</p>
 <p>Pero si quisiéramos conocer la altura media de los mallorquines entre 18 y 25 años, sería muy complicado medirlos a todos. Entonces, lo que haríamos sería tomar una muestra representativa de esta población, medirlos y a partir de sus alturas estimar dicha altura media. Naturalmente, lo más seguro es que de esta manera no obtuviéramos el valor exacto de la altura media de los mallorquines de 18 años, nos tendríamos que conformar con obtener una aproximación dentro de un cierto margen de error y determinar la probabilidad de acertar con nuestra estimación y este margen de error. La estadística inferencial es la que nos permite acotar el error que podamos haber cometido y calcular la probabilidad de cometerlo, incluyendo la metodología que tendríamos que haber usado para tomar la muestra en primer lugar.</p>
 </section>
-<section id="r-rstudio---posit-rmarkdowm---quarto" class="level4" data-number="1.0.2.2">
-<h4 data-number="1.0.2.2" class="anchored" data-anchor-id="r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.0.2.2</span> R/ RStudio - Posit / RMarkdowm - Quarto</h4>
+<section id="r-rstudio---posit-rmarkdowm---quarto" class="level4" data-number="1.1.0.2">
+<h4 data-number="1.1.0.2" class="anchored" data-anchor-id="r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.1.0.2</span> R/ RStudio - Posit / RMarkdowm - Quarto</h4>
 <p>Todas las técnicas que usaremos en la asignatura pueden ser implementadas y/o desarrolladas en software libre como Python y R. Ambos se consideran lenguajes de programación esenciales para la ciencia de datos. Lo ideal sería dominar ambos para tener una base de programación completa, pero:</p>
 <ul>
 <li><p>R es un <strong>lenguaje específico utilizado para el análisis de datos y la estadística</strong>.</p></li>
@@ -286,8 +288,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Posit Cloud</strong> permite acceder al potente conjunto de herramientas de ciencia de datos de Posit directamente desde su navegador. Esto favorecerá el trabajo en equipo. Podéis revisar la siguiente <a href="https://posit.cloud/learn/guide">Guía</a> para crearos una cuenta.</p></li>
 </ul>
 </section>
-<section id="control-de-versiones-con-git-github" class="level4" data-number="1.0.2.3">
-<h4 data-number="1.0.2.3" class="anchored" data-anchor-id="control-de-versiones-con-git-github"><span class="header-section-number">1.0.2.3</span> Control de versiones con Git / GitHub</h4>
+<section id="control-de-versiones-con-git-github" class="level4" data-number="1.1.0.3">
+<h4 data-number="1.1.0.3" class="anchored" data-anchor-id="control-de-versiones-con-git-github"><span class="header-section-number">1.1.0.3</span> Control de versiones con Git / GitHub</h4>
 <ul>
 <li><p>En esta asignatura la forma de llegar a un resultado de análisis de datos es tan importante como el propio resultado. Además, uno de los objetivos es exponeros al uso de herramientas de software para la ciencia de datos moderna.</p></li>
 <li><p>La idea de reproducibilidad lleva implícita la colaboración. El código que se produce es parte de la documentación del proceso y es fundamental compartirlo (aunque sólo sea con uno mismo).</p></li>
@@ -316,8 +318,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Crearemos en GitHub un repositorio por estudiante/equipo para cada entrega. Utilizaremos un sencillo flujo de trabajo centralizado que sólo requiere realizar acciones simples como push, pull, add, rm, commit, status y clone.</li>
 </ul>
 </section>
-<section id="git-github-con-r" class="level4" data-number="1.0.2.4">
-<h4 data-number="1.0.2.4" class="anchored" data-anchor-id="git-github-con-r"><span class="header-section-number">1.0.2.4</span> Git / GitHub con R</h4>
+<section id="git-github-con-r" class="level4" data-number="1.1.0.4">
+<h4 data-number="1.1.0.4" class="anchored" data-anchor-id="git-github-con-r"><span class="header-section-number">1.1.0.4</span> Git / GitHub con R</h4>
 <p>Veamos cómo configurar todo. Gran parte de lo que está aquí proviene del libro <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> de Jenny Bryan y del artículo de <a href="https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r/">David Keyes</a> puedes ver sus vídeos en caso de que, la breve explicación que presentamos abajo, no sea suficiente para ti.</p>
 <ul>
 <li><span style="color: blue;"><em>Instalar Git</em></span>: El primer paso es instalar Git, en el <a href="https://happygitwithr.com/install-git">Capítulo 6 del libro</a> explican el proceso para los usuarios de Mac, Windows y Linux. Nosotros ya lo tenemos instalado, así que mostramos cómo verificar si tienes Git instalado y su versión usando el terminal en RStudio.</li>
@@ -375,8 +377,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Observa los nuevos cambios resaltados en color verde. Frente a los valores antiguos que aparecerán en color rojo.</p></li>
 </ul>
 </section>
-<section id="conectar-rstudio-y-github" class="level4" data-number="1.0.2.5">
-<h4 data-number="1.0.2.5" class="anchored" data-anchor-id="conectar-rstudio-y-github"><span class="header-section-number">1.0.2.5</span> Conectar RStudio y GitHub</h4>
+<section id="conectar-rstudio-y-github" class="level4" data-number="1.1.0.5">
+<h4 data-number="1.1.0.5" class="anchored" data-anchor-id="conectar-rstudio-y-github"><span class="header-section-number">1.1.0.5</span> Conectar RStudio y GitHub</h4>
 <p>El proceso hasta ahora nos ha permitido usar Git localmente. Pero, ¿qué pasa si queremos conectarnos a GitHub? ¿Cómo lo hacemos?</p>
 <p>La mejor manera de conectar RStudio y GitHub es usando tu nombre de usuario y un token de acceso personal (PAT). Para generar un token de acceso personal, usa la función <code>create_github_token()</code> de <code>usethis</code>. Esto te llevará a la página correspondiente en el sitio web de GitHub, donde le darás un nombre a tu token y lo copiarás (¡no lo pierdas porque nunca volverá a aparecer!).</p>
 <p>En la consola de RStudio:</p>
@@ -398,8 +400,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># introduce el token copiado en el paso anterior</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="conectar-proyectos-de-rstudio-con-repositorios-de-github" class="level4" data-number="1.0.2.6">
-<h4 data-number="1.0.2.6" class="anchored" data-anchor-id="conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.0.2.6</span> Conectar proyectos de RStudio con repositorios de GitHub</h4>
+<section id="conectar-proyectos-de-rstudio-con-repositorios-de-github" class="level4" data-number="1.1.0.6">
+<h4 data-number="1.1.0.6" class="anchored" data-anchor-id="conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.1.0.6</span> Conectar proyectos de RStudio con repositorios de GitHub</h4>
 <p>Ahora que hemos conectado RStudio y GitHub, discutamos cómo hacer que los dos funcionen juntos. La idea básica es que configures los proyectos que creas en RStudio con repositorios GitHub asociados. Cada proyecto de RStudio vive en un solo repositorio de GitHub.</p>
 <p>¿Cómo conectamos un proyecto de RStudio a un repositorio de GitHub? Happy Git and GitHub for the useR propone tres estrategias. Demostraremos la forma más sencilla</p>
 <p>crear un repositorio en GitHub primero. Cree el repositorio y, a continuación, cuando inicie un nuevo proyecto en RStudio, utilice la opción de control de versiones, introduzca la URL de su repositorio y listo.</p>
@@ -414,8 +416,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>A continuación podrás consultarse la pestaña “Git” y ver la información asociada al repositorio descargado.</p></li>
 </ul>
 </section>
-<section id="flujo-de-trabajo-general" class="level4" data-number="1.0.2.7">
-<h4 data-number="1.0.2.7" class="anchored" data-anchor-id="flujo-de-trabajo-general"><span class="header-section-number">1.0.2.7</span> Flujo de trabajo general</h4>
+<section id="flujo-de-trabajo-general" class="level4" data-number="1.1.0.7">
+<h4 data-number="1.1.0.7" class="anchored" data-anchor-id="flujo-de-trabajo-general"><span class="header-section-number">1.1.0.7</span> Flujo de trabajo general</h4>
 <p>Ahora que hemos conectado RStudio y GitHub, podemos compartir nuestro trabajo entre los dos.</p>
 <p><strong>Push (Subir a Github)</strong></p>
 <p>“Push” significa enviar cualquier cambio en tu código de RStudio a GitHub. Para hacer esto, primero tenemos que hacer un commit. Después de confirmar, ahora tenemos un botón (la flecha hacia arriba) en RStudio que podemos usar para enviar nuestro código a GitHub.</p>
@@ -442,9 +444,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>¡Lo lograste!</strong></p>
 <p>¡Ahora está todo configurado para usar Git y GitHub con RStudio!</p>
 </section>
-</section>
-<section id="los-datos-y-sus-tipos" class="level3" data-number="1.0.3">
-<h3 data-number="1.0.3" class="anchored" data-anchor-id="los-datos-y-sus-tipos"><span class="header-section-number">1.0.3</span> Los datos y sus tipos</h3>
+<section id="los-datos-y-sus-tipos" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="los-datos-y-sus-tipos"><span class="header-section-number">1.1.1</span> Los datos y sus tipos</h3>
 <p>En vuestro curso de Estadística estudiasteis algunas técnicas básicas de estadística descriptiva. Estas técnicas consisten en una serie de valores y gráficos que nos permiten resumir y explorar un conjunto de datos, con el objetivo final de entenderlos o describirlos lo mejor posible.</p>
 <p>Los datos de los que disponemos suelen ser multidimensionales, en el sentido de que observamos varias características (<strong>variables</strong>) de una serie de individuos. Almacenamos estos datos en <strong>tablas de datos</strong> como la que presentamos abajo, donde cada columna corresponde a una variable y cada fila son los datos de un individuo concreto. Así, en esta tabla, cada fila representa un niño y cada columna recoge una de las características que hemos anotado: su nombre, su altura (en cm), su número de hermanos, el color de sus cabellos, el número semanal de refrescos que suele tomar, y su grado de satisfacción con un juego para móvil (entre 0 y 5).</p>
 <div class="cell">
@@ -587,8 +588,8 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <p>Así, para datos cualitativos sólo tiene interés estudiar y representar las frecuencias con que aparecen sus diferentes valores, mientras que el análisis de datos cuantitativos suele involucrar el cálculo de medidas estadísticas, como la media o la desviación típica, que expresen numéricamente sus propiedades.</p>
 <p>Os dejamos el material <a href="https://aprender-uib.github.io/AprendeR1/">Aprender R1</a> para que repaséis los capítulos 10 al 14 correspondientes a la parte de Estadística descriptiva.</p>
 </section>
-<section id="práctica-1" class="level3" data-number="1.0.4">
-<h3 data-number="1.0.4" class="anchored" data-anchor-id="práctica-1"><span class="header-section-number">1.0.4</span> <span style="color: red;"><em>Práctica 1</em></span>:</h3>
+<section id="práctica-1" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="práctica-1"><span class="header-section-number">1.1.2</span> <span style="color: red;"><em>Práctica 1</em></span>:</h3>
 <ul>
 <li><p>Formad grupos de 3 integrantes.</p></li>
 <li><p>Trabajaréis con los datos <a href="https://allisonhorst.github.io/palmerpenguins/">pingüinos</a>, leed la documentación y seguid las siguientes instrucciones:</p>
@@ -635,10 +636,10 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <li><p>Entregad el reporte en la tarea de Aula Digital disponible. Revisad la fecha en que cierra la tarea.</p></li>
 </ul>
 </section>
-<section id="gramática-limpia-y-coherente-con-tidyverse" class="level3" data-number="1.0.5">
-<h3 data-number="1.0.5" class="anchored" data-anchor-id="gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.0.5</span> Gramática limpia y coherente con <code>Tidyverse</code></h3>
-<section id="la-librería-tidyverse" class="level4" data-number="1.0.5.1">
-<h4 data-number="1.0.5.1" class="anchored" data-anchor-id="la-librería-tidyverse"><span class="header-section-number">1.0.5.1</span> La librería <code>Tidyverse</code></h4>
+<section id="gramática-limpia-y-coherente-con-tidyverse" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.1.3</span> Gramática limpia y coherente con <code>Tidyverse</code></h3>
+<section id="la-librería-tidyverse" class="level4" data-number="1.1.3.1">
+<h4 data-number="1.1.3.1" class="anchored" data-anchor-id="la-librería-tidyverse"><span class="header-section-number">1.1.3.1</span> La librería <code>Tidyverse</code></h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -668,16 +669,17 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <ul>
 <li><p><a href="https://hadley.nz/">Hadley Wickham</a>, su creador, es el director de los científicos de datos de RStudio (actual Posit) y profesor adjunto de estadística en la Universidad de Auckland, la Universidad de Stanford y la Universidad de Rice.</p></li>
 <li><p>Las librerías de tidyverse han venido a sustituir R base por su eficiencia y facilidad de programación para no informáticos. Casi todas las consultas a páginas técnicas de R son o incluyen código de <code>tidyverse</code>.</p></li>
-<li><p><strong>Paquetes de <code>tidyverse</code> base :</strong></p>
+<li><p><strong>Paquetes del core de <code>tidyverse</code>:</strong></p>
 <ul>
-<li><code>readr</code>: lectura de datos</li>
-<li><code>tibble</code>: una clase ‘tbl_df’ que constituye un mejor formato que el data frame tradicional.</li>
-<li><code>stringr</code>: paquete de funciones para texto</li>
-<li><code>forcats</code>: paquete de funciones para factores</li>
-<li><code>tidyr</code>: arreglo y limpieza de datos</li>
-<li><code>dplyr</code>: manipulación de datos</li>
-<li><code>ggplot2</code>: visualización (gráficos)</li>
-<li><code>purrr</code>: programación funcional (pipes)</li>
+<li><p><code>ggplot2</code>: Permite crear gráficos de forma declarativa. Le introducimos los datos, le decimos cómo asignar variables a la estética, qué tipo de gráfico utilizar, y ggplot2 nos devolverá un gráfico más “elegante” y fácil de editar que los de R base.</p></li>
+<li><p><code>dplyr</code>: Gramática de manipulación de datos, un conjunto coherente de acciones que resuelven los retos más comunes como juntar datos y transformarlos.</p></li>
+<li><p><code>tidyr</code>: Conjunto de funciones que ayudan a obtener datos ordenados. Los datos ordenados son datos con una forma consistente: en resumen, cada variable va en una columna, y cada fila es una unidad muestral.</p></li>
+<li><p><code>readr</code>: Proporciona una forma rápida y amigable de leer datos rectangulares (como csv, tsv).</p></li>
+<li><p><code>purrr</code>: Mejora el conjunto de herramientas de programación funcional (PF) de R proporcionando un conjunto completo y coherente de herramientas para trabajar con funciones y vectores. Una vez dominados los conceptos básicos, purrr permite sustituir muchos bucles <code>for</code> por código más fácil de escribir y más expresivo.</p></li>
+<li><p><code>tibble</code>: Un formato más moderno que el data frame, manteniendo lo que en el tiempo ha demostrado ser eficaz, y desechando lo que no.</p></li>
+<li><p><code>stringr</code>: Conjunto cohesivo de funciones diseñadas para hacer el trabajo con cadenas de texto lo más fácil posible.</p></li>
+<li><p><code>forcats</code>: Conjunto de herramientas útiles que resuelven problemas comunes con factores. R utiliza factores para manejar variables categóricas, variables que tienen un conjunto fijo y conocido de posibles valores.</p></li>
+<li><p><code>purrr</code>: programación funcional (pipes)</p></li>
 </ul>
 <p>Hay muchos otros paquetes que se integran sin problemas, por ejemplo, <code>lubridate</code> (para manejar datos tomados en el tiempo), <code>stringr</code> (texto), <code>forcats</code> (factores), etc.</p></li>
 <li><p>Para instalar y cargar <code>tidyverse</code></p></li>
@@ -702,8 +704,8 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <p>Se puede ver la versión del paquete tidyverse y la de los paquetes base.</p>
 <p><span style="color: red;">Cuidado</span>: algunas funciones de R se sobrescriben por sus equivalentes de <code>tidyverse</code>. En ocasiones es preferible indicar explícitamente el nombre de la función que deseamos utilizar, por ejemplo: <code>dplyr::group_by</code> para distinguir de <code>plyr::group_by</code> (dplyr es una evolución del paquete plyr).</p>
 </section>
-<section id="qué-significa-tidy-data" class="level4" data-number="1.0.5.2">
-<h4 data-number="1.0.5.2" class="anchored" data-anchor-id="qué-significa-tidy-data"><span class="header-section-number">1.0.5.2</span> ¿Qué significa tidy data?</h4>
+<section id="qué-significa-tidy-data" class="level4" data-number="1.1.3.2">
+<h4 data-number="1.1.3.2" class="anchored" data-anchor-id="qué-significa-tidy-data"><span class="header-section-number">1.1.3.2</span> ¿Qué significa tidy data?</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -790,20 +792,629 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 6 &lt;NA&gt;      &lt;NA&gt;   &lt;NA&gt;   Pontiac Firebird  19.2     8</code></pre>
 </div>
 </div>
-<p><a href="https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos">Libro</a></p>
 <ul>
 <li>Si tenemos datos provenientes de distintas fuentes, seguramente tendremos que limpiarlos y juntarlos en un único tibble.</li>
 </ul>
-<!-- ### 5.3. El operador de tuberías (pipe) `%>%`  -->
-<!-- ### 5.4. Data frames  avanzados:  `tibbels` -->
-<!-- ### 5.5.  Lectura de datos de texto rectangulares: `readr`  -->
-<!-- ### 5.6.  Ordenando datos no tidy: `tidyr`  -->
-<!-- ### 5.7.  Manipulación de datos: `dplyr`  -->
-<!-- ### 5.8.  Visualización de datos: `ggplot2`  -->
+</section>
+<section id="el-operador-de-tuberías-pipe" class="level4" data-number="1.1.3.3">
+<h4 data-number="1.1.3.3" class="anchored" data-anchor-id="el-operador-de-tuberías-pipe"><span class="header-section-number">1.1.3.3</span> El operador de tuberías (pipe) <code>%&gt;%</code></h4>
+<ul>
+<li>Los pipes básicos pasan un valor, atributo u objeto (LHS: Left Hand Side) a la siguiente llamada de función (RHS: Right Hand Side) como <strong>primer</strong> argumento</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> f <span class="co"># equivalente a: f(x)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(y) <span class="co"># equivalente a: f(x, y)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> f <span class="sc">%&gt;%</span> g <span class="sc">%&gt;%</span> h <span class="co"># equivalente a: h(g(f(x)))</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Los pipes también se usan con marcadores de posición; en este caso, reenvian un valor u objeto (LHS) a la siguiente llamada de función (RHS) como <strong>cualquier</strong> argumento.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(.) <span class="co"># equivalente a: x %&gt;% f</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(y, .) <span class="co"># equivalente a: f(y, x)</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(y, <span class="at">z =</span> .) <span class="co"># equivalente a: f(y, z = x)</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%&gt;%</span> <span class="fu">f</span>(<span class="at">y =</span> <span class="fu">nrow</span>(.),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">z =</span> <span class="fu">ncol</span>(.))  <span class="co"># equivalente a: f(x, y = nrow(x), z = ncol(x))</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Una secuencia de código que comienza con el marcador de posición (<code>.</code>) devuelve una función que puede utilizarse para aplicar posteriormente la tubería a valores concretos.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> . <span class="sc">%&gt;%</span> cos <span class="sc">%&gt;%</span> sin <span class="co"># equivalente a: f &lt;- function(.) sin(cos(.))</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">f</span>(<span class="dv">20</span>) <span class="co"># equivalente a: la tubería 20 %&gt;% cos %&gt;% sin</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Para saber más sobre <code>%&gt;%</code>, haced <code>vignette("magrittr")</code> en la consola de R.</p></li>
+<li><p>Se puede obtener <code>%&gt;%</code> en Rstudio desktop utilizando el atajo de teclado: <strong>Ctrl + Shift + M</strong>.</p></li>
+<li><p><span style="color: blue;">Ejemplo:</span> ¿Cuál es la masa corporal media, en gramos, de los pingüinos estudiados durante el año 2007?</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sin pipes</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">subset</span>(penguins, year <span class="sc">==</span> <span class="dv">2007</span>)<span class="sc">$</span>body_mass_g, <span class="at">na.rm =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4124.541</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Con pipes (tidyverse)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  .<span class="sc">$</span>body_mass_g <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(<span class="at">na.rm =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La respuesta a la pregunta formulada sería: “La masa corporal media, en gramos, de los pingüinos estudiados durante el año 2007 es 4125 gramos”.</p>
+<ul>
+<li><p>Ventajas de usar pipes:</p>
+<ul>
+<li><p>El estilo secuencial de las tuberías mejora la lectura del código en comparación con las funciones anidadas.</p></li>
+<li><p>Hace innecesario almacenar los resultados intermedios.</p></li>
+<li><p>Es muy fácil añadir o eliminar pasos (empalmes de tuberías) individuales en el “<strong>pipeline</strong>”.</p></li>
+</ul></li>
+<li><p>Las versiones recientes de R también tienen un operador de tuberías nativo (<code>|&gt;</code>).</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">2</span>) <span class="co">#  es lo mismo que  head(mtcars, 2)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              mpg cyl disp  hp drat    wt  qsec vs am gear carb
+Mazda RX4      21   6  160 110  3.9 2.620 16.46  0  1    4    4
+Mazda RX4 Wag  21   6  160 110  3.9 2.875 17.02  0  1    4    4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span> <span class="fu">subset</span>(cyl <span class="sc">==</span> <span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">nrow</span>()  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 11</code></pre>
+</div>
+</div>
+</section>
+<section id="data-frames-avanzados-tibbels" class="level4" data-number="1.1.3.4">
+<h4 data-number="1.1.3.4" class="anchored" data-anchor-id="data-frames-avanzados-tibbels"><span class="header-section-number">1.1.3.4</span> Data frames avanzados <code>tibbels</code></h4>
+<p>EL paquete <code>tibble</code> proporciona un objeto de tipo data frame mejorado: <code>tbl_df</code>. Un <code>tibble</code> se puede crear de cuatro maneras diferentes.</p>
+<ol type="a">
+<li>A partir de vectores columna:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>),</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">z =</span> <span class="fu">c</span>(T, F)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  x         y z    
+  &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt;
+1 a         1 TRUE 
+2 b         2 FALSE</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Escribiendo en texto por columnas:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tribble</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>x, <span class="sc">~</span>y, <span class="sc">~</span>z,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a"</span>, <span class="dv">1</span>, T,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"b"</span>, <span class="dv">2</span>, F</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  x         y z    
+  &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt;
+1 a         1 TRUE 
+2 b         2 FALSE</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Creando un <code>tibble</code> a partir de otro objeto de las clases <code>matrix</code> o <code>data.frame</code>:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">z =</span> <span class="fu">c</span>(T, F)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>as_tibble</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  x         y z    
+  &lt;chr&gt; &lt;dbl&gt; &lt;lgl&gt;
+1 a         1 TRUE 
+2 b         2 FALSE</code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>Creando un <code>tibble</code> a partir de vectores con nombre:</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(<span class="at">x =</span> <span class="st">"a"</span>, <span class="at">y =</span> <span class="st">"b"</span>, <span class="at">z =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>(<span class="at">name =</span> <span class="st">"x"</span>, <span class="at">value =</span> <span class="st">"y"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  x     y    
+  &lt;chr&gt; &lt;chr&gt;
+1 x     a    
+2 y     b    
+3 z     1    </code></pre>
+</div>
+</div>
+<ul>
+<li><p><strong>Diferencias entre tibble y data.frame</strong></p>
+<ul>
+<li><p>Un tibble nunca cambia el tipo de entrada. Ya no hay que preocuparse de que los caracteres se conviertan automáticamente en cadenas.</p></li>
+<li><p>Un tibble puede tener columnas que son listas.</p></li>
+<li><p>Un tibble puede tener nombres de variables no estándar. Pueden empezar por un número o contener espacios. Para utilizarlo se refiere a estos en un backtick, por ejemplo, <code>peso en Kg</code>.</p></li>
+<li><p>Sólo recicla vectores de longitud 1.</p></li>
+<li><p>No tiene como atributo nombres de filas <code>row.names</code>.</p></li>
+<li><p>Por defecto, <code>tibble()</code> imprime sólo las diez primeras filas, todas las columnas que caben en la pantalla, y las clases de las columnas</p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>penguins</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           NA            NA                  NA          NA
+ 5 Adelie  Torgersen           36.7          19.3               193        3450
+ 6 Adelie  Torgersen           39.3          20.6               190        3650
+ 7 Adelie  Torgersen           38.9          17.8               181        3625
+ 8 Adelie  Torgersen           39.2          19.6               195        4675
+ 9 Adelie  Torgersen           34.1          18.1               193        3475
+10 Adelie  Torgersen           42            20.2               190        4250
+# ℹ 334 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data.frame(penguins) recordad que esto imprime todo el data frame</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>glimpse</code> nos da la versión transpuesta de <code>print()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> glimpse</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 344
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+$ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…</code></pre>
+</div>
+</div>
+<ul>
+<li>El subconjunto de un <code>tibble</code> (<code>[]</code>) siempre devuelve otro <code>tibble</code> y nunca un vector (en contraste con los objetos de un <code>data.frame</code>).</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(penguins) <span class="sc">%&gt;%</span> .[, <span class="st">"species"</span>] <span class="sc">%&gt;%</span> class</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>penguins[, <span class="st">"species"</span>] <span class="sc">%&gt;%</span> class</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "tbl_df"     "tbl"        "data.frame"</code></pre>
+</div>
+</div>
+<ul>
+<li>El subconjunto de un data.frame busca el nombre de la variable más parecida</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(<span class="fu">data.frame</span>(penguins))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "species"           "island"            "bill_length_mm"   
+[4] "bill_depth_mm"     "flipper_length_mm" "body_mass_g"      
+[7] "sex"               "year"             </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">data.frame</span>(penguins)<span class="sc">$</span>spec)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Adelie Adelie Adelie Adelie Adelie Adelie
+Levels: Adelie Chinstrap Gentoo</code></pre>
+</div>
+</div>
+<ul>
+<li><code>tibble</code> no permite la coincidencia parcial, es decir, siempre se debe proporcionar el nombre completo de la columna.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins<span class="sc">$</span>spec)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Unknown or uninitialised column: `spec`.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(penguins<span class="sc">$</span>species)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] Adelie Adelie Adelie Adelie Adelie Adelie
+Levels: Adelie Chinstrap Gentoo</code></pre>
+</div>
+</div>
+<ul>
+<li>Las tibbles dan mejores mensajes <code>Warnings</code> y <code>Errors</code> para solucionar problemas.</li>
+</ul>
+</section>
+<section id="lectura-de-datos-de-texto-rectangulares-readr" class="level4" data-number="1.1.3.5">
+<h4 data-number="1.1.3.5" class="anchored" data-anchor-id="lectura-de-datos-de-texto-rectangulares-readr"><span class="header-section-number">1.1.3.5</span> Lectura de datos de texto rectangulares <code>readr</code></h4>
+<p>El paquete <strong><code>readr</code></strong> proporciona funciones de lectura y escritura para múltiples formatos de archivo:</p>
+<ul>
+<li><p><code>read_delim()</code>: archivos delimitados en general</p></li>
+<li><p><code>read_csv()</code>: archivos separados por comas</p></li>
+<li><p><code>read_csv2()</code>: archivos separados por punto y coma. En la mayoría de los países europeos, Microsoft Excel utiliza <code>;</code> como delimitador común</p></li>
+<li><p><code>read_tsv()</code>: archivos separados por tabulaciones</p></li>
+<li><p><code>read_fwf()</code>: archivos de ancho fijo</p></li>
+<li><p><code>read_table()</code>: archivos separados por espacios en blanco</p></li>
+<li><p><code>read_log()</code>: archivos de registro web</p></li>
+<li><p>Convenientemente, las funciones <code>write_*()</code> funcionan de forma análoga.</p></li>
+<li><p>Se utiliza el paquete <code>readxl</code> para archivos de Excel,</p></li>
+<li><p>El paquete <code>haven</code> para archivos de Stata, SAS y SPSS,</p></li>
+<li><p>El paquete <code>googlesheets4</code> para Google Sheets</p></li>
+<li><p>El paquete <code>rvest</code> para archivos HTML. Esta es la librería de referencia en el contexto de la extracción de datos de la web con <code>R</code></p></li>
+</ul>
+<p>Para ilustrar el paquete <code>readr</code>, hemos creado previamente un archivo csv que contiene los datos de los pingüinos, utilizando <code>write_csv(penguins, archivo = "datos/penguins.csv")</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.csv"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 344 Columns: 9
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(3): species, island, sex dbl (6): ...1, bill_length_mm, bill_depth_mm,
+flipper_length_mm, body_mass_g...
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.csv"</span>, <span class="at">col_select =</span> <span class="fu">c</span>(species, island))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>New names:
+Rows: 344 Columns: 2
+── Column specification
+──────────────────────────────────────────────────────── Delimiter: "," chr
+(2): species, island
+ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
+Specify the column types or set `show_col_types = FALSE` to quiet this message.
+• `` -&gt; `...1`</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.csv"</span>,</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">col_names =</span> <span class="fu">paste</span>(<span class="st">"Var"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>, <span class="at">sep =</span> <span class="st">"_"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 345 Columns: 9
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (8): Var_2, Var_3, Var_4, Var_5, Var_6, Var_7, Var_8, X9
+dbl (1): Var_1
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.csv"</span>, <span class="at">skip =</span> <span class="dv">5</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 339 Columns: 9
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (3): Adelie, Torgersen, female
+dbl (6): 5, 36.7, 19.3, 193, 3450, 2007
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Observa que} la salida de cualquier función <code>read_*()</code> es un objeto <code>tibble</code>.</p></li>
+<li><p><code>readr</code> imprime las especificaciones de las columnas después de la importación.</p></li>
+<li><p>Por defecto, <code>readr</code> intenta inferir el tipo de columna (por ejemplo, <code>int</code>, <code>dbl</code>, <code>chr</code>, <code>fct</code>, <code>date</code>, <code>lgl</code>) a partir de las primeras 1.000 filas y analiza las columnas en consecuencia.</p></li>
+<li><p>Una buena práctica es especificar de forma explícita el formato de las columnas.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">archivo =</span> <span class="st">"./datos/penguins.csv"</span>,</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">species =</span> <span class="fu">col_character</span>(),</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    año <span class="ot">=</span> <span class="fu">col_datetime</span>(<span class="at">formato =</span> <span class="st">"%Y"</span>),</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">isla =</span> <span class="fu">col_skip</span>())</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Analizar sólo las primeras 1.000 filas es eficiente, pero puede llevar a conjeturas erróneas:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.csv"</span>, <span class="at">guess_max =</span> <span class="dv">2000</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Encuentra más información y funciones de <code>readr</code> en la <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf">hoja de trucos</a>.</p></li>
+<li><p>A veces puedes tener problemas al leer datos de texto (tipo carácter): los signos especiales como ö, ä o ü pueden ser codificados de forma extraña como símbolos. En esos casos debes controlar la codificación los datos en la función read_csv (por ejemplo, UTF-8)</p></li>
+<li><p>Supongamos que deseamos dejar de utilizar los archivos <code>.xlsx</code> y <code>.csv</code> ya que no son capaces de almacenar de forma fiable los metadatos (por ejemplo, los tipos de datos).</p></li>
+<li><p>Las funciones <code>write_rds()</code> y <code>read_rds()</code> (son warppers de <code>writeRDS</code> y <code>readRDS</code> del paquete base de R) proporcionan una buena alternativa para <a href="https://en.wikipedia.org/wiki/Serialization">serializar</a> tus objetos <code>R</code> (por ejemplo, <code>tibbles</code>, modelos) y almacenarlos como archivos <code>.rds</code>.</p></li>
+<li><p>Más info sobre <a href="https://mgimond.github.io/ES218/Week02b.html#Export_to_a_Rds_file">archivos rds</a></p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_rds</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.rds"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="at">file =</span> <span class="st">"./datos/penguins.rds"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Nota que:</p>
+<ul>
+<li><p><code>write_rds()</code> solo puede utilizarse para guardar un objeto a la vez,</p></li>
+<li><p>un archivo <code>.rds</code> cargado debe ser almacenado en una nueva variable, es decir, darle un nuevo nombre,</p></li>
+<li><p><code>read_rds()</code> ¡conserva los tipos de datos!</p></li>
+</ul>
+</section>
+<section id="ordenando-datos-tidyr" class="level4" data-number="1.1.3.6">
+<h4 data-number="1.1.3.6" class="anchored" data-anchor-id="ordenando-datos-tidyr"><span class="header-section-number">1.1.3.6</span> Ordenando datos <code>tidyr</code></h4>
+<ul>
+<li>Podemos cambiar el formato de una tabla de datos de largo a ancho y viceversa con las funciones: <code>pivot_longer()</code> y <code>pivot_wider()</code>.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/pivotting.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Tomamos la tabla de datos no tidy del Ejemplo 1 de estas notas y tratamos de estructurarla correctamente. La tabla es la hemos llamado <code>ejemplo1</code> y la presentamos a continuación:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  species   Biscoe Dream Torgersen
+  &lt;fct&gt;      &lt;int&gt; &lt;int&gt;     &lt;int&gt;
+1 Adelie        44    56        52
+2 Chinstrap     NA    68        NA
+3 Gentoo       124    NA        NA</code></pre>
+</div>
+</div>
+<p>Aplicamos la función <code>pivot_longer</code> para hacerla tidy:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>nueva <span class="ot">&lt;-</span> ejemplo1 <span class="sc">%&gt;%</span> </span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(Biscoe, Dream, Torgersen),</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"Isla"</span>, <span class="at">values_to =</span> <span class="st">"Frecuencia"</span></span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>nueva</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
+  species   Isla      Frecuencia
+  &lt;fct&gt;     &lt;chr&gt;          &lt;int&gt;
+1 Adelie    Biscoe            44
+2 Adelie    Dream             56
+3 Adelie    Torgersen         52
+4 Chinstrap Biscoe            NA
+5 Chinstrap Dream             68
+6 Chinstrap Torgersen         NA
+7 Gentoo    Biscoe           124
+8 Gentoo    Dream             NA
+9 Gentoo    Torgersen         NA</code></pre>
+</div>
+</div>
+<ul>
+<li><p>La función <code>pivot_wider()</code> invierte el efecto de <code>pivot_longer()</code>. Lo dejamos como <span style="color: red;"><em>Ejercicio</em></span></p></li>
+<li><p>Puedes encontrar más información acerca de <code>pivot_*()</code> en <a href="https://tidyr.tidyverse.org/articles/pivot.html">Pivoting . tidyr</a>.</p></li>
+<li><p>Otra cosa que podemos hacer es “agrupar”anidar” datos de manera que cada grupo se convierte en una sola fila en un data frame.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>nested_penguins <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>(<span class="at">nested_data =</span> </span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">c</span>(island, bill_length_mm, </span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>             bill_depth_mm,flipper_length_mm,</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>             body_mass_g, sex))</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>nested_penguins</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 3
+  species    year nested_data      
+  &lt;fct&gt;     &lt;int&gt; &lt;list&gt;           
+1 Adelie     2007 &lt;tibble [50 × 6]&gt;
+2 Adelie     2008 &lt;tibble [50 × 6]&gt;
+3 Adelie     2009 &lt;tibble [52 × 6]&gt;
+4 Gentoo     2007 &lt;tibble [34 × 6]&gt;
+5 Gentoo     2008 &lt;tibble [46 × 6]&gt;
+6 Gentoo     2009 &lt;tibble [44 × 6]&gt;
+7 Chinstrap  2007 &lt;tibble [26 × 6]&gt;
+8 Chinstrap  2008 &lt;tibble [18 × 6]&gt;
+9 Chinstrap  2009 &lt;tibble [24 × 6]&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li><p>La función <code>nest()</code> genera datos anidados en un data frame con una fila por <code>species</code> y <code>year</code>.</p></li>
+<li><p>Los datos anidados <code>nested_data</code> por columnas contienen <code>tibbles</code> con seis columnas cada uno y un número de observaciones que pueden ser distintos.</p></li>
+<li><p>Los datos anidados son útiles si queremos aplicar funciones a cada subgrupo de datos (por ejemplo, comparar estadísticos por especie).</p></li>
+<li><p>Para deshacer las estructuras de datos anidados se puede usar la función <code>tidyr::unnest()</code>.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>nested_penguins <span class="sc">%&gt;%</span> <span class="fu">unnest</span>(<span class="at">cols =</span> <span class="fu">c</span>(nested_data)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species  year island    bill_length_mm bill_depth_mm flipper_length_mm
+   &lt;fct&gt;   &lt;int&gt; &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;
+ 1 Adelie   2007 Torgersen           39.1          18.7               181
+ 2 Adelie   2007 Torgersen           39.5          17.4               186
+ 3 Adelie   2007 Torgersen           40.3          18                 195
+ 4 Adelie   2007 Torgersen           NA            NA                  NA
+ 5 Adelie   2007 Torgersen           36.7          19.3               193
+ 6 Adelie   2007 Torgersen           39.3          20.6               190
+ 7 Adelie   2007 Torgersen           38.9          17.8               181
+ 8 Adelie   2007 Torgersen           39.2          19.6               195
+ 9 Adelie   2007 Torgersen           34.1          18.1               193
+10 Adelie   2007 Torgersen           42            20.2               190
+# ℹ 334 more rows
+# ℹ 2 more variables: body_mass_g &lt;int&gt;, sex &lt;fct&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Dividir y combinar múltiples columnas en una sola.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">"specie_sex"</span>,</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">c</span>(species, sex), <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 7
+   specie_sex  island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;chr&gt;       &lt;fct&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie_male Torge…           39.1          18.7               181        3750
+ 2 Adelie_fem… Torge…           39.5          17.4               186        3800
+ 3 Adelie_fem… Torge…           40.3          18                 195        3250
+ 4 Adelie_NA   Torge…           NA            NA                  NA          NA
+ 5 Adelie_fem… Torge…           36.7          19.3               193        3450
+ 6 Adelie_male Torge…           39.3          20.6               190        3650
+ 7 Adelie_fem… Torge…           38.9          17.8               181        3625
+ 8 Adelie_male Torge…           39.2          19.6               195        4675
+ 9 Adelie_NA   Torge…           34.1          18.1               193        3475
+10 Adelie_NA   Torge…           42            20.2               190        4250
+# ℹ 334 more rows
+# ℹ 1 more variable: year &lt;int&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Separar una sola columna, que contiene varios valores, en varias columnas.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">separate</span>(bill_length_mm, <span class="at">sep =</span> <span class="dv">2</span>, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"cm"</span>, <span class="st">"mm"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 9
+   species island  cm    mm    bill_depth_mm flipper_length_mm body_mass_g sex  
+   &lt;fct&gt;   &lt;fct&gt;   &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt; &lt;fct&gt;
+ 1 Adelie  Torger… 39    ".1"           18.7               181        3750 male 
+ 2 Adelie  Torger… 39    ".5"           17.4               186        3800 fema…
+ 3 Adelie  Torger… 40    ".3"           18                 195        3250 fema…
+ 4 Adelie  Torger… &lt;NA&gt;  &lt;NA&gt;           NA                  NA          NA &lt;NA&gt; 
+ 5 Adelie  Torger… 36    ".7"           19.3               193        3450 fema…
+ 6 Adelie  Torger… 39    ".3"           20.6               190        3650 male 
+ 7 Adelie  Torger… 38    ".9"           17.8               181        3625 fema…
+ 8 Adelie  Torger… 39    ".2"           19.6               195        4675 male 
+ 9 Adelie  Torger… 34    ".1"           18.1               193        3475 &lt;NA&gt; 
+10 Adelie  Torger… 42    ""             20.2               190        4250 &lt;NA&gt; 
+# ℹ 334 more rows
+# ℹ 1 more variable: year &lt;int&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>Separar una sola columna, que contiene varios valores, en varias filas.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span> <span class="fu">separate_rows</span>(island, <span class="at">sep =</span> <span class="st">"s"</span>, <span class="at">convert =</span> T)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 564 × 8
+   species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;chr&gt;           &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torger           39.1          18.7               181        3750
+ 2 Adelie  en               39.1          18.7               181        3750
+ 3 Adelie  Torger           39.5          17.4               186        3800
+ 4 Adelie  en               39.5          17.4               186        3800
+ 5 Adelie  Torger           40.3          18                 195        3250
+ 6 Adelie  en               40.3          18                 195        3250
+ 7 Adelie  Torger           NA            NA                  NA          NA
+ 8 Adelie  en               NA            NA                  NA          NA
+ 9 Adelie  Torger           36.7          19.3               193        3450
+10 Adelie  en               36.7          19.3               193        3450
+# ℹ 554 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Manejo de los valores perdidos:</strong></li>
+</ul>
+<p>Supongamos que tenemos una tibble y queremos hacer explícitos los valores perdidos.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  species    year measurement
+  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie     2007        41.6
+2 Adelie     2008        46.5
+3 Gentoo     2008        73.4
+4 Chinstrap  2007        NA  </code></pre>
+</div>
+</div>
+<p>Para hacer explícitos los NAs:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>incompl_penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(species, year, <span class="at">fill =</span> <span class="fu">list</span>(<span class="at">measurement =</span> <span class="cn">NA</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  species    year measurement
+  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie     2007        41.6
+2 Adelie     2008        46.5
+3 Chinstrap  2007        NA  
+4 Chinstrap  2008        NA  
+5 Gentoo     2007        NA  
+6 Gentoo     2008        73.4</code></pre>
+</div>
+</div>
+<p>Para hacer implícitos los valores perdidos explícitos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>incompl_penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(measurement)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  species  year measurement
+  &lt;chr&gt;   &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie   2007        41.6
+2 Adelie   2008        46.5
+3 Gentoo   2008        73.4</code></pre>
+</div>
+</div>
+<ul>
+<li>Reemplazar los valores que faltan por la entrada siguiente o anterior.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>incompl_penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fill</span>(measurement, <span class="at">.direction =</span> <span class="st">"down"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  species    year measurement
+  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie     2007        41.6
+2 Adelie     2008        46.5
+3 Gentoo     2008        73.4
+4 Chinstrap  2007        73.4</code></pre>
+</div>
+</div>
+<ul>
+<li>Reemplazar los valores que faltan por un valor predefinido.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>incompl_penguins <span class="sc">%&gt;%</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="at">replace =</span> <span class="fu">list</span>(<span class="at">measurement =</span> <span class="fu">mean</span>(.<span class="sc">$</span>measurement, <span class="at">na.rm =</span> T)))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  species    year measurement
+  &lt;chr&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+1 Adelie     2007        41.6
+2 Adelie     2008        46.5
+3 Gentoo     2008        73.4
+4 Chinstrap  2007        53.8</code></pre>
+</div>
+</div>
+<ul>
+<li><p>Más información en <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf"><code>tidyr</code> cheatsheet</a>.</p></li>
+<li><p>Los argumentos de una función precedidos por un punto en el tidyverse pueden tener una de estas dos razones:</p>
+<ul>
+<li><p>la función es todavía prematura, es decir, los desarrolladores aún piensan en la mejor manera de implementar y nombrar la función</p></li>
+<li><p>la función se aplica regularmente dentro de otra función para no confundir los argumentos de la función entre la función interna y la externa</p></li>
+</ul></li>
+</ul>
+<!-- ### 5.7.  Manipulación de datos `dplyr`  -->
+<!-- ### 5.8.  Visualización de datos `ggplot2`  -->
 <!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
-<!-- https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos.html#bienvenido-al-tidyverse -->
 
 
+</section>
 </section>
 </section>
 
