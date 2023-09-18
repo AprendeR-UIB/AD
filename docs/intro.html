@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Notas de clase para Análisis de datos - 1&nbsp; 1. La estadística y el método científico</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./index.html" rel="prev">
+<link href="./cover.jpg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. La estadística y el método científico</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Notas de clase para Análisis de datos</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/RicUIB/Enlaces" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo lector">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefacio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. La estadística y el método científico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#gestión-básica-de-datos" id="toc-gestión-básica-de-datos" class="nav-link active" data-scroll-target="#gestión-básica-de-datos"><span class="header-section-number">1.1</span> 2. Gestión básica de datos</a>
+  <ul class="collapse">
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">1.1.1</span> 2.1. Introducción</a></li>
+  <li><a href="#r-rstudio---posit-rmarkdowm---quarto" id="toc-r-rstudio---posit-rmarkdowm---quarto" class="nav-link" data-scroll-target="#r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.1.2</span> 2.2. R/ RStudio - Posit / RMarkdowm - Quarto</a></li>
+  <li><a href="#control-de-versiones-con-git-github" id="toc-control-de-versiones-con-git-github" class="nav-link" data-scroll-target="#control-de-versiones-con-git-github"><span class="header-section-number">1.1.3</span> 2.3. Control de versiones con Git / GitHub</a></li>
+  <li><a href="#git-github-con-r" id="toc-git-github-con-r" class="nav-link" data-scroll-target="#git-github-con-r"><span class="header-section-number">1.1.4</span> 2.4. Git / GitHub con R</a></li>
+  <li><a href="#conectar-rstudio-y-github" id="toc-conectar-rstudio-y-github" class="nav-link" data-scroll-target="#conectar-rstudio-y-github"><span class="header-section-number">1.1.5</span> 2.5. Conectar RStudio y GitHub</a></li>
+  <li><a href="#conectar-proyectos-de-rstudio-con-repositorios-de-github" id="toc-conectar-proyectos-de-rstudio-con-repositorios-de-github" class="nav-link" data-scroll-target="#conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.1.6</span> 2.6. Conectar proyectos de RStudio con repositorios de GitHub</a></li>
+  <li><a href="#flujo-de-trabajo-general" id="toc-flujo-de-trabajo-general" class="nav-link" data-scroll-target="#flujo-de-trabajo-general"><span class="header-section-number">1.1.7</span> 2.7. Flujo de trabajo general</a></li>
+  </ul></li>
+  <li><a href="#los-datos-y-sus-tipos" id="toc-los-datos-y-sus-tipos" class="nav-link" data-scroll-target="#los-datos-y-sus-tipos"><span class="header-section-number">1.2</span> 3. Los datos y sus tipos</a></li>
+  <li><a href="#práctica-1" id="toc-práctica-1" class="nav-link" data-scroll-target="#práctica-1"><span class="header-section-number">1.3</span> 4. <span style="color: red;"><em>Práctica 1</em></span>:</a></li>
+  <li><a href="#gramática-limpia-y-coherente-con-tidyverse" id="toc-gramática-limpia-y-coherente-con-tidyverse" class="nav-link" data-scroll-target="#gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.4</span> 5. Gramática limpia y coherente con <code>Tidyverse</code></a>
+  <ul class="collapse">
+  <li><a href="#la-librería-tidyverse" id="toc-la-librería-tidyverse" class="nav-link" data-scroll-target="#la-librería-tidyverse"><span class="header-section-number">1.4.1</span> 5.1. La librería <code>Tidyverse</code></a></li>
+  <li><a href="#qué-significa-tidy-data" id="toc-qué-significa-tidy-data" class="nav-link" data-scroll-target="#qué-significa-tidy-data"><span class="header-section-number">1.4.2</span> 5.2. ¿Qué significa tidy data?</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RicUIB/Enlaces/edit/main/intro.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/RicUIB/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. La estadística y el método científico</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<ul>
+<li><p>La ciencia avanza definiendo teorías que intentan explicar el mundo.</p></li>
+<li><p>La comunidad científica elabora teorías/hipótesis que intentan explicar hechos que ocurren. Una hipótesis es científica si existe alguna manera de comprobar su veracidad.</p></li>
+<li><p>Podemos diseñar experimentos para comprobar si se cumplen las afirmaciones de la teoría.</p></li>
+<li><p>Como la naturaleza tiene un comportamiento con “incertidumbre”, es decir, que si repetimos el experimento se obtienen resultados similares pero no idénticos, la estadística permite analizar estos resultados y ver si las desviaciones de la teoría son razonables o no.</p></li>
+<li><p>Se ha definido estadística de muchas maneras. La que más nos gusta, y que está relaciona con la situación que acabamos de explicar, es que:</p></li>
+</ul>
+<blockquote class="blockquote">
+<p>La <strong>estadística</strong> es la ciencia que permite adquirir conocimiento generalizable a partir de datos.</p>
+</blockquote>
+<ul>
+<li><p>La estadística ayuda en todas las fases del método científico:</p>
+<ul>
+<li><p><span style="color: blue;"><em>Planteamiento del problema</em></span>: Diseño de experimentos y encuestas, determinación del tamaño de la muestra y métodos de muestreo adecuados para garantizar que los datos recopilados sean representativos de la población objetivo.</p></li>
+<li><p><span style="color: blue;"><em>Recopilación de datos</em></span>: Proporciona herramientas para recopilar y organizar datos relevantes sobre el problema.</p></li>
+<li><p><span style="color: blue;"><em>Análisis de datos</em></span>: Aplicación de técnicas descriptivas (Análisis explorartorio de datos), así como técnicas inferenciales (contrastes de hipótesis, ajustes de modelos,etc) para sacar conclusiones sobre la población en función de la muestra recopilada.</p></li>
+<li><p><span style="color: blue;"><em>Interpretación de resultados</em></span>: Ayuda a los científicos a determinar si los resultados son estadísticamente significativos y si las conclusiones se pueden generalizar a la población más amplia.</p></li>
+<li><p><span style="color: blue;"><em>Comunicación de hallazgos</em></span>: La estadística se usa para comunicar los resultados de manera efectiva a través de gráficos, tablas y tests estadísticos. Esto es esencial para que otros investigadores puedan comprender y evaluar los resultados.</p></li>
+<li><p><span style="color: blue;"><em>Reproducibilidad</em></span>: Proporciona métodos estadísticos claros y transparentes, se permite que otros repitan los experimentos y análisis para verificar la validez de los hallazgos.</p></li>
+<li><p><span style="color: blue;"><em>Toma de decisiones</em></span>: En muchos campos científicos, los resultados estadísticos se utilizan para tomar decisiones importantes. Por ejemplo, en la medicina, la estadística se usa para evaluar la eficacia de tratamientos y tomar decisiones sobre su uso en la práctica clínica.</p></li>
+</ul></li>
+<li><p>Cuando alguien realiza un nuevo descubrimiento lo envía a una revisión por pares de la comunidad científica. Para que estos acepten el descubrimiento y pase a formar parte del conocimiento científico debes poner a disposición:</p>
+<ul>
+<li><p>Los datos brutos (raw data) junto con el modelo de datos.</p></li>
+<li><p>El código parametrizado y con las líneas más importantes comentadas.</p></li>
+<li><p>La documentación (artículo/ reporte) donde se interpretan y presentan los resultados más relevantes.</p></li>
+</ul></li>
+</ul>
+<p>En resumen, la estadística es una herramienta esencial que ayuda a garantizar que la investigación científica sea rigurosa, confiable y basada en evidencia sólida.</p>
+<section id="gestión-básica-de-datos" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="gestión-básica-de-datos"><span class="header-section-number">1.1</span> 2. Gestión básica de datos</h2>
+<section id="introducción" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.1.1</span> 2.1. Introducción</h3>
+<ul>
+<li><p>En estadística, siempre se empieza obteniendo unos <strong>datos</strong> sobre un grupo (relativamente pequeño) de individuos de una población. Bueno, en realidad, no se empieza obteniendo los datos, sino planificando cuidadosamente cómo se van a obtener, pero todo forma parte de la “obtención” de los datos.</p></li>
+<li><p>Se <strong>generaliza la información</strong> que se ha obtenido sobre este grupo de personas al total de la población.</p></li>
+<li><p>Y no se trata de trucos de magia adivinatoria, sino de una <strong>ciencia</strong> cuya metodología ha sido validada por medio de demostraciones matemáticas o, en el peor de los casos, mediante simulaciones numéricas (el equivalente en matemáticas de los experimentos en las otras ciencias).</p></li>
+</ul>
+<p>Así pues, la situación de partida a la hora de aplicar técnicas estadísticas es que disponemos de un conjunto de datos que describen algunas características de un grupo de individuos. El análisis estadístico de estos datos puede ser entonces de dos tipos básicos:</p>
+<ul>
+<li><p><strong>Análisis exploratorio de datos</strong>, cuando nuestro objetivo sea simplemente resumir, representar y explicar los datos concretos de los que disponemos. La <strong>estadística descriptiva</strong> es el conjunto de técnicas que se usan con este fin.</p></li>
+<li><p><strong>Análisis inferencial</strong>, si nuestro objetivo es deducir (<strong>inferir</strong>), a partir de estos datos, información significativa sobre el total de la población de interés. Las técnicas que se usan en este caso forman la <strong>estadística inferencial</strong>.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/EstInf.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ambos tipos de análisis están relacionados. Por un lado, porque es conveniente (obligatorio, en nuestra opinión) empezar cualquier análisis inferencial dando un vistazo a los datos que se usarán.</p>
+<p>Por otro, porque muchas técnicas descriptivas permiten estimar propiedades de la población de la que se ha extraído la muestra. Por citar un ejemplo, la media aritmética de las alturas de un grupo de individuos nos da un valor más o menos representativo de sus alturas, pero también sirve para <em>estimar</em> la altura media de los individuos de la población total.</p>
+<p>La estadística inferencial entra en juego cuando se quiere obtener información sobre una población y no se puede acceder a todos sus integrantes. Si por ejemplo queremos conocer la altura media de los estudiantes matriculados en esta asignatura de la UIB en este curso, en principio no necesitamos para nada la estadística inferencial. Sois pocos, os mediríamos a todos y calcularíamos la media. En todo caso, usaríamos técnicas de estadística descriptiva para arropar este valor representando la distribución de vuestras alturas de manera adecuada.</p>
+<p>Pero si quisiéramos conocer la altura media de los mallorquines entre 18 y 25 años, sería muy complicado medirlos a todos. Entonces, lo que haríamos sería tomar una muestra representativa de esta población, medirlos y a partir de sus alturas estimar dicha altura media. Naturalmente, lo más seguro es que de esta manera no obtuviéramos el valor exacto de la altura media de los mallorquines de 18 años, nos tendríamos que conformar con obtener una aproximación dentro de un cierto margen de error y determinar la probabilidad de acertar con nuestra estimación y este margen de error. La estadística inferencial es la que nos permite acotar el error que podamos haber cometido y calcular la probabilidad de cometerlo, incluyendo la metodología que tendríamos que haber usado para tomar la muestra en primer lugar.</p>
+</section>
+<section id="r-rstudio---posit-rmarkdowm---quarto" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" class="anchored" data-anchor-id="r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.1.2</span> 2.2. R/ RStudio - Posit / RMarkdowm - Quarto</h3>
+<p>Todas las técnicas que usaremos en la asignatura pueden ser implementadas y/o desarrolladas en software libre como Python y R. Ambos se consideran lenguajes de programación esenciales para la ciencia de datos. Lo ideal sería dominar ambos para tener una base de programación completa, pero:</p>
+<ul>
+<li><p>R es un <strong>lenguaje específico utilizado para el análisis de datos y la estadística</strong>.</p></li>
+<li><p>R es muy adecuado para un sub-campo del aprendizaje automático conocido como aprendizaje estadístico. Cualquier persona con una formación formal en estadística debería reconocer la sintaxis y la construcción de R.</p></li>
+<li><p>Al igual que Python, R cuenta con una sólida comunidad, estructurada alrededor de la “Comprehensive R Archive Network”, o CRAN, pero no ofrece un desarrollo de software de propósito general como Python.</p></li>
+<li><p>Cada día salen nuevos paquetes que extienden las funcionalidades de R y cubren casi todas las necesidades computacionales y estadísticas de un científico. Para que os hagáis una idea, en el momento de revisar estas notas (septiembre de 2023) el número de paquetes en el repositorio de la CRAN acaba de superar los 19800.</p></li>
+<li><p>El acceso a R se proporciona a través de RStudio, entorno que presenta una ventana de visualización, un explorador de archivos, un visor de datos y un editor. Este entorno suele ser menos intimidante que el shell de R. Además, cuenta con ayuda integrada, resaltado de sintaxis y completado contextual por tabulaciones; todas estas herramientas facilitan el trabajo.</p></li>
+<li><p>RStudio tiene un nuevo nombre desde julio de 2022: <strong>Posit</strong>. Posit es una palabra que significa proponer una idea para su discusión, proviene de la aspiración científica de construir niveles cada vez mayores de conocimiento y comprensión de experimentos que generan</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/posit.JPG" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Posit tiene como misión la creación de software libre y de código abierto para la ciencia de datos, la investigación científica y la comunicación técnica. Han incluido algunas herramientas para Python a través de <strong>Quarto</strong>.</p></li>
+<li><p>Quarto está pensado como un cuaderno de laboratorio moderno donde predomina R pero que soporta código Python (<code>reticulate</code>), SQL, Julia, entre otros; pensado para experimentos que requieren multilenguaje.</p></li>
+<li><p><strong>Posit Cloud</strong> permite acceder al potente conjunto de herramientas de ciencia de datos de Posit directamente desde su navegador. Esto favorecerá el trabajo en equipo. Podéis revisar la siguiente <a href="https://posit.cloud/learn/guide">Guía</a> para crearos una cuenta.</p></li>
+</ul>
+</section>
+<section id="control-de-versiones-con-git-github" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" class="anchored" data-anchor-id="control-de-versiones-con-git-github"><span class="header-section-number">1.1.3</span> 2.3. Control de versiones con Git / GitHub</h3>
+<ul>
+<li><p>En esta asignatura la forma de llegar a un resultado de análisis de datos es tan importante como el propio resultado. Además, uno de los objetivos es exponeros al uso de herramientas de software para la ciencia de datos moderna.</p></li>
+<li><p>La idea de reproducibilidad lleva implícita la colaboración. El código que se produce es parte de la documentación del proceso y es fundamental compartirlo (aunque sólo sea con uno mismo).</p></li>
+<li><p>Lo anterior se logra mejor con un sistema de control de versiones distribuido como <strong>Git</strong>. Mantener un registro sobre los proyectos, es lo que permite rastrear y gestionar cambios en el código a lo largo del tiempo. Se puede decir que nos permite guardar el progreso de nuestro código de tal forma que, si en algún momento cometemos algún error irreversible en una versión posterior, siempre podremos recuperar una versión anterior en la que todo funcionaba correctamente y retomar el proyecto desde ese punto.</p></li>
+<li><p>Git permite la colaboración, pero carece de características sociales y herramientas específicas para la colaboración en equipo. <strong>GitHub</strong> proporciona herramientas para la revisión de código, la gestión de problemas y la colaboración en proyectos.</p></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/GitHub.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>GitHub es un servicio en la nube donde se pueden subir repositorios propios y compartir el código con otras personas de tal forma que sea accesible desde Internet.</p></li>
+<li><p>Un repositorio funciona como una carpeta virtual. En él se encuentran todos los archivos de un proyecto y el historial de revisiones de cada uno, permitiendo restablecer una versión del código en caso de error en su ejecución.</p></li>
+<li><p>Podemos ver proyectos de otras usuarios, valorarlos, proponer mejoras en el código, GitHub es una de las aplicaciones que mejora la gestión de proyectos y el acceso a recursos compartidos.</p></li>
+<li><p>En octubre del 2021 se estrenó <strong>GitHub Copilot</strong>, una herramienta de inteligencia artificial en la nube desarrollada conjuntamente entre GitHub y OpenAI. Su objetivo es sugerir y autocompletar el código escrito en entornos de desarrollo integrados (IDE).</p></li>
+</ul>
+<blockquote class="blockquote">
+<p>En esta clase, utilizaremos GitHub como sistema de gestión del aprendizaje para distribuir y recopilar las entregas como repositorios.</p>
+</blockquote>
+<ul>
+<li>Crearemos en GitHub un repositorio por estudiante/equipo para cada entrega. Utilizaremos un sencillo flujo de trabajo centralizado que sólo requiere realizar acciones simples como push, pull, add, rm, commit, status y clone.</li>
+</ul>
+</section>
+<section id="git-github-con-r" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" class="anchored" data-anchor-id="git-github-con-r"><span class="header-section-number">1.1.4</span> 2.4. Git / GitHub con R</h3>
+<p>Veamos cómo configurar todo. Gran parte de lo que está aquí proviene del libro <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> de Jenny Bryan y del artículo de <a href="https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r/">David Keyes</a> puedes ver sus vídeos en caso de que, la breve explicación que presentamos abajo, no sea suficiente para ti.</p>
+<ul>
+<li><span style="color: blue;"><em>Instalar Git</em></span>: El primer paso es instalar Git, en el <a href="https://happygitwithr.com/install-git">Capítulo 6 del libro</a> explican el proceso para los usuarios de Mac, Windows y Linux. Nosotros ya lo tenemos instalado, así que mostramos cómo verificar si tienes Git instalado y su versión usando el terminal en RStudio.</li>
+</ul>
+<p>En el terminal de RStudio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>which git <span class="co"># ruta donde está instalado el Git</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>git <span class="sc">--</span>version <span class="co"># version</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><span style="color: blue;"><em>Configurar Git (Editar gitconfig file)</em></span>:El siguiente paso es configurar Git. Esto se trata en el Capítulo 7 del libro, aunque mostramos lo que creemos es un proceso un poco más fácil. Específicamente, sugerimos usar la función <code>edit_git_config()</code> del paquete <code>usethis</code>, que abrirá su archivo gitconfig. Agrega tu nombre y correo electrónico y cierra esto.</li>
+</ul>
+<p>En la consola de RStudio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">edit_git_config</span>()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Modificar en el fichero ".gitconfig" los apartados: "name" y "email" </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># y guardar el fichero</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><span style="color: blue;"><em>Inicializar un repositorio Git</em></span>: Ahora que has instalado y configurado Git, puedes usarlo localmente. La función <code>use_git()</code> agregará un repositorio Git (a menudo denominado “repositorio”) a un proyecto RStudio existente. Aquí crearemos un nuevo proyecto y luego inicializaremos un repositorio de Git.</li>
+</ul>
+<p>En RStudio: * Crear un proyecto nuevo</p>
+<ul>
+<li><p>Seleccionar “Nuevo Directorio”</p></li>
+<li><p>Proyecto</p>
+<ul>
+<li>Activar: “Create a git repository”</li>
+</ul></li>
+</ul>
+<p>En la consola de RStudio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_git</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Elegir siempre la opción: 1</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Y ante la ventana, seleccionar: "Save"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Y visitar la pestaña: “Git” en RStudio.</p>
+<ul>
+<li><span style="color: blue;"><em>Ver historial de confirmación</em></span>: Ahora que tu proyecto de RStudio tiene un repositorio Git asociado, verás una pestaña adicional en la parte superior derecha: la pestaña Git. Desde aquí, puedes ver todo el historial de cambios en tu código a lo largo del tiempo (¡todavía no muchos!).</li>
+</ul>
+<p>En RStudio:</p>
+<p>Visitar la pestaña: “Git” de RStudio Pulsar el icono del reloj para ver el historial de “Commit” realizados para ver el “Initial Commit”.</p>
+<ul>
+<li><span style="color: blue;"><em>Hacer una confirmación (commit) y ver más historia</em></span>: Git no realiza un seguimiento automático de los cambios de la manera en que lo hace una herramienta como Google Docs. En su lugar, tienes que decirle a Git: Hice cambios y quiero que mantengas un registro de ellos. Decirle a Git esto se llama hacer una confirmación (commit) y puedes hacerlo desde RStudio.</li>
+</ul>
+<p>Cada commit tiene un mensaje de confirmación, lo que es útil porque, cuando miras tu historial de código, ves lo que hiciste en cada momento (es decir, en cada commit). RStudio tiene una herramienta integrada para ver su historial de código. Puedes hacer clic en cualquier commit para ver qué cambió, en relación con el commit anterior. Las líneas que se agregaron en verde; y las que se eliminaron en rojo.</p>
+<p>En RStudio:</p>
+<ul>
+<li><p>Crear un fichero de script R: “test.R” y guardarlo.</p></li>
+<li><p>Visita la pestaña “Git” de RStudio y pulsa sobre el botón de “commit” para confirmar la creación del fichero: “test.R”.</p></li>
+<li><p>En el panel del commit añada un texto que lo defina.</p></li>
+<li><p>Haz varios cambios en el fichero “test.R” y en cada uno de ellos haz de nuevo un “commit”.</p></li>
+<li><p>Revisa luego la historia de los cambios que se han producido en el historial (pulsar el icono del reloj).</p></li>
+<li><p>Observa los nuevos cambios resaltados en color verde. Frente a los valores antiguos que aparecerán en color rojo.</p></li>
+</ul>
+</section>
+<section id="conectar-rstudio-y-github" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" class="anchored" data-anchor-id="conectar-rstudio-y-github"><span class="header-section-number">1.1.5</span> 2.5. Conectar RStudio y GitHub</h3>
+<p>El proceso hasta ahora nos ha permitido usar Git localmente. Pero, ¿qué pasa si queremos conectarnos a GitHub? ¿Cómo lo hacemos?</p>
+<p>La mejor manera de conectar RStudio y GitHub es usando tu nombre de usuario y un token de acceso personal (PAT). Para generar un token de acceso personal, usa la función <code>create_github_token()</code> de <code>usethis</code>. Esto te llevará a la página correspondiente en el sitio web de GitHub, donde le darás un nombre a tu token y lo copiarás (¡no lo pierdas porque nunca volverá a aparecer!).</p>
+<p>En la consola de RStudio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(usethis)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_github_token</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p>Pulsa sobre el enlace que aparece en la salida en la consola.</p></li>
+<li><p>Se abrirá una página web de Github en la que tendrás que pulsar el botón “Generate token”.</p></li>
+<li><p>Copia el token que aparece en Github (lo utilizarás en el siguiente paso).</p></li>
+<li><p>Ahora que has creado un token de acceso personal, debes almacenarlo para que RStudio pueda acceder a él y sepa conectarse a tu cuenta de GitHub. La función <code>gitcreds_set()</code> del paquete <code>gitcreds</code> te ayudará aquí. Ingresará tu nombre de usuario de GitHub y el token de acceso personal como contraseña (NO tu contraseña de GitHub). Una vez que hayas hecho todo esto, ¡habrás conectado RStudio a GitHub!.</p></li>
+</ul>
+<p>En la consola de RStudio:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gitcreds)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>gitcreds<span class="sc">::</span><span class="fu">gitcreds_set</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ante la pregunta: "Enter password or token"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># introduce el token copiado en el paso anterior</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="conectar-proyectos-de-rstudio-con-repositorios-de-github" class="level3" data-number="1.1.6">
+<h3 data-number="1.1.6" class="anchored" data-anchor-id="conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.1.6</span> 2.6. Conectar proyectos de RStudio con repositorios de GitHub</h3>
+<p>Ahora que hemos conectado RStudio y GitHub, discutamos cómo hacer que los dos funcionen juntos. La idea básica es que configures los proyectos que creas en RStudio con repositorios GitHub asociados. Cada proyecto de RStudio vive en un solo repositorio de GitHub.</p>
+<p>¿Cómo conectamos un proyecto de RStudio a un repositorio de GitHub? Happy Git and GitHub for the useR propone tres estrategias. Demostraremos la forma más sencilla</p>
+<p>crear un repositorio en GitHub primero. Cree el repositorio y, a continuación, cuando inicie un nuevo proyecto en RStudio, utilice la opción de control de versiones, introduzca la URL de su repositorio y listo.</p>
+<p><strong>GitHub primero</strong></p>
+<p>Crea el repositorio en GitHub y, a continuación, cuando inicies un nuevo proyecto en RStudio, utiliza la opción de control de versiones, introduce la URL de tu repositorio y listo.</p>
+<p>Para bajar un repositorio creado en Github a un proyecto local en RStudio, tendréis que realizar los siguientes pasos:</p>
+<ul>
+<li><p>Crear un nuevo repositorio en nuestra cuenta de Github (o utilizar uno ya existente): pulsar el botón “Create repository”.</p></li>
+<li><p>Copiar al portapapeles la primera dirección que aparece (pulsando el botón de la derecha). Coincide con la dirección url que aparece en la barra del navegador.</p></li>
+<li><p>En RStudio seleccionamos crear “New project”, elegimos “Version Control” y luego seleccionamos “Git”.</p></li>
+<li><p>Introducimos en el primer cuadro de texto la url copiada anteriormente. Pulsamos “Create Project”.</p></li>
+<li><p>A continuación podrás consultarse la pestaña “Git” y ver la información asociada al repositorio descargado.</p></li>
+</ul>
+</section>
+<section id="flujo-de-trabajo-general" class="level3" data-number="1.1.7">
+<h3 data-number="1.1.7" class="anchored" data-anchor-id="flujo-de-trabajo-general"><span class="header-section-number">1.1.7</span> 2.7. Flujo de trabajo general</h3>
+<p>Ahora que hemos conectado RStudio y GitHub, podemos compartir nuestro trabajo entre los dos.</p>
+<p><strong>Push (Subir a Github)</strong></p>
+<p>“Push” significa enviar cualquier cambio en tu código de RStudio a GitHub. Para hacer esto, primero tenemos que hacer un commit. Después de confirmar, ahora tenemos un botón (la flecha hacia arriba) en RStudio que podemos usar para enviar nuestro código a GitHub.</p>
+<p>En RStudio:</p>
+<ul>
+<li><p>Creamos un nuevo fichero de script R o un fichero Rmd y lo guardamos.</p></li>
+<li><p>Pulsamos en la pestaña “Git” sobre el botón de “commit”. Marcamos todos los ficheros sobre los checks de “Staged”, rellenamos la descripción del commit y pulsamos sobre el botón de “commit”.</p></li>
+<li><p>Después de hacer el commit, pulsamos sobre el botón “Push” para subir los cambios a Github.</p></li>
+<li><p>A continuación puedes comprobar en la página de Github del repositorio que se han actualizado los últimos ficheros considerados en el último commit.</p></li>
+</ul>
+<p><strong>Pull (Descargar desde Github)</strong></p>
+<p>Lo opuesto a “empujar”Push” es bajar (“Pull”). Utilizando el botón de flecha hacia abajo, RStudio va al repositorio de GitHub, toma el código más reciente y lo lleva a su editor local.</p>
+<p>Hacer “Push” regularmente es extremadamente importante si estás colaborando, aunque si eres el único que trabaja en un proyecto de RStudio y un repositorio GitHub asociado, sabes que tu código local coincide con lo que está en GitHub, por lo que es menos importante.</p>
+<p>En la página de Github de nuestro repositorio:</p>
+<ul>
+<li><p>Editamos uno de los ficheros de nuestro repositorio pulsando sobre el icono de un lápiz (a la derecha). Realizamos alguna modificación sobre el fichero (o ficheros).</p></li>
+<li><p>Pulsamos en la parte inferior de la página en el botón de “Commit changes” (rellenando los comentarios que creamos oportunos sobre el commit que se está realizando). Se puede navegar por la página de Github para consultar todos los commits realizados (y mucha más información).</p></li>
+</ul>
+<p>Volvemos a RStudio:</p>
+<ul>
+<li><p>En la pestaña “Git” pulsamos sobre el botón de la flecha que apunta hacia abajo (verde) para realizar un “Pull” o descarga de los cambios en Github a nuestro proyecto local en RStudio.</p></li>
+<li><p>Después de eso puedes comprobare que los ficheros locales de nuestro proyecto se han actualizado con los cambios que se han producido en el repositorio.</p></li>
+</ul>
+<p><strong>¡Lo lograste!</strong></p>
+<p>¡Ahora está todo configurado para usar Git y GitHub con RStudio!</p>
+</section>
+</section>
+<section id="los-datos-y-sus-tipos" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="los-datos-y-sus-tipos"><span class="header-section-number">1.2</span> 3. Los datos y sus tipos</h2>
+<p>En vuestro curso de Estadística estudiasteis algunas técnicas básicas de estadística descriptiva. Estas técnicas consisten en una serie de valores y gráficos que nos permiten resumir y explorar un conjunto de datos, con el objetivo final de entenderlos o describirlos lo mejor posible.</p>
+<p>Los datos de los que disponemos suelen ser multidimensionales, en el sentido de que observamos varias características (<strong>variables</strong>) de una serie de individuos. Almacenamos estos datos en <strong>tablas de datos</strong> como la que presentamos abajo, donde cada columna corresponde a una variable y cada fila son los datos de un individuo concreto. Así, en esta tabla, cada fila representa un niño y cada columna recoge una de las características que hemos anotado: su nombre, su altura (en cm), su número de hermanos, el color de sus cabellos, el número semanal de refrescos que suele tomar, y su grado de satisfacción con un juego para móvil (entre 0 y 5).</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-condensed table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Una pequeña tabla de datos sobre niños</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Nombre</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Altura</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Hermanos</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Cabello</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Refrescos semanales</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Satisfacción App</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Marta</td>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rubio</td>
+<td style="text-align: left;">2-3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Laura</td>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">negro</td>
+<td style="text-align: left;">2-3</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Xavier</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">negro</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Joan</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">castaño</td>
+<td style="text-align: left;">4-5</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Maria</td>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">rojo</td>
+<td style="text-align: left;">0-1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Maria</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">castaño</td>
+<td style="text-align: left;">6 o más</td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<div class="cell" type="rmdcaution">
+
+<div class="rmdcaution">
+<p>En este curso vamos a “sobrecargar” el término <strong>variable</strong>, en el sentido de que tendrá dos significados diferentes que esperamos que podáis distinguir según el contexto:</p>
+<ul>
+<li><p>Por un lado, llamaremos <strong>variable</strong> a una característica que puede tomar diferentes valores sobre diferentes individuos; cuando tenga este sentido, a veces le añadiremos el adjetivo <strong>poblacional</strong>. Por ejemplo, la altura de las personas (de todo el mundo, de un país, de una ciudad…) es una variable poblacional.</p></li>
+<li><p>Por otro lado, también llamaremos una <strong>variable</strong> a un vector formado por los valores de una variable poblacional sobre los sujetos de una muestra. Por ejemplo, las alturas de los niños recogidas en la tabla forman una variable en este sentido.</p></li>
+</ul>
+</div>
+</div>
+<p>Los tipos básicos de datos que consideramos en este curso son los siguientes:</p>
+<ul>
+<li><p>Datos <strong>cualitativos</strong>. Son los que expresan una cualidad del individuo, como por ejemplo el sexo cromosómico (macho, hembra), el género de una persona (hombre, mujer, lesbiana, gay, bisexual, transexual, intersexual, asexual), tipos de cáncer (de mama, de colon, de próstata…)… Si solo pueden tomar dos valores (“Sí” o “No”, “Macho” o “Hembra”…) los llamamos <strong>binarios</strong> o <strong>dicotómicos</strong> y si pueden tomar más de dos valores, <strong>politómicos</strong> o <strong>multicotómicos</strong>, dependiendo de lo que queramos complicar los adjetivos. A los posibles valores que puede tomar un tipo de datos cualitativo se los suele llamar <strong>niveles</strong>.</p>
+<p>Los datos cualitativos pueden ser iguales o distintos, y no admiten ningún otro tipo de comparación.</p></li>
+<li><p>Datos <strong>ordinales</strong>. Son datos similares a los cualitativos, en el sentido de que expresan una cualidad del individuo, pero con la diferencia de que se pueden ordenar de manera natural. Por ejemplo, los niveles de gravedad de una enfermedad (sano, leve, grave, muy grave, …) o las calificaciones en un examen (suspenso, aprobado, notable, sobresaliente) son datos ordinales. En cambio, no se pueden ordenar de manera significativa los sexos o los tipos de cáncer de los individuos: por eso son datos cualitativos y no ordinales.</p>
+<p>También se suele llamar a los posibles valores que puede tomar un tipo de datos ordinal sus <strong>niveles</strong>.</p></li>
+<li><p>Datos <strong>cuantitativos</strong>. Son datos que se refieren a medidas que sean números genuinos, con los que tenga sentido operar, tales como edades, longitudes, pesos, tiempos, números de individuos, etc. Distinguimos dos tipos:</p>
+<ul>
+<li><p><strong>Discretos</strong>: Pueden tomar solo valores que avanzan a saltos y que podemos identificar con números naturales: número de hermanos, número de ingresos en un día en un hospital…</p></li>
+<li><p><strong>Continuos</strong>: Podrían tomar cualquier valor real dentro de un intervalo si se pudieran medir con precisión infinita: altura, temperatura, tiempo…</p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<pre class="example cell-code"><code>En la tabla anterior:
+  
+* La variable "Nombre" es cualitativa.
+* La variable "Altura" es cuantitativa continua.
+* La variable "Hermanos" es cuantitativa discreta.
+* La variable "Cabello" es cualitativa.
+* La variable "Refrescos semanales" es ordinal.
+* La variable "Satisfacción App" también es ordinal.
+</code></pre>
+</div>
+<p>Dos puntos relevantes a tener en cuenta y que justifican algunas clasificaciones que puede que encontréis dudosas en el ejemplo anterior:</p>
+<ul>
+<li><p><strong>No todo número es un dato cuantitativo.</strong> Solo los consideramos cuantitativos cuando son números genuinos, “de verdad”. Por ejemplo, si pedimos a un paciente que califique su dolor con un número natural de 0 a 10, no es un dato cuantitativo, sino ordinal:</p>
+<ul>
+<li><p>No es una medida precisa del dolor; no son números “de verdad”, sino abreviaturas de “Nada”, “Un poquito”,…, “Matadme”.</p></li>
+<li><p>Tener dolor 6 no significa “tener el doble de dolor” que tener dolor 3 (si lo significara, ¿cuál sería el valor correspondiente “al doble de dolor” que 7?). En cambio, una persona con 6 hermanos sí que tiene el doble de hermanos que si tuviera 3.</p></li>
+<li><p>No tiene sentido sumarlos u operarlos en general. Por ejemplo, si yo tengo dolor de nivel 6 y tú tienes dolor de nivel 5, entre los dos no tenemos dolor de nivel 11. En cambio, si yo tengo 6 hermanos y tú 5, entre los dos sí que tenemos 11 hermanos.</p></li>
+</ul>
+<p>Este es justamente el caso de la variable “Satisfacción App” de la tabla anterior. Pese a que sus valores son números, el único contenido real que tienen es su orden: a la María que toma muchos refrescos le ha gustado la app bastante más que a la María que apenas toma refrescos.</p></li>
+<li><p><strong>La distinción discreto-continuo es puramente teórica</strong>. En realidad, todo dato es discreto porque no podemos medir nada con precisión infinita, pero las herramientas matemáticas “continuas” (derivadas, integrales, etc.) son mucho más potentes que las discretas, por lo que siempre que tenga sentido, es conveniente considerar una variable como continua.</p>
+<p>Observad, por ejemplo, la diferencia entre la altura, pongamos que medida en cm y redondeada a unidades como en la tabla anterior, y el número de hermanos. Ambos se presentan como números naturales, pero los números de hermanos no admiten mayor precisión, mientras que las alturas las podríamos medir, con los aparatos adecuados, en mm, en µm, en nm…. Como además las herramientas para tratar datos continuos son mucho más potentes, vamos a considerar las alturas como datos continuos, mientras que los números de hermanos no hay más remedio que tratarlos como discretos.</p>
+<p>En concreto, <strong>es conveniente considerar en la práctica como datos continuos aquellos que dan lugar a números naturales muy grandes</strong>, como por ejemplo los números de glóbulos rojos en un litro de sangre, de bases nucléicas en un genoma, o de personas de un país. La diferencia entre diez millones, diez millones uno, diez millones dos… puede considerarse como continua: de hecho, si tomamos el millón como unidad, la diferencia está en la séptima cifra decimal.</p></li>
+</ul>
+<div class="cell" type="rmdnote">
+
+<div class="rmdnote">
+Hemos dicho que la variable “Cabello” es cualitativa. En principio, el color de los cabellos no tiene ningún orden “natural”. Pero si en un estudio definimos un orden claro para esta variable (por ejemplo, por la longitud de onda correspondiente) y este orden es relevante en nuestro estudio, habrá que considerarla una variable ordinal.
+</div>
+</div>
+<div class="cell" type="rmdnote">
+
+<div class="rmdnote">
+La variable “Refrescos semanales” es de un tipo de datos ordinales muy concreto que a veces se califican de <strong>cuantitativos agrupados</strong>: sus niveles se obtienen agrupando en intervalos los posibles valores de una variable cuantitativa (en este caso, la variable discreta que mide el número preciso de refrescos semanales).
+</div>
+</div>
+<blockquote class="blockquote">
+<p>El análisis, tanto descriptivo como inferencial, de un conjunto de datos es diferente según su tipo.</p>
+</blockquote>
+<p>Así, para datos cualitativos sólo tiene interés estudiar y representar las frecuencias con que aparecen sus diferentes valores, mientras que el análisis de datos cuantitativos suele involucrar el cálculo de medidas estadísticas, como la media o la desviación típica, que expresen numéricamente sus propiedades.</p>
+<p>Os dejamos el material <a href="https://aprender-uib.github.io/AprendeR1/">Aprender R1</a> para que repaséis los capítulos 10 al 14 correspondientes a la parte de Estadística descriptiva.</p>
+</section>
+<section id="práctica-1" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="práctica-1"><span class="header-section-number">1.3</span> 4. <span style="color: red;"><em>Práctica 1</em></span>:</h2>
+<ul>
+<li><p>Formad grupos de 3 integrantes.</p></li>
+<li><p>Trabajaréis con los datos <a href="https://allisonhorst.github.io/palmerpenguins/">pingüinos</a>, leed la documentación y seguid las siguientes instrucciones:</p>
+<ul>
+<li><p>Cread un repositorio en Github para vuestro grupo con un nombre que sea fácilmente identificable para los profesores de la asignatura, por ejemplo,“Entrega_1_AD”.</p></li>
+<li><p>Cread un proyecto nuevo en RStudio conectado al repositorio que habéis creado en el paso anterior. Agregad un documento de quarto donde trabajaréis.</p></li>
+<li><p>Instalad y cargad en RStudio la librería <code>palmerpenguins</code> , así como el conjunto de datos <code>penguins</code></p></li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("palmerpenguins",dep=TRUE)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"palmerpenguins"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(penguins, <span class="at">width =</span> <span class="dv">50</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species island    bill_length_mm bill_depth_mm
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Adelie  Torgersen           39.1          18.7
+ 2 Adelie  Torgersen           39.5          17.4
+ 3 Adelie  Torgersen           40.3          18  
+ 4 Adelie  Torgersen           NA            NA  
+ 5 Adelie  Torgersen           36.7          19.3
+ 6 Adelie  Torgersen           39.3          20.6
+ 7 Adelie  Torgersen           38.9          17.8
+ 8 Adelie  Torgersen           39.2          19.6
+ 9 Adelie  Torgersen           34.1          18.1
+10 Adelie  Torgersen           42            20.2
+# ℹ 334 more rows
+# ℹ 4 more variables: flipper_length_mm &lt;int&gt;,
+#   body_mass_g &lt;int&gt;, sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/pinguinos_madagascar.jpg" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Con lo que sabéis de R base, realizad un análisis exploratorio de datos y redactad un reporte con los hallazgos más importantes. No olvidéis agregar en el reporte el URL de vuestro repositorio de GitHub.</p></li>
+<li><p>Entregad el reporte en la tarea de Aula Digital disponible. Revisad la fecha en que cierra la tarea.</p></li>
+</ul>
+</section>
+<section id="gramática-limpia-y-coherente-con-tidyverse" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.4</span> 5. Gramática limpia y coherente con <code>Tidyverse</code></h2>
+<section id="la-librería-tidyverse" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" class="anchored" data-anchor-id="la-librería-tidyverse"><span class="header-section-number">1.4.1</span> 5.1. La librería <code>Tidyverse</code></h3>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/tidyverse-hex.PNG" class="img-fluid figure-img" style="width:40.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><strong>Tidyverse</strong> es una colección de paquetes/librerías de R para ciencia de datos que comparten una filosofía de diseño, gramática y estructuras similar. En la página <a href="https://www.tidyverse.org/">Tidverse.org</a> podéis encontrar una descripción detallada de cada una de las librerías, un Blog con artículos de interés para la ciencia de datos, ayuda y recursos de aprendizaje.</p></li>
+<li><p>Todos estos paquetes están pensados para:</p>
+<ul>
+<li><p>Tener una tecnología con la que puedan convivir diferentes tipos de profesionales (como por ejemplo: informáticos, economistas, matemáticos, gestores) compartiendo el mismo flujo de datos.</p></li>
+<li><p>Facilitar el análisis y modelización de datos</p></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/data-science.png" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><a href="https://hadley.nz/">Hadley Wickham</a>, su creador, es el director de los científicos de datos de RStudio (actual Posit) y profesor adjunto de estadística en la Universidad de Auckland, la Universidad de Stanford y la Universidad de Rice.</p></li>
+<li><p>Las librerías de tidyverse han venido a sustituir R base por su eficiencia y facilidad de programación para no informáticos. Casi todas las consultas a páginas técnicas de R son o incluyen código de <code>tidyverse</code>.</p></li>
+<li><p><strong>Paquetes de <code>tidyverse</code> base :</strong></p>
+<ul>
+<li><code>readr</code>: lectura de datos</li>
+<li><code>tibble</code>: una clase ‘tbl_df’ que constituye un mejor formato que el data frame tradicional.</li>
+<li><code>stringr</code>: paquete de funciones para texto</li>
+<li><code>forcats</code>: paquete de funciones para factores</li>
+<li><code>tidyr</code>: arreglo y limpieza de datos</li>
+<li><code>dplyr</code>: manipulación de datos</li>
+<li><code>ggplot2</code>: visualización (gráficos)</li>
+<li><code>purrr</code>: programación funcional (pipes)</li>
+</ul>
+<p>Hay muchos otros paquetes que se integran sin problemas, por ejemplo, <code>lubridate</code> (para manejar datos tomados en el tiempo), <code>stringr</code> (texto), <code>forcats</code> (factores), etc.</p></li>
+<li><p>Para instalar y cargar <code>tidyverse</code></p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tidyverse")</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.2     ✔ readr     2.1.4
+✔ forcats   1.0.0     ✔ stringr   1.5.0
+✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+✔ purrr     1.0.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()     masks stats::filter()
+✖ dplyr::group_rows() masks kableExtra::group_rows()
+✖ dplyr::lag()        masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>Se puede ver la versión del paquete tidyverse y la de los paquetes base.</p>
+<p><span style="color: red;">Cuidado</span>: algunas funciones de R se sobrescriben por sus equivalentes de <code>tidyverse</code>. En ocasiones es preferible indicar explícitamente el nombre de la función que deseamos utilizar, por ejemplo: <code>dplyr::group_by</code> para distinguir de <code>plyr::group_by</code> (dplyr es una evolución del paquete plyr).</p>
+</section>
+<section id="qué-significa-tidy-data" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" class="anchored" data-anchor-id="qué-significa-tidy-data"><span class="header-section-number">1.4.2</span> 5.2. ¿Qué significa tidy data?</h3>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/plot_tidy.png" class="img-fluid figure-img" style="width:50.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Decimos que unos datos están bien estructurados o son “tidy data” si se cumplen los siguientes principios:</p>
+<ul>
+<li><p>Cada variable forma una columna.</p></li>
+<li><p>Cada observación forma una fila.</p></li>
+<li><p>Cada tipo de unidad de observación forma una tabla.</p></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/tidy_data.PNG" class="img-fluid figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Algunas formas de violar los principios de los datos ordenados son:</p>
+<ul>
+<li><p>Las cabeceras de las columnas son valores, no nombres de variables.</p></li>
+<li><p>Se almacenan múltiples variables en una columna.</p></li>
+<li><p>Las variables se almacenan tanto en filas como en columnas.</p></li>
+<li><p>Se almacenan múltiples tipos de unidades de observación en la misma tabla.</p></li>
+<li><p>Una misma unidad de observación se almacena en varias tablas.</p></li>
+</ul></li>
+</ul>
+<p>Veamos ejemplos de datos “No tidy” creados a partir del conjunto de datos con el que venimos trabajando de los pingüinos.</p>
+<p><strong>Ejemplo 1</strong>:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  species   Biscoe Dream Torgersen
+  &lt;fct&gt;      &lt;int&gt; &lt;int&gt;     &lt;int&gt;
+1 Adelie        44    56        52
+2 Chinstrap     NA    68        NA
+3 Gentoo       124    NA        NA</code></pre>
+</div>
+</div>
+<p><strong>Ejemplo 2</strong>:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  col            island     year
+  &lt;chr&gt;          &lt;fct&gt;     &lt;int&gt;
+1 Gentoo_NA      Biscoe     2007
+2 Adelie_male    Torgersen  2007
+3 Gentoo_female  Biscoe     2008
+4 Chinstrap_male Dream      2008
+5 Adelie_male    Torgersen  2009</code></pre>
+</div>
+</div>
+<p><strong>Ejemplo 3</strong>:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  term              bill_length_mm bill_depth_mm flipper_length_mm
+  &lt;chr&gt;                      &lt;dbl&gt;         &lt;dbl&gt;             &lt;dbl&gt;
+1 bill_length_mm            NA            -0.235             0.656
+2 bill_depth_mm             -0.235        NA                -0.584
+3 flipper_length_mm          0.656        -0.584            NA    </code></pre>
+</div>
+</div>
+<p><strong>Ejemplo 4</strong>:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  species   island sex    model              mpg   cyl
+  &lt;fct&gt;     &lt;fct&gt;  &lt;fct&gt;  &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt;
+1 Chinstrap Dream  female &lt;NA&gt;              NA      NA
+2 Gentoo    Biscoe female &lt;NA&gt;              NA      NA
+3 Gentoo    Biscoe male   &lt;NA&gt;              NA      NA
+4 &lt;NA&gt;      &lt;NA&gt;   &lt;NA&gt;   Merc 450SLC       15.2     8
+5 &lt;NA&gt;      &lt;NA&gt;   &lt;NA&gt;   Dodge Challenger  15.5     8
+6 &lt;NA&gt;      &lt;NA&gt;   &lt;NA&gt;   Pontiac Firebird  19.2     8</code></pre>
+</div>
+</div>
+<p><a href="https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos">Libro</a></p>
+<ul>
+<li>Si tenemos datos provenientes de distintas fuentes, seguramente tendremos que limpiarlos y juntarlos en un único tibble.</li>
+</ul>
+<!-- ### 5.3. El operador de tuberías (pipe) `%>%`  -->
+<!-- ### 5.4. Data frames  avanzados:  `tibbels` -->
+<!-- ### 5.5.  Lectura de datos de texto rectangulares: `readr`  -->
+<!-- ### 5.6.  Ordenando datos no tidy: `tidyr`  -->
+<!-- ### 5.7.  Manipulación de datos: `dplyr`  -->
+<!-- ### 5.8.  Visualización de datos: `ggplot2`  -->
+<!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
+<!-- https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos.html#bienvenido-al-tidyverse -->
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Prefacio</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Introducción a la probabilidad para el análisis de datos: Con R y python.</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Este libro se ha creado con <a href="https://quarto.org/">Quarto</a>.</div>
+  </div>
+</footer>
+
+
+
+</body></html>

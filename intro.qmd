@@ -1,9 +1,591 @@
-# Introduction
+## 1. La estadística y el método científico
 
-This is a book created from markdown and executable code.
+-   La ciencia avanza definiendo teorías que intentan explicar el mundo.
 
-See @knuth84 for additional discussion of literate programming.
+-   La comunidad científica elabora teorías/hipótesis que intentan explicar hechos que ocurren. Una hipótesis es científica si existe alguna manera de comprobar su veracidad.
 
-```{r}
-1 + 1
+-   Podemos diseñar experimentos para comprobar si se cumplen las afirmaciones de la teoría.
+
+-   Como la naturaleza tiene un comportamiento con "incertidumbre", es decir, que si repetimos el experimento se obtienen resultados similares pero no idénticos, la estadística permite analizar estos resultados y ver si las desviaciones de la teoría son razonables o no.
+
+-   Se ha definido estadística de muchas maneras. La que más nos gusta, y que está relaciona con la situación que acabamos de explicar, es que:
+
+> La **estadística** es la ciencia que permite adquirir conocimiento generalizable a partir de datos.
+
+-   La estadística ayuda en todas las fases del método científico:
+
+    -   [*Planteamiento del problema*]{style="color: blue;"}: Diseño de experimentos y encuestas, determinación del tamaño de la muestra y métodos de muestreo adecuados para garantizar que los datos recopilados sean representativos de la población objetivo.
+
+    -   [*Recopilación de datos*]{style="color: blue;"}: Proporciona herramientas para recopilar y organizar datos relevantes sobre el problema.
+
+    -   [*Análisis de datos*]{style="color: blue;"}: Aplicación de técnicas descriptivas (Análisis explorartorio de datos), así como técnicas inferenciales (contrastes de hipótesis, ajustes de modelos,etc) para sacar conclusiones sobre la población en función de la muestra recopilada.
+
+    -   [*Interpretación de resultados*]{style="color: blue;"}: Ayuda a los científicos a determinar si los resultados son estadísticamente significativos y si las conclusiones se pueden generalizar a la población más amplia.
+
+    -   [*Comunicación de hallazgos*]{style="color: blue;"}: La estadística se usa para comunicar los resultados de manera efectiva a través de gráficos, tablas y tests estadísticos. Esto es esencial para que otros investigadores puedan comprender y evaluar los resultados.
+
+    -   [*Reproducibilidad*]{style="color: blue;"}: Proporciona métodos estadísticos claros y transparentes, se permite que otros repitan los experimentos y análisis para verificar la validez de los hallazgos.
+
+    -   [*Toma de decisiones*]{style="color: blue;"}: En muchos campos científicos, los resultados estadísticos se utilizan para tomar decisiones importantes. Por ejemplo, en la medicina, la estadística se usa para evaluar la eficacia de tratamientos y tomar decisiones sobre su uso en la práctica clínica.
+
+-   Cuando alguien realiza un nuevo descubrimiento lo envía a una revisión por pares de la comunidad científica. Para que estos acepten el descubrimiento y pase a formar parte del conocimiento científico debes poner a disposición:
+
+    -   Los datos brutos (raw data) junto con el modelo de datos.
+
+    -   El código parametrizado y con las líneas más importantes comentadas.
+
+    -   La documentación (artículo/ reporte) donde se interpretan y presentan los resultados más relevantes.
+
+En resumen, la estadística es una herramienta esencial que ayuda a garantizar que la investigación científica sea rigurosa, confiable y basada en evidencia sólida.
+
+## 2. Gestión básica de datos
+
+### 2.1. Introducción
+
+-   En estadística, siempre se empieza obteniendo unos **datos** sobre un grupo (relativamente pequeño) de individuos de una población. Bueno, en realidad, no se empieza obteniendo los datos, sino planificando cuidadosamente cómo se van a obtener, pero todo forma parte de la "obtención" de los datos.
+
+-   Se **generaliza la información** que se ha obtenido sobre este grupo de personas al total de la población.
+
+-   Y no se trata de trucos de magia adivinatoria, sino de una **ciencia** cuya metodología ha sido validada por medio de demostraciones matemáticas o, en el peor de los casos, mediante simulaciones numéricas (el equivalente en matemáticas de los experimentos en las otras ciencias).
+
+Así pues, la situación de partida a la hora de aplicar técnicas estadísticas es que disponemos de un conjunto de datos que describen algunas características de un grupo de individuos. El análisis estadístico de estos datos puede ser entonces de dos tipos básicos:
+
+-   **Análisis exploratorio de datos**, cuando nuestro objetivo sea simplemente resumir, representar y explicar los datos concretos de los que disponemos. La **estadística descriptiva** es el conjunto de técnicas que se usan con este fin.
+
+-   **Análisis inferencial**, si nuestro objetivo es deducir (**inferir**), a partir de estos datos, información significativa sobre el total de la población de interés. Las técnicas que se usan en este caso forman la **estadística inferencial**.
+
+```{r estinf,echo=FALSE,out.width="80%", fig.align ="center"}
+knitr::include_graphics("Figuras/EstInf.png")
 ```
+
+Ambos tipos de análisis están relacionados. Por un lado, porque es conveniente (obligatorio, en nuestra opinión) empezar cualquier análisis inferencial dando un vistazo a los datos que se usarán.
+
+Por otro, porque muchas técnicas descriptivas permiten estimar propiedades de la población de la que se ha extraído la muestra. Por citar un ejemplo, la media aritmética de las alturas de un grupo de individuos nos da un valor más o menos representativo de sus alturas, pero también sirve para *estimar* la altura media de los individuos de la población total.
+
+La estadística inferencial entra en juego cuando se quiere obtener información sobre una población y no se puede acceder a todos sus integrantes. Si por ejemplo queremos conocer la altura media de los estudiantes matriculados en esta asignatura de la UIB en este curso, en principio no necesitamos para nada la estadística inferencial. Sois pocos, os mediríamos a todos y calcularíamos la media. En todo caso, usaríamos técnicas de estadística descriptiva para arropar este valor representando la distribución de vuestras alturas de manera adecuada.
+
+Pero si quisiéramos conocer la altura media de los mallorquines entre 18 y 25 años, sería muy complicado medirlos a todos. Entonces, lo que haríamos sería tomar una muestra representativa de esta población, medirlos y a partir de sus alturas estimar dicha altura media. Naturalmente, lo más seguro es que de esta manera no obtuviéramos el valor exacto de la altura media de los mallorquines de 18 años, nos tendríamos que conformar con obtener una aproximación dentro de un cierto margen de error y determinar la probabilidad de acertar con nuestra estimación y este margen de error. La estadística inferencial es la que nos permite acotar el error que podamos haber cometido y calcular la probabilidad de cometerlo, incluyendo la metodología que tendríamos que haber usado para tomar la muestra en primer lugar.
+
+### 2.2. R/ RStudio - Posit / RMarkdowm - Quarto
+
+Todas las técnicas que usaremos en la asignatura pueden ser implementadas y/o desarrolladas en software libre como Python y R. Ambos se consideran lenguajes de programación esenciales para la ciencia de datos. Lo ideal sería dominar ambos para tener una base de programación completa, pero:
+
+-   R es un **lenguaje específico utilizado para el análisis de datos y la estadística**.
+
+-   R es muy adecuado para un sub-campo del aprendizaje automático conocido como aprendizaje estadístico. Cualquier persona con una formación formal en estadística debería reconocer la sintaxis y la construcción de R.
+
+-   Al igual que Python, R cuenta con una sólida comunidad, estructurada alrededor de la "Comprehensive R Archive Network", o CRAN, pero no ofrece un desarrollo de software de propósito general como Python.
+
+-   Cada día salen nuevos paquetes que extienden las funcionalidades de R y cubren casi todas las necesidades computacionales y estadísticas de un científico. Para que os hagáis una idea, en el momento de revisar estas notas (septiembre de 2023) el número de paquetes en el repositorio de la CRAN acaba de superar los 19800.
+
+-   El acceso a R se proporciona a través de RStudio, entorno que presenta una ventana de visualización, un explorador de archivos, un visor de datos y un editor. Este entorno suele ser menos intimidante que el shell de R. Además, cuenta con ayuda integrada, resaltado de sintaxis y completado contextual por tabulaciones; todas estas herramientas facilitan el trabajo.
+
+-   RStudio tiene un nuevo nombre desde julio de 2022: **Posit**. Posit es una palabra que significa proponer una idea para su discusión, proviene de la aspiración científica de construir niveles cada vez mayores de conocimiento y comprensión de experimentos que generan 
+
+```{r posit,echo=FALSE,out.width="80%", fig.align ="center"}
+knitr::include_graphics("Figuras/posit.JPG")
+```
+
+-   Posit tiene como misión la creación de software libre y de código abierto para la ciencia de datos, la investigación científica y la comunicación técnica. Han incluido algunas herramientas para Python a través de **Quarto**.
+
+-   Quarto está pensado como un cuaderno de laboratorio moderno donde predomina R pero que soporta código Python (`reticulate`), SQL, Julia, entre otros; pensado para experimentos que requieren multilenguaje.
+
+-   **Posit Cloud** permite acceder al potente conjunto de herramientas de ciencia de datos de Posit directamente desde su navegador. Esto favorecerá el trabajo en equipo. Podéis revisar la siguiente [Guía](https://posit.cloud/learn/guide) para crearos una cuenta.
+
+
+### 2.3. Control de versiones con Git / GitHub
+
+* En esta asignatura la forma de llegar a un resultado de análisis de datos es tan importante como el propio resultado. Además, uno de los objetivos es exponeros al uso de herramientas de software para la ciencia de datos moderna. 
+
+* La idea de reproducibilidad lleva implícita la colaboración. El código que se produce es parte de la documentación del proceso y es fundamental compartirlo (aunque sólo sea con uno mismo).
+
+* Lo anterior se logra mejor con un sistema de control de versiones distribuido como **Git**.  Mantener un registro sobre los proyectos, es lo que permite rastrear y gestionar cambios en el código a lo largo del tiempo. Se puede decir que nos permite guardar el progreso de nuestro código de tal forma que, si en algún momento cometemos algún error irreversible en una versión posterior, siempre podremos recuperar una versión anterior en la que todo funcionaba correctamente y retomar el proyecto desde ese punto.
+
+* Git permite la colaboración, pero carece de características sociales y herramientas específicas para la colaboración en equipo. **GitHub** proporciona herramientas para la revisión de código, la gestión de problemas y la colaboración en proyectos.
+
+```{r github,echo=FALSE,out.width="50%", fig.align ="center"}
+knitr::include_graphics("Figuras/GitHub.png")
+```
+
+* GitHub es un servicio en la nube donde se pueden subir repositorios propios y compartir el código con otras personas de tal forma que sea accesible desde Internet.
+
+
+
+* Un repositorio funciona como una carpeta virtual. En él se encuentran todos los archivos de un proyecto y el historial de revisiones de cada uno, permitiendo restablecer una versión del código en caso de error en su ejecución.
+
+* Podemos ver proyectos de otras usuarios, valorarlos, proponer mejoras en el código, GitHub es una de las aplicaciones que mejora la gestión de proyectos y el acceso a recursos compartidos.
+
+* En octubre del 2021 se estrenó **GitHub Copilot**, una herramienta de inteligencia artificial en la nube desarrollada conjuntamente entre GitHub y OpenAI. Su objetivo es sugerir y autocompletar el código escrito en entornos de desarrollo integrados (IDE).
+
+> En esta clase, utilizaremos GitHub como sistema de gestión del aprendizaje para distribuir y recopilar las entregas como repositorios.
+
+* Crearemos en GitHub un repositorio por estudiante/equipo para cada entrega. Utilizaremos un sencillo flujo de trabajo centralizado que sólo requiere realizar acciones simples como push, pull, add, rm, commit, status y clone.
+
+### 2.4. Git / GitHub con R
+
+Veamos cómo configurar todo. Gran parte de lo que está aquí proviene del libro [Happy Git and GitHub for the useR](https://happygitwithr.com/) de Jenny Bryan y del artículo de [David Keyes](https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r/)   puedes ver sus vídeos en caso de que, la breve explicación que presentamos abajo, no sea suficiente para ti.
+
+ -   [*Instalar Git*]{style="color: blue;"}: El primer paso es instalar Git, en el [Capítulo 6 del libro](https://happygitwithr.com/install-git) explican el proceso para los usuarios de Mac, Windows y Linux. Nosotros ya lo tenemos instalado, así que mostramos cómo verificar si tienes Git instalado y su versión usando el terminal en RStudio. 
+ 
+ En el terminal de RStudio:
+```{r, eval=FALSE}
+which git # ruta donde está instalado el Git
+git --version # version
+```
+ 
+ -   [*Configurar Git (Editar gitconfig file)*]{style="color: blue;"}:El siguiente paso es configurar Git. Esto se trata en el Capítulo 7 del libro, aunque mostramos lo que creemos es un proceso un poco más fácil. Específicamente, sugerimos usar la función `edit_git_config()` del paquete `usethis`, que abrirá su archivo gitconfig. Agrega tu nombre y correo electrónico y cierra esto.
+ 
+ En la consola de RStudio:
+ 
+```{r, eval=FALSE}
+library(usethis)
+usethis::edit_git_config()
+# Modificar en el fichero ".gitconfig" los apartados: "name" y "email" 
+# y guardar el fichero
+```
+ 
+
+-   [*Inicializar un repositorio Git*]{style="color: blue;"}: Ahora que has instalado y configurado Git, puedes usarlo localmente. La función `use_git()` agregará un repositorio Git (a menudo denominado “repositorio”) a un proyecto RStudio existente. Aquí crearemos un nuevo proyecto y luego inicializaremos un repositorio de Git.
+
+En RStudio:
+* Crear un proyecto nuevo
+
+* Seleccionar “Nuevo Directorio”
+
+* Proyecto
+    -  Activar: “Create a git repository”
+    
+En la consola de RStudio:
+
+```{r, eval=FALSE}
+library(usethis)
+usethis::use_git()
+# Elegir siempre la opción: 1
+# Y ante la ventana, seleccionar: "Save"
+```
+
+
+Y visitar la pestaña: “Git” en RStudio.
+
+-   [*Ver historial de confirmación*]{style="color: blue;"}: Ahora que tu proyecto de RStudio tiene un repositorio Git asociado, verás una pestaña adicional en la parte superior derecha: la pestaña Git. Desde aquí, puedes ver todo el historial de cambios en tu código a lo largo del tiempo (¡todavía no muchos!).
+
+En RStudio:
+
+Visitar la pestaña: “Git” de RStudio
+Pulsar el icono del reloj para ver el historial de “Commit” realizados para ver el “Initial Commit”.
+
+-   [*Hacer una confirmación (commit) y ver más historia*]{style="color: blue;"}: Git no realiza un seguimiento automático de los cambios de la manera en que lo hace una herramienta como Google Docs. En su lugar, tienes que decirle a Git: Hice cambios y quiero que mantengas un registro de ellos. Decirle a Git esto se llama hacer una confirmación (commit) y puedes hacerlo desde RStudio.
+
+Cada commit tiene un mensaje de confirmación, lo que es útil porque, cuando miras tu historial de código, ves lo que hiciste en cada momento (es decir, en cada commit). RStudio tiene una herramienta integrada para ver su historial de código. Puedes hacer clic en cualquier commit para ver qué cambió, en relación con el commit anterior. Las líneas que se agregaron en verde; y las que se eliminaron en rojo.
+
+En RStudio:
+
+* Crear un fichero de script R: “test.R” y guardarlo.
+
+* Visita la pestaña “Git” de RStudio y pulsa sobre el botón de “commit” para confirmar la creación del fichero: “test.R”.
+
+* En el panel del commit añada un texto que lo defina.
+
+* Haz varios cambios en el fichero “test.R” y en cada uno de ellos haz de nuevo un “commit”.
+
+* Revisa luego la historia de los cambios que se han producido en el historial (pulsar el icono del reloj).
+
+* Observa los nuevos cambios resaltados en color verde.
+Frente a los valores antiguos que aparecerán en color rojo.
+
+### 2.5. Conectar RStudio y GitHub
+
+El proceso hasta ahora nos ha permitido usar Git localmente. Pero, ¿qué pasa si queremos conectarnos a GitHub? ¿Cómo lo hacemos?
+
+La mejor manera de conectar RStudio y GitHub es usando tu nombre de usuario y un token de acceso personal (PAT). Para generar un token de acceso personal, usa la función `create_github_token()` de `usethis`. Esto te llevará a la página correspondiente en el sitio web de GitHub, donde le darás un nombre a tu token y lo copiarás (¡no lo pierdas porque nunca volverá a aparecer!).
+
+En la consola de RStudio:
+```{r, eval=FALSE}
+library(usethis)
+usethis::create_github_token()
+```
+
+* Pulsa sobre el enlace que aparece en la salida en la consola.
+
+* Se abrirá una página web de Github en la que tendrás que pulsar el botón “Generate token”.
+
+* Copia el token que aparece en Github (lo utilizarás en el siguiente paso).
+
+* Ahora que has creado un token de acceso personal, debes almacenarlo para que RStudio pueda acceder a él y sepa conectarse a tu cuenta de GitHub. La función `gitcreds_set()` del paquete `gitcreds` te ayudará aquí. Ingresará tu nombre de usuario de GitHub y el token de acceso personal como contraseña (NO tu contraseña de GitHub). Una vez que hayas hecho todo esto, ¡habrás conectado RStudio a GitHub!.
+
+En la consola de RStudio:
+```{r, eval=FALSE}
+library(gitcreds)
+gitcreds::gitcreds_set()
+# Ante la pregunta: "Enter password or token"
+# introduce el token copiado en el paso anterior
+```
+
+### 2.6. Conectar proyectos de RStudio con repositorios de GitHub
+
+Ahora que hemos conectado RStudio y GitHub, discutamos cómo hacer que los dos funcionen juntos. La idea básica es que configures los proyectos que creas en RStudio con repositorios GitHub asociados. Cada proyecto de RStudio vive en un solo repositorio de GitHub.
+
+¿Cómo conectamos un proyecto de RStudio a un repositorio de GitHub? Happy Git and GitHub for the useR propone tres estrategias. Demostraremos la forma más sencilla
+
+ crear un repositorio en GitHub primero. Cree el repositorio y, a continuación, cuando inicie un nuevo proyecto en RStudio, utilice la opción de control de versiones, introduzca la URL de su repositorio y listo.
+
+**GitHub primero**
+
+Crea el repositorio en GitHub y, a continuación, cuando inicies un nuevo proyecto en RStudio, utiliza la opción de control de versiones, introduce la URL de tu repositorio y listo.
+
+Para bajar un repositorio creado en Github a un proyecto local en RStudio, tendréis que realizar los siguientes pasos:
+
+* Crear un nuevo repositorio en nuestra cuenta de Github (o utilizar uno ya existente): pulsar el botón “Create repository”.
+
+* Copiar al portapapeles la primera dirección que aparece (pulsando el botón de la derecha). Coincide con la dirección url que aparece en la barra del navegador.
+
+* En RStudio seleccionamos crear “New project”, elegimos “Version Control” y luego seleccionamos “Git”.
+
+* Introducimos en el primer cuadro de texto la url copiada anteriormente. Pulsamos “Create Project”.
+
+* A continuación podrás consultarse la pestaña “Git” y ver la información asociada al repositorio descargado.
+
+### 2.7. Flujo de trabajo general
+
+Ahora que hemos conectado RStudio y GitHub, podemos compartir nuestro trabajo entre los dos.
+
+**Push (Subir a Github)**
+
+"Push" significa enviar cualquier cambio en tu código de RStudio a GitHub. Para hacer esto, primero tenemos que hacer un commit. Después de confirmar, ahora tenemos un botón (la flecha hacia arriba) en RStudio que podemos usar para enviar nuestro código a GitHub.
+
+En RStudio:
+
+* Creamos un nuevo fichero de script R o un fichero Rmd y lo guardamos.
+
+* Pulsamos en la pestaña “Git” sobre el botón de “commit”.
+Marcamos todos los ficheros sobre los checks de “Staged”, rellenamos la descripción del commit y pulsamos sobre el botón de “commit”.
+
+* Después de hacer el commit, pulsamos sobre el botón “Push” para subir los cambios a Github.
+
+* A continuación puedes comprobar en la página de Github del repositorio que se han actualizado los últimos ficheros considerados en el último commit.
+
+**Pull (Descargar desde Github)**
+
+Lo opuesto a "empujar"Push" es bajar ("Pull"). Utilizando el botón de flecha hacia abajo, RStudio va al repositorio de GitHub, toma el código más reciente y lo lleva a su editor local. 
+
+Hacer "Push" regularmente es extremadamente importante si estás colaborando, aunque si eres el único que trabaja en un proyecto de RStudio y un repositorio GitHub asociado, sabes que tu código local coincide con lo que está en GitHub, por lo que es menos importante.
+
+En la página de Github de nuestro repositorio:
+
+* Editamos uno de los ficheros de nuestro repositorio pulsando sobre el icono de un lápiz (a la derecha).
+Realizamos alguna modificación sobre el fichero (o ficheros).
+
+* Pulsamos en la parte inferior de la página en el botón de “Commit changes” (rellenando los comentarios que creamos oportunos sobre el commit que se está realizando).
+Se puede navegar por la página de Github para consultar todos los commits realizados (y mucha más información).
+
+Volvemos a RStudio:
+
+* En la pestaña “Git” pulsamos sobre el botón de la flecha que apunta hacia abajo (verde) para realizar un “Pull” o descarga de los cambios en Github a nuestro proyecto local en RStudio.
+
+* Después de eso puedes comprobare que los ficheros locales de nuestro proyecto se han actualizado con los cambios que se han producido en el repositorio.
+
+**¡Lo lograste!**
+
+¡Ahora está todo configurado para usar Git y GitHub con RStudio!
+
+
+## 3.  Los datos y sus tipos
+
+En vuestro curso de Estadística estudiasteis algunas técnicas básicas de estadística descriptiva. Estas técnicas consisten en una serie de valores y gráficos que nos permiten resumir y explorar un conjunto de datos, con el objetivo final de entenderlos o describirlos lo mejor posible.
+
+Los datos de los que disponemos suelen ser multidimensionales, en el sentido de que observamos varias características (**variables**) de una serie de individuos. Almacenamos estos datos en **tablas de datos** como la que presentamos abajo, donde cada columna corresponde a una variable y cada fila son los datos de un individuo concreto. Así, en esta tabla, cada fila representa un niño y cada columna recoge una de las características que hemos anotado: su nombre, su altura (en cm), su número de hermanos, el color de sus cabellos, el número semanal de refrescos que suele tomar, y su grado de satisfacción con un juego para móvil (entre 0 y 5).
+
+
+```{r,echo=FALSE,label=tabla1}
+library(kableExtra)
+DF=data.frame(Nombre=c("Marta","Laura","Xavier","Joan","Maria","Maria"),
+              Altura=c(135,132,138,141,134,136),
+              Hermanos=c(2,1,0,3,2,1),
+              Cabello=c("rubio","negro","negro","castaño","rojo","castaño"),
+              Refrescos=c("2-3","2-3","0-1","4-5","0-1","6 o más"),
+              Satisfaccion=c(4,4,3,2,3,5))
+kable(DF,
+              caption='Una pequeña tabla de datos sobre niños',
+             row.names=TRUE,
+             col.names=c("Nombre","Altura","Hermanos","Cabello","Refrescos semanales","Satisfacción App"))%>%
+  kable_styling(bootstrap_options=c("condensed"), full_width = FALSE)
+```
+
+
+```{block2,type="rmdcaution"}
+En este curso vamos a "sobrecargar" el término **variable**, en el sentido de que tendrá dos significados diferentes que esperamos que podáis distinguir según el contexto:
+  
+* Por un lado, llamaremos **variable**  a una característica que puede tomar diferentes valores sobre diferentes individuos; cuando tenga este sentido, a veces le añadiremos el adjetivo **poblacional**. Por ejemplo, la altura de las personas (de todo el mundo, de un país, de una ciudad...) es una variable poblacional. 
+
+* Por otro lado, también llamaremos una **variable** a un vector formado por los valores de una variable poblacional sobre los sujetos de una muestra. Por ejemplo, las alturas de los niños recogidas en la tabla forman una variable en este sentido.
+
+```
+
+Los tipos básicos de datos que consideramos en este curso son los siguientes:
+
+-   Datos **cualitativos**. Son los que expresan una cualidad del individuo, como por ejemplo el sexo cromosómico (macho, hembra), el género de una persona (hombre, mujer, lesbiana, gay, bisexual, transexual, intersexual, asexual), tipos de cáncer (de mama, de colon, de próstata...)... Si solo pueden tomar dos valores ("Sí" o "No", "Macho" o "Hembra"...) los llamamos **binarios** o **dicotómicos** y si pueden tomar más de dos valores, **politómicos** o **multicotómicos**, dependiendo de lo que queramos complicar los adjetivos. A los posibles valores que puede tomar un tipo de datos cualitativo se los suele llamar **niveles**.
+
+
+    Los datos cualitativos pueden ser iguales o distintos, y no admiten ningún otro tipo de comparación.
+
+
+-   Datos **ordinales**. Son datos similares a los cualitativos, en el sentido de que expresan una cualidad del individuo, pero con la diferencia de que se pueden ordenar de manera natural. Por ejemplo, los niveles de gravedad de una enfermedad (sano, leve, grave, muy grave, ...) o las calificaciones en un examen (suspenso, aprobado, notable, sobresaliente) son datos ordinales. En cambio, no se pueden ordenar de manera significativa los sexos o los tipos de cáncer de los individuos: por eso son datos cualitativos y no ordinales.
+
+    También se suele llamar a los posibles valores que puede tomar un tipo de datos ordinal sus **niveles**.
+
+
+-   Datos **cuantitativos**. Son datos que se refieren a medidas que sean números genuinos, con los que tenga sentido operar, tales como edades, longitudes, pesos, tiempos, números de individuos, etc. Distinguimos dos tipos:
+
+
+    -   **Discretos**: Pueden tomar solo valores que avanzan a saltos y que podemos identificar con números naturales: número de hermanos, número de ingresos en un día en un hospital...
+
+
+    -   **Continuos**: Podrían tomar cualquier valor real dentro de un intervalo si se pudieran medir con precisión infinita: altura, temperatura, tiempo...
+
+```{example}
+En la tabla anterior:
+  
+* La variable "Nombre" es cualitativa.
+* La variable "Altura" es cuantitativa continua.
+* La variable "Hermanos" es cuantitativa discreta.
+* La variable "Cabello" es cualitativa.
+* La variable "Refrescos semanales" es ordinal.
+* La variable "Satisfacción App" también es ordinal.
+
+```
+
+Dos puntos relevantes a tener en cuenta y que justifican algunas clasificaciones que puede que encontréis dudosas en el ejemplo anterior:
+
+-   **No todo número es un dato cuantitativo.** Solo los consideramos cuantitativos cuando son números genuinos, "de verdad". Por ejemplo, si pedimos a un paciente que califique su dolor con un número natural de 0 a 10, no es un dato cuantitativo, sino ordinal:
+
+    -   No es una medida precisa del dolor; no son números "de verdad", sino abreviaturas de "Nada", "Un poquito",..., "Matadme".
+
+    -   Tener dolor 6 no significa "tener el doble de dolor" que tener dolor 3 (si lo significara, ¿cuál sería el valor correspondiente "al doble de dolor" que 7?). En cambio, una persona con 6 hermanos sí que tiene el doble de hermanos que si tuviera 3.
+
+    -   No tiene sentido sumarlos u operarlos en general. Por ejemplo, si yo tengo dolor de nivel 6 y tú tienes dolor de nivel 5, entre los dos no tenemos dolor de nivel 11. En cambio, si yo tengo 6 hermanos y tú 5, entre los dos sí que tenemos 11 hermanos.
+
+    Este es justamente el caso de la variable "Satisfacción App" de la tabla anterior. Pese a que sus valores son números, el único contenido real que tienen es su orden: a la María que toma muchos refrescos le ha gustado la app bastante más que a la María que apenas toma refrescos.
+
+-   **La distinción discreto-continuo es puramente teórica**. En realidad, todo dato es discreto porque no podemos medir nada con precisión infinita, pero las herramientas matemáticas "continuas" (derivadas, integrales, etc.) son mucho más potentes que las discretas, por lo que siempre que tenga sentido, es conveniente considerar una variable como continua.
+
+    Observad, por ejemplo, la diferencia entre la altura, pongamos que medida en cm y redondeada a unidades como en la tabla anterior, y el número de hermanos. Ambos se presentan como números naturales, pero los números de hermanos no admiten mayor precisión, mientras que las alturas las podríamos medir, con los aparatos adecuados, en mm, en µm, en nm.... Como además las herramientas para tratar datos continuos son mucho más potentes, vamos a considerar las alturas como datos continuos, mientras que los números de hermanos no hay más remedio que tratarlos como discretos.
+
+    En concreto, **es conveniente considerar en la práctica como datos continuos aquellos que dan lugar a números naturales muy grandes**, como por ejemplo los números de glóbulos rojos en un litro de sangre, de bases nucléicas en un genoma, o de personas de un país. La diferencia entre diez millones, diez millones uno, diez millones dos... puede considerarse como continua: de hecho, si tomamos el millón como unidad, la diferencia está en la séptima cifra decimal.
+
+```{block2,type="rmdnote"}
+Hemos dicho que la variable "Cabello" es cualitativa. En principio, el color de los cabellos no tiene ningún orden "natural". Pero si en un estudio definimos un orden claro para esta variable (por ejemplo, por la longitud de onda correspondiente) y este orden es relevante en nuestro estudio, habrá que considerarla una variable ordinal.
+```
+
+
+```{block2,type="rmdnote"}
+La variable  "Refrescos semanales" es de un tipo de datos ordinales muy concreto que a veces se califican de **cuantitativos agrupados**: sus niveles se obtienen agrupando en intervalos los posibles valores de una variable cuantitativa (en este caso, la variable discreta que mide el número preciso de refrescos semanales).
+```
+
+
+>El análisis, tanto descriptivo como inferencial, de un conjunto de datos es diferente según su tipo. 
+
+Así, para datos cualitativos sólo tiene interés estudiar y representar las frecuencias con que aparecen sus diferentes valores, mientras que el análisis de datos cuantitativos suele involucrar el cálculo de medidas estadísticas, como la media o la desviación típica, que expresen numéricamente sus propiedades.
+
+
+Os dejamos el material [Aprender R1](https://aprender-uib.github.io/AprendeR1/) para que repaséis los capítulos 10 al 14 correspondientes a la parte de Estadística descriptiva.
+
+
+## 4. [*Práctica 1*]{style="color: red;"}:
+
+* Formad grupos de 3 integrantes.
+
+* Trabajaréis con los datos [pingüinos](https://allisonhorst.github.io/palmerpenguins/), leed la documentación y seguid las siguientes instrucciones:
+
+  * Cread un repositorio en Github para vuestro grupo con un nombre que sea fácilmente identificable para los profesores de la asignatura, por ejemplo,"Entrega_1_AD".
+  
+  * Cread un proyecto nuevo en RStudio conectado al repositorio que habéis creado en el paso anterior. Agregad un documento  de quarto donde trabajaréis.
+  
+  * Instalad y cargad en RStudio la librería `palmerpenguins` , así como el conjunto de datos `penguins` 
+  
+
+```{r, warning=FALSE}
+#install.packages("palmerpenguins",dep=TRUE)
+library("palmerpenguins")
+print(penguins, width = 50)
+```
+  
+```{r, echo=F, fig.align='center', out.width='60%'}
+knitr::include_graphics("Figuras/pinguinos_madagascar.jpg")
+```
+
+
+  * Con lo que sabéis de R base, realizad un análisis exploratorio de datos y redactad un reporte con los hallazgos más importantes. No olvidéis agregar en el reporte el URL de vuestro repositorio de GitHub. 
+  
+  * Entregad el reporte en la tarea de Aula Digital disponible. Revisad la fecha en que cierra la tarea.
+  
+
+
+
+## 5. Gramática limpia y coherente con `Tidyverse`
+
+### 5.1. La librería `Tidyverse`
+
+
+```{r, echo=FALSE, out.width='40%',fig.align='center'}
+knitr::include_graphics("Figuras/tidyverse-hex.PNG")
+```
+
+* **Tidyverse**  es una  colección de paquetes/librerías  de R para ciencia de datos que comparten una filosofía de diseño, gramática y estructuras similar. En la página [Tidverse.org](https://www.tidyverse.org/) podéis encontrar una descripción detallada de cada una de las librerías, un Blog con artículos de interés para la ciencia de datos, ayuda y recursos de aprendizaje. 
+
+* Todos estos paquetes están pensados para:
+
+    * Tener una tecnología con la que puedan convivir diferentes tipos de profesionales (como por ejemplo: informáticos, economistas, matemáticos, gestores) compartiendo el mismo flujo de datos.
+
+   *  Facilitar el análisis y modelización de datos
+
+
+```{r, echo=F, out.width='60%', fig.align="center"}
+knitr::include_graphics("Figuras/data-science.png")
+```
+
+* [Hadley Wickham](https://hadley.nz/), su creador, es el director de los científicos de datos de RStudio (actual Posit) y profesor adjunto de estadística en la Universidad de Auckland, la Universidad de Stanford y la Universidad de Rice. 
+
+* Las librerías de tidyverse han venido a sustituir R base por su eficiencia y facilidad de programación para no informáticos. Casi todas las consultas  a páginas técnicas de R son o incluyen código de `tidyverse`.
+
+* **Paquetes de `tidyverse` base :**
+
+  * `readr`: lectura de datos
+  * `tibble`: una clase 'tbl_df' que constituye un mejor formato que el data frame tradicional.
+  * `stringr`: paquete de funciones para texto
+  * `forcats`: paquete de funciones para factores
+  * `tidyr`:  arreglo y limpieza de datos 
+  * `dplyr`: manipulación de datos
+  * `ggplot2`:   visualización (gráficos)
+  * `purrr`: programación funcional (pipes)
+
+
+  Hay muchos otros paquetes que se integran sin problemas, por ejemplo, `lubridate` (para manejar datos tomados en el tiempo), `stringr` (texto), `forcats` (factores), etc.
+
+
+* Para instalar y cargar `tidyverse`
+
+```{r,warning=FALSE, message=TRUE}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+Se puede ver la versión del paquete tidyverse y la de los paquetes base.
+
+[Cuidado]{style="color: red;"}: algunas funciones de R se sobrescriben por sus equivalentes de `tidyverse`. En ocasiones es preferible indicar explícitamente el nombre de la función que deseamos utilizar, por ejemplo: `dplyr::group_by` para distinguir de `plyr::group_by` (dplyr es una evolución del paquete plyr).
+
+### 5.2. ¿Qué significa tidy data? 
+
+```{r tidy_data, echo=FALSE,fig.align='center',out.width="50%"}
+knitr::include_graphics("Figuras/plot_tidy.png")
+```
+
+
+* Decimos que unos datos están bien estructurados o son "tidy data" si se cumplen los siguientes principios:
+
+  * Cada variable forma una columna.
+
+  * Cada observación forma una fila.
+
+  * Cada tipo de unidad de observación forma una tabla.
+
+
+
+```{r tidydata, echo=FALSE,fig.align='center',out.width="60%"}
+knitr::include_graphics("Figuras/tidy_data.PNG")
+```
+
+```{r plot_tidy, echo=F,fig.align="center",include=FALSE, out.width="30%"}
+png("Figuras/plot_tidy.png")
+set.seed(33)
+x=rnorm(1000)
+y=rnorm(1000)
+colores=cut(x,4)
+levels(colores)=c("red","blue","green","brown")
+par(mfrow=c(1,2))
+plot(x=x,y=y,pch=15,col=sample(c("red","blue","green","brown"),500,replace=TRUE),
+axes=FALSE,xlab="",ylab="",main="Datos NO tidy")
+plot(x=x,y=y,pch=15,col=as.character(colores),axes=FALSE,xlab="",ylab="",main="Datos tidy")
+par(mfrow=c(1,1))
+dev.off()
+```
+
+* Algunas formas de violar los principios de los datos ordenados son:
+
+  * Las cabeceras de las columnas son valores, no nombres de variables.  
+
+  * Se almacenan múltiples variables en una columna. 
+  
+  * Las variables se almacenan tanto en filas como en columnas.  
+
+  * Se almacenan múltiples tipos de unidades de observación en la misma tabla. 
+
+  * Una misma unidad de observación se almacena en varias tablas.
+
+
+
+Veamos ejemplos de datos "No tidy" creados a partir del conjunto de datos con el que venimos trabajando de los pingüinos.
+
+**Ejemplo 1**:
+
+```{r, warning=FALSE, echo=FALSE}
+library(palmerpenguins)
+set.seed(123)
+
+penguins %>% 
+  group_by(species, island) %>% 
+  summarise(n = n(), .groups = "drop") %>% 
+  pivot_wider(names_from = island, values_from = n) %>% 
+  unnest(cols = c(Biscoe, Dream, Torgersen))
+```
+
+
+**Ejemplo 2**:
+    
+```{r, echo=F}
+penguins %>% 
+  select(species, island, sex, year) %>% 
+  unite(col, species, sex) %>% 
+  sample_n(5)
+```
+
+**Ejemplo 3**:
+```{r, echo=F, message=F, warning=F}
+penguins %>% 
+  select(bill_length_mm, bill_depth_mm, flipper_length_mm) %>% 
+  corrr::correlate(method = "pearson")
+```
+
+
+**Ejemplo 4**:
+```{r , echo=F,message=F, warning=F}
+penguins %>% 
+  select(species, island, sex) %>% 
+  sample_n(3) %>% 
+  bind_rows(
+    mtcars %>%
+      tibble::rownames_to_column("model") %>% 
+      select(model, mpg, cyl) %>% 
+      sample_n(3)
+  )
+```
+
+[Libro](https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos)
+
+* Si tenemos datos provenientes de distintas fuentes, seguramente tendremos que limpiarlos y juntarlos en un único tibble.
+
+<!-- ### 5.3. El operador de tuberías (pipe) `%>%`  -->
+
+
+<!-- ### 5.4. Data frames  avanzados:  `tibbels` -->
+
+<!-- ### 5.5.  Lectura de datos de texto rectangulares: `readr`  -->
+
+<!-- ### 5.6.  Ordenando datos no tidy: `tidyr`  -->
+
+<!-- ### 5.7.  Manipulación de datos: `dplyr`  -->
+
+<!-- ### 5.8.  Visualización de datos: `ggplot2`  -->
+
+<!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
+
+<!-- https://bookdown.org/rodolfo_carvajal/apunte/02-tablas-de-datos.html#bienvenido-al-tidyverse -->

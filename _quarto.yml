@@ -4,9 +4,9 @@ project:
   
 
 book:
-  title: "Introducción a la probabilidad para el análisis de datos"
-  author: " "
-  date: "2/8/2023"
+  title: "Notas de clase para Análisis de datos"
+  author: "Irene García, Ricardo Alberich, Arnau Mir y Francesc Roselló"
+  date: "2023"
   reader-mode: true
   
   page-footer:
@@ -22,7 +22,7 @@ book:
   repo-actions: [edit, issue]
   chapters:
     - index.qmd
-    - 0.qmd
+    - intro.qmd
     - references.qmd
     
     
