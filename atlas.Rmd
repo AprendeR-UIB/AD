@@ -49,7 +49,6 @@ for (j in c(3,50,100,145,288,430,573,715,858)) {
 ```{r}
 images_atlas=paste0('compressed/atlas_compressed_svd_rank_',c(3,50,100,858), '.jpg')
 knitr::include_graphics(images_atlas)
-
 ```
 
 
@@ -57,10 +56,4 @@ knitr::include_graphics(images_atlas)
 
 
 
-
-
-```
-knitr::include_graphics("compressed/atlas_compressed_svd_rank_3.jpg", "compressed/atlas_compressed_svd_rank_50.jpg",
-"compressed/atlas_compressed_svd_rank_858.jpg")
-```
 
