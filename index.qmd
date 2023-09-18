@@ -1,5 +1,3 @@
-# Prefacio {.unnumbered}
+# Presentación {.unnumbered}
 
-
-
-Hemos escrito estas notas entre varios colaboradores desde lugar donde vive el [ferreret](https://es.wikipedia.org/wiki/Alytes_muletensis).
+Esto es una edición en línea de los apuntes de Análisis de Datos del grado de Matemática de la UIB. Hemos escrito estas notas entre varios profesores del Grado. 

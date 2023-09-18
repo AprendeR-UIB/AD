@@ -4,20 +4,20 @@ project:
   
 
 book:
-  title: "Notas de clase para Análisis de datos"
+  title: "Análisis de datos (Grado de Matemáticas UIB)"
   author: "Irene García, Ricardo Alberich, Arnau Mir y Francesc Roselló"
-  date: "2023"
+  date: "9/18/2023"
   reader-mode: true
   
   page-footer:
     left: |
-      Introducción a la probabilidad para el análisis de datos: Con R y python.
+      Análisis de Datos para el GMAT-UIB
     right: |
      Este libro se ha creado con  <a href="https://quarto.org/">Quarto</a>.
   cover-image: cover.jpg
   favicon: cover.jpg
-  site-url: https://github.com/RicUIB/Enlaces
-  repo-url: https://github.com/RicUIB/Enlaces
+  site-url: https://aprender-uib.github.io/AD
+  repo-url: https://github.com/AprendeR-UIB/AD/Enlaces
   repo-branch: main
   repo-actions: [edit, issue]
   chapters:

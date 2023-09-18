@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Notas de clase para Análisis de datos - 1&nbsp; 1. La estadística y el método científico</title>
+<title>Análisis de datos (Grado de Matemáticas UIB) - 1&nbsp; Introducción al Análisis Multivariante de Datos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. La estadística y el método científico</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción al Análisis Multivariante de Datos</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -126,9 +126,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Notas de clase para Análisis de datos</a> 
+      <a href="./">Análisis de datos (Grado de Matemáticas UIB)</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/RicUIB/Enlaces" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/AprendeR-UIB/AD/Enlaces" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo lector">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -147,13 +147,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prefacio</span></a>
+ <span class="menu-text">Presentación</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. La estadística y el método científico</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción al Análisis Multivariante de Datos</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -172,32 +172,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#gestión-básica-de-datos" id="toc-gestión-básica-de-datos" class="nav-link active" data-scroll-target="#gestión-básica-de-datos"><span class="header-section-number">1.1</span> 2. Gestión básica de datos</a>
-  <ul class="collapse">
-  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">1.1.1</span> 2.1. Introducción</a></li>
-  <li><a href="#r-rstudio---posit-rmarkdowm---quarto" id="toc-r-rstudio---posit-rmarkdowm---quarto" class="nav-link" data-scroll-target="#r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.1.2</span> 2.2. R/ RStudio - Posit / RMarkdowm - Quarto</a></li>
-  <li><a href="#control-de-versiones-con-git-github" id="toc-control-de-versiones-con-git-github" class="nav-link" data-scroll-target="#control-de-versiones-con-git-github"><span class="header-section-number">1.1.3</span> 2.3. Control de versiones con Git / GitHub</a></li>
-  <li><a href="#git-github-con-r" id="toc-git-github-con-r" class="nav-link" data-scroll-target="#git-github-con-r"><span class="header-section-number">1.1.4</span> 2.4. Git / GitHub con R</a></li>
-  <li><a href="#conectar-rstudio-y-github" id="toc-conectar-rstudio-y-github" class="nav-link" data-scroll-target="#conectar-rstudio-y-github"><span class="header-section-number">1.1.5</span> 2.5. Conectar RStudio y GitHub</a></li>
-  <li><a href="#conectar-proyectos-de-rstudio-con-repositorios-de-github" id="toc-conectar-proyectos-de-rstudio-con-repositorios-de-github" class="nav-link" data-scroll-target="#conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.1.6</span> 2.6. Conectar proyectos de RStudio con repositorios de GitHub</a></li>
-  <li><a href="#flujo-de-trabajo-general" id="toc-flujo-de-trabajo-general" class="nav-link" data-scroll-target="#flujo-de-trabajo-general"><span class="header-section-number">1.1.7</span> 2.7. Flujo de trabajo general</a></li>
-  </ul></li>
-  <li><a href="#los-datos-y-sus-tipos" id="toc-los-datos-y-sus-tipos" class="nav-link" data-scroll-target="#los-datos-y-sus-tipos"><span class="header-section-number">1.2</span> 3. Los datos y sus tipos</a></li>
-  <li><a href="#práctica-1" id="toc-práctica-1" class="nav-link" data-scroll-target="#práctica-1"><span class="header-section-number">1.3</span> 4. <span style="color: red;"><em>Práctica 1</em></span>:</a></li>
-  <li><a href="#gramática-limpia-y-coherente-con-tidyverse" id="toc-gramática-limpia-y-coherente-con-tidyverse" class="nav-link" data-scroll-target="#gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.4</span> 5. Gramática limpia y coherente con <code>Tidyverse</code></a>
-  <ul class="collapse">
-  <li><a href="#la-librería-tidyverse" id="toc-la-librería-tidyverse" class="nav-link" data-scroll-target="#la-librería-tidyverse"><span class="header-section-number">1.4.1</span> 5.1. La librería <code>Tidyverse</code></a></li>
-  <li><a href="#qué-significa-tidy-data" id="toc-qué-significa-tidy-data" class="nav-link" data-scroll-target="#qué-significa-tidy-data"><span class="header-section-number">1.4.2</span> 5.2. ¿Qué significa tidy data?</a></li>
-  </ul></li>
+  <li><a href="#la-estadística-y-el-método-científico" id="toc-la-estadística-y-el-método-científico" class="nav-link active" data-scroll-target="#la-estadística-y-el-método-científico"><span class="header-section-number">1.0.1</span> La estadística y el método científico</a></li>
+  <li><a href="#gestión-básica-de-datos" id="toc-gestión-básica-de-datos" class="nav-link" data-scroll-target="#gestión-básica-de-datos"><span class="header-section-number">1.0.2</span> Gestión básica de datos</a></li>
+  <li><a href="#los-datos-y-sus-tipos" id="toc-los-datos-y-sus-tipos" class="nav-link" data-scroll-target="#los-datos-y-sus-tipos"><span class="header-section-number">1.0.3</span> Los datos y sus tipos</a></li>
+  <li><a href="#práctica-1" id="toc-práctica-1" class="nav-link" data-scroll-target="#práctica-1"><span class="header-section-number">1.0.4</span> <span style="color: red;"><em>Práctica 1</em></span>:</a></li>
+  <li><a href="#gramática-limpia-y-coherente-con-tidyverse" id="toc-gramática-limpia-y-coherente-con-tidyverse" class="nav-link" data-scroll-target="#gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.0.5</span> Gramática limpia y coherente con <code>Tidyverse</code></a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/RicUIB/Enlaces/edit/main/intro.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/RicUIB/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/intro.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">1. La estadística y el método científico</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción al Análisis Multivariante de Datos</span></h1>
 </div>
 
 
@@ -212,6 +200,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
+<section id="la-estadística-y-el-método-científico" class="level3" data-number="1.0.1">
+<h3 data-number="1.0.1" class="anchored" data-anchor-id="la-estadística-y-el-método-científico"><span class="header-section-number">1.0.1</span> La estadística y el método científico</h3>
 <ul>
 <li><p>La ciencia avanza definiendo teorías que intentan explicar el mundo.</p></li>
 <li><p>La comunidad científica elabora teorías/hipótesis que intentan explicar hechos que ocurren. Una hipótesis es científica si existe alguna manera de comprobar su veracidad.</p></li>
@@ -241,10 +231,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 </ul>
 <p>En resumen, la estadística es una herramienta esencial que ayuda a garantizar que la investigación científica sea rigurosa, confiable y basada en evidencia sólida.</p>
-<section id="gestión-básica-de-datos" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="gestión-básica-de-datos"><span class="header-section-number">1.1</span> 2. Gestión básica de datos</h2>
-<section id="introducción" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.1.1</span> 2.1. Introducción</h3>
+</section>
+<section id="gestión-básica-de-datos" class="level3" data-number="1.0.2">
+<h3 data-number="1.0.2" class="anchored" data-anchor-id="gestión-básica-de-datos"><span class="header-section-number">1.0.2</span> Gestión básica de datos</h3>
+<section id="introducción" class="level4" data-number="1.0.2.1">
+<h4 data-number="1.0.2.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">1.0.2.1</span> Introducción</h4>
 <ul>
 <li><p>En estadística, siempre se empieza obteniendo unos <strong>datos</strong> sobre un grupo (relativamente pequeño) de individuos de una población. Bueno, en realidad, no se empieza obteniendo los datos, sino planificando cuidadosamente cómo se van a obtener, pero todo forma parte de la “obtención” de los datos.</p></li>
 <li><p>Se <strong>generaliza la información</strong> que se ha obtenido sobre este grupo de personas al total de la población.</p></li>
@@ -269,8 +260,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>La estadística inferencial entra en juego cuando se quiere obtener información sobre una población y no se puede acceder a todos sus integrantes. Si por ejemplo queremos conocer la altura media de los estudiantes matriculados en esta asignatura de la UIB en este curso, en principio no necesitamos para nada la estadística inferencial. Sois pocos, os mediríamos a todos y calcularíamos la media. En todo caso, usaríamos técnicas de estadística descriptiva para arropar este valor representando la distribución de vuestras alturas de manera adecuada.</p>
 <p>Pero si quisiéramos conocer la altura media de los mallorquines entre 18 y 25 años, sería muy complicado medirlos a todos. Entonces, lo que haríamos sería tomar una muestra representativa de esta población, medirlos y a partir de sus alturas estimar dicha altura media. Naturalmente, lo más seguro es que de esta manera no obtuviéramos el valor exacto de la altura media de los mallorquines de 18 años, nos tendríamos que conformar con obtener una aproximación dentro de un cierto margen de error y determinar la probabilidad de acertar con nuestra estimación y este margen de error. La estadística inferencial es la que nos permite acotar el error que podamos haber cometido y calcular la probabilidad de cometerlo, incluyendo la metodología que tendríamos que haber usado para tomar la muestra en primer lugar.</p>
 </section>
-<section id="r-rstudio---posit-rmarkdowm---quarto" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" class="anchored" data-anchor-id="r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.1.2</span> 2.2. R/ RStudio - Posit / RMarkdowm - Quarto</h3>
+<section id="r-rstudio---posit-rmarkdowm---quarto" class="level4" data-number="1.0.2.2">
+<h4 data-number="1.0.2.2" class="anchored" data-anchor-id="r-rstudio---posit-rmarkdowm---quarto"><span class="header-section-number">1.0.2.2</span> R/ RStudio - Posit / RMarkdowm - Quarto</h4>
 <p>Todas las técnicas que usaremos en la asignatura pueden ser implementadas y/o desarrolladas en software libre como Python y R. Ambos se consideran lenguajes de programación esenciales para la ciencia de datos. Lo ideal sería dominar ambos para tener una base de programación completa, pero:</p>
 <ul>
 <li><p>R es un <strong>lenguaje específico utilizado para el análisis de datos y la estadística</strong>.</p></li>
@@ -295,8 +286,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Posit Cloud</strong> permite acceder al potente conjunto de herramientas de ciencia de datos de Posit directamente desde su navegador. Esto favorecerá el trabajo en equipo. Podéis revisar la siguiente <a href="https://posit.cloud/learn/guide">Guía</a> para crearos una cuenta.</p></li>
 </ul>
 </section>
-<section id="control-de-versiones-con-git-github" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" class="anchored" data-anchor-id="control-de-versiones-con-git-github"><span class="header-section-number">1.1.3</span> 2.3. Control de versiones con Git / GitHub</h3>
+<section id="control-de-versiones-con-git-github" class="level4" data-number="1.0.2.3">
+<h4 data-number="1.0.2.3" class="anchored" data-anchor-id="control-de-versiones-con-git-github"><span class="header-section-number">1.0.2.3</span> Control de versiones con Git / GitHub</h4>
 <ul>
 <li><p>En esta asignatura la forma de llegar a un resultado de análisis de datos es tan importante como el propio resultado. Además, uno de los objetivos es exponeros al uso de herramientas de software para la ciencia de datos moderna.</p></li>
 <li><p>La idea de reproducibilidad lleva implícita la colaboración. El código que se produce es parte de la documentación del proceso y es fundamental compartirlo (aunque sólo sea con uno mismo).</p></li>
@@ -325,8 +316,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Crearemos en GitHub un repositorio por estudiante/equipo para cada entrega. Utilizaremos un sencillo flujo de trabajo centralizado que sólo requiere realizar acciones simples como push, pull, add, rm, commit, status y clone.</li>
 </ul>
 </section>
-<section id="git-github-con-r" class="level3" data-number="1.1.4">
-<h3 data-number="1.1.4" class="anchored" data-anchor-id="git-github-con-r"><span class="header-section-number">1.1.4</span> 2.4. Git / GitHub con R</h3>
+<section id="git-github-con-r" class="level4" data-number="1.0.2.4">
+<h4 data-number="1.0.2.4" class="anchored" data-anchor-id="git-github-con-r"><span class="header-section-number">1.0.2.4</span> Git / GitHub con R</h4>
 <p>Veamos cómo configurar todo. Gran parte de lo que está aquí proviene del libro <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> de Jenny Bryan y del artículo de <a href="https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r/">David Keyes</a> puedes ver sus vídeos en caso de que, la breve explicación que presentamos abajo, no sea suficiente para ti.</p>
 <ul>
 <li><span style="color: blue;"><em>Instalar Git</em></span>: El primer paso es instalar Git, en el <a href="https://happygitwithr.com/install-git">Capítulo 6 del libro</a> explican el proceso para los usuarios de Mac, Windows y Linux. Nosotros ya lo tenemos instalado, así que mostramos cómo verificar si tienes Git instalado y su versión usando el terminal en RStudio.</li>
@@ -384,8 +375,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Observa los nuevos cambios resaltados en color verde. Frente a los valores antiguos que aparecerán en color rojo.</p></li>
 </ul>
 </section>
-<section id="conectar-rstudio-y-github" class="level3" data-number="1.1.5">
-<h3 data-number="1.1.5" class="anchored" data-anchor-id="conectar-rstudio-y-github"><span class="header-section-number">1.1.5</span> 2.5. Conectar RStudio y GitHub</h3>
+<section id="conectar-rstudio-y-github" class="level4" data-number="1.0.2.5">
+<h4 data-number="1.0.2.5" class="anchored" data-anchor-id="conectar-rstudio-y-github"><span class="header-section-number">1.0.2.5</span> Conectar RStudio y GitHub</h4>
 <p>El proceso hasta ahora nos ha permitido usar Git localmente. Pero, ¿qué pasa si queremos conectarnos a GitHub? ¿Cómo lo hacemos?</p>
 <p>La mejor manera de conectar RStudio y GitHub es usando tu nombre de usuario y un token de acceso personal (PAT). Para generar un token de acceso personal, usa la función <code>create_github_token()</code> de <code>usethis</code>. Esto te llevará a la página correspondiente en el sitio web de GitHub, donde le darás un nombre a tu token y lo copiarás (¡no lo pierdas porque nunca volverá a aparecer!).</p>
 <p>En la consola de RStudio:</p>
@@ -407,8 +398,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># introduce el token copiado en el paso anterior</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="conectar-proyectos-de-rstudio-con-repositorios-de-github" class="level3" data-number="1.1.6">
-<h3 data-number="1.1.6" class="anchored" data-anchor-id="conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.1.6</span> 2.6. Conectar proyectos de RStudio con repositorios de GitHub</h3>
+<section id="conectar-proyectos-de-rstudio-con-repositorios-de-github" class="level4" data-number="1.0.2.6">
+<h4 data-number="1.0.2.6" class="anchored" data-anchor-id="conectar-proyectos-de-rstudio-con-repositorios-de-github"><span class="header-section-number">1.0.2.6</span> Conectar proyectos de RStudio con repositorios de GitHub</h4>
 <p>Ahora que hemos conectado RStudio y GitHub, discutamos cómo hacer que los dos funcionen juntos. La idea básica es que configures los proyectos que creas en RStudio con repositorios GitHub asociados. Cada proyecto de RStudio vive en un solo repositorio de GitHub.</p>
 <p>¿Cómo conectamos un proyecto de RStudio a un repositorio de GitHub? Happy Git and GitHub for the useR propone tres estrategias. Demostraremos la forma más sencilla</p>
 <p>crear un repositorio en GitHub primero. Cree el repositorio y, a continuación, cuando inicie un nuevo proyecto en RStudio, utilice la opción de control de versiones, introduzca la URL de su repositorio y listo.</p>
@@ -423,8 +414,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>A continuación podrás consultarse la pestaña “Git” y ver la información asociada al repositorio descargado.</p></li>
 </ul>
 </section>
-<section id="flujo-de-trabajo-general" class="level3" data-number="1.1.7">
-<h3 data-number="1.1.7" class="anchored" data-anchor-id="flujo-de-trabajo-general"><span class="header-section-number">1.1.7</span> 2.7. Flujo de trabajo general</h3>
+<section id="flujo-de-trabajo-general" class="level4" data-number="1.0.2.7">
+<h4 data-number="1.0.2.7" class="anchored" data-anchor-id="flujo-de-trabajo-general"><span class="header-section-number">1.0.2.7</span> Flujo de trabajo general</h4>
 <p>Ahora que hemos conectado RStudio y GitHub, podemos compartir nuestro trabajo entre los dos.</p>
 <p><strong>Push (Subir a Github)</strong></p>
 <p>“Push” significa enviar cualquier cambio en tu código de RStudio a GitHub. Para hacer esto, primero tenemos que hacer un commit. Después de confirmar, ahora tenemos un botón (la flecha hacia arriba) en RStudio que podemos usar para enviar nuestro código a GitHub.</p>
@@ -452,8 +443,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>¡Ahora está todo configurado para usar Git y GitHub con RStudio!</p>
 </section>
 </section>
-<section id="los-datos-y-sus-tipos" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="los-datos-y-sus-tipos"><span class="header-section-number">1.2</span> 3. Los datos y sus tipos</h2>
+<section id="los-datos-y-sus-tipos" class="level3" data-number="1.0.3">
+<h3 data-number="1.0.3" class="anchored" data-anchor-id="los-datos-y-sus-tipos"><span class="header-section-number">1.0.3</span> Los datos y sus tipos</h3>
 <p>En vuestro curso de Estadística estudiasteis algunas técnicas básicas de estadística descriptiva. Estas técnicas consisten en una serie de valores y gráficos que nos permiten resumir y explorar un conjunto de datos, con el objetivo final de entenderlos o describirlos lo mejor posible.</p>
 <p>Los datos de los que disponemos suelen ser multidimensionales, en el sentido de que observamos varias características (<strong>variables</strong>) de una serie de individuos. Almacenamos estos datos en <strong>tablas de datos</strong> como la que presentamos abajo, donde cada columna corresponde a una variable y cada fila son los datos de un individuo concreto. Así, en esta tabla, cada fila representa un niño y cada columna recoge una de las características que hemos anotado: su nombre, su altura (en cm), su número de hermanos, el color de sus cabellos, el número semanal de refrescos que suele tomar, y su grado de satisfacción con un juego para móvil (entre 0 y 5).</p>
 <div class="cell">
@@ -596,8 +587,8 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <p>Así, para datos cualitativos sólo tiene interés estudiar y representar las frecuencias con que aparecen sus diferentes valores, mientras que el análisis de datos cuantitativos suele involucrar el cálculo de medidas estadísticas, como la media o la desviación típica, que expresen numéricamente sus propiedades.</p>
 <p>Os dejamos el material <a href="https://aprender-uib.github.io/AprendeR1/">Aprender R1</a> para que repaséis los capítulos 10 al 14 correspondientes a la parte de Estadística descriptiva.</p>
 </section>
-<section id="práctica-1" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="práctica-1"><span class="header-section-number">1.3</span> 4. <span style="color: red;"><em>Práctica 1</em></span>:</h2>
+<section id="práctica-1" class="level3" data-number="1.0.4">
+<h3 data-number="1.0.4" class="anchored" data-anchor-id="práctica-1"><span class="header-section-number">1.0.4</span> <span style="color: red;"><em>Práctica 1</em></span>:</h3>
 <ul>
 <li><p>Formad grupos de 3 integrantes.</p></li>
 <li><p>Trabajaréis con los datos <a href="https://allisonhorst.github.io/palmerpenguins/">pingüinos</a>, leed la documentación y seguid las siguientes instrucciones:</p>
@@ -644,10 +635,10 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <li><p>Entregad el reporte en la tarea de Aula Digital disponible. Revisad la fecha en que cierra la tarea.</p></li>
 </ul>
 </section>
-<section id="gramática-limpia-y-coherente-con-tidyverse" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.4</span> 5. Gramática limpia y coherente con <code>Tidyverse</code></h2>
-<section id="la-librería-tidyverse" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="la-librería-tidyverse"><span class="header-section-number">1.4.1</span> 5.1. La librería <code>Tidyverse</code></h3>
+<section id="gramática-limpia-y-coherente-con-tidyverse" class="level3" data-number="1.0.5">
+<h3 data-number="1.0.5" class="anchored" data-anchor-id="gramática-limpia-y-coherente-con-tidyverse"><span class="header-section-number">1.0.5</span> Gramática limpia y coherente con <code>Tidyverse</code></h3>
+<section id="la-librería-tidyverse" class="level4" data-number="1.0.5.1">
+<h4 data-number="1.0.5.1" class="anchored" data-anchor-id="la-librería-tidyverse"><span class="header-section-number">1.0.5.1</span> La librería <code>Tidyverse</code></h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -711,8 +702,8 @@ La variable “Refrescos semanales” es de un tipo de datos ordinales muy concr
 <p>Se puede ver la versión del paquete tidyverse y la de los paquetes base.</p>
 <p><span style="color: red;">Cuidado</span>: algunas funciones de R se sobrescriben por sus equivalentes de <code>tidyverse</code>. En ocasiones es preferible indicar explícitamente el nombre de la función que deseamos utilizar, por ejemplo: <code>dplyr::group_by</code> para distinguir de <code>plyr::group_by</code> (dplyr es una evolución del paquete plyr).</p>
 </section>
-<section id="qué-significa-tidy-data" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="qué-significa-tidy-data"><span class="header-section-number">1.4.2</span> 5.2. ¿Qué significa tidy data?</h3>
+<section id="qué-significa-tidy-data" class="level4" data-number="1.0.5.2">
+<h4 data-number="1.0.5.2" class="anchored" data-anchor-id="qué-significa-tidy-data"><span class="header-section-number">1.0.5.2</span> ¿Qué significa tidy data?</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1053,7 +1044,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Prefacio</span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Presentación</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
@@ -1065,7 +1056,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Introducción a la probabilidad para el análisis de datos: Con R y python.</div>   
+    <div class="nav-footer-left">Análisis de Datos para el GMAT-UIB</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>

@@ -1,4 +1,6 @@
-## 1. La estadística y el método científico
+## Introducción al Análisis Multivariante de Datos
+
+### La estadística y el método científico
 
 -   La ciencia avanza definiendo teorías que intentan explicar el mundo.
 
@@ -38,9 +40,9 @@
 
 En resumen, la estadística es una herramienta esencial que ayuda a garantizar que la investigación científica sea rigurosa, confiable y basada en evidencia sólida.
 
-## 2. Gestión básica de datos
+### Gestión básica de datos
 
-### 2.1. Introducción
+#### Introducción
 
 -   En estadística, siempre se empieza obteniendo unos **datos** sobre un grupo (relativamente pequeño) de individuos de una población. Bueno, en realidad, no se empieza obteniendo los datos, sino planificando cuidadosamente cómo se van a obtener, pero todo forma parte de la "obtención" de los datos.
 
@@ -66,7 +68,7 @@ La estadística inferencial entra en juego cuando se quiere obtener información
 
 Pero si quisiéramos conocer la altura media de los mallorquines entre 18 y 25 años, sería muy complicado medirlos a todos. Entonces, lo que haríamos sería tomar una muestra representativa de esta población, medirlos y a partir de sus alturas estimar dicha altura media. Naturalmente, lo más seguro es que de esta manera no obtuviéramos el valor exacto de la altura media de los mallorquines de 18 años, nos tendríamos que conformar con obtener una aproximación dentro de un cierto margen de error y determinar la probabilidad de acertar con nuestra estimación y este margen de error. La estadística inferencial es la que nos permite acotar el error que podamos haber cometido y calcular la probabilidad de cometerlo, incluyendo la metodología que tendríamos que haber usado para tomar la muestra en primer lugar.
 
-### 2.2. R/ RStudio - Posit / RMarkdowm - Quarto
+####  R/ RStudio - Posit / RMarkdowm - Quarto
 
 Todas las técnicas que usaremos en la asignatura pueden ser implementadas y/o desarrolladas en software libre como Python y R. Ambos se consideran lenguajes de programación esenciales para la ciencia de datos. Lo ideal sería dominar ambos para tener una base de programación completa, pero:
 
@@ -93,7 +95,7 @@ knitr::include_graphics("Figuras/posit.JPG")
 -   **Posit Cloud** permite acceder al potente conjunto de herramientas de ciencia de datos de Posit directamente desde su navegador. Esto favorecerá el trabajo en equipo. Podéis revisar la siguiente [Guía](https://posit.cloud/learn/guide) para crearos una cuenta.
 
 
-### 2.3. Control de versiones con Git / GitHub
+#### Control de versiones con Git / GitHub
 
 * En esta asignatura la forma de llegar a un resultado de análisis de datos es tan importante como el propio resultado. Además, uno de los objetivos es exponeros al uso de herramientas de software para la ciencia de datos moderna. 
 
@@ -121,7 +123,7 @@ knitr::include_graphics("Figuras/GitHub.png")
 
 * Crearemos en GitHub un repositorio por estudiante/equipo para cada entrega. Utilizaremos un sencillo flujo de trabajo centralizado que sólo requiere realizar acciones simples como push, pull, add, rm, commit, status y clone.
 
-### 2.4. Git / GitHub con R
+#### Git / GitHub con R
 
 Veamos cómo configurar todo. Gran parte de lo que está aquí proviene del libro [Happy Git and GitHub for the useR](https://happygitwithr.com/) de Jenny Bryan y del artículo de [David Keyes](https://rfortherestofus.com/2021/02/how-to-use-git-github-with-r/)   puedes ver sus vídeos en caso de que, la breve explicación que presentamos abajo, no sea suficiente para ti.
 
@@ -193,7 +195,7 @@ En RStudio:
 * Observa los nuevos cambios resaltados en color verde.
 Frente a los valores antiguos que aparecerán en color rojo.
 
-### 2.5. Conectar RStudio y GitHub
+#### Conectar RStudio y GitHub
 
 El proceso hasta ahora nos ha permitido usar Git localmente. Pero, ¿qué pasa si queremos conectarnos a GitHub? ¿Cómo lo hacemos?
 
@@ -221,7 +223,7 @@ gitcreds::gitcreds_set()
 # introduce el token copiado en el paso anterior
 ```
 
-### 2.6. Conectar proyectos de RStudio con repositorios de GitHub
+#### Conectar proyectos de RStudio con repositorios de GitHub
 
 Ahora que hemos conectado RStudio y GitHub, discutamos cómo hacer que los dos funcionen juntos. La idea básica es que configures los proyectos que creas en RStudio con repositorios GitHub asociados. Cada proyecto de RStudio vive en un solo repositorio de GitHub.
 
@@ -245,7 +247,7 @@ Para bajar un repositorio creado en Github a un proyecto local en RStudio, tendr
 
 * A continuación podrás consultarse la pestaña “Git” y ver la información asociada al repositorio descargado.
 
-### 2.7. Flujo de trabajo general
+#### Flujo de trabajo general
 
 Ahora que hemos conectado RStudio y GitHub, podemos compartir nuestro trabajo entre los dos.
 
@@ -289,7 +291,7 @@ Volvemos a RStudio:
 ¡Ahora está todo configurado para usar Git y GitHub con RStudio!
 
 
-## 3.  Los datos y sus tipos
+### Los datos y sus tipos
 
 En vuestro curso de Estadística estudiasteis algunas técnicas básicas de estadística descriptiva. Estas técnicas consisten en una serie de valores y gráficos que nos permiten resumir y explorar un conjunto de datos, con el objetivo final de entenderlos o describirlos lo mejor posible.
 
@@ -390,7 +392,7 @@ Así, para datos cualitativos sólo tiene interés estudiar y representar las fr
 Os dejamos el material [Aprender R1](https://aprender-uib.github.io/AprendeR1/) para que repaséis los capítulos 10 al 14 correspondientes a la parte de Estadística descriptiva.
 
 
-## 4. [*Práctica 1*]{style="color: red;"}:
+### [*Práctica 1*]{style="color: red;"}:
 
 * Formad grupos de 3 integrantes.
 
@@ -421,9 +423,9 @@ knitr::include_graphics("Figuras/pinguinos_madagascar.jpg")
 
 
 
-## 5. Gramática limpia y coherente con `Tidyverse`
+### Gramática limpia y coherente con `Tidyverse`
 
-### 5.1. La librería `Tidyverse`
+#### La librería `Tidyverse`
 
 
 ```{r, echo=FALSE, out.width='40%',fig.align='center'}
@@ -473,7 +475,7 @@ Se puede ver la versión del paquete tidyverse y la de los paquetes base.
 
 [Cuidado]{style="color: red;"}: algunas funciones de R se sobrescriben por sus equivalentes de `tidyverse`. En ocasiones es preferible indicar explícitamente el nombre de la función que deseamos utilizar, por ejemplo: `dplyr::group_by` para distinguir de `plyr::group_by` (dplyr es una evolución del paquete plyr).
 
-### 5.2. ¿Qué significa tidy data? 
+#### ¿Qué significa tidy data? 
 
 ```{r tidy_data, echo=FALSE,fig.align='center',out.width="50%"}
 knitr::include_graphics("Figuras/plot_tidy.png")
