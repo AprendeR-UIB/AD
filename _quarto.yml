@@ -1,0 +1,49 @@
+project:
+  type: book
+  output-dir: docs
+  
+
+book:
+  title: "Introducción a la probabilidad para el análisis de datos"
+  author: " "
+  date: "2/8/2023"
+  reader-mode: true
+  
+  page-footer:
+    left: |
+      Introducción a la probabilidad para el análisis de datos: Con R y python.
+    right: |
+     Este libro se ha creado con  <a href="https://quarto.org/">Quarto</a>.
+  cover-image: cover.jpg
+  favicon: cover.jpg
+  site-url: https://github.com/RicUIB/Enlaces
+  repo-url: https://github.com/RicUIB/Enlaces
+  repo-branch: main
+  repo-actions: [edit, issue]
+  chapters:
+    - index.qmd
+    - 0.qmd
+    - 1.qmd
+    - 2.qmd
+    - 3.qmd
+    - 4.qmd
+    - 5.qmd
+    - 6.qmd
+    - 7.qmd
+    - references.qmd
+    
+    
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    lang: es 
+  pdf:
+    documentclass: scrreprt
+    linkcolor: blue
+    lang: es 
+
+
+
