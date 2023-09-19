@@ -1,3 +1,5 @@
 # Presentación {.unnumbered}
 
-Esto es una edición en línea de los apuntes de Análisis de Datos del grado de Matemática de la UIB. Hemos escrito estas notas entre varios profesores del Grado. 
+Esto es una edición en línea de los apuntes de Análisis de Datos del grado de Matemática de la UIB. 
+
+Este libro fue editado en con  <a href="https://quarto.org/">Quarto</a>

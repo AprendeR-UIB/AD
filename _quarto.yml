@@ -11,11 +11,11 @@ book:
   
   page-footer:
     left: |
-      Análisis de Datos para el GMAT-UIB
+      Análisis de Datos UIB
     right: |
      Este libro se ha creado con  <a href="https://quarto.org/">Quarto</a>.
-  cover-image: cover.jpg
-  favicon: cover.jpg
+  cover-image: atlas.jpeg
+  favicon: atlas.jpeg
   site-url: https://aprender-uib.github.io/AD
   repo-url: https://github.com/AprendeR-UIB/AD/Enlaces
   repo-branch: main
