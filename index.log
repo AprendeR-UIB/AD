@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.3) (preloaded format=xelatex 2023.6.7)  18 SEP 2023 14:29
+This is XeTeX, Version 3.141592653-2.6-0.999994 (MiKTeX 22.3) (preloaded format=xelatex 2023.6.7)  20 SEP 2023 11:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1360,31 +1360,31 @@ File: Figuras/GitHub.png Graphic file (type bmp)
 <Figuras/GitHub.png>
 [9] [10] [11] [12] [13]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.665pt on input line 931.
+(Font)              scaled to size 7.665pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.475pt on input line 931.
+(Font)              scaled to size 5.475pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.95099pt on input line 931.
+(Font)              scaled to size 10.95099pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.66568pt on input line 931.
+(Font)              scaled to size 7.66568pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.4755pt on input line 931.
+(Font)              scaled to size 5.4755pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 10.94882pt on input line 931.
+(Font)              scaled to size 10.94882pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.66417pt on input line 931.
+(Font)              scaled to size 7.66417pt on input line 934.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.47441pt on input line 931.
+(Font)              scaled to size 5.47441pt on input line 934.
 ! Undefined control sequence.
-l.950 \BeginKnitrBlock
+l.953 \BeginKnitrBlock
                       {rmdcaution} 
 Here is how much of TeX's memory you used:
- 39346 strings out of 410967
- 794727 string characters out of 2828017
- 1437472 words of memory out of 3000000
- 59534 multiletter control sequences out of 15000+600000
- 475788 words of font info for 78 fonts, out of 8000000 for 9000
+ 39360 strings out of 410967
+ 795191 string characters out of 2828017
+ 1437262 words of memory out of 3000000
+ 59547 multiletter control sequences out of 15000+600000
+ 475796 words of font info for 79 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 108i,9n,121p,10602b,903s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 108i,9n,121p,10602b,901s stack positions out of 10000i,1000n,20000p,200000b,80000s
 
 Output written on index.pdf (13 pages).
