@@ -773,6 +773,7 @@ head(penguins$species)
 
 #### Lectura de datos de texto rectangulares `readr`  
 
+
 El paquete **`readr`** proporciona funciones de lectura y escritura para múltiples formatos de archivo:
 
 * `read_delim()`: archivos delimitados en general
@@ -825,7 +826,7 @@ data <- read_csv(file = "./datos/penguins.csv", skip = 5)
 ```
 
 
-* Observa que} la salida de cualquier función `read_*()` es un objeto `tibble`.
+* Observa que la salida de cualquier función `read_*()` es un objeto `tibble`.
 
 
 * `readr` imprime las especificaciones de las columnas después de la importación. 
@@ -864,7 +865,7 @@ read_csv(file = "./datos/penguins.csv", guess_max = 2000)
 * Supongamos que deseamos dejar de utilizar los archivos `.xlsx` y `.csv` ya que no son capaces de almacenar de forma fiable los metadatos (por ejemplo, los tipos de datos).
 
 
-* Las funciones `write_rds()` y `read_rds()` (son warppers de `writeRDS` y `readRDS` del paquete base de R) proporcionan una buena alternativa para [serializar](https://en.wikipedia.org/wiki/Serialization) tus objetos `R` (por ejemplo, `tibbles`, modelos) y almacenarlos como archivos `.rds`.
+* Las funciones `write_rds()` y `read_rds()` proporcionan una buena alternativa para [serializar](https://en.wikipedia.org/wiki/Serialization) tus objetos de `R` (por ejemplo, `tibbles`, modelos) y almacenarlos como archivos `.rds`.
 
 * Más info sobre [archivos rds](https://mgimond.github.io/ES218/Week02b.html#Export_to_a_Rds_file)
 
@@ -891,14 +892,14 @@ Nota que:
 #### Ordenando datos `tidyr`
 
 
-* Podemos cambiar el formato de una tabla de datos de largo a ancho y viceversa con las funciones: `pivot_longer()` y `pivot_wider()`.
+* Podemos cambiar el formato de una tabla de datos con las funciones: `pivot_longer()` y `pivot_wider()` tal como se muestra en la siguiente figura.
 
 ```{r, out.width="50%",fig.align='center',echo=FALSE}
 knitr::include_graphics("Figuras/pivotting.png") 
 ```
 
 
-Tomamos la tabla de datos no tidy del Ejemplo 1 de estas notas y tratamos de estructurarla correctamente. La tabla es la hemos llamado `ejemplo1` y la presentamos a continuación:
+* [Ejemplo]{style="color: blue;"}: Tomamos la tabla de datos no tidy del Ejemplo 1 de estas notas y tratamos de estructurarla correctamente. La tabla la hemos llamado `ejemplo1` y os la presentamos a continuación:
 
 ```{r, warning=FALSE, echo=FALSE}
 library(palmerpenguins)
@@ -912,7 +913,7 @@ ejemplo1 <-penguins %>%
 ejemplo1
 ```
 
-Aplicamos la función `pivot_longer` para hacerla tidy:
+Vamos a aplicar la función `pivot_longer` para hacerla tidy:
 
 ```{r}
 nueva <- ejemplo1 %>% 
@@ -928,11 +929,12 @@ nueva
 
 
 
-* Puedes encontrar más información acerca de `pivot_*()` en [Pivoting . tidyr ](https://tidyr.tidyverse.org/articles/pivot.html).
+* Puedes encontrar más información acerca de `pivot_*()` en [tidyr ](https://tidyr.tidyverse.org/articles/pivot.html).
 
 
 
-* Otra cosa que podemos hacer es "agrupar"anidar" datos de manera que cada grupo se convierte en una sola fila en un data frame.
+* Otra cosa que podemos hacer con `tidyr` es "agrupar" datos de manera que cada grupo se convierte en una sola fila en un data frame. La función `nest()` genera datos anidados en un data frame con una fila por `species` y `year`.
+
 
 ```{r}
 nested_penguins <- penguins %>% 
@@ -944,10 +946,7 @@ nested_penguins
 ```
 
 
-- La función `nest()` genera datos anidados en un data frame con una fila por `species` y `year`.
-
-
-- Los datos anidados `nested_data` por columnas contienen `tibbles` con seis columnas cada uno y  un  número de observaciones que pueden ser distintos.
+- Los datos anidados `nested_penguins` contienen `tibbles` con seis columnas cada uno y  un  número de observaciones que pueden ser distintos.
 
 
 - Los datos anidados son útiles si queremos aplicar funciones a cada subgrupo  de datos  (por ejemplo, comparar  estadísticos por especie).
@@ -961,7 +960,7 @@ nested_penguins %>% unnest(cols = c(nested_data))
 
 
 
-* Dividir y combinar múltiples columnas en una sola.
+* [Ejemplo]{style="color: blue;"}: Dividir y combinar múltiples columnas en una sola.
 
 ```{r}
 penguins %>% unite(col = "specie_sex",
@@ -969,22 +968,22 @@ penguins %>% unite(col = "specie_sex",
 ```
 
 
-* Separar una sola columna, que contiene varios valores, en varias columnas.
+* [Ejemplo]{style="color: blue;"}: Separar una sola columna, que contiene varios valores, en varias columnas.
 ```{r}
 penguins %>% separate(bill_length_mm, sep = 2, into = c("cm", "mm"))
 ```
 
 
-* Separar una sola columna, que contiene varios valores, en varias filas.
+* [Ejemplo]{style="color: blue;"}: Separar una sola columna, que contiene varios valores, en varias filas.
 ```{r}
 penguins %>% separate_rows(island, sep = "s", convert = T)
 ```
 
 
 
-* **Manejo de los valores perdidos:** 
+#### **Manejo de NAs** 
 
-Supongamos que tenemos una tibble y queremos hacer explícitos los valores perdidos.
+Supongamos que tenemos una tibble que llamamos `incompl_penguins` y queremos hacer explícitos los valores perdidos porque la tabla luce de la siguiente forma:
 
 ```{r, echo=F}
 incompl_penguins <- tibble(
@@ -995,7 +994,7 @@ incompl_penguins <- tibble(
 incompl_penguins
 ```
 
-Para hacer explícitos los NAs:
+Para hacer explícitos los NAs, ejecutamos las siguientes instrucciones:
 
 ```{r}
 incompl_penguins %>% 
@@ -1003,14 +1002,15 @@ incompl_penguins %>%
 ```
 
 
-Para hacer implícitos los valores perdidos explícitos.
+Si, por el contrario, queremos hacer implícitos los valores perdidos, ejecutamos la instrucción:
+
 ```{r}
 incompl_penguins %>% 
   drop_na(measurement)
 ```
 
 
-* Reemplazar los valores que faltan por la entrada siguiente o anterior. 
+* Para reemplazar los valores faltantes por la entrada siguiente:
 
 ```{r}
 incompl_penguins %>% 
@@ -1026,17 +1026,947 @@ incompl_penguins %>%
 
 
 
-* Más   información en [`tidyr` cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
+* Más   información en la [Hoja de trucos de `tidyr`](https://raw.githubusercontent.com/rstudio/cheatsheets/master/data-import.pdf).
 
 
-* Los argumentos de una función precedidos por un punto en el tidyverse pueden tener una de estas dos razones:
+* [Recordad]{style="color: red;"}: Los argumentos de una función precedidos por un punto en el tidyverse pueden deberse a dos razones:
 
-  - la función es todavía prematura, es decir, los desarrolladores aún piensan en la mejor manera de implementar y nombrar la función
+  - La función es todavía una versión no acabada, es decir, los desarrolladores aún piensan en la mejor manera de implementar y nombrar la función.
 
-  - la función se aplica regularmente dentro de otra función para no confundir los argumentos de la función entre la función interna y la externa
+  - La función se aplica regularmente dentro de otra función para no confundir los argumentos de la función interna y la externa.
 
-<!-- ### 5.7.  Manipulación de datos `dplyr`  -->
+<br>
 
-<!-- ### 5.8.  Visualización de datos `ggplot2`  -->
+### Manipulación de datos `dplyr`
+
+
+`dplyr` proporciona un conjunto de funciones para manipular objetos `tibbles`. Las funciones están representadas por "acciones" que reflejan las operaciones subyacentes y siempre dan como resultado un `tibble` nuevo o modificado.
+
+
+#### **Operaciones por filas**
+
+- `filter()` selecciona las filas que cumplen uno o varios criterios lógicos
+
+- `slice()` selecciona las filas en función de su ubicación en los datos
+
+- `arrange()` cambia el orden de las filas
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar un data frame con los pingüinos de la especie "Adelie".
+
+```{r}
+penguins %>% 
+  filter(species == "Adelie")
+```
+
+
+
+[Ejemplo]{style="color: blue;"}: Encontrar los pingüinos con NAs en la variable `bill_length_mm`.
+
+
+```{r}
+penguins %>% 
+  filter(is.na(bill_length_mm) == T)
+```
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar los pingüinos observados antes del año 2008 o después del año 2008 y que tienen masa corporal entre 3800 y 4000 gramos.
+
+
+```{r}
+penguins %>% 
+  filter(between(body_mass_g, 3800, 4000) & (year < 2008 | year > 2008))
+```
+
+
+ 
+[Ejemplo]{style="color: blue;"}: Seleccionar los pingüinos de acuerdo a su ubicación.
+
+```{r}
+penguins %>% 
+  slice(23:27)
+```
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar los 5 primeros pingüinos 
+
+```{r}
+penguins %>% 
+  slice_head(n = 5) 
+# alternativamente: 
+#slice_head(frac = 0.05)
+```
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar una muestra aleatoria de `n` pingüinos
+
+
+```{r}
+penguins %>% 
+  slice_sample(n = 5)
+```
+
+
+* [Ejemplo]{style="color: blue;"}: Seleccionar los `n` pingüinos con el pico más grande.
+
+```{r}
+penguins %>% 
+  slice_max(bill_length_mm, n = 5)
+```
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar los cinco pingüinos con menor masa corporal.
+
+```{r}
+penguins %>% 
+  arrange(body_mass_g) %>% 
+  slice_head(n = 5)  # equivalentente a: slice_min(body_mass_g, n = 3)
+```
+
+
+
+#### **Operaciones por columnas**
+
+- `select()` selecciona determinadas columnas
+
+- `rename()` cambia los nombres de las columnas
+
+- `relocate()` cambia el orden de las columnas
+
+- `mutate()` transforma los valores de las columnas y/o crea nuevas columnas
+
+
+[Ejemplo]{style="color: blue;"}: Selección por número de la(s) columna(s)
+
+```{r}
+penguins %>% 
+  select(1:3) %>% 
+  glimpse
+```
+
+
+[Ejemplo]{style="color: blue;"}: Selección por nombre de la(s) columna(s)
+
+```{r}
+penguins %>% 
+  select(species, island, bill_length_mm) %>% 
+  glimpse
+```
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar todas las columnas
+
+```{r}
+penguins %>% 
+  select(everything()) %>% 
+  glimpse
+
+# select(last_col())
+```
+
+[Ejemplo]{style="color: blue;"}: Seleccionar las columnas cuyos nombres empiezan por un patrón específico
+
+```{r}
+penguins %>% 
+  select(starts_with("bill")) %>% 
+  glimpse
+# ends_with()
+```
+
+
+
+```{r}
+penguins %>% 
+  select(contains("e") & contains("a")) %>% 
+  glimpse
+```
+
+
+[Ejemplo]{style="color: blue;"}: Seleccionar columnas en base a una expresión regular ([regex](https://www.rexegg.com/regex-quickstart.html))
+
+```{r}
+penguins %>% 
+  select(matches("_\\w*_mm$")) %>% 
+  glimpse
+```
+
+
+```{r}
+penguins %>% 
+  select(where(is.numeric)) %>% 
+  glimpse
+```
+
+* [Ejercicio]{style="color: red;"}: ¿Qué columnas devuelven las siguientes consultas?
+
+```{r, eval=F}
+penguins %>% 
+  select(ends_with("mm"))
+```
+
+```{r, eval=F}
+penguins %>% 
+  select(-contains("mm"))
+```
+
+```{r, eval=F}
+penguins %>% 
+  select(where(~ is.numeric(.))) %>%  # select(where(is.numeric))
+  select(where(~ mean(., na.rm = T) > 1000))
+```
+
+
+[Ejemplo]{style="color: blue;"}: Cambiar el nombre de la columna `body_mass_g` a bm  y `sex`  a  gender.
+
+```{r}
+penguins %>% rename(bm = body_mass_g, gender = sex) %>% 
+  colnames()
+```
+
+[Ejemplo]{style="color: blue;"}: Cambiar los nombres de las columnas que incluyen `"mm"` a mayúsculas.
+
+```{r}
+penguins %>% rename_with(.fn = toupper, .cols = contains("mm")) %>% 
+  colnames()
+```
+
+
+[Ejemplo]{style="color: blue;"}: Cambiar el orden de las columnas en la `tibble` de acuerdo al siguiente esquema:
+
+1. colocar "especie" después de "masa corporal".
+2. colocar "sexo" antes de "especie".
+3. colocar "isla" al final
+
+```{r}
+penguins %>% 
+  relocate(species, .after = body_mass_g) %>%
+  relocate(sex, .before = species) %>%
+  relocate(island, .after = last_col()) %>%
+  colnames()
+```
+
+[Ejemplo]{style="color: blue;"}: Crear una nueva variable `bm_kg` que ponga `body_mass_g` en kilogramos.
+
+```{r}
+penguins %>% 
+  mutate(bm_kg = body_mass_g/1000, .keep = "all", .after = island) %>% 
+  slice_head(n = 5)
+```
+
+- Usamos `.keep` para especificar las columnas que se mantendrán después de la manipulación.
+- Usamos `.before`/`.after` para especificar la posición de la nueva columna.
+- Para anular una columna dada simplemente utiliza el mismo nombre de columna.
+- Para mantener únicamente la nueva columna utiliza `dplyr::transmute()`.
+
+
+[Ejemplo]{style="color: blue;"}: Codificación de una variable categórica con "C" niveles de factor en "C-1" binarias o dummies.
+
+```{r}
+penguins %>% 
+  mutate(
+    sex_binary = case_when(
+      sex == "male" ~ 1,
+      sex == "female" ~ 0),
+    .keep = "all", .after = island
+  ) %>% 
+  slice_head(n = 3)
+```
+
+
+[Ejemplo]{style="color: blue;"}:
+
+`case_when`:
+  - Versión vectorizada de if_else
+  
+  - Fórmulas de dos lados: El LHS comprueba la condición, el RHS especifica el valor de sustitución
+  
+  - Para los casos no coincidentes, la función devuelve NA
+  
+  - Utiliza el LHS `TRUE` para capturar todos los casos no especificados explícitamente de antemano.
+  
+  
+
+[Ejemplo]{style="color: blue;"}: Transformar las variables de medidas a metros
+
+```{r}
+penguins %>% 
+  mutate(
+    across(contains("mm"), ~ ./1000),
+    .keep = "all"
+  ) %>% 
+  slice_head(n = 3)
+```
+
+
+[Ejemplo]{style="color: blue;"}:
+
+`across`:
+
+- Aplicar la misma transformación en varias columnas
+
+- Te permite utilizar la semántica que conoces de la función `select()`.
+
+- No requiere que se especifique explícitamente un nombre de columna, ya que sólo transforma las columnas existentes
+
+
+[Ejemplo]{style="color: blue;"}: Definir `species`, `island` y `sex` como variables categóricas, es decir factores, usando `across()`.
+
+```{r}
+penguins %>% 
+  mutate(
+    across(where(is.character), as.factor),
+    .keep = "all"
+  ) %>% 
+  slice_head(n = 3)
+```
+
+
+#### **Operaciones sobre datos agrupados**
+
+- `group_by()` divide los datos en función de una o varias columnas
+
+- `summarise()` reduce un grupo de datos en una sola fila
+
+
+[Ejemplo]{style="color: blue;"}: Partición de los datos por tipo de especie del pingüino
+
+```{r}
+penguins %>% group_by(species)
+```
+
+Utiliza `group_keys()`, `group_indices()` y `group_vars()` para acceder a las claves de agrupación, los índices de grupo por fila y las variables de agrupación. 
+
+
+
+* `group_by()` cambia la representación del `tibble` y lo transforma en un data frame agrupado (`grouped_df`). Esto nos permite operar en los subgrupos individualmente usando `summarise()`.
+
+
+[Ejemplo]{style="color: blue;"}:
+
+```{r}
+penguins %>% group_by(species) %>% 
+  summarise(count = n(), .groups = "drop")
+```
+
+
+```{r}
+penguins %>% group_by(species, sex) %>% summarise(count = n(), .groups = "drop")
+```
+
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    across(contains("mm"), ~ mean(., na.rm = T), .names = "{.col}_media"),
+    .groups = "drop"
+  )
+```
+
+
+> Utilizar `group_by()`, seguido de `summarise()` y `ungroup()` refleja el paradigma **dividir-aplicar-combinar** del análisis de datos: Dividir los datos en particiones, aplicar alguna función a los datos y luego combinar los resultados.
+
+
+* `.add = T` permite añadir nuevas variables de agrupación (si no, se anula la primera)
+
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  group_by(year, .add = T)   # equivalente a: group_by(species, year)
+```
+
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    across(
+      contains("mm"),
+      list(media = ~ mean(., na.rm = T), sd = ~ sd(., na.rm = T)),
+      .names = "{.col}_{.fn}"
+    ),
+    .groups = "drop"
+  )
+```
+
+
+[Ejemplo]{style="color: blue;"}: Las funciones de resumen, por ejemplo, `mean()` o `sd()` operan en particiones de los datos en lugar de en los datos completos
+
+```{r}
+penguins %>%
+  group_by(species) %>% 
+  mutate(stand_bm = (body_mass_g - mean(body_mass_g, na.rm = T))
+         /sd(body_mass_g, na.rm = T)) %>% 
+  glimpse
+```
+
+
+
+[Ejemplo]{style="color: blue;"}: Calcular franjas para la masa corporal de acuerdo a la cantidad de desviaciones estándar de la media. Agrupar los datos según estos intervalos.
+
+```{r, eval=FALSE}
+bm_breaks <- mean(penguins$body_mass_g, 
+                  na.rm = T) - (-3:3) *
+  sd(penguins$body_mass_g,na.rm = T)
+
+penguins %>% 
+  group_by(species, bm_bin = cut(body_mass_g, breaks = bm_breaks)) %>%
+  summarise(count = n(), .groups = "drop")
+```
+
+
+
+```{r, echo=FALSE}
+bm_breaks <- mean(penguins$body_mass_g, 
+                  na.rm = T) - (-3:3) *
+  sd(penguins$body_mass_g,na.rm = T)
+
+penguins %>% 
+  group_by(species, bm_bin = cut(body_mass_g, breaks = bm_breaks)) %>%
+  summarise(count = n(), .groups = "drop")
+```
+
+
+[Ejemplo]{style="color: blue;"}: Filtrar en las particiones en lugar de en la totalidad de los datos
+
+```{r}
+penguins %>% 
+  group_by(species, island) %>% 
+  filter(flipper_length_mm == max(flipper_length_mm, na.rm = T))
+```
+
+
+[Ejemplo]{style="color: blue;"}: Utilizar `group_by()` seguido de `nest()` para producir un data frame anidado
+
+```{r}
+penguins %>% 
+  group_by(species, year) %>% 
+  tidyr::nest()
+```
+
+Puedes encontrar más información de `group_by()` ejecutando `vignette("grouping")`.
+
+
+#### **Otras operaciones con `dlpyr`**
+
+* `distinct()` selecciona sólo filas únicas
+```{r}
+penguins %>% 
+  distinct(species, island)
+```
+
+* `pull()` extrae columnas individuales como vectores
+
+```{r, eval=FALSE}
+penguins %>% 
+  pull(year)  # equivalente a: penguins$year
+```
+
+
+* `if_else()` sentencia if-else vectorizada.
+```{r}
+penguins %>% select(species, island, body_mass_g) %>% 
+  mutate(penguin_size = if_else(body_mass_g < 3500,
+                                "pequeño",
+                                "grande"))
+```
+
+
+* `lag()` desplaza los valores de las columnas `n` posiciones hacia adelante
+
+```{r}
+penguins %>% select(species, body_mass_g) %>% 
+  mutate(lagged_bm = lag(body_mass_g, n = 1))
+```
+
+
+* Combinar diferentes data frames haciendo coincidir las filas en función de la "key"
+
+```{r, out.width="40%",fig.align='center',echo=FALSE}
+knitr::include_graphics("Figuras/combinar_tablas.PNG") 
+```
+
+[Nota]{style="color: red;"}
+
+* En el enlace de [Tidydatatutor](https://tidydatatutor.com/) puedes escribir código R y Tidyverse en tu navegador y ver cómo cambia el data frame en cada paso del pipeline que has escrito.
+
+Aquí os dejamos el enlace para visualizar las  instrucciones más utilizadas de tidyverse con el ejemplo de los pingüinos:
+
+* [arrange()](https://tidydatatutor.com/vis.html#trace=example-code/r_arrange.json)
+
+* [filter()](https://tidydatatutor.com/vis.html#trace=example-code/r_filter.json)
+
+
+* [mutate()](https://tidydatatutor.com/vis.html#trace=example-code/r_mutate.json)
+
+* [select()](https://tidydatatutor.com/vis.html#trace=example-code/r_select.json)
+
+* [group_by() %>%  slice()](https://tidydatatutor.com/vis.html#trace=example-code/r_grouped_slice.json)
+
+* [group_by() %>% summarize()](https://tidydatatutor.com/vis.html#trace=example-code/r_grouped_summarise.json)
+
+
+
+###  Visualización de datos `ggplot2`
+
+
+`ggplot2` es un sistema para crear gráficos de forma declarativa, basado en [The Grammar of Graphics](https://link.springer.com/chapter/10.1007/978-3-642-21551-3_13). Permite producir "**gráficos modernos para el análisis de datos**"
+
+La sintaxis de ggplot2 ayuda a pensar los gráficos de una manera nueva y más general que R base, por ejemplo, facilita el agregar las leyendas, los ejes, los colores, en comparación con R base.
+
+En [R gallery](https://r-graph-gallery.com/),  [R charts](https://r-charts.com) y en  [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/gallery/) puedes encontrar muchos ejemplos de gráficos con los códigos.
+
+
+### Gramática básica de `ggplot2`
+
+**Un ggplot necesita al menos tres cosas que hay que especificar: ** 
+
+* **Datos**: Normalmente un `tibble` del que se seleccionan las variables a visualizar. Siempre empezamos con **`ggplot(data = df)`** que le dice a `{ggplot2}` que vamos a trabajar con los datos `df`. 
+
+* **Estética**: Propiedades visuales que deseamos tenga nuestro gráfico. Por ejemplo, si deseamos visualizar la relación entre dos variables de `df`: `var1` en el eje `x`  y `var2` en el eje `y`, debemos especificar: **`aes(x = var1, y = var2)`**. 
+
+* **Geometría**: Forma geométrica que deseamos utilizar para representar los datos: puntos, líneas continuas, curvas, entre otras. Se especifica con **`geom_*()`**. Por ejemplo, `geom_point()` para hacer un diagrama de puntos.
+
+[Ejemplo]{style="color: blue;"}:
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE}
+penguins %>% 
+  ggplot(aes(x=bill_length_mm, y = flipper_length_mm)) +
+  geom_point(na.rm = TRUE)
+```
+ 
+### Más elementos de la gramática ... 
+
+* **Escalas**: Permiten anular los valores por defecto de una estética para especificar otros. La sintáxis es **`scale_*()`**. Existen escalas para asignar valores de manera discreta, continua o manual. También escalas de localización, para color, relleno; tamaño y figuras. 
+
+```{r, echo=F, out.height='60%', out.width='70%', fig.align='center'}
+knitr::include_graphics("Figuras/escalas.PNG")
+```
+
+
+*	**Resúmenes**: Permiten construir nuevas variables de resumen para hacer un gráfico. Por ejemplo: conteo, cuantiles, proporciones, curvas ajustadas. Se especifica con **`stat_*()`**. 
+
+```{r, echo=F, out.height='60%', out.width='70%', fig.align='center'}
+knitr::include_graphics("Figuras/stats.PNG")
+```
+
+
+* **Sistema de coordenadas**: Permite especificar cómo deseamos las coordenadas del gráfico. La sintáxis es **`coord_*`**.
+
+```{r, echo=F, out.height='50%', out.width='40%', fig.align='center'}
+knitr::include_graphics("Figuras/coordenadas.PNG")
+```
+
+
+* **Facetas**: Dividen una gráfica en múltiple subgráficas en base a una o varias variables discretas. La sintáxis es **`facet_*`**.
+
+```{r, echo=F, out.height='50%', out.width='40%', fig.align='center'}
+knitr::include_graphics("Figuras/facetas.PNG")
+```
+
+ 
+
+*	**Ajuste de las posiciones**: Permite indicar qué hacer con geoms que ocuparían la misma posición en la gráfica
+
+```{r, echo=F, out.height='50%', out.width='40%', fig.align='center'}
+knitr::include_graphics("Figuras/posicion.PNG")
+```
+
+
+* **Tema**: Valores visuales generales de un gráfico, como el fondo, las cuadrículas, los ejes, el tipo de letra predeterminado, los tamaños y los colores.
+
+```{r, echo=F, out.height='40%', out.width='40%', fig.align='center'}
+knitr::include_graphics("Figuras/temas.PNG")
+```
+
+
+#### Visualizando una variable cualitativa 
+
+Vamos a visualizar una variable cualitativa, con un tema que no es el que trae por defecto ggplot con fondo gris
+
+```{r, eval=FALSE}
+penguins %>% 
+  ggplot(aes(x = species)) +
+  geom_bar(fill="blue") + 
+  labs(x="Especie", y="Número de pingüinos") +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold")) 
+```
+
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE}
+penguins %>% 
+  ggplot(aes(x = species)) +
+  geom_bar(fill="blue") + 
+  labs(x="Especie", y="Número de pingüinos") +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"))
+  
+```
+
+
+#### Cruzando dos variables cualitativas 
+
+Para observar la distribución conjunta de dos variables cualitativas hay que mapear las a diferentes aspectos gráficos. 
+
+```{r, eval=FALSE}
+penguins %>% ggplot() + 
+  geom_bar(aes(species, fill=island),
+           position="dodge") + coord_flip() +
+  guides(fill = guide_legend(title = "Isla")) +
+  labs(x="Número de pingüinos", y="Especie") +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20)) 
+  
+```
+
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE}
+penguins %>% ggplot() + 
+  geom_bar(aes(species, fill=island),
+           position="dodge") + coord_flip() +
+  guides(fill = guide_legend(title = "Isla")) +
+  labs(y="Número de pingüinos", x="Especie") +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20)) 
+  
+```
+
+
+Para conseguir que cada barra represente el 100% de la categoría, se indica en el argumento de geom_bar.
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE}
+penguins %>% ggplot() + 
+  geom_bar(aes(species, fill=island),
+           position="fill") + coord_flip() +
+  guides(fill = guide_legend(title = "Isla")) +
+  labs(y="Proporción de pingüinos", x="Especie") +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20))
+```
+
+
+#### Visualizando una variable cuantitativa
+
+```{r, out.height='40%', out.width='60%', fig.align='center', message=FALSE}
+penguins %>% 
+  ggplot(aes(x = flipper_length_mm)) +
+  geom_histogram(na.rm = TRUE) +
+    labs(x="Longitud de la aleta en mm", 
+         y="Frecuencia absoluta") + 
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"))
+```
+
+#### Cruzando una variable cuantitativa con una cualitativa
+
+
+```{r, eval=FALSE}
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_histogram(aes(fill = species), 
+                 alpha = 0.5, 
+                 position = "identity",
+                 na.rm = TRUE) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Longitud de la aleta en mm",
+       y = "Frecuencia absoluta") +
+  guides(fill = guide_legend(title = "Especie")) +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20))
+```
+
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE}
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_histogram(aes(fill = species), 
+                 alpha = 0.5, 
+                 position = "identity",
+                 na.rm = TRUE) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Longitud de la aleta en mm",
+       y = "Frecuencia absoluta") +
+  guides(fill = guide_legend(title = "Especie")) +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20))
+```
+
+#### Cruzando una variable cuantitativa con una cualitativa
+
+Para que el gráfico sea más claro, se los puede separar con facetas: `facet_grid(.~species)` justo después de la capa geom_histogram.
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE, message=FALSE}
+ggplot(data = penguins, aes(x = flipper_length_mm)) +
+  geom_histogram(aes(fill = species), 
+                 alpha = 0.5, 
+                 position = "identity",
+                 na.rm = TRUE) +
+  facet_grid(.~species) +
+  scale_fill_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Longitud de la aleta en mm",
+       y = "Frecuencia absoluta") +
+  guides(fill = guide_legend(title = "Especie")) +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20))
+```
+
+
+#### Cruzando una variable cuantitativa con una cualitativa
+
+* La capa `facet_grid` admite dos variables como argumento, separadas por ~, las categorías de la primera definen las filas y las de la segunda, las columnas.  Si solo se usa una, se ubica un punto en el lugar de la otra.
+
+* Otra forma muy conveniente de cruzar una variable cuantitativa con otra cualitativa es usando boxplots. 
+
+```{r, eval=FALSE}
+ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
+  geom_boxplot(aes(color = species), width = 0.3, 
+               show.legend = FALSE) + 
+  geom_jitter(aes(color = species), alpha = 0.5, 
+              show.legend = FALSE, 
+              position = position_jitter(width = 0.2, seed = 0)) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Epecie", y = "Longitud de la aleta en mm")
+```
+
+#### Cruzando una variable cuantitativa con una cualitativa
+
+```{r, out.height='50%', out.width='60%', fig.align='center', message=FALSE, warning=FALSE, echo=FALSE}
+ggplot(data = penguins, aes(x = species, 
+                            y = flipper_length_mm)) +
+  geom_boxplot(aes(color = species),
+               width = 0.3, show.legend = FALSE) +
+  geom_jitter(aes(color = species), alpha = 0.5, 
+              show.legend = FALSE, 
+              position = position_jitter(width = 0.2, seed = 0)) +
+  scale_color_manual(values = c("darkorange","purple","cyan4")) +
+  labs(x = "Epecie",
+       y = "Longitud de la aleta en mm") +
+  theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20))
+```
+
+#### Cruzando dos variables cuantitativas
+
+```{r, eval=FALSE}
+ggplot(penguins) +
+  geom_point(mapping = aes(x = flipper_length_mm,
+                           y = body_mass_g,
+                           color = sex), size=3)+ theme_bw() +
+  theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20)) + 
+  guides(fill = guide_legend(title = "Sexo"))
+```
+
+
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, warning=FALSE, echo=FALSE}
+ggplot(penguins) +
+  geom_point(mapping = aes(x=flipper_length_mm,y = body_mass_g,color = sex), size=3)+ theme_bw()+
+  labs(x = "Longitud de la aleta en mm",
+       y = "Masa corporal en gramos") +
+  guides(fill = guide_legend(title = "Sexo")) +  
+theme(axis.text = element_text(size=20),
+        axis.title = element_text(size=20, face = "bold"),
+        legend.title = element_text(size=20)) 
+```
+
+
+####  Códigos de color html
+
+* Para utilizar colores personalizados, puedes consultar los [códigos de color HTML](https://www.w3schools.com/colors/colors_picker.asp) (también llamados *códigos hexadecimales*, por ejemplo, `#ff0000` para el rojo) en lugar de especificar los colores por su [nombre predefinido](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) en `R`.
+
+
+* Hexcodes: códigos que especifican el nivel de intensidad del color rojo (dos primeros), verde (dos segundos) y azul (dos últimos dígitos)
+
+* La familia de funciones `scale_colour_*()` permite ajustar los valores de la estética `color` (por ejemplo, `scale_colour_brewer()` selecciona una paleta del famoso proyecto [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)). 
+
+
+### Ejemplo integrando las herramientas de tidyverse 
+
+* Ejemplo 1: 
+
+```{r, message=FALSE, warning=FALSE}
+penguins_long <- penguins %>% 
+  tidyr::pivot_longer(
+    cols = contains("mm"),
+    names_to = "var", values_to = "val") %>% 
+  tidyr::drop_na()
+```
+
+```{r, eval=FALSE}
+penguins_long %>% 
+  ggplot(aes(x = var, y = val, fill=var)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(legend.position="none") +
+  labs(x="", y="Medida en mm")
+```
+
+
+
+
+```{r, echo=FALSE, out.height='50%', out.width='50%', fig.align='center', message=FALSE, warning=FALSE}
+penguins_long %>% 
+  ggplot(aes(x = var, y = val, fill=var)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(legend.position="none") +
+  labs(x="", y="Medida en mm") +
+  theme(axis.text = element_text(size=20),
+axis.title = element_text(size=20, face = "bold"),
+legend.title = element_text(size=20)) 
+```
+
+* Ejemplo 2:
+
+```{r, out.height='40%', out.width='60%', fig.align='center'}
+penguins %>%
+  dplyr::count(species) %>%
+  dplyr::mutate(prop = n / sum(n)) %>%
+  ggplot() + geom_col(aes(x = prop, y = species)) +
+  labs(x="Proporción", y="") + 
+  theme(axis.text = element_text(size=20),
+axis.title = element_text(size=20, face = "bold"),
+legend.title = element_text(size=20)) 
+```
+
+### Extensiones de ggplot
+
+Hay muchas [extensiones de ggplot](https://exts.ggplot2.tidyverse.org/gallery/). Algunos ejemplos son:
+
+* `GGally` 
+
+```{r, eval=FALSE}
+library(GGally)
+library(gapminder)
+gapminder %>% select(-country,-year) %>% 
+  ggpairs(aes(color=continent))
+```
+
+
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE, out.width='60%',fig.align='center'}
+library(GGally)
+library(gapminder)
+gapminder %>% select(-country,-year) %>% 
+  ggpairs(aes(color=continent))
+```
+
+
+
+* `ggpubr` proporciona algunas funciones fáciles de usar para crear y personalizar gráficos útiles para una publicación.
+
+```{r, echo=FALSE, out.width='50%', out.height='50%', fig.align='center'}
+knitr::include_graphics("Figuras/violin.PNG")
+```
+
+* Puedes ver más ejemplos en [‘ggplot2’ Based Publication Ready Plots](https://rpkgs.datanovia.com/ggpubr/index.html).
+
+
+
+* En la cuenta de gitHub de [Allison Horst](https://allisonhorst.github.io/palmerpenguins/articles/examples.html) puedes encontrar otros ejemplos de gráficos con los datos de los pingüinos.
+
+
+### Gráficos interactivos
+
+Mencionaremos algunas librerías que podéis utilizar tanto en combinación con `ggplot2` o por sí solas para crear visualizaciones interactivas en R.
+
+#### **Combinando `ggplot2`y `shiny`**
+
+`shiny` es un paquete de RStudio que hace fácil construir aplicaciones web interactivas con R. Para una introducción y ejemplos en vivo, visita la página web de [Shiny](https://shiny.rstudio.com/).
+
+Para ver el uso potencial, puedes consultar los ejemplos de Hello Shiny, ejecuta las siguientes instrucciones en la consola de tu RStudio.
+
+```{r, eval=FALSE}
+library(shiny)
+runExample("01_hello")
+runExample("04_mpg")
+```
+
+#### Plotly 
+
+[Plot.ly](https://plotly.com/r/plotly-fundamentals/) es una herramienta para crear gráficos interactivos en línea y aplicaciones web. 
+
+El paquete `plotly` permite crear los gráficos interactivos  a partir de tus gráficos `ggplot` desde R.
+
+
+Para ilustrar las herramientas de esta librería utilizaremos datos del *Estudio Nacional de Morbilidad y Mortalidad por Contaminación Atmosférica (NMMAPS)*. 
+
+Para que los gráficos sean manejables, limitamos los datos a Chicago entre los años 1997-2000. 
+
+Para más detalles sobre este conjunto de datos, consulta el libro de Roger Peng [Statistical Methods in Environmental Epidemiology with R](https://link.springer.com/book/10.1007/978-0-387-78167-9). 
+
+Podemos importar los datos a nuestra sesión de R, por ejemplo, con `read_csv()` de la librería `readr`. Los almacenamos en una variable llamada `chic`.
+
+```{r}
+chic <- readr::read_csv("https://raw.githubusercontent.com/z3tt/ggplot-courses/main/data/chicago-nmmaps-custom.csv")
+tibble::glimpse(chic)
+```
+
+
+```{r, eval=FALSE}
+library(ggplot2)
+g <- ggplot(chic, aes(date, temp)) +
+  geom_line(color = "grey") +
+  geom_point(aes(color = season)) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  labs(x = NULL, y = "Temperatura (°F)") +
+  theme_bw()
+library(plotly)
+ggplotly(g)
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+g<-ggplot(chic, aes(date, temp)) +
+  geom_line(color = "grey") +
+  geom_point(aes(color = season)) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  labs(x = NULL, y = "Temperatura (°F)") +
+  theme_bw()
+library(plotly)
+g2<-ggplotly(g)
+gc <- htmltools::div( g2, align="center" )  
+gc 
+```
+
+
+#### `ggiraph`
+
+[ggiraph](https://davidgohel.github.io/ggiraph/index.html) es un paquete de R que permite crear gráficos dinámicos `ggplot2`. 
+
+Permite añadir tooltips (globo /herramienta de ayuda visual), animaciones y acciones JavaScript a los gráficos. 
+
+
+### Recursos adicionales
+
+* [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/) por Hadley Wickham, disponible en acceso abierto.
+
+* [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) por Claus O. Wilke sobre la visualización de datos en general pero utilizando `ggplot2`. Puedes encontrar los códigos en su perfil de GitHub.
+
+* [Cookbook for R](http://www.cookbook-r.com/Graphs/) por Winston Chang con recetas para producir gráficos en R.
+
+* [Galería 50 mejores visualizaciones de ggplot2](http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html).
+
+* [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
+
 
 <!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
+
