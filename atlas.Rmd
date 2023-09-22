@@ -10,6 +10,46 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
+A=matrix(round(rnorm(20,10,2),2),ncol=4)
+A
+```
+```{r}
+solSVD=svd(A)
+str(solSVD)
+```
+```{r}
+solSVD$d # vector valores propios 
+solSVD$u # matriz 5 x 4
+dim(solSVD$u) 
+solSVD$v
+dim(solSVD$v) # matriz 4x4
+```
+
+
+```{r}
+D=diag(solSVD$d)
+D
+U=solSVD$u
+U
+V=solSVD$v
+V
+```
+
+
+$$A= U\cot D\ cdot V.$$
+
+```{r}
+A4=U%*% D %*% t(V)
+A==A4
+dplyr::near(A,A4)
+#help(near)
+```
+
+
+
+
+
+```{r}
 library(jpeg)
 ```
 
