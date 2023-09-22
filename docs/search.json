@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Análisis de datos (Grado de Matemáticas UIB)",
+    "title": "Análisis de datos",
     "section": "",
-    "text": "Presentación\nEsto es una edición en línea de los apuntes de Análisis de Datos del grado de Matemática de la UIB.\nEste libro fue editado en con Quarto"
+    "text": "Presentación\nEsto es una edición en línea de los apuntes de Análisis de Datos.\nEl enfoque es teórico-práctico para el grado de Matemática de la UIB y se puede emplear como un curso previo una asignatura de Análisis de Datos en grados de informática."
   },
   {
     "objectID": "intro.html#gestión-básica-de-datos",
