@@ -1510,11 +1510,11 @@ Aquí os dejamos el enlace para visualizar las  instrucciones más utilizadas de
 ###  Visualización de datos `ggplot2`
 
 
-`ggplot2` es un sistema para crear gráficos de forma declarativa, basado en [The Grammar of Graphics](https://link.springer.com/chapter/10.1007/978-3-642-21551-3_13). Permite producir "**gráficos modernos para el análisis de datos**"
+`ggplot2` es un sistema para crear gráficos de forma declarativa, basado en [The Grammar of Graphics](https://link.springer.com/chapter/10.1007/978-3-642-21551-3_13). Permite producir "gráficos modernos para el análisis de datos".
 
 La sintaxis de ggplot2 ayuda a pensar los gráficos de una manera nueva y más general que R base, por ejemplo, facilita el agregar las leyendas, los ejes, los colores, en comparación con R base.
 
-En [R gallery](https://r-graph-gallery.com/),  [R charts](https://r-charts.com) y en  [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/gallery/) puedes encontrar muchos ejemplos de gráficos con los códigos.
+En [R gallery](https://r-graph-gallery.com/),  [R charts](https://r-charts.com) y en  [ggplot2 extensions](https://exts.ggplot2.tidyverse.org/gallery/) puedes encontrar muchos ejemplos de gráficos con los códigos que os servirán de inspiración.
 
 
 ### Gramática básica de `ggplot2`
@@ -1527,6 +1527,8 @@ En [R gallery](https://r-graph-gallery.com/),  [R charts](https://r-charts.com) 
 
 * **Geometría**: Forma geométrica que deseamos utilizar para representar los datos: puntos, líneas continuas, curvas, entre otras. Se especifica con **`geom_*()`**. Por ejemplo, `geom_point()` para hacer un diagrama de puntos.
 
+
+
 [Ejemplo]{style="color: blue;"}:
 
 ```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE}
@@ -1537,7 +1539,7 @@ penguins %>%
  
 ### Más elementos de la gramática ... 
 
-* **Escalas**: Permiten anular los valores por defecto de una estética para especificar otros. La sintáxis es **`scale_*()`**. Existen escalas para asignar valores de manera discreta, continua o manual. También escalas de localización, para color, relleno; tamaño y figuras. 
+* **Escalas**: Permiten asignar los valores que hay en los datos a los valores visuales de una estética (anulando los valores por defecto de esa estética). La sintáxis es **`scale_*()`**. Existen escalas para asignar valores de manera discreta, continua o manual. También escalas de localización, para color, relleno; tamaño y figuras. 
 
 ```{r, echo=F, out.height='60%', out.width='70%', fig.align='center'}
 knitr::include_graphics("Figuras/escalas.PNG")
@@ -1558,7 +1560,7 @@ knitr::include_graphics("Figuras/coordenadas.PNG")
 ```
 
 
-* **Facetas**: Dividen una gráfica en múltiple subgráficas en base a una o varias variables discretas. La sintáxis es **`facet_*`**.
+* **Facetas**: Dividen un gráfico en múltiples subgráficos de acuerdo a una o varias variables discretas. La sintáxis es **`facet_*`**.
 
 ```{r, echo=F, out.height='50%', out.width='40%', fig.align='center'}
 knitr::include_graphics("Figuras/facetas.PNG")
@@ -1566,7 +1568,7 @@ knitr::include_graphics("Figuras/facetas.PNG")
 
  
 
-*	**Ajuste de las posiciones**: Permite indicar qué hacer con geoms que ocuparían la misma posición en la gráfica
+*	**Ajustes de las posiciones**: Permite indicar qué hacer con geometrías (geoms) que ocuparían la misma posición en el gráfico.
 
 ```{r, echo=F, out.height='50%', out.width='40%', fig.align='center'}
 knitr::include_graphics("Figuras/posicion.PNG")
@@ -1579,8 +1581,10 @@ knitr::include_graphics("Figuras/posicion.PNG")
 knitr::include_graphics("Figuras/temas.PNG")
 ```
 
+Hay muchas cosas más, puedes descargar la [hoja de trucos de ggplot2 ](https://diegokoz.github.io/intro_ds/fuentes/ggplot2-cheatsheet-2.1-Spanish.pdf) en castellano.
 
-#### Visualizando una variable cualitativa 
+
+#### Visualizando una variable cualitativa con ggplot2
 
 Vamos a visualizar una variable cualitativa, con un tema que no es el que trae por defecto ggplot con fondo gris
 
