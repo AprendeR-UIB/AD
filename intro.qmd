@@ -1584,11 +1584,11 @@ knitr::include_graphics("Figuras/temas.PNG")
 Hay muchas cosas más, puedes descargar la [hoja de trucos de ggplot2 ](https://diegokoz.github.io/intro_ds/fuentes/ggplot2-cheatsheet-2.1-Spanish.pdf) en castellano.
 
 
-#### Visualizando una variable cualitativa con ggplot2
+### Visualizando una variable cualitativa con ggplot2
 
-Vamos a visualizar una variable cualitativa, con un tema que no es el que trae por defecto ggplot con fondo gris
+Vamos a visualizar una variable cualitativa, con un tema que no es el que trae por defecto ggplot con fondo gris.
 
-```{r, eval=FALSE}
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE}
 penguins %>% 
   ggplot(aes(x = species)) +
   geom_bar(fill="blue") + 
@@ -1599,21 +1599,9 @@ penguins %>%
 ```
 
 
-```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE}
-penguins %>% 
-  ggplot(aes(x = species)) +
-  geom_bar(fill="blue") + 
-  labs(x="Especie", y="Número de pingüinos") +
-  theme_bw() +
-  theme(axis.text = element_text(size=20),
-        axis.title = element_text(size=20, face = "bold"))
-  
-```
+### Cruzando dos variables cualitativas con ggplot2
 
-
-#### Cruzando dos variables cualitativas 
-
-Para observar la distribución conjunta de dos variables cualitativas hay que mapear las a diferentes aspectos gráficos. 
+Para observar la distribución conjunta de dos variables cualitativas podemos emplear un gráfico de barras. Las siguientes instrucciones nos ayudan a visualizar la relación entre las variables `species` e `island` del conjunto de datos de los pingüinos. 
 
 ```{r, eval=FALSE}
 penguins %>% ggplot() + 
@@ -1643,9 +1631,9 @@ penguins %>% ggplot() +
 ```
 
 
-Para conseguir que cada barra represente el 100% de la categoría, se indica en el argumento de geom_bar.
+Si deseamos que cada barra represente el 100% de la categoría, se indica en el argumento de geom_bar.
 
-```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE}
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE}
 penguins %>% ggplot() + 
   geom_bar(aes(species, fill=island),
            position="fill") + coord_flip() +
@@ -1658,7 +1646,7 @@ penguins %>% ggplot() +
 ```
 
 
-#### Visualizando una variable cuantitativa
+### Visualizando una variable cuantitativa con ggplot2
 
 ```{r, out.height='40%', out.width='60%', fig.align='center', message=FALSE}
 penguins %>% 
@@ -1671,7 +1659,7 @@ penguins %>%
         axis.title = element_text(size=20, face = "bold"))
 ```
 
-#### Cruzando una variable cuantitativa con una cualitativa
+### Cruzando una variable cuantitativa con una cualitativa
 
 
 ```{r, eval=FALSE}
@@ -1707,11 +1695,10 @@ ggplot(data = penguins, aes(x = flipper_length_mm)) +
         legend.title = element_text(size=20))
 ```
 
-#### Cruzando una variable cuantitativa con una cualitativa
 
 Para que el gráfico sea más claro, se los puede separar con facetas: `facet_grid(.~species)` justo después de la capa geom_histogram.
 
-```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, echo=FALSE, message=FALSE}
+```{r, out.height='60%', out.width='60%', fig.align='center', message=FALSE, message=FALSE}
 ggplot(data = penguins, aes(x = flipper_length_mm)) +
   geom_histogram(aes(fill = species), 
                  alpha = 0.5, 
@@ -1729,7 +1716,6 @@ ggplot(data = penguins, aes(x = flipper_length_mm)) +
 ```
 
 
-#### Cruzando una variable cuantitativa con una cualitativa
 
 * La capa `facet_grid` admite dos variables como argumento, separadas por ~, las categorías de la primera definen las filas y las de la segunda, las columnas.  Si solo se usa una, se ubica un punto en el lugar de la otra.
 
@@ -1746,7 +1732,6 @@ ggplot(data = penguins, aes(x = species, y = flipper_length_mm)) +
   labs(x = "Epecie", y = "Longitud de la aleta en mm")
 ```
 
-#### Cruzando una variable cuantitativa con una cualitativa
 
 ```{r, out.height='50%', out.width='60%', fig.align='center', message=FALSE, warning=FALSE, echo=FALSE}
 ggplot(data = penguins, aes(x = species, 
@@ -1796,36 +1781,20 @@ theme(axis.text = element_text(size=20),
 * Para utilizar colores personalizados, puedes consultar los [códigos de color HTML](https://www.w3schools.com/colors/colors_picker.asp) (también llamados *códigos hexadecimales*, por ejemplo, `#ff0000` para el rojo) en lugar de especificar los colores por su [nombre predefinido](http://sape.inf.usi.ch/quick-reference/ggplot2/colour) en `R`.
 
 
-* Hexcodes: códigos que especifican el nivel de intensidad del color rojo (dos primeros), verde (dos segundos) y azul (dos últimos dígitos)
-
 * La familia de funciones `scale_colour_*()` permite ajustar los valores de la estética `color` (por ejemplo, `scale_colour_brewer()` selecciona una paleta del famoso proyecto [ColorBrewer](https://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3)). 
 
 
-### Ejemplo integrando las herramientas de tidyverse 
+### Ejemplos integrando las herramientas de tidyverse 
 
 * Ejemplo 1: 
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE,out.height='50%', out.width='50%', fig.align='center'}
 penguins_long <- penguins %>% 
   tidyr::pivot_longer(
     cols = contains("mm"),
     names_to = "var", values_to = "val") %>% 
   tidyr::drop_na()
-```
 
-```{r, eval=FALSE}
-penguins_long %>% 
-  ggplot(aes(x = var, y = val, fill=var)) +
-  geom_boxplot() +
-  theme_bw() +
-  theme(legend.position="none") +
-  labs(x="", y="Medida en mm")
-```
-
-
-
-
-```{r, echo=FALSE, out.height='50%', out.width='50%', fig.align='center', message=FALSE, warning=FALSE}
 penguins_long %>% 
   ggplot(aes(x = var, y = val, fill=var)) +
   geom_boxplot() +
@@ -1834,8 +1803,10 @@ penguins_long %>%
   labs(x="", y="Medida en mm") +
   theme(axis.text = element_text(size=20),
 axis.title = element_text(size=20, face = "bold"),
-legend.title = element_text(size=20)) 
+legend.title = element_text(size=20))
 ```
+
+
 
 * Ejemplo 2:
 
@@ -1852,7 +1823,7 @@ legend.title = element_text(size=20))
 
 ### Extensiones de ggplot
 
-Hay muchas [extensiones de ggplot](https://exts.ggplot2.tidyverse.org/gallery/). Algunos ejemplos son:
+Hay muchas [extensiones de ggplot](https://exts.ggplot2.tidyverse.org/gallery/), algunos ejemplos son:
 
 * `GGally` 
 
@@ -1972,5 +1943,41 @@ Permite añadir tooltips (globo /herramienta de ayuda visual), animaciones y acc
 * [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
 
 
-<!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
+### [*Práctica 2*]{style="color: red;"}
 
+La base de datos `mpg` (ya precargada en tidyverse) contiene datos de vehículos y sus rendimientos tanto en ciudad como en carretera. La descripción de las variables es la siguiente:
+
+
+* `manufacturer`: nombre del fabricante.
+
+* `model`: nombre del modelo.
+
+* `displ`: desplazamiento del motor, en litros.
+
+* `year`: año de fabricación.
+
+* `cyl`: número de cilindros.
+
+* `trans`: tipo de transmisión (manual o automática)
+
+* `drv`: tipo de tracción, con f = tracción delantera, r = tracción trasera, 4 = tracción en cuatro ruedas.
+
+* `cty`: rendimiento en ciudad, en millas por galón.
+
+* `hwy`: rendimiento en carretera, en millas por galón.
+
+* `fl`: tipo de combustible, con e = etanol, d = diesel, r = regular, p = premium, c = CNG (gas natural).
+
+* `class`: tipo de vehículo.
+
+1. Dibujad un gráfico que permita visualizar el número de vehículos de cada fabricante del conjunto de datos.
+
+2. Dibujad un gráfico para mostrar el rendimiento medio en ciudad para cada clase.
+
+3. Construid un gráfico para mostrar el rendimiento medio en ciudad para cada clase y tipo de tracción simultáneamente. 
+
+4. Utilizad un gráfico para mostrar la relación entre el tamaño del motor y el rendimiento en carretera, para cada clase de vehículo. ¿Qué podéis observar?
+
+5. Comparad la distribución del rendimiento en ciudad para distintos tipos de tracción.
+
+<!-- ## 6. Introducción a la estadística descriptiva multidimensional -->
