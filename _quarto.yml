@@ -6,9 +6,8 @@ project:
 book:
   title: "Análisis de datos"
   author: "Irene García, Ricardo Alberich, Arnau Mir y Francesc Roselló"
-  date: "9/18/2023"
+  date: "10/1/2023"
   reader-mode: true
-  
   page-footer:
     left: |
       Análisis de Datos UIB
@@ -23,6 +22,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - EM.qmd
     - references.qmd
     
     
