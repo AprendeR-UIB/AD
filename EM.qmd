@@ -239,7 +239,7 @@ $$
 
 La correlación tiene las propiedades importantes siguientes:
 
-1. No tiene unidades (porque las unidades de $\sigma_X$ son las de $X$, las unidades de $\sigma_*Y$ son las de $Y$, y las unidades de $\sigma_{X,Y}$ son las de $X$ por las de $Y$)
+1. No tiene unidades (porque las unidades de $\sigma_X$ son las de $X$, las unidades de $\sigma_Y$ son las de $Y$, y las unidades de $\sigma_{X,Y}$ son las de $X$ por las de $Y$)
 
 2. Toma valores entre -1 y 1: $-1\leqslant \rho_{X,Y}\leqslant 1$
 
@@ -282,7 +282,7 @@ La tendencia al crecimiento simultáneo de $X$ y $Y$ se puede deber a una tercer
 
 
 
-Si entráis a la página web [*Spurious Correlations*](https://tylervigen.com/spurious-correlations) podréis explorar un montón de correlaciones espurias. Nuestra preferida es una correlación de 0.947 entre la variable $X$ "Tomo un año y anoto el consumo per capita* de queso en los EE. UU." e $Y$ "Tomo un año y anoto el número de muertes por estrangulamiento accidental con las sábanas de la cama en los EE. UU.".
+Si entráis a la página web [*Spurious Correlations*](https://tylervigen.com/spurious-correlations) podréis explorar un montón de correlaciones espurias. Nuestra preferida es una correlación de 0.947 entre la variable $X$= "Tomo un año y anoto el consumo per capita* de queso en los EE. UU." e $Y$= "Tomo un año y anoto el número de muertes por estrangulamiento accidental con las sábanas de la cama en los EE. UU.".
 
 ```{r, echo=FALSE, out.width="80%", fig.align='center'}
 knitr::include_graphics("Figuras/spurcorr1.png")
@@ -353,7 +353,8 @@ set.seed(42)
 X=rbinom(101,100,0.5)
 X1=X[-101]
 X2.menos.X1=diff(X)
-plot(X1,X2.menos.X1,pch=20,xlab=expression(X[1]),ylab=expression(X[2]-X[1]))
+plot(X1,X2.menos.X1,pch=20,xlab=expression(X[1])
+     ,ylab=expression(X[2]-X[1]))
 cor(X1,X2.menos.X1)
 ```
 La correlación predicha por el teorema anterior es
@@ -382,9 +383,9 @@ Es decir, la diferencia entre la versión "muestral" y la versión "a secas" rec
 Como en el caso poblacional, la **covarianza** entre dos vectores mide la tendencia que tienen los datos a variar conjuntamente:
 
 
-* Cuando $\widetilde{S}_{X,Y}>0$, si $x_y>x_j$ entonces $y_y$ tiende a ser más grande que $y_j$
+* Cuando $\widetilde{S}_{X,Y}>0$, si $x_i>x_j$ entonces $y_i$ tiende a ser más grande que $y_j$
 
-* Cuando $\widetilde{S}_{X,Y}<0$, si $x_y>x_j$ entonces $y_y$ tiende a ser más pequeño que $y_j$
+* Cuando $\widetilde{S}_{X,Y}<0$, si $x_i>x_j$ entonces $y_i$ tiende a ser más pequeño que $y_j$
 
 * Cuando $\widetilde{S}=0$, no hay ninguna tendencia en este sentido
 
@@ -403,7 +404,7 @@ $$
 
 [*Ejemplo*]{style="color: blue;"}
 
-Hemos mesurado el índice de masa corporal, BMI, y el nivel de colesterol en 5 individuos sanos. Guardamos los resultados en un *dataframe* y calculamos las medias:
+Hemos medido el índice de masa corporal, BMI, y el nivel de colesterol en 5 individuos sanos. Guardamos los resultados en un *dataframe* y calculamos las medias:
 
 
 ```{r}
@@ -435,7 +436,7 @@ $$
 
 
 
-La covarianza *muestral** de dos vectores numéricos de la misma longitud $n$ se calcula en R con la función `cov`.
+La covarianza **muestral** de dos vectores numéricos de la misma longitud $n$ se calcula en R con la función `cov`.
 
 ```{r}
 cov(BMI,Chol)
@@ -487,7 +488,7 @@ La matriz de covarianzas muestrales se calcula con la función `cov` aplicada a 
 
 [*Ejemplo*]{style="color: blue;"}
 
-Añadiremos a los datos del Ejemplo anterior una tercera variable con las edades de los 5 individuos.
+Añadiremos a los datos del ejemplo anterior una tercera variable con las edades de los 5 individuos.
 
 
 
@@ -508,7 +509,7 @@ apply(DF,MARGIN=2,FUN=var)
 
 ### Correlación de Pearson
 
-Sean $X=(x_1,\ldots,x_n)$ e $Y=(*y_1,\ldots,y_n)$ dos vectores obtenidos midiendo dos variables aleatorias continuas sobre una misma muestra de individuos de medida $n$ de una población.
+Sean $X=(x_1,\ldots,x_n)$ e $Y=(y_1,\ldots,y_n)$ dos vectores obtenidos midiendo dos variables aleatorias continuas sobre una misma muestra de individuos de medida $n$ de una población.
 
 La *correlación de Pearson* de $X$ e $Y$ es su covarianza muestral dividida por el producto de sus desviaciones típicas muestrales:
 $$
@@ -524,7 +525,7 @@ $$
 
 [*Ejemplo*]{style="color: blue;"}
 
-Volvemos a la situación del Ejemplo anterior. La covarianza muestral y las desviaciones típicas muestrales de los vectores `BMI` y `Chol` son
+Volvemos a la situación del ejemplo anterior. La covarianza muestral y las desviaciones típicas muestrales de los vectores `BMI` y `Chol` son
 ```{r}
 cov(BMI,Chol)
 sd(BMI)
@@ -562,7 +563,7 @@ $$
 * Si $R=0$, no hay ninguna tendencia en este sentido
 
 
-* $R_{X,Y}=\*pm 1$ si, y solo si, todos los puntos $(x_i,y_i)$ están sobre una recta $y=*ax+b$ con $a\neq 0$. La pendiente $a$ de esta relación lineal tiene el mismo signo que $R_{X,Y}$. Por lo tanto, la recta es creciente si $R_{X,Y}=1$ y decreciendo si $R_{X,Y}=- 1$.
+* $R_{X,Y}=\pm 1$ si, y solo si, todos los puntos $(x_i,y_i)$ están sobre una recta $y=ax+b$ con $a\neq 0$. La pendiente $a$ de esta relación lineal tiene el mismo signo que $R_{X,Y}$. Por lo tanto, la recta es creciente si $R_{X,Y}=1$ y decreciendo si $R_{X,Y}=- 1$.
 
 * El coeficiente de determinación $R^2$ de la regresión lineal por mínimos cuadrados de $Y$ respecto de $X$ es igual al cuadrado de su correlación de Pearson:
 $$
@@ -571,7 +572,6 @@ $$
 
 
 >Por lo tanto, cuanto más se acerca la correlación de Pearson de $X$ e $Y$ a 1 o a -1, más se acercan los puntos $(x_i,y_i)$ a estar sobre una recta. El signo de $R_{X,Y}$ indica si esta recta es creciente ($R_{X,Y}>0$) o decreciendo ($R_{X,Y}<0$).
-
 
 
 Como en el caso poblacional, cuando uno de los vectores es constante, la correlación es igual a 0.
@@ -599,8 +599,8 @@ abline(lm(Chol~BMI),col="red",lwd=1.5)
 
 Podemos observar como `Chol` tiende a crecer cuando `BMI` crece, pero los puntos (BMI,Chol) no tienden a estar sobre una recta.
 
-`[*Cuidado*]{style="color: red;"}
-Es conveniente acompañar el cálculo de correlación o covarianza de dos vectores $x,y$ con un gráfico de los puntos $(x_y,y_y)$, porque conjuntos muy diferentes de puntos pueden dar lugar a la misma correlación.
+[*Cuidado*]{style="color: red;"}
+Es conveniente acompañar el cálculo de correlación o covarianza de dos vectores $x,y$ con un gráfico de los puntos $(x_i,y_i)$, porque conjuntos muy diferentes de puntos pueden dar lugar a la misma correlación.
 
 
 Un ejemplo clásico de este hecho son los cuatro conjuntos de datos $(x_{1,i},y_{1,i})_{i=1,\ldots,11}$, $(x_{2,i},y_{2,i})_{i=1,\ldots,11}$,  $(x_{3,i},y_{3,i})_{i=1,\ldots,11}$,  $(x_{4,i},y_{4,i})_{i=1,\ldots,11}$ que forman el *dataframe* `anscombe` de R:
@@ -644,7 +644,7 @@ abline(lm(y4~x4,data=anscombe),col="red",lwd=1.5)
 par(mfrow=c(1,1))
 ```
 
-Ejemplos más espectaculares se pueden obtener con las funciones del paquete **datasaurus**, que permiten crear conjuntos de puntos de "formas" diferentes con los mismos estadísticos, y en particular la misma correlación. Empleando este paquete, hemos creado dos pares de vectores de datos `dino` y `star`, que hemos recogido a la tabla de datos [https://raw.githubusercontent.com/aprender-uib/matesii/master/dades/datasaurus.txt](https://raw.githubusercontent.com/aprender-uib/matesii/master/dades/datasaurus.txt). Esta tabla de datos tiene tres variables: una variable `dataset` que indica el conjunto de datos, y las variables `x` y `y` que dan las coordenadas de los puntos que forman cada conjunto de datos. Comprobaremos que los dos pares de vectores de datos el mismo coeficiente de correlación (al menos hasta la séptima cifra decimal) y los dibujaremos.
+Ejemplos más espectaculares se pueden obtener con las funciones del paquete **datasaurus**, que permiten crear conjuntos de puntos de "formas" diferentes con los mismos estadísticos, y en particular la misma correlación. Empleando este paquete, hemos creado dos pares de vectores de datos `dino` y `star`, que hemos recogido a la [tabla de datos](https://github.com/AprendeR-UIB/MatesII/blob/master/Dades/Datasaurus.txt). Esta tabla de datos tiene tres variables: una variable `dataset` que indica el conjunto de datos, y las variables `x` y `y` que dan las coordenadas de los puntos que forman cada conjunto de datos. Comprobaremos que los dos pares de vectores de datos el mismo coeficiente de correlación (al menos hasta la séptima cifra decimal) y los dibujaremos.
  Neteja
 
 
@@ -866,7 +866,19 @@ La conclusión es que no hemos obtenido evidencia que el BMI y el nivel de coles
 <!-- ## Matriz de datos centrados -->
 
 <!-- ## Gráficos para datos multidimensionales -->
+```{r, eval=FALSE}
+stars(mpg, cex=0.55)
+library(GGally)
+ggpairs(mtcars[c("mpg","disp","drat", "wt")])
+```
 
+página 258 de R in Action, mosaicos plot
+
+https://www.geeksforgeeks.org/multivariate-data-visualization-with-r/
+
+https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html
+
+We will implement Chernoff faces in R by using the faces() function available under the aplpack package in R.
 <!-- ## Variables redundantes -->
 
 <!-- ## Distribución normal bivariante y multivariante -->

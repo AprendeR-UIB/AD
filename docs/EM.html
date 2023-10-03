@@ -410,7 +410,7 @@ P(X=-1)\cdot P(Y=4)=\frac{1}{4}\cdot\frac{1}{2}=\frac{1}{8}\neq 0.
 \]</span></p>
 <p>La correlación tiene las propiedades importantes siguientes:</p>
 <ol type="1">
-<li><p>No tiene unidades (porque las unidades de <span class="math inline">\(\sigma_X\)</span> son las de <span class="math inline">\(X\)</span>, las unidades de <span class="math inline">\(\sigma_*Y\)</span> son las de <span class="math inline">\(Y\)</span>, y las unidades de <span class="math inline">\(\sigma_{X,Y}\)</span> son las de <span class="math inline">\(X\)</span> por las de <span class="math inline">\(Y\)</span>)</p></li>
+<li><p>No tiene unidades (porque las unidades de <span class="math inline">\(\sigma_X\)</span> son las de <span class="math inline">\(X\)</span>, las unidades de <span class="math inline">\(\sigma_Y\)</span> son las de <span class="math inline">\(Y\)</span>, y las unidades de <span class="math inline">\(\sigma_{X,Y}\)</span> son las de <span class="math inline">\(X\)</span> por las de <span class="math inline">\(Y\)</span>)</p></li>
 <li><p>Toma valores entre -1 y 1: <span class="math inline">\(-1\leqslant \rho_{X,Y}\leqslant 1\)</span></p></li>
 <li><p>Es simétrica, <span class="math inline">\(\rho_{X,Y}= \rho_{Y,X}\)</span></p></li>
 <li><p>La correlación de una variable con ella misma es 1: <span class="math inline">\(\rho_{X,X}=1\)</span></p></li>
@@ -438,7 +438,7 @@ P(X=-1)\cdot P(Y=4)=\frac{1}{4}\cdot\frac{1}{2}=\frac{1}{8}\neq 0.
 <p><strong>Correlación no implica causalidad!</strong></p>
 </blockquote>
 <p>La tendencia al crecimiento simultáneo de <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span> se puede deber a una tercera variable que las haga crecer las dos, o puede ser puramente espuria.</p>
-<p>Si entráis a la página web <a href="https://tylervigen.com/spurious-correlations"><em>Spurious Correlations</em></a> podréis explorar un montón de correlaciones espurias. Nuestra preferida es una correlación de 0.947 entre la variable <span class="math inline">\(X\)</span> “Tomo un año y anoto el consumo per capita* de queso en los EE. UU.” e <span class="math inline">\(Y\)</span> “Tomo un año y anoto el número de muertes por estrangulamiento accidental con las sábanas de la cama en los EE. UU.”.</p>
+<p>Si entráis a la página web <a href="https://tylervigen.com/spurious-correlations"><em>Spurious Correlations</em></a> podréis explorar un montón de correlaciones espurias. Nuestra preferida es una correlación de 0.947 entre la variable <span class="math inline">\(X\)</span>= “Tomo un año y anoto el consumo per capita* de queso en los EE. UU.” e <span class="math inline">\(Y\)</span>= “Tomo un año y anoto el número de muertes por estrangulamiento accidental con las sábanas de la cama en los EE. UU.”.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -488,7 +488,8 @@ X_2-X_1=(x_2-x_1,x_3-x_2,\ldots,x_{101}-x_{100}).
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">rbinom</span>(<span class="dv">101</span>,<span class="dv">100</span>,<span class="fl">0.5</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>X1<span class="ot">=</span>X[<span class="sc">-</span><span class="dv">101</span>]</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X2.menos.X1<span class="ot">=</span><span class="fu">diff</span>(X)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X1,X2.menos.X1,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">xlab=</span><span class="fu">expression</span>(X[<span class="dv">1</span>]),<span class="at">ylab=</span><span class="fu">expression</span>(X[<span class="dv">2</span>]<span class="sc">-</span>X[<span class="dv">1</span>]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X1,X2.menos.X1,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">xlab=</span><span class="fu">expression</span>(X[<span class="dv">1</span>])</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     ,<span class="at">ylab=</span><span class="fu">expression</span>(X[<span class="dv">2</span>]<span class="sc">-</span>X[<span class="dv">1</span>]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="EM_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -519,8 +520,8 @@ X_2-X_1=(x_2-x_1,x_3-x_2,\ldots,x_{101}-x_{100}).
 </blockquote>
 <p>Como en el caso poblacional, la <strong>covarianza</strong> entre dos vectores mide la tendencia que tienen los datos a variar conjuntamente:</p>
 <ul>
-<li><p>Cuando <span class="math inline">\(\widetilde{S}_{X,Y}&gt;0\)</span>, si <span class="math inline">\(x_y&gt;x_j\)</span> entonces <span class="math inline">\(y_y\)</span> tiende a ser más grande que <span class="math inline">\(y_j\)</span></p></li>
-<li><p>Cuando <span class="math inline">\(\widetilde{S}_{X,Y}&lt;0\)</span>, si <span class="math inline">\(x_y&gt;x_j\)</span> entonces <span class="math inline">\(y_y\)</span> tiende a ser más pequeño que <span class="math inline">\(y_j\)</span></p></li>
+<li><p>Cuando <span class="math inline">\(\widetilde{S}_{X,Y}&gt;0\)</span>, si <span class="math inline">\(x_i&gt;x_j\)</span> entonces <span class="math inline">\(y_i\)</span> tiende a ser más grande que <span class="math inline">\(y_j\)</span></p></li>
+<li><p>Cuando <span class="math inline">\(\widetilde{S}_{X,Y}&lt;0\)</span>, si <span class="math inline">\(x_i&gt;x_j\)</span> entonces <span class="math inline">\(y_i\)</span> tiende a ser más pequeño que <span class="math inline">\(y_j\)</span></p></li>
 <li><p>Cuando <span class="math inline">\(\widetilde{S}=0\)</span>, no hay ninguna tendencia en este sentido</p></li>
 </ul>
 <p>Es fácil comprobar que:</p>
@@ -533,7 +534,7 @@ X_2-X_1=(x_2-x_1,x_3-x_2,\ldots,x_{101}-x_{100}).
 \]</span></li>
 </ul>
 <p><span style="color: blue;"><em>Ejemplo</em></span></p>
-<p>Hemos mesurado el índice de masa corporal, BMI, y el nivel de colesterol en 5 individuos sanos. Guardamos los resultados en un <em>dataframe</em> y calculamos las medias:</p>
+<p>Hemos medido el índice de masa corporal, BMI, y el nivel de colesterol en 5 individuos sanos. Guardamos los resultados en un <em>dataframe</em> y calculamos las medias:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>BMI<span class="ot">=</span> <span class="fu">c</span>(<span class="fl">18.3</span>,<span class="fl">24.4</span>,<span class="fl">24.6</span>,<span class="fl">24.4</span>,<span class="fl">22.2</span>,<span class="fl">19.5</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>Chol<span class="ot">=</span><span class="fu">c</span>(<span class="dv">170</span>,<span class="dv">202</span>,<span class="dv">215</span>,<span class="dv">218</span>,<span class="dv">210</span>,<span class="dv">210</span>)</span>
@@ -561,7 +562,7 @@ X_2-X_1=(x_2-x_1,x_3-x_2,\ldots,x_{101}-x_{100}).
 \qquad +(22.2-22.23)(210-204.17)+(19.5-22.23)(210-204.17)\Big)=28.1944
 \end{array}
 \]</span></p>
-<p>La covarianza *muestral** de dos vectores numéricos de la misma longitud <span class="math inline">\(n\)</span> se calcula en R con la función <code>cov</code>.</p>
+<p>La covarianza <strong>muestral</strong> de dos vectores numéricos de la misma longitud <span class="math inline">\(n\)</span> se calcula en R con la función <code>cov</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(BMI,Chol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -604,7 +605,7 @@ S_{X_p,X_1} &amp; S_{X_p,X_2} &amp; \ldots &amp; S^2_{X_p}
 \]</span> Las dos son simétricas.</p>
 <p>La matriz de covarianzas muestrales se calcula con la función <code>cov</code> aplicada a la matriz o al data frame de variables numéricas que almacena la tabla de datos. Para calcular la matriz de covarianzas a secas, se multiplica el resultado de <code>cov</code> por <span class="math inline">\((n-1)/n\)</span>, donde <span class="math inline">\(n\)</span> es el número de filas de la tabla.</p>
 <p><span style="color: blue;"><em>Ejemplo</em></span></p>
-<p>Añadiremos a los datos del Ejemplo anterior una tercera variable con las edades de los 5 individuos.</p>
+<p>Añadiremos a los datos del ejemplo anterior una tercera variable con las edades de los 5 individuos.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>DF<span class="sc">$</span>Edad<span class="ot">=</span><span class="fu">c</span>(<span class="dv">49</span>,<span class="dv">39</span>,<span class="dv">50</span>,<span class="dv">44</span>,<span class="dv">40</span>,<span class="dv">36</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>DF</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -639,7 +640,7 @@ Edad  1.140000 -33.00000  32.00</code></pre>
 </section>
 <section id="correlación-de-pearson" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="correlación-de-pearson"><span class="header-section-number">2.4.2</span> Correlación de Pearson</h3>
-<p>Sean <span class="math inline">\(X=(x_1,\ldots,x_n)\)</span> e <span class="math inline">\(Y=(*y_1,\ldots,y_n)\)</span> dos vectores obtenidos midiendo dos variables aleatorias continuas sobre una misma muestra de individuos de medida <span class="math inline">\(n\)</span> de una población.</p>
+<p>Sean <span class="math inline">\(X=(x_1,\ldots,x_n)\)</span> e <span class="math inline">\(Y=(y_1,\ldots,y_n)\)</span> dos vectores obtenidos midiendo dos variables aleatorias continuas sobre una misma muestra de individuos de medida <span class="math inline">\(n\)</span> de una población.</p>
 <p>La <em>correlación de Pearson</em> de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> es su covarianza muestral dividida por el producto de sus desviaciones típicas muestrales: <span class="math display">\[
 R_{X,Y}=\frac{\widetilde{S}_{X,Y}}{\widetilde{S}_X\cdot \widetilde{S}_Y}.
 \]</span></p>
@@ -649,7 +650,7 @@ R_{X,Y}=\frac{\widetilde{S}_{X,Y}}{\widetilde{S}_X\cdot \widetilde{S}_Y}=
 \frac{S_{X,Y}}{S_X \cdot S_Y}=R_{X,Y}.
 \]</span></p>
 <p><span style="color: blue;"><em>Ejemplo</em></span></p>
-<p>Volvemos a la situación del Ejemplo anterior. La covarianza muestral y las desviaciones típicas muestrales de los vectores <code>BMI</code> y <code>Chol</code> son</p>
+<p>Volvemos a la situación del ejemplo anterior. La covarianza muestral y las desviaciones típicas muestrales de los vectores <code>BMI</code> y <code>Chol</code> son</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(BMI,Chol)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -682,7 +683,7 @@ R_{X,X}=1
 <li><p>Si <span class="math inline">\(R_{X,Y}&gt;0\)</span> y si <span class="math inline">\(x_i&gt;x_j\)</span>, <span class="math inline">\(y_i\)</span> tiende a ser más grande que <span class="math inline">\(y_j\)</span></p></li>
 <li><p>Si <span class="math inline">\(R_{X,Y}&lt;0\)</span> y si <span class="math inline">\(x_i&gt;x_j\)</span>, <span class="math inline">\(y_i\)</span> tiende a ser más pequeño que <span class="math inline">\(y_j\)</span></p></li>
 <li><p>Si <span class="math inline">\(R=0\)</span>, no hay ninguna tendencia en este sentido</p></li>
-<li><p><span class="math inline">\(R_{X,Y}=\*pm 1\)</span> si, y solo si, todos los puntos <span class="math inline">\((x_i,y_i)\)</span> están sobre una recta <span class="math inline">\(y=*ax+b\)</span> con <span class="math inline">\(a\neq 0\)</span>. La pendiente <span class="math inline">\(a\)</span> de esta relación lineal tiene el mismo signo que <span class="math inline">\(R_{X,Y}\)</span>. Por lo tanto, la recta es creciente si <span class="math inline">\(R_{X,Y}=1\)</span> y decreciendo si <span class="math inline">\(R_{X,Y}=- 1\)</span>.</p></li>
+<li><p><span class="math inline">\(R_{X,Y}=\pm 1\)</span> si, y solo si, todos los puntos <span class="math inline">\((x_i,y_i)\)</span> están sobre una recta <span class="math inline">\(y=ax+b\)</span> con <span class="math inline">\(a\neq 0\)</span>. La pendiente <span class="math inline">\(a\)</span> de esta relación lineal tiene el mismo signo que <span class="math inline">\(R_{X,Y}\)</span>. Por lo tanto, la recta es creciente si <span class="math inline">\(R_{X,Y}=1\)</span> y decreciendo si <span class="math inline">\(R_{X,Y}=- 1\)</span>.</p></li>
 <li><p>El coeficiente de determinación <span class="math inline">\(R^2\)</span> de la regresión lineal por mínimos cuadrados de <span class="math inline">\(Y\)</span> respecto de <span class="math inline">\(X\)</span> es igual al cuadrado de su correlación de Pearson: <span class="math display">\[
 R^2=R_{X,Y}^2
 \]</span></p></li>
@@ -718,7 +719,7 @@ R^2=R_{X,Y}^2
 </div>
 </div>
 <p>Podemos observar como <code>Chol</code> tiende a crecer cuando <code>BMI</code> crece, pero los puntos (BMI,Chol) no tienden a estar sobre una recta.</p>
-<p>`<span style="color: red;"><em>Cuidado</em></span> Es conveniente acompañar el cálculo de correlación o covarianza de dos vectores <span class="math inline">\(x,y\)</span> con un gráfico de los puntos <span class="math inline">\((x_y,y_y)\)</span>, porque conjuntos muy diferentes de puntos pueden dar lugar a la misma correlación.</p>
+<p><span style="color: red;"><em>Cuidado</em></span> Es conveniente acompañar el cálculo de correlación o covarianza de dos vectores <span class="math inline">\(x,y\)</span> con un gráfico de los puntos <span class="math inline">\((x_i,y_i)\)</span>, porque conjuntos muy diferentes de puntos pueden dar lugar a la misma correlación.</p>
 <p>Un ejemplo clásico de este hecho son los cuatro conjuntos de datos <span class="math inline">\((x_{1,i},y_{1,i})_{i=1,\ldots,11}\)</span>, <span class="math inline">\((x_{2,i},y_{2,i})_{i=1,\ldots,11}\)</span>, <span class="math inline">\((x_{3,i},y_{3,i})_{i=1,\ldots,11}\)</span>, <span class="math inline">\((x_{4,i},y_{4,i})_{i=1,\ldots,11}\)</span> que forman el <em>dataframe</em> <code>anscombe</code> de R:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(anscombe)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -769,7 +770,7 @@ R^2=R_{X,Y}^2
 <p><img src="EM_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
 </div>
-<p>Ejemplos más espectaculares se pueden obtener con las funciones del paquete <strong>datasaurus</strong>, que permiten crear conjuntos de puntos de “formas” diferentes con los mismos estadísticos, y en particular la misma correlación. Empleando este paquete, hemos creado dos pares de vectores de datos <code>dino</code> y <code>star</code>, que hemos recogido a la tabla de datos <a href="https://raw.githubusercontent.com/aprender-uib/matesii/master/dades/datasaurus.txt">https://raw.githubusercontent.com/aprender-uib/matesii/master/dades/datasaurus.txt</a>. Esta tabla de datos tiene tres variables: una variable <code>dataset</code> que indica el conjunto de datos, y las variables <code>x</code> y <code>y</code> que dan las coordenadas de los puntos que forman cada conjunto de datos. Comprobaremos que los dos pares de vectores de datos el mismo coeficiente de correlación (al menos hasta la séptima cifra decimal) y los dibujaremos. Neteja</p>
+<p>Ejemplos más espectaculares se pueden obtener con las funciones del paquete <strong>datasaurus</strong>, que permiten crear conjuntos de puntos de “formas” diferentes con los mismos estadísticos, y en particular la misma correlación. Empleando este paquete, hemos creado dos pares de vectores de datos <code>dino</code> y <code>star</code>, que hemos recogido a la <a href="https://github.com/AprendeR-UIB/MatesII/blob/master/Dades/Datasaurus.txt">tabla de datos</a>. Esta tabla de datos tiene tres variables: una variable <code>dataset</code> que indica el conjunto de datos, y las variables <code>x</code> y <code>y</code> que dan las coordenadas de los puntos que forman cada conjunto de datos. Comprobaremos que los dos pares de vectores de datos el mismo coeficiente de correlación (al menos hasta la séptima cifra decimal) y los dibujaremos. Neteja</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>datasaure<span class="ot">=</span><span class="fu">read.table</span>(<span class="st">"https://raw.githubusercontent.com/AprendeR-UIB/MatesII/master/Dades/Datasaurus.txt"</span>,<span class="at">header=</span><span class="cn">TRUE</span>,<span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(datasaure)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -963,7 +964,15 @@ sample estimates:
 <p><span style="color: red;"><em>Cuidado</em></span> La conclusión es que no hemos obtenido evidencia que el BMI y el nivel de colesterol <em>tengan correlación positiva</em> <strong>en la población de los adultos sanos</strong>. No en nuestra muestra, que sí que ha dado correlación positiva. Recordad que los contrastes siempre se refieren a la población.</p>
 <!-- ## Matriz de datos centrados -->
 <!-- ## Gráficos para datos multidimensionales -->
-<!-- ## Variables redundantes -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stars</span>(mpg, <span class="at">cex=</span><span class="fl">0.55</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(mtcars[<span class="fu">c</span>(<span class="st">"mpg"</span>,<span class="st">"disp"</span>,<span class="st">"drat"</span>, <span class="st">"wt"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>página 258 de R in Action, mosaicos plot</p>
+<p>https://www.geeksforgeeks.org/multivariate-data-visualization-with-r/</p>
+<p>https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html</p>
+<p>We will implement Chernoff faces in R by using the faces() function available under the aplpack package in R. <!-- ## Variables redundantes --></p>
 <!-- ## Distribución normal bivariante y multivariante -->
 <!-- ## Contrastes de hipótesis univariantes versus multivariantes -->
 
