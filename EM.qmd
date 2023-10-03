@@ -707,7 +707,7 @@ Las covarianzas de dos vectores obtenidos midiendo dos variables $X,Y$ sobre una
 
 * La covarianza ${S}_{X,Y}=\frac{n-1}{n}\widetilde{S}_{X,Y}$ es un estimador sesgado de la covarianza poblacional $\sigma_{X,Y}$, con sesgo que tiende a 0, y es más eficiente que $\widetilde{S}_{X,Y}$
 
-* La covarianza $S_{X,Y}$ es el estimador máximo verosímil de $\sigma_{X,Y}$ cuando la distribución conjunta de las variables $X,Y$ es la [normal bivariante](http://es.wikipedia.org/wiki/distribución_normal_multivariante}) que estudiaremos próximamente.
+* La covarianza $S_{X,Y}$ es el estimador máximo verosímil de $\sigma_{X,Y}$ cuando la distribución conjunta de las variables $X,Y$ es la [normal bivariante](https://es.wikipedia.org/wiki/Distribuci%C3%B3n_normal_multivariada) que estudiaremos próximamente.
 
 
 La correlación de Pearson de dos vectores obtenidos midiendo dos variables continuas $X,Y$ sobre una muestra aleatoria simple de sujetos de una población estima la correlación poblacional de las variables $X,Y$. En concreto:
@@ -732,7 +732,7 @@ Cuanto más se acerca la correlación de Spearman a 1 (o -1), para más parejas 
 
 
 
-Formalmente, la correlación de Spearman de dos vectores $X$ e $Y$ se define como la correlación de Pearson de los vectores de *rangos** de $X$ e $Y$. El vector de rangos de un vector $X$ se obtiene sustituyendo cada valor de $X$ por su posición en el vector ordenado de menor a mayor, y en caso de empates asignando a grupos de valores empatados la media de las posiciones que ocuparían. Por ejemplo, el vector de rangos de
+Formalmente, la correlación de Spearman de dos vectores $X$ e $Y$ se define como la correlación de Pearson de los vectores de **rangos** de $X$ e $Y$. El vector de rangos de un vector $X$ se obtiene sustituyendo cada valor de $X$ por su posición en el vector ordenado de menor a mayor, y en caso de empates asignando a grupos de valores empatados la media de las posiciones que ocuparían. Por ejemplo, el vector de rangos de
 
 $$
 x=(4,5,1,5,1,3,4,4)
