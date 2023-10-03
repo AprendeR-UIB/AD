@@ -488,8 +488,8 @@ X_2-X_1=(x_2-x_1,x_3-x_2,\ldots,x_{101}-x_{100}).
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">rbinom</span>(<span class="dv">101</span>,<span class="dv">100</span>,<span class="fl">0.5</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>X1<span class="ot">=</span>X[<span class="sc">-</span><span class="dv">101</span>]</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X2.menos.X1<span class="ot">=</span><span class="fu">diff</span>(X)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X1,X2.menos.X1,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">xlab=</span><span class="fu">expression</span>(X[<span class="dv">1</span>])</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     ,<span class="at">ylab=</span><span class="fu">expression</span>(X[<span class="dv">2</span>]<span class="sc">-</span>X[<span class="dv">1</span>]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X1,X2.menos.X1,<span class="at">pch=</span><span class="dv">20</span>,<span class="at">xlab=</span><span class="fu">expression</span>(X[<span class="dv">1</span>]),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="fu">expression</span>(X[<span class="dv">2</span>]<span class="sc">-</span>X[<span class="dv">1</span>]))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="EM_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -770,7 +770,7 @@ R^2=R_{X,Y}^2
 <p><img src="EM_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" style="width:90.0%"></p>
 </div>
 </div>
-<p>Ejemplos más espectaculares se pueden obtener con las funciones del paquete <strong>datasaurus</strong>, que permiten crear conjuntos de puntos de “formas” diferentes con los mismos estadísticos, y en particular la misma correlación. Empleando este paquete, hemos creado dos pares de vectores de datos <code>dino</code> y <code>star</code>, que hemos recogido a la <a href="https://github.com/AprendeR-UIB/MatesII/blob/master/Dades/Datasaurus.txt">tabla de datos</a>. Esta tabla de datos tiene tres variables: una variable <code>dataset</code> que indica el conjunto de datos, y las variables <code>x</code> y <code>y</code> que dan las coordenadas de los puntos que forman cada conjunto de datos. Comprobaremos que los dos pares de vectores de datos el mismo coeficiente de correlación (al menos hasta la séptima cifra decimal) y los dibujaremos. Neteja</p>
+<p>Ejemplos más espectaculares se pueden obtener con las funciones del paquete <strong>datasaurus</strong>, que permiten crear conjuntos de puntos de “formas” diferentes con los mismos estadísticos, y en particular la misma correlación. Empleando este paquete, hemos creado dos pares de vectores de datos <code>dino</code> y <code>star</code>, que hemos recogido en la siguiente <a href="https://github.com/AprendeR-UIB/MatesII/blob/master/Dades/Datasaurus.txt">tabla de datos</a>. Esta tabla de datos tiene tres variables: una variable <code>dataset</code> que indica el conjunto de datos, y las variables <code>x</code> e <code>y</code> que dan las coordenadas de los puntos que forman cada conjunto de datos. Comprobaremos que los dos pares de vectores de datos tienen el mismo coeficiente de correlación (al menos hasta la séptima cifra decimal) y los dibujaremos.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>datasaure<span class="ot">=</span><span class="fu">read.table</span>(<span class="st">"https://raw.githubusercontent.com/AprendeR-UIB/MatesII/master/Dades/Datasaurus.txt"</span>,<span class="at">header=</span><span class="cn">TRUE</span>,<span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(datasaure)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -844,12 +844,12 @@ Edad 0.07316517 -0.3314527  1.00000000</code></pre>
 </section>
 <section id="correlación-de-spearman" class="level3" data-number="2.4.4">
 <h3 data-number="2.4.4" class="anchored" data-anchor-id="correlación-de-spearman"><span class="header-section-number">2.4.4</span> Correlación de Spearman</h3>
-<p>La correlación de Pearson mide específicamente la tendencia de dos variables continuas a depender linealmente la una de la otra. Si no esperamos que esta dependencia lineal exista, o si nuestras variables son discretas o simplemente ordinales, emplear la correlación de Pearson para analizar la relación entre dos variables no es lo más adecuado. Entre las propuestas alternativas, la más popular es la *correlación de Spearman**.</p>
+<p>La correlación de Pearson mide específicamente la tendencia de dos variables continuas a depender linealmente la una de la otra. Si no esperamos que esta dependencia lineal exista, o si nuestras variables son discretas o simplemente ordinales, emplear la correlación de Pearson para analizar la relación entre dos variables no es lo más adecuado. Entre las propuestas alternativas, la más popular es la <strong>correlación de Spearman</strong>.</p>
 <p>Intuitivamente, la correlación de Spearman mide la tendencia que si <span class="math inline">\(x_i&gt;x_j\)</span>, pase que <span class="math inline">\(y_i&gt;y_j\)</span>. Su valor es 1 si, para todos <span class="math inline">\(y,j\)</span>, <span class="math display">\[
 x_i&gt;x_j\Longleftrightarrow y_i&gt;y_j
 \]</span> y su valor es -1 si, para todo <span class="math inline">\(i,j\)</span>, <span class="math display">\[
 x_i&gt;x_j\Longleftrightarrow y_i&lt;y_j
-\]</span> Cuanto más se acerca la correlación de Spearman a valer 1 (o -1), para más parejas de índices <span class="math inline">\((y,j)\)</span> tales que <span class="math inline">\(x_y&gt;x_j\)</span> se tiene que <span class="math inline">\(y_y&gt;y_j\)</span> (<span class="math inline">\(y_y&lt;y_j\)</span>, si se acerca a -1).</p>
+\]</span> Cuanto más se acerca la correlación de Spearman a 1 (o -1), para más parejas de índices <span class="math inline">\((i,j)\)</span> tales que <span class="math inline">\(x_i&gt;x_j\)</span> se tiene que <span class="math inline">\(y_i&gt;y_j\)</span> (<span class="math inline">\(y_i&lt;y_j\)</span>, si se acerca a -1).</p>
 <p>Formalmente, la correlación de Spearman de dos vectores <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> se define como la correlación de Pearson de los vectores de *rangos** de <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>. El vector de rangos de un vector <span class="math inline">\(X\)</span> se obtiene sustituyendo cada valor de <span class="math inline">\(X\)</span> por su posición en el vector ordenado de menor a mayor, y en caso de empates asignando a grupos de valores empatados la media de las posiciones que ocuparían. Por ejemplo, el vector de rangos de</p>
 <p><span class="math display">\[
 x=(4,5,1,5,1,3,4,4)
@@ -867,7 +867,7 @@ x &amp; 4&amp; 5 &amp; 1 &amp; 5 &amp; 1 &amp; 3 &amp; 4 &amp; 4\\ \hline
 </ol>
 <ul>
 <li>El rango de los dos elementos 1 de <span class="math inline">\(x\)</span> es la media de las posiciones 1, 2 del vector ordenado: 1.5.</li>
-<li>Como que solo hay un 3 a <span class="math inline">\(x\)</span>, su rango es su posición en el vector ordenado: 3.</li>
+<li>Como que solo hay un 3 en <span class="math inline">\(x\)</span>, su rango es su posición en el vector ordenado: 3.</li>
 <li>El rango de los tres elementos 4 es la media de las posiciones 4, 5 y 6 del vector ordenado: 5.</li>
 <li>Finalmente, el rango de los dos elementos 5 es la media de las posiciones 7, 8 del vector ordenado: 7.5.</li>
 </ul>
@@ -885,7 +885,7 @@ x &amp; 4&amp; 5 &amp; 1 &amp; 5 &amp; 1 &amp; 3 &amp; 4 &amp; 4\\ \hline
 <pre><code>[1] 5.0 7.5 1.5 7.5 1.5 3.0 5.0 5.0</code></pre>
 </div>
 </div>
-<p>Con R, la correlación de *Spearman se calcula directamente con la función <code>cor</code> especificando el parámetro <code>method="spearman"</code>. (El valor por defecto del parámetro <code>method</code> es <code>"pearson"</code> y por eso no lo indicamos cuando calculamos la correlación de Pearson.)</p>
+<p>Con R, la correlación de Spearman se calcula directamente con la función <code>cor</code> especificando el parámetro <code>method="spearman"</code>. (El valor por defecto del parámetro <code>method</code> es <code>"pearson"</code> y por eso no lo indicamos cuando calculamos la correlación de Pearson.)</p>
 <p><span style="color: blue;"><em>Ejemplo</em></span> Consideremos los vectores <code>BMI</code> y <code>Chol</code> del ejemplo que venimos trabajando. Lo primero que haremos será calcular sus vectores de rangos:</p>
 <p><span class="math display">\[
 \begin{array}{|c|c||c|c|}
@@ -900,7 +900,7 @@ BMI &amp; \text{Rangs} &amp; Chol&amp;  \text{Rangs}
 19.5&amp;2 &amp; 210&amp;  3.5\\\hline
 \end{array}
 \]</span></p>
-<p>Por tanto, la correlacióo de Spearman de <span class="math display">\[
+<p>Por tanto, la correlación de Spearman de <span class="math display">\[
 \mathit{BMI}=(18.3, 24.4, 24.6, 24.4, 22.2, 19.5)\mbox{ i }\mathit{Chol}=(170, 202, 215, 218, 210, 210)
 \]</span> es la correlación de Pearson de <span class="math display">\[
 (1, 4.5, 6, 4.5, 3, 2)\mbox{ i }(1, 2, 5, 6, 3.5, 3.5)
@@ -929,7 +929,7 @@ H_1: &amp; \rho_{XY}&gt; 0\text{ o }\rho_{XY}&lt; 0\text{ o }\rho_{XY}\neq 0
 <blockquote class="blockquote">
 <p>Si en un contraste de correlación rechazamos la hipótesis nula, en particular concluimos que las variables <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> son dependientes (porque si fueran independientes, su correlación seria 0).</p>
 </blockquote>
-<p>No explicaremos cómo se hace a mano este contraste ni qué hipótesis tienen que satisfacer las variables poblacionales para que el resultado sea fiable. Si *estáis interesados en el detalle, podéis consultar la <a href="https://en.wikipedia.org/wiki/pearson_correlation_coefficient#Testing_using_Student's_t-distribution">correspondiente entrada de la Wikipedia</a>. Simplemente tenéis que saber que se efectúa con la función <code>cor.plot</code>. Su sintaxis es similar a la de las otras funciones que efectúan contrastes.</p>
+<p>No explicaremos cómo se hace a mano este contraste ni qué hipótesis tienen que satisfacer las variables poblacionales para que el resultado sea fiable. Si estáis interesados en el detalle, podéis consultar la <a href="https://en.wikipedia.org/wiki/pearson_correlation_coefficient#Testing_using_Student's_t-distribution">correspondiente entrada de la Wikipedia</a>. Simplemente tenéis que saber que se efectúa con la función <code>cor.plot</code>. Su sintaxis es similar a la de las otras funciones que efectúan contrastes.</p>
 <p><span style="color: blue;"><em>Ejemplo</em></span> Queremos contrastar si hay correlación positiva entre el BMI y el nivel de colesterol de un adulto sano, con un nivel de significación del 5%.</p>
 <p><em>Variables poblacionales de interés</em>:</p>
 <ul>
@@ -960,7 +960,7 @@ sample estimates:
 0.6979141 </code></pre>
 </div>
 </div>
-<p><em>Conclusión</em>: No hemos obtenido evidencia estadísticamente significativa que el BMI y el nivel de colesterol de un adulto sano *tengan correlación positiva (test de correlación, p-valor 0.06, IC 95% para <span class="math inline">\(\rho\)</span> de -0.086 a 1).</p>
+<p><em>Conclusión</em>: No hemos obtenido evidencia estadísticamente significativa que el BMI y el nivel de colesterol de un adulto sano tengan correlación positiva (test de correlación, p-valor 0.06, IC 95% para <span class="math inline">\(\rho\)</span> [-0.086 a 1]).</p>
 <p><span style="color: red;"><em>Cuidado</em></span> La conclusión es que no hemos obtenido evidencia que el BMI y el nivel de colesterol <em>tengan correlación positiva</em> <strong>en la población de los adultos sanos</strong>. No en nuestra muestra, que sí que ha dado correlación positiva. Recordad que los contrastes siempre se refieren a la población.</p>
 <!-- ## Matriz de datos centrados -->
 <!-- ## Gráficos para datos multidimensionales -->
@@ -969,12 +969,6 @@ sample estimates:
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(mtcars[<span class="fu">c</span>(<span class="st">"mpg"</span>,<span class="st">"disp"</span>,<span class="st">"drat"</span>, <span class="st">"wt"</span>)])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>página 258 de R in Action, mosaicos plot</p>
-<p>https://www.geeksforgeeks.org/multivariate-data-visualization-with-r/</p>
-<p>https://little-book-of-r-for-multivariate-analysis.readthedocs.io/en/latest/src/multivariateanalysis.html</p>
-<p>We will implement Chernoff faces in R by using the faces() function available under the aplpack package in R. <!-- ## Variables redundantes --></p>
-<!-- ## Distribución normal bivariante y multivariante -->
-<!-- ## Contrastes de hipótesis univariantes versus multivariantes -->
 
 
 </section>
