@@ -862,12 +862,4 @@ cor.test(BMI,Chol,alternative="greater")
 [*Cuidado*]{style="color: red;"}
 La conclusión es que no hemos obtenido evidencia que el BMI y el nivel de colesterol *tengan correlación positiva* **en la población de los adultos sanos**. No en nuestra muestra, que sí que ha dado correlación positiva. Recordad que los contrastes siempre se refieren a la población.
 
-<!-- ## Matriz de datos centrados -->
-
-<!-- ## Gráficos para datos multidimensionales -->
-```{r, eval=FALSE}
-stars(mpg, cex=0.55)
-library(GGally)
-ggpairs(mtcars[c("mpg","disp","drat", "wt")])
-```
 
