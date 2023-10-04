@@ -187,7 +187,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#correlación-de-pearson" id="toc-correlación-de-pearson" class="nav-link" data-scroll-target="#correlación-de-pearson"><span class="header-section-number">2.4.2</span> Correlación de Pearson</a></li>
   <li><a href="#estimación" id="toc-estimación" class="nav-link" data-scroll-target="#estimación"><span class="header-section-number">2.4.3</span> Estimación</a></li>
   <li><a href="#correlación-de-spearman" id="toc-correlación-de-spearman" class="nav-link" data-scroll-target="#correlación-de-spearman"><span class="header-section-number">2.4.4</span> Correlación de Spearman</a></li>
-  <li><a href="#contrastes-de-correlación" id="toc-contrastes-de-correlación" class="nav-link" data-scroll-target="#contrastes-de-correlación"><span class="header-section-number">2.4.5</span> Contrastes de correlación</a></li>
+  </ul></li>
+  <li><a href="#contrastes-de-correlación" id="toc-contrastes-de-correlación" class="nav-link" data-scroll-target="#contrastes-de-correlación"><span class="header-section-number">2.5</span> Contrastes de correlación</a></li>
+  <li><a href="#gráficos-para-datos-multidimensionales" id="toc-gráficos-para-datos-multidimensionales" class="nav-link" data-scroll-target="#gráficos-para-datos-multidimensionales"><span class="header-section-number">2.6</span> Gráficos para datos multidimensionales</a>
+  <ul class="collapse">
+  <li><a href="#otro-gráfico-para-datos-bivariantes" id="toc-otro-gráfico-para-datos-bivariantes" class="nav-link" data-scroll-target="#otro-gráfico-para-datos-bivariantes"><span class="header-section-number">2.6.1</span> Otro gráfico para datos bivariantes</a></li>
+  <li><a href="#matriz-de-dispersión" id="toc-matriz-de-dispersión" class="nav-link" data-scroll-target="#matriz-de-dispersión"><span class="header-section-number">2.6.2</span> Matriz de dispersión</a></li>
+  <li><a href="#caras-de-chernoff" id="toc-caras-de-chernoff" class="nav-link" data-scroll-target="#caras-de-chernoff"><span class="header-section-number">2.6.3</span> Caras de Chernoff</a></li>
+  <li><a href="#matriz-de-correlaciones" id="toc-matriz-de-correlaciones" class="nav-link" data-scroll-target="#matriz-de-correlaciones"><span class="header-section-number">2.6.4</span> Matriz de correlaciones</a></li>
+  <li><a href="#gráficos-de-mosaico" id="toc-gráficos-de-mosaico" class="nav-link" data-scroll-target="#gráficos-de-mosaico"><span class="header-section-number">2.6.5</span> Gráficos de mosaico</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/EM.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
@@ -917,8 +925,9 @@ BMI &amp; \text{Rangs} &amp; Chol&amp;  \text{Rangs}
 </div>
 </div>
 </section>
-<section id="contrastes-de-correlación" class="level3" data-number="2.4.5">
-<h3 data-number="2.4.5" class="anchored" data-anchor-id="contrastes-de-correlación"><span class="header-section-number">2.4.5</span> Contrastes de correlación</h3>
+</section>
+<section id="contrastes-de-correlación" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="contrastes-de-correlación"><span class="header-section-number">2.5</span> Contrastes de correlación</h2>
 <p>En un <em>contraste de correlación</em> de dos variables poblacionales continuas <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, la hipótesis nula es que no hay correlación entre las dos variables, lo cual traduce que no hay ninguna relación entre ellas. <span class="math display">\[
 \left\{
 \begin{array}{ll}
@@ -960,8 +969,142 @@ sample estimates:
 0.6979141 </code></pre>
 </div>
 </div>
-<p><em>Conclusión</em>: No hemos obtenido evidencia estadísticamente significativa que el BMI y el nivel de colesterol de un adulto sano tengan correlación positiva (test de correlación, p-valor 0.06, IC 95% para <span class="math inline">\(\rho\)</span> [-0.086 a 1]).</p>
+<p><em>Conclusión</em>: No hemos obtenido evidencia estadísticamente significativa que el BMI y el nivel de colesterol de un adulto sano tengan correlación positiva (test de correlación, p-valor 0.06, IC para <span class="math inline">\(\rho\)</span> 95% [-0.086 a 1]).</p>
 <p><span style="color: red;"><em>Cuidado</em></span> La conclusión es que no hemos obtenido evidencia que el BMI y el nivel de colesterol <em>tengan correlación positiva</em> <strong>en la población de los adultos sanos</strong>. No en nuestra muestra, que sí que ha dado correlación positiva. Recordad que los contrastes siempre se refieren a la población.</p>
+</section>
+<section id="gráficos-para-datos-multidimensionales" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="gráficos-para-datos-multidimensionales"><span class="header-section-number">2.6</span> Gráficos para datos multidimensionales</h2>
+<section id="otro-gráfico-para-datos-bivariantes" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="otro-gráfico-para-datos-bivariantes"><span class="header-section-number">2.6.1</span> Otro gráfico para datos bivariantes</h3>
+<p>El boxplot bivariante es un gráfico de dispersión que incluye dos elipses estimadas, la interior que contiene aproximadamente el 50% de los datos y la exterior que contiene aproximadamente el 95% de los datos. Este tipo de gráficos nos ayuda a localizar datos atípicos. Veamos un ejemplo con los datos de los pingüinos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MVA)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>a2<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(body_mass_g,bill_length_mm) <span class="sc">%&gt;%</span></span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>  na.omit <span class="sc">%&gt;%</span> <span class="fu">as.matrix</span>()</span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a><span class="fu">bvbox</span>(a2,<span class="at">xlab =</span> <span class="st">"Peso del pingüino en gr"</span>, </span>
+<span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylab =</span> <span class="st">"Longitud del pico en mm"</span>,</span>
+<span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Las dos rectas dentro de las elipses del gráfico anterior son estimaciones de la recta de regresión.La recta más oscura es la habitual de mínimos cuadrados utilizando todas las observaciones. La recta más clara es una estimación más robusta que reduce la influencia de cualquier valor extremo.</p>
+</section>
+<section id="matriz-de-dispersión" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="matriz-de-dispersión"><span class="header-section-number">2.6.2</span> Matriz de dispersión</h3>
+<p>Es posible ver los gráficos de dispersión por pares entre diversas variables cuantitativas utilizando una matriz. Se puede generar utilizando la función “pairs()” de R base. Veamos un ejemplo con nuestros datos de pingüinos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>  na.omit</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(a,</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>)[<span class="fu">as.integer</span>(a<span class="sc">$</span>sex)], </span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">pch =</span> <span class="dv">18</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Existen muchas otras funciones para crear matrices de gráficos de dispersión. Una que nos gusta es <code>ggpairs()</code> del paquete <code>GGally</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(a)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Por defecto, la diagonal principal de la matriz contiene la curva de densidad para cada variable. Por debajo de la diagonal principal se muestran los gráficos de dispersión y la correlación (para las variables cuantitativas) o el cruce entre variables si se trata de una variable categórica.</p>
+</section>
+<section id="caras-de-chernoff" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3" class="anchored" data-anchor-id="caras-de-chernoff"><span class="header-section-number">2.6.3</span> Caras de Chernoff</h3>
+<p>Cada variable del conjunto de datos se usa para representar una característica de la cara. Chernoff usó hasta 18 variables para representar diferentes rasgos faciales como cabeza, nariz, ojos, cejas, boca y oídos. El gráfico de Chernoff tiene como ventaja la la facilidad humana para reconocer patrones de caras. El inconveniente es que la representación es muy dependiente de las variables escogidas para representar cada rasgo. Por ejemplo: la boca y la forma de la cabeza son rasgos más llamativos que las orejas o la longitud de la nariz, y el mismo conjunto puede sugerir distintos patrones de similitud entre las observaciones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"aplpack"</span>)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(species<span class="sc">==</span><span class="st">"Adelie"</span>, </span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>             island<span class="sc">==</span><span class="st">"Torgersen"</span>,</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>             sex<span class="sc">==</span><span class="st">"female"</span>,</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>             year<span class="sc">==</span><span class="dv">2007</span>)</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a><span class="fu">faces</span>(b[,<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>],<span class="at">face.type =</span> <span class="dv">1</span>, <span class="at">scale =</span><span class="cn">TRUE</span>,<span class="at">print.info =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>effect of variables:
+ modified item       Var                
+ "height of face   " "bill_length_mm"   
+ "width of face    " "bill_depth_mm"    
+ "structure of face" "flipper_length_mm"
+ "height of mouth  " "body_mass_g"      
+ "width of mouth   " "bill_length_mm"   
+ "smiling          " "bill_depth_mm"    
+ "height of eyes   " "flipper_length_mm"
+ "width of eyes    " "body_mass_g"      
+ "height of hair   " "bill_length_mm"   
+ "width of hair   "  "bill_depth_mm"    
+ "style of hair   "  "flipper_length_mm"
+ "height of nose  "  "body_mass_g"      
+ "width of nose   "  "bill_length_mm"   
+ "width of ear    "  "bill_depth_mm"    
+ "height of ear   "  "flipper_length_mm"</code></pre>
+</div>
+</div>
+<p>Alternativamente, podemos representar cada elemento por una figura geométrica, donde las similitudes entre figuras indican las similitudes entre los elementos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stars</span>(a[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">key.loc =</span> <span class="fu">c</span>(<span class="dv">44</span>, <span class="fl">1.5</span>),<span class="at">cex=</span><span class="fl">0.45</span>,</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels=</span><span class="fu">row.names</span>(a[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), <span class="at">draw.segments=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Por supuesto que <code>ggplot2</code> nos da opciones más modernas de este tipo de gráficos. Ver, por ejemplo:</p>
+<ul>
+<li><p><a href="https://r-graph-gallery.com/web-radar-chart-with-R.html">ggradar</a></p></li>
+<li><p><a href="https://www.r-bloggers.com/2023/10/creating-interactive-radar-charts-in-r-with-the-fmsb-library/">fmsb library</a></p></li>
+</ul>
+</section>
+<section id="matriz-de-correlaciones" class="level3" data-number="2.6.4">
+<h3 data-number="2.6.4" class="anchored" data-anchor-id="matriz-de-correlaciones"><span class="header-section-number">2.6.4</span> Matriz de correlaciones</h3>
+<p>Las correlaciones por pares entre varias variables se muestran visualmente mediante un mapa de calor de la matriz de correlaciones. La función <code>ggcorrplot()</code> del paquete “ggcorrplot” de R puede utilizarse para construirlo. A continuación se muestra un ejemplo que utiliza el conjunto de datos de los pingüinos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>penguins <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>(.) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(.) <span class="sc">%&gt;%</span> </span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggcorrplot</span>(., <span class="at">hc.order =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">type =</span> <span class="st">"lower"</span>,</span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">colors =</span> <span class="fu">c</span>(<span class="st">"#6D9EC1"</span>,</span>
+<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"yellow"</span>, <span class="st">"#E46726"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En el gráfico, el color naranja denota correlaciones positivas y el gris correlaciones negativas. Al especificar <code>hc.order</code>,las variables también se ordenan.</p>
+</section>
+<section id="gráficos-de-mosaico" class="level3" data-number="2.6.5">
+<h3 data-number="2.6.5" class="anchored" data-anchor-id="gráficos-de-mosaico"><span class="header-section-number">2.6.5</span> Gráficos de mosaico</h3>
+<p>Hasta ahora, hemos explorado métodos para visualizar relaciones entre variables cuantitativas. Pero, ¿qué hacemos si hay más de dos variables categóricas?</p>
+<p>Un método consiste en utilizar gráficos de mosaico, en los que las frecuencias de una tabla de contingencia multidimensional se representan mediante regiones rectangulares anidadas que son proporcionales a su frecuencia de celda. La función <code>mosaic()</code> de la librería <code>vcd</code> proporciona características más amplias que la de R base <code>mosaicplot()</code>. Si se añade la opción opción <code>shade=TRUE</code> colorea la figura basándose en los residuos de Pearson de un modelo ajustado (independencia por defecto), y la opción <code>legend=TRUE</code> muestra una leyenda para estos residuos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species,island, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>a2<span class="ot">&lt;-</span> <span class="fu">ftable</span>(a)</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaic</span>(<span class="sc">~</span>species<span class="sc">+</span>island<span class="sc">+</span>sex, <span class="at">data=</span>a2,</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">shade=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 </section>
