@@ -979,3 +979,40 @@ a2<- table(a)
 mosaicplot(a2,shade=TRUE, main="")
 ```
 
+## [*Práctica 3* ]{style="color: red;"}
+
+
+De las fuentes de datos que se citan abajo o de alguna otra fuente que sea de libre acceso, seleccionad un conjunto de datos que os guste y pensad en responder una pregunta a partir de estos. El conjunto de datos debe cumplir con las siguientes condiciones:
+
+  * Que contenga al menos un par de variables cualitativas (una ordinal y otra nominal).
+  * Que contenga al menos cinco variables cuantitativas, cuantas más mejor.
+  * Si tenéis que unir varias tablas de datos, usad las herramientas que hemos presentado de tidyverse.
+  * Algunas fuentes de datos:
+    * [Compendium of Data Sources for Data Science, Machine Learning, and Artificial Intelligence](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4567555).
+    * [datos.gob.es](https://datos.gob.es/es/catalogo)
+    * [IBESTAT](https://ibestat.caib.es/ibestat/inici)
+    * [Datasets 2023 Makeover Mondey](https://www.makeovermonday.co.uk/data/)
+
+
+
+  1. Cread un repositorio en Github para vuestro grupo con un nombre que sea fácilmente identificable para los profesores de la asignatura. Cread un proyecto nuevo en RStudio conectado al repositorio anterior que contenga los documentos/scripts y presentación del proyecto.
+  
+2. El proyecto debe incluir:
+
+    * Resumen del problema que trataréis, su contexto y la fuente de datos. Describid cada una de las variables que conforman la base de datos del estudio. Plantead una pregunta u objetivo del proyecto.
+  
+    * Tibble o dataframe con la base de datos limpia. Indicad los pasos e instrucciones que habéis utilizado para lograr convertir vuestros datos en `tidy data` (si aplica).
+  
+    * Un análisis multivariante exploratorio de los datos con visualizaciones apropiadas y su interpretación en el contexto del problema.
+    
+    * La estimación del vector de medias y la matriz de covarianza/correlación de las variables cuantitativas, así como un contraste de correlación. 
+    
+    * Escribid una conclusión con los resultados importantes del análisis.
+    
+    * Preparad una presentación de máximo 15 minutos en la que cada miembro del grupo exponga una parte del trabajo.
+    
+    * Cada grupo tiene 15 minutos para exponer y 5 para responder las dudas y preguntas de los compañeros y de los profesores de la asignatura. La calificación se realizará por medio de la rúbrica publicada en Aula Digital que podéis encontrar en la sección "Bloque I".
+    
+    * El peso de la evaluación es el siguiente: 0.8* Nota de la Expo + 0.2* Nota del repositorio. Para calcular la nota de la Expo (exposición), se tomará la calificación media de vuestros compañeros (excluidos los integrantes del grupo) y la asignada por los profesores. Si la diferencia de notas entre los profesores y los compañeros es mayor a 2 puntos, contará únicamente la nota de los profesores.
+  
+

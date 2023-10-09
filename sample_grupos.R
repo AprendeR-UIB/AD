@@ -1,0 +1,11 @@
+grupo1<-c("Ángel García", "Arnau Piferrer", "Guillem Serra")
+grupo2<-c("Carla Martínez", "Patricia Mateu", "Margalida Verd")
+grupo3<-c("Javi Torres", "Marcos Gibert")
+grupo4<-c("Ángel Álamo", "Juanjo Doblas", "Óscar Vanrell")
+grupo5<-c("Maria Àngels Llobera", "Alba Linares")
+grupo6<-c("Marcos Oliva","Hugo García")
+grupo7<-c("Irene LiFeng", "Julià Pérez", "Xisco Ribera Ramis")
+grupo8<-c("Maria del Mar Deyà", "Toni Fuentes Bauzà", "Frank Hammond")
+
+set.seed(3)
+sample(1:8,8)
