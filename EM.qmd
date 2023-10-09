@@ -1013,6 +1013,7 @@ De las fuentes de datos que se citan abajo o de alguna otra fuente que sea de li
     
     * Cada grupo tiene 15 minutos para exponer y 5 para responder las dudas y preguntas de los compañeros y de los profesores de la asignatura. La calificación se realizará por medio de la rúbrica publicada en Aula Digital que podéis encontrar en la sección "Bloque I".
     
-    * El peso de la evaluación es el siguiente: 0.8* Nota de la Expo + 0.2* Nota del repositorio. Para calcular la nota de la Expo (exposición), se tomará la calificación media de vuestros compañeros (excluidos los integrantes del grupo) y la asignada por los profesores. Si la diferencia de notas entre los profesores y los compañeros es mayor a 2 puntos, contará únicamente la nota de los profesores.
+    * El peso de la evaluación es el siguiente: 0.8 $\cdot$ Nota de la Exposición + 0.2 $\cdot$ Nota del repositorio$. Para calcular la nota de la Exposición, se tomará la calificación media de vuestros compañeros (excluidos los integrantes del propio grupo) y la asignada por los profesores. Si la diferencia de notas entre los profesores y los compañeros es mayor a 2 puntos, contará únicamente la nota de los profesores.
+    
   
 
