@@ -1022,7 +1022,7 @@ sample estimates:
 </section>
 <section id="caras-de-chernoff" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="caras-de-chernoff"><span class="header-section-number">2.6.3</span> Caras de Chernoff</h3>
-<p>Cada variable del conjunto de datos se usa para representar una característica de la cara. Chernoff usó hasta 18 variables para representar diferentes rasgos faciales como cabeza, nariz, ojos, cejas, boca y oídos. El gráfico de Chernoff tiene como ventaja la la facilidad humana para reconocer patrones de caras. El inconveniente es que la representación es muy dependiente de las variables escogidas para representar cada rasgo. Por ejemplo: la boca y la forma de la cabeza son rasgos más llamativos que las orejas o la longitud de la nariz, y el mismo conjunto puede sugerir distintos patrones de similitud entre las observaciones.</p>
+<p>Cada variable del conjunto de datos se usa para representar una característica de la cara. Chernoff usó hasta 18 variables para representar diferentes rasgos faciales como cabeza, nariz, ojos, cejas, boca y orejas. El gráfico de Chernoff tiene como ventaja la facilidad humana para reconocer patrones de caras. El inconveniente es que la representación es muy dependiente de las variables escogidas para representar cada rasgo. Por ejemplo: la boca y la forma de la cabeza son rasgos más llamativos que las orejas o la longitud de la nariz, por tanto, el mismo conjunto puede sugerir distintos patrones de similitud entre las observaciones. Veamos un ejemplo.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"aplpack"</span>)</span>
 <span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
@@ -1065,7 +1065,7 @@ sample estimates:
 </div>
 <p>Por supuesto que <code>ggplot2</code> nos da opciones más modernas de este tipo de gráficos. Ver, por ejemplo:</p>
 <ul>
-<li><p><a href="https://r-graph-gallery.com/web-radar-chart-with-R.html">ggradar</a></p></li>
+<li><p><a href="https://www.r-bloggers.com/2016/10/the-grammar-of-graphics-and-radar-charts/">ggradar</a></p></li>
 <li><p><a href="https://www.r-bloggers.com/2023/10/creating-interactive-radar-charts-in-r-with-the-fmsb-library/">fmsb library</a></p></li>
 </ul>
 </section>
@@ -1091,16 +1091,16 @@ sample estimates:
 <section id="gráficos-de-mosaico" class="level3" data-number="2.6.5">
 <h3 data-number="2.6.5" class="anchored" data-anchor-id="gráficos-de-mosaico"><span class="header-section-number">2.6.5</span> Gráficos de mosaico</h3>
 <p>Hasta ahora, hemos explorado métodos para visualizar relaciones entre variables cuantitativas. Pero, ¿qué hacemos si hay más de dos variables categóricas?</p>
-<p>Un método consiste en utilizar gráficos de mosaico, en los que las frecuencias de una tabla de contingencia multidimensional se representan mediante regiones rectangulares anidadas que son proporcionales a su frecuencia de celda. La función <code>mosaic()</code> de la librería <code>vcd</code> proporciona características más amplias que la de R base <code>mosaicplot()</code>. Si se añade la opción opción <code>shade=TRUE</code> colorea la figura basándose en los residuos de Pearson de un modelo ajustado (independencia por defecto), y la opción <code>legend=TRUE</code> muestra una leyenda para estos residuos.</p>
+<p>Un método consiste en utilizar gráficos de mosaico, en los que las frecuencias de una tabla de contingencia multidimensional se representan mediante regiones rectangulares anidadas que son proporcionales a su frecuencia de celda. La función <code>mosaicplot()</code> de la librería <code>vcd</code> proporciona características más amplias que la de R base.</p>
+<p>Si se añade la opción opción <code>shade=TRUE</code> colorea la figura basándose en los residuos estandarizados de un modelo loglineal para la tabla. La idea central detrás de un modelo loglineal es modelar las probabilidades de ocurrencia de cada categoría en la tabla de contingencia y el modelo se ajusta utilizando técnicas de regresión logística.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(vcd)</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
-<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species,island, sex) <span class="sc">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(island,species,sex) <span class="sc">%&gt;%</span></span>
 <span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
-<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>a2<span class="ot">&lt;-</span> <span class="fu">ftable</span>(a)</span>
-<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaic</span>(<span class="sc">~</span>species<span class="sc">+</span>island<span class="sc">+</span>sex, <span class="at">data=</span>a2,</span>
-<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">shade=</span><span class="cn">TRUE</span>, <span class="at">legend=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>a2<span class="ot">&lt;-</span> <span class="fu">table</span>(a)</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(a2,<span class="at">shade=</span><span class="cn">TRUE</span>, <span class="at">main=</span><span class="st">""</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="EM_files/figure-html/unnamed-chunk-37-1.png" class="img-fluid" width="672"></p>
 </div>

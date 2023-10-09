@@ -912,7 +912,7 @@ Por defecto, la diagonal principal de la matriz contiene la curva de densidad pa
 
 ### Caras de Chernoff
 
-Cada variable del conjunto de datos se usa para representar una característica de la cara. Chernoff usó hasta 18 variables para representar diferentes rasgos faciales como cabeza, nariz, ojos, cejas, boca y oídos. El gráfico de Chernoff tiene como ventaja la la facilidad humana para reconocer patrones de caras. El inconveniente es que la representación es muy dependiente de las variables escogidas para representar cada rasgo. Por ejemplo: la boca y la forma de la cabeza son rasgos más llamativos que las orejas o la longitud de la nariz, y el mismo conjunto puede sugerir distintos patrones de similitud entre las observaciones.
+Cada variable del conjunto de datos se usa para representar una característica de la cara. Chernoff usó hasta 18 variables para representar diferentes rasgos faciales como cabeza, nariz, ojos, cejas, boca y orejas. El gráfico de Chernoff tiene como ventaja la facilidad humana para reconocer patrones de caras. El inconveniente es que la representación es muy dependiente de las variables escogidas para representar cada rasgo. Por ejemplo: la boca y la forma de la cabeza son rasgos más llamativos que las orejas o la longitud de la nariz, por tanto, el mismo conjunto puede sugerir distintos patrones de similitud entre las observaciones. Veamos un ejemplo.
 
 
 ```{r}
@@ -935,7 +935,7 @@ stars(a[,1:4], key.loc = c(44, 1.5),cex=0.45,
 
 Por supuesto que `ggplot2`  nos da opciones más modernas de este tipo de gráficos. Ver, por ejemplo:
 
-* [ggradar](https://r-graph-gallery.com/web-radar-chart-with-R.html)
+* [ggradar](https://www.r-bloggers.com/2016/10/the-grammar-of-graphics-and-radar-charts/)
 
 * [fmsb library](https://www.r-bloggers.com/2023/10/creating-interactive-radar-charts-in-r-with-the-fmsb-library/)
 
@@ -964,17 +964,18 @@ En el gráfico, el color naranja denota correlaciones positivas y el gris correl
 
 Hasta ahora, hemos explorado métodos para visualizar relaciones entre variables cuantitativas. Pero, ¿qué hacemos si hay más de dos variables categóricas?
 
-Un método consiste en utilizar gráficos de mosaico, en los que las frecuencias de una tabla de contingencia multidimensional se representan mediante regiones rectangulares anidadas que son proporcionales a su frecuencia de celda. La función `mosaic()` de la librería `vcd` proporciona características más amplias que la de R base `mosaicplot()`. Si se añade la opción
-opción `shade=TRUE` colorea la figura basándose en los residuos de Pearson de un modelo ajustado (independencia por defecto), y la opción `legend=TRUE` muestra una leyenda para estos residuos.
+Un método consiste en utilizar gráficos de mosaico, en los que las frecuencias de una tabla de contingencia multidimensional se representan mediante regiones rectangulares anidadas que son proporcionales a su frecuencia de celda. La función `mosaicplot()` de la librería `vcd` proporciona características más amplias que la de R base. 
+
+Si se añade la opción opción `shade=TRUE` colorea la figura basándose en los residuos estandarizados de un modelo loglineal para la tabla. La idea central detrás de un modelo loglineal es modelar las probabilidades de ocurrencia de cada categoría en la tabla de contingencia y el modelo se ajusta utilizando técnicas de regresión logística.
+
 
 ```{r, message=FALSE}
 library(vcd)
 a<- penguins %>%
-  select(species,island, sex) %>%
+  select(island,species,sex) %>%
   na.omit()
+a2<- table(a)
 
-a2<- ftable(a)
-mosaic(~species+island+sex, data=a2,
-       shade=TRUE, legend=TRUE)
+mosaicplot(a2,shade=TRUE, main="")
 ```
 

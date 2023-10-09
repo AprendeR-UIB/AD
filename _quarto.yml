@@ -6,7 +6,7 @@ project:
 book:
   title: "Análisis de datos"
   author: "Irene García, Ricardo Alberich, Arnau Mir y Francesc Roselló"
-  date: "10/1/2023"
+  date: "10/9/2023"
   reader-mode: true
   page-footer:
     left: |
