@@ -1879,47 +1879,39 @@ runExample("04_mpg")
 
 El paquete `plotly` permite crear los gráficos interactivos  a partir de tus gráficos `ggplot` desde R.
 
+Para ilustrar las herramientas de esta librería utilizaremos datos de los precios de Google desde enero de 2018 hasta el 31 de diciembre de 2019 que están disponibles en la librería `tidyquant`.
 
-Para ilustrar las herramientas de esta librería utilizaremos datos del *Estudio Nacional de Morbilidad y Mortalidad por Contaminación Atmosférica (NMMAPS)*. 
-
-Para que los gráficos sean manejables, limitamos los datos a Chicago entre los años 1997-2000. 
-
-Para más detalles sobre este conjunto de datos, consulta el libro de Roger Peng [Statistical Methods in Environmental Epidemiology with R](https://link.springer.com/book/10.1007/978-0-387-78167-9). 
-
-Podemos importar los datos a nuestra sesión de R, por ejemplo, con `read_csv()` de la librería `readr`. Los almacenamos en una variable llamada `chic`.
-
-```{r}
-chic <- readr::read_csv("https://raw.githubusercontent.com/z3tt/ggplot-courses/main/data/chicago-nmmaps-custom.csv")
-tibble::glimpse(chic)
-```
-
-
-```{r, eval=FALSE}
-library(ggplot2)
-g <- ggplot(chic, aes(date, temp)) +
-  geom_line(color = "grey") +
-  geom_point(aes(color = season)) +
-  scale_color_brewer(palette = "Dark2", guide = "none") +
-  labs(x = NULL, y = "Temperatura (°F)") +
-  theme_bw()
+```{r, message=FALSE, warning=FALSE}
+library(tidyquant)
 library(plotly)
-ggplotly(g)
-```
+getSymbols("GOOG",
+             from = "2018-01-01",
+             to = "2019-12-31")
+stock <- data.frame(GOOG$GOOG.Adjusted)
+stock$GOOG.Adjusted <- stock$GOOG.Adjusted/stock$GOOG.Adjusted[1]
+stock <- data.frame(stock,rownames(stock))
+colnames(stock) <- append('GOOG','date')
+
+fig <- plot_ly(stock, type = 'scatter', mode = 'lines')%>%
+  add_trace(x = ~date, y = ~GOOG, name = 'GOOG')%>%
+  layout(showlegend = F)
+options(warn = -1)
+
+fig <- fig %>%
+  layout(
+         xaxis = list(zerolinecolor = '#ffff',
+                      zerolinewidth = 2,
+                      gridcolor = 'ffff'),
+         yaxis = list(zerolinecolor = '#ffff',
+                      zerolinewidth = 2,
+                      gridcolor = 'ffff'),
+         plot_bgcolor='#e5ecf6', width = 900)
 
 
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(ggplot2)
-g<-ggplot(chic, aes(date, temp)) +
-  geom_line(color = "grey") +
-  geom_point(aes(color = season)) +
-  scale_color_brewer(palette = "Dark2", guide = "none") +
-  labs(x = NULL, y = "Temperatura (°F)") +
-  theme_bw()
-library(plotly)
-g2<-ggplotly(g)
-gc <- htmltools::div( g2, align="center" )  
-gc 
+fig
+
 ```
+
 
 
 #### `ggiraph`

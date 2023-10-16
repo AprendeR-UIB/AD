@@ -198,6 +198,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#gráficos-de-mosaico" id="toc-gráficos-de-mosaico" class="nav-link" data-scroll-target="#gráficos-de-mosaico"><span class="header-section-number">2.6.5</span> Gráficos de mosaico</a></li>
   </ul></li>
   <li><a href="#práctica-3" id="toc-práctica-3" class="nav-link" data-scroll-target="#práctica-3"><span class="header-section-number">2.7</span> <span style="color: red;"><em>Práctica 3</em></span></a></li>
+  <li><a href="#distancias" id="toc-distancias" class="nav-link" data-scroll-target="#distancias"><span class="header-section-number">2.8</span> Distancias</a>
+  <ul class="collapse">
+  <li><a href="#distancia-euclídea" id="toc-distancia-euclídea" class="nav-link" data-scroll-target="#distancia-euclídea"><span class="header-section-number">2.8.1</span> Distancia euclídea</a></li>
+  <li><a href="#distancia-de-minkowski" id="toc-distancia-de-minkowski" class="nav-link" data-scroll-target="#distancia-de-minkowski"><span class="header-section-number">2.8.2</span> Distancia de Minkowski</a></li>
+  </ul></li>
+  <li><a href="#distancias-basadas-en-la-correlación" id="toc-distancias-basadas-en-la-correlación" class="nav-link" data-scroll-target="#distancias-basadas-en-la-correlación"><span class="header-section-number">2.9</span> Distancias basadas en la correlación</a></li>
+  <li><a href="#distancia-de-mahalanobis" id="toc-distancia-de-mahalanobis" class="nav-link" data-scroll-target="#distancia-de-mahalanobis"><span class="header-section-number">2.10</span> Distancia de Mahalanobis</a></li>
+  <li><a href="#distancias-para-variables-binarias" id="toc-distancias-para-variables-binarias" class="nav-link" data-scroll-target="#distancias-para-variables-binarias"><span class="header-section-number">2.11</span> Distancias para variables binarias:</a></li>
+  <li><a href="#distancias-para-variables-categóricas" id="toc-distancias-para-variables-categóricas" class="nav-link" data-scroll-target="#distancias-para-variables-categóricas"><span class="header-section-number">2.12</span> Distancias para variables categóricas:</a></li>
+  <li><a href="#distancias-para-variables-mixtas" id="toc-distancias-para-variables-mixtas" class="nav-link" data-scroll-target="#distancias-para-variables-mixtas"><span class="header-section-number">2.13</span> Distancias para variables mixtas</a></li>
+  <li><a href="#visualización-de-matrices-de-distancias" id="toc-visualización-de-matrices-de-distancias" class="nav-link" data-scroll-target="#visualización-de-matrices-de-distancias"><span class="header-section-number">2.14</span> Visualización de matrices de distancias</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/EM.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
@@ -1137,6 +1148,481 @@ sample estimates:
 <li><p>El peso de la evaluación es el siguiente: 0.8 <span class="math inline">\(\cdot\)</span> Nota de la Exposición + 0.2 <span class="math inline">\(\cdot\)</span> Nota del repositorio$. Para calcular la nota de la Exposición, se tomará la calificación media de vuestros compañeros (excluidos los integrantes del propio grupo) y la asignada por los profesores. Si la diferencia de notas entre los profesores y los compañeros es mayor a 2 puntos, contará únicamente la nota de los profesores.</p></li>
 </ul></li>
 </ol>
+</section>
+<section id="distancias" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="distancias"><span class="header-section-number">2.8</span> Distancias</h2>
+<p>Como hemos mencionado, la información multivariante es una matriz de datos de orden <span class="math inline">\(n \times p\)</span>, con <span class="math inline">\(n\)</span> el número de filas y <span class="math inline">\(p\)</span> el número de variables consideradas. A veces, para determinar cuáles observaciones multivariantes son semejantes y cuáles no, se emplean matrices de distancias o similaridades. Dependiendo del contexto, hay que seleccionar la más apropiada para obtener resultados confiables. A continuación, presentamos algunas de las distancias más utilizadas.</p>
+<section id="distancia-euclídea" class="level3" data-number="2.8.1">
+<h3 data-number="2.8.1" class="anchored" data-anchor-id="distancia-euclídea"><span class="header-section-number">2.8.1</span> Distancia euclídea</h3>
+<p>La distancia euclídea entre dos realizaciones <span class="math inline">\(\underline{X}=(x_1,\ldots,x_p)\)</span> e <span class="math inline">\(\underline{Y}=(y_1,\ldots,y_p)\)</span> se define como</p>
+<p><span class="math display">\[d_E(\underline{X},\underline{Y})=\sqrt{\displaystyle\sum_{k=1}^p (x_k-y_k)^2}\]</span></p>
+<p>Esta distancia equivale a la suma de las longitudes de los segmentos que unen cada par de posiciones. La siguiente imagen muestra el perfil de dos usuarios en base a las valoraciones que han hecho de 10 ítems.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>usuario_a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>usuario_b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">5</span>, <span class="dv">6</span>) <span class="sc">+</span> <span class="dv">3</span></span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">usuario =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="at">each =</span> <span class="dv">10</span>),</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">valoracion =</span> <span class="fu">c</span>(usuario_a, usuario_b),</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">item =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(item), <span class="at">y =</span> valoracion,</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> usuario)) <span class="sc">+</span></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">group =</span> usuario)) <span class="sc">+</span></span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb69-11"><a href="#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> item), <span class="at">colour =</span> <span class="st">"firebrick"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb69-12"><a href="#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"item"</span>) <span class="sc">+</span></span>
+<span id="cb69-13"><a href="#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La distancia euclideana entre los dos usuarios es:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">sum</span>((usuario_a<span class="sc">-</span>usuario_b)<span class="sc">^</span><span class="dv">2</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.486833</code></pre>
+</div>
+</div>
+<p>Las funciones <code>dist()</code> de R base y <code>get_dist</code> de la librería <code>factoextra</code> se pueden utilizar para calcular las distancias entre todas las filas (observaciones) de una matriz o data frame. Por defecto, las funciones devuelven una matriz triangular inferior.</p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Para el data frame de los pingüinos, calculamos las distancias euclideanas entre las ocho hembras de la especie Adelie que fueron registradas en Torgensen el año 2007.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>p_ATf<span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span> </span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species<span class="sc">==</span><span class="st">"Adelie"</span>, </span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>         island<span class="sc">==</span><span class="st">"Torgersen"</span>,</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>         sex<span class="sc">==</span><span class="st">"female"</span>,</span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>         year<span class="sc">==</span><span class="dv">2007</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>)</span>
+<span id="cb72-6"><a href="#cb72-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-7"><a href="#cb72-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(p_ATf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          1         2         3         4         5         6         7
+2  9.055385                                                            
+3  7.774960  4.318565                                                  
+4  5.051732 14.071247 12.291867                                        
+5  4.312772 13.030733 11.968709  2.424871                              
+6  3.093542 10.664427  8.140025  4.614109  5.412024                    
+7  9.176056  1.886796  2.844293 14.052758 13.293607 10.288343          
+8  5.568662 12.488795  9.332738  5.441507  7.037755  2.489980 11.825819</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_dist</span>(p_ATf, <span class="at">stand=</span><span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1        2        3        4        5        6        7
+2 1.819868                                                      
+3 3.293836 2.530682                                             
+4 1.077437 2.510238 3.181155                                    
+5 1.039894 2.343332 3.710845 1.048543                           
+6 1.443639 2.415665 2.600833 1.244814 2.113671                  
+7 2.840218 1.637506 1.061075 2.989495 3.228280 2.641200         
+8 2.750331 3.317954 2.286750 2.271394 3.259136 1.338307 2.850519</code></pre>
+</div>
+</div>
+<p>Las distancias grandes indican mayores disimilitudes entre las observaciones.</p>
+<p>Observa que hemos calculado la distancia euclideana con la función <code>get_dist</code> pero estandarizando los datos especificando <code>stand=TRUE</code>, es decir, para cada variable (columna), restamos el valor medio de la columna y dividimos por la desviación típica de la columna, lo cual tiene sentido hacerlo cuando las variables del conjunto de datos están en escalas diferentes. El problema con la distancia euclideana es que no toma en cuenta la correlación entre las variables consideradas.</p>
+</section>
+<section id="distancia-de-minkowski" class="level3" data-number="2.8.2">
+<h3 data-number="2.8.2" class="anchored" data-anchor-id="distancia-de-minkowski"><span class="header-section-number">2.8.2</span> Distancia de Minkowski</h3>
+<p>Otra distancia que podría ser considerada es la de Minkowski, cuya definición es la siguiente:</p>
+<p><span class="math display">\[d_{M_q}(\underline{X}_i,\underline{X}_j)=\left(\displaystyle\sum_{k=1}^p|x_{ik}-x_{jk}|^q \right)^{1/q}, \;\; q&gt;0\]</span> Presenta los mismos inconvenientes que <span class="math inline">\(d_E\)</span> <span class="math inline">\((d_E = d_{M_2})\)</span>.</p>
+<ul>
+<li><p>Si <span class="math inline">\(q=1\)</span>, se le llama distancia de Manhattan</p></li>
+<li><p>Si <span class="math inline">\(q \rightarrow \infty\)</span>, se le llama distancia dominante <span class="math display">\[d_{M_\infty}(\underline{X}_i,\underline{X}_j)=\max\{ |x_{i1}-x_{j1}|,\ldots,|x_{ip}-y_{jp}|\}\]</span></p></li>
+</ul>
+<p>La siguiente imagen muestra una comparación entre la distancia euclídea (segmento azul) y la distancia de Manhattan (segmento rojo y verde) en un espacio bidimensional. Existen múltiples caminos para unir dos puntos con el mismo valor de distancia de Manhattan, ya que su valor es igual al desplazamiento total en cada una de las dimensiones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">observacion =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">7</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">7</span>))</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>manhattan <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">x =</span> <span class="fu">rep</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each =</span> <span class="dv">2</span>),</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">y =</span> <span class="fu">rep</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dv">5</span>),</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">xend =</span> <span class="fu">rep</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">each =</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="dv">5</span>),</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">yend =</span> <span class="fu">rep</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">each =</span> <span class="dv">2</span>))</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>manhattan_2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">7</span>),</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">4</span>),</span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">xend =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">7</span>),</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">7</span>))</span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="dv">2</span>, <span class="at">xend =</span> <span class="dv">7</span>, <span class="at">yend =</span> <span class="dv">7</span>), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb76-16"><a href="#cb76-16" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_segment</span>(<span class="at">data =</span> manhattan, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
+<span id="cb76-17"><a href="#cb76-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb76-18"><a href="#cb76-18" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_segment</span>(<span class="at">data =</span> manhattan_2, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">xend =</span> xend, <span class="at">yend =</span> yend),</span>
+<span id="cb76-19"><a href="#cb76-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"green3"</span>, <span class="at">size =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb76-20"><a href="#cb76-20" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb76-21"><a href="#cb76-21" aria-hidden="true" tabindex="-1"></a><span class="fu">theme</span>(<span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb76-22"><a href="#cb76-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">size =</span> <span class="dv">2</span>),</span>
+<span id="cb76-23"><a href="#cb76-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"gray"</span>,</span>
+<span id="cb76-24"><a href="#cb76-24" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">colour =</span> <span class="st">"white"</span>,</span>
+<span id="cb76-25"><a href="#cb76-25" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-41-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="distancias-basadas-en-la-correlación" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="distancias-basadas-en-la-correlación"><span class="header-section-number">2.9</span> Distancias basadas en la correlación</h2>
+<p>Las distancias basadas en la correlación son útiles utilizadas cuando la similitud queremos establecerla en términos del patrón o forma y no de desplazamiento o magnitud; por ejemplo en el análisis de datos de expresión génica.</p>
+<p><span class="math display">\[d_{cor}(\underline{X}_i,\underline{X}_j)=1-Cor(\underline{X}_i,\underline{X}_j)\]</span></p>
+<p>donde la correlación puede ser de distintos tipos (Pearson, Spearman, Kendall…)</p>
+<p>En la siguiente imagen mostramos el perfil de 3 usuarios. Veamos qué ocurre si utilizamos la distancia euclideana y la de correlación de Pearson para compararlos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>usuario_a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">4</span>, <span class="fl">7.5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>usuario_b <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">4</span>, <span class="fl">7.5</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">5</span>, <span class="dv">6</span>) <span class="sc">+</span> <span class="dv">4</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>usuario_c <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="fl">5.5</span>, <span class="fl">4.8</span>, <span class="fl">5.4</span>, <span class="fl">4.7</span>, <span class="fl">5.6</span>, <span class="fl">5.3</span>, <span class="fl">5.5</span>, <span class="fl">5.2</span>, <span class="fl">4.8</span>)</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">usuario =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">each =</span> <span class="dv">10</span>),</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">valoracion =</span> <span class="fu">c</span>(usuario_a, usuario_b, usuario_c),</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">item =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">as.factor</span>(item),</span>
+<span id="cb77-10"><a href="#cb77-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> valoracion, </span>
+<span id="cb77-11"><a href="#cb77-11" aria-hidden="true" tabindex="-1"></a>                         <span class="at">colour =</span> usuario)) <span class="sc">+</span></span>
+<span id="cb77-12"><a href="#cb77-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">group =</span> usuario)) <span class="sc">+</span></span>
+<span id="cb77-13"><a href="#cb77-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb77-14"><a href="#cb77-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"item"</span>) <span class="sc">+</span></span>
+<span id="cb77-15"><a href="#cb77-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb77-16"><a href="#cb77-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(<span class="at">x =</span> <span class="fu">rbind</span>(usuario_a, usuario_b, usuario_c), <span class="at">method =</span> <span class="st">"euclidean"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          usuario_a usuario_b
+usuario_b  12.64911          
+usuario_c   3.75100  13.98821</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">-</span> <span class="fu">cor</span>(<span class="at">x =</span> <span class="fu">cbind</span>(usuario_a, usuario_b, usuario_c), <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          usuario_a usuario_b usuario_c
+usuario_a 0.0000000 0.0000000 0.9466303
+usuario_b 0.0000000 0.0000000 0.9466303
+usuario_c 0.9466303 0.9466303 0.0000000</code></pre>
+</div>
+</div>
+<p>De acuerdo a la distancia euclideana, los usuarios a y c son los más similares, mientras que acorde a la correlación de Pearson, a y b son los más parecidos. Este ejemplo pone de manifiesto que no existe una única medida de distancia que sea mejor que las demás, sino que, dependiendo del contexto, una será más adecuada que otra.</p>
+</section>
+<section id="distancia-de-mahalanobis" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="distancia-de-mahalanobis"><span class="header-section-number">2.10</span> Distancia de Mahalanobis</h2>
+<p><span class="math display">\[d^2_M \left( \underline{X}_i,\underline{X}_j \right)= \left(\underline{X}_i-\underline{X}_j \right)^t {\bf S}^{-1}
+\left(\underline{X}_i-\underline{X}_j\right),\]</span></p>
+<p>donde <span class="math inline">\({\bf S}\)</span> es la matriz de covarianzas muestrales de la matriz de datos <span class="math inline">\({\bf X}\)</span>.</p>
+<p>Es adecuada como medida de discrepancia entre datos, porque:</p>
+<ul>
+<li><p>Es invariante frente a transformaciones lineales invertibles de las variables.</p></li>
+<li><p><span class="math inline">\(d_E=d_M\)</span> cuando <span class="math inline">\({\bf S}={\bf I}\)</span> y <span class="math inline">\(d_K = d_M\)</span> cuando <span class="math inline">\({\bf S}=diag(s^2_1,\ldots,s^2_p),\)</span></p></li>
+<li><p>Esta distancia tiene en cuenta las correlaciones entre las variables.</p></li>
+<li><p>No aumenta por el simple hecho de aumentar el número de variables registradas, sino que solamente aumentará cuando las nuevas variables no sean redundantes con respecto de la información aportada por las anteriores.</p></li>
+<li><p>Esta es la distancia más utilizada cuando todas las variables son cuantitativas.</p></li>
+</ul>
+</section>
+<section id="distancias-para-variables-binarias" class="level2" data-number="2.11">
+<h2 data-number="2.11" class="anchored" data-anchor-id="distancias-para-variables-binarias"><span class="header-section-number">2.11</span> Distancias para variables binarias:</h2>
+<p>Si <span class="math inline">\(X_1,\ldots,X_p\)</span> son variables que toman valores <span class="math inline">\(\{0,1\}\)</span>, existen muchos <strong>coeficientes de similaridad</strong> <span class="math inline">\(s_{ij}\)</span> entre dos observaciones <span class="math inline">\(i,j\)</span>, calculados a partir de las frecuencias tales que <span class="math inline">\(a+b+c+d=p\)</span>, donde:</p>
+<ul>
+<li><p><span class="math inline">\(a\)</span>: el número de variables con respuesta 1 en ambos individuos,</p></li>
+<li><p><span class="math inline">\(b\)</span>: el número de variables con respuesta 0 en la observación <span class="math inline">\(i\)</span> y con respuesta 1 en el individuo <span class="math inline">\(j\)</span>,</p></li>
+<li><p><span class="math inline">\(c\)</span>: el número de variables con respuesta 1 en la observación <span class="math inline">\(i\)</span> y con respuesta 0 en la observación <span class="math inline">\(j\)</span>,</p></li>
+<li><p><span class="math inline">\(d\)</span>: el número de variables con respuesta 0 en ambos individuos.</p></li>
+</ul>
+<p>Algunos coeficientes de similaridad son:</p>
+<p><strong>Sokal y Michener</strong>: <span class="math inline">\(s_{ij}=\frac{a+d}{p}\)</span>, <strong>Jaccard</strong>: <span class="math inline">\(s_{ij} =\frac{a}{a+b+c}\)</span></p>
+<p>Aplicando uno de estos coeficientes a un conjunto de <span class="math inline">\(n\)</span> objetos se obtiene una matriz de similaridades <span class="math inline">\({\bf S}=(s_{ij})_{n\times n}\)</span></p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Se han medido 6 variables sobre 3 individuos:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>ind.</th>
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th><span class="math inline">\(X_3\)</span></th>
+<th><span class="math inline">\(X_4\)</span></th>
+<th><span class="math inline">\(X_5\)</span></th>
+<th><span class="math inline">\(X_6\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/tabla_binaria.PNG" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Las matrices de similaridad son: <span class="math display">\[{\bf S}_{Sokal}=\left(\begin{array}{ccc}
+1 &amp; 0.6667 &amp; 0.5\\
+0.667 &amp; 1 &amp; 0.5\\
+0.5 &amp; 0.5 &amp; 1
+\end{array}\right), \;\;\; {\bf S}_{Jaccard}=\left(\begin{array}{ccc}
+1 &amp; 0.6 &amp; 0.4\\
+0.6 &amp; 1 &amp; 0.4\\
+0.4 &amp; 0.4 &amp; 1
+\end{array}\right) \]</span></p>
+</section>
+<section id="distancias-para-variables-categóricas" class="level2" data-number="2.12">
+<h2 data-number="2.12" class="anchored" data-anchor-id="distancias-para-variables-categóricas"><span class="header-section-number">2.12</span> Distancias para variables categóricas:</h2>
+<p>Se mide una variable categórica nominal con <span class="math inline">\(k\)</span> niveles sobre una muestra de <span class="math inline">\(n = n_1+\cdots+n_g\)</span> observaciones provenientes de <span class="math inline">\(g\)</span> poblaciones diferentes. Se desea obtener una medida de disimilaridad entre estas poblaciones.</p>
+<p>En estas condiciones, el vector de frecuencias de cada población <span class="math inline">\({\bf n}_{\alpha}=(n_{\alpha1},\ldots,n_{\alpha k})\)</span>, para <span class="math inline">\(\alpha=1,\ldots, g\)</span>, tiene una distribución conjunta multinomial con parámetros <span class="math inline">\((n_{\alpha}, {\bf p}_{\alpha})\)</span>, donde <span class="math inline">\(n_{\alpha}=n_{\alpha1}+\ldots +n_{\alpha k}\)</span> y <span class="math inline">\({\bf p}_{\alpha}=(p_{\alpha 1},\ldots,p_{\alpha k}\)</span> es el vector de probabilidades de los <span class="math inline">\(k\)</span> niveles en la población <span class="math inline">\(\alpha\)</span> (con <span class="math inline">\(p_{\alpha 1}+\ldots + p_{\alpha k}=1\)</span>).</p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: La siguiente tabla contiene las proporciones génicas observadas entre 10 poblaciones. Observa que las filas suman 1.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Población</th>
+<th>grupo A</th>
+<th>grupo AB</th>
+<th>grupo B</th>
+<th>grupo O</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>francesa</td>
+<td>0.21</td>
+<td>0.06</td>
+<td>0.06</td>
+<td>0.67</td>
+</tr>
+<tr class="even">
+<td>checa</td>
+<td>0.25</td>
+<td>0.04</td>
+<td>0.14</td>
+<td>0.57</td>
+</tr>
+<tr class="odd">
+<td>germánica</td>
+<td>0.22</td>
+<td>0.06</td>
+<td>0.08</td>
+<td>0.64</td>
+</tr>
+<tr class="even">
+<td>vasca</td>
+<td>0.19</td>
+<td>0.04</td>
+<td>0.02</td>
+<td>0.75</td>
+</tr>
+<tr class="odd">
+<td>china</td>
+<td>0.18</td>
+<td>0.00</td>
+<td>0.15</td>
+<td>0.67</td>
+</tr>
+<tr class="even">
+<td>ainu</td>
+<td>0.23</td>
+<td>0.00</td>
+<td>0.28</td>
+<td>0.49</td>
+</tr>
+<tr class="odd">
+<td>esquimal</td>
+<td>0.30</td>
+<td>0.00</td>
+<td>0.06</td>
+<td>0.64</td>
+</tr>
+<tr class="even">
+<td>negra USA</td>
+<td>0.10</td>
+<td>0.06</td>
+<td>0.13</td>
+<td>0.71</td>
+</tr>
+<tr class="odd">
+<td>española</td>
+<td>0.27</td>
+<td>0.04</td>
+<td>0.06</td>
+<td>0.63</td>
+</tr>
+<tr class="even">
+<td>egipcia</td>
+<td>0.21</td>
+<td>0.05</td>
+<td>0.20</td>
+<td>0.54</td>
+</tr>
+</tbody>
+</table>
+<p>Dos medidas de disimilaridad para este tipo de variables son:</p>
+<ul>
+<li><p><strong>Distancia de Bhattacharyya</strong> <span class="math display">\[d^2_{ij}=arccos\left( \displaystyle\sum_{l=1}^k \sqrt{p_{il} \; p_{jl}}\right)\]</span></p></li>
+<li><p><strong>Distancia de Balakrishnan-Sanghvi</strong> <span class="math display">\[d^2_{ij}= 2 \displaystyle\sum_{l=1}^k \frac{(p_{il}-p_{jl})^2}{p_{il}+p_{jl}} \]</span></p></li>
+</ul>
+<p>Para los datos del ejemplo, la matriz de distancias de Bhattacharyya es:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>poblacion<span class="ot">=</span><span class="fu">c</span>(<span class="st">"francesa"</span>,<span class="st">"checa"</span>,<span class="st">"germánica"</span>,<span class="st">"vasca"</span>,<span class="st">"china"</span>,<span class="st">"ainu"</span>,<span class="st">"esquimal"</span>,<span class="st">"negra USA"</span>,<span class="st">"española"</span>,<span class="st">"egipcia"</span>)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>grupoA<span class="ot">=</span><span class="fu">c</span>(<span class="fl">0.21</span>,<span class="fl">0.25</span>,.<span class="dv">22</span>,.<span class="dv">19</span>,.<span class="dv">18</span>,.<span class="dv">23</span>,.<span class="dv">3</span>,.<span class="dv">1</span>,.<span class="dv">27</span>,.<span class="dv">21</span>)</span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>grupoAB<span class="ot">=</span><span class="fu">c</span>(.<span class="dv">06</span>,.<span class="dv">04</span>,.<span class="dv">06</span>,.<span class="dv">04</span>,.<span class="dv">00</span>,.<span class="dv">00</span>,.<span class="dv">00</span>,.<span class="dv">06</span>,.<span class="dv">04</span>,.<span class="dv">05</span>)</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>grupoB<span class="ot">=</span><span class="fu">c</span>(.<span class="dv">06</span>,.<span class="dv">14</span>,.<span class="dv">08</span>,.<span class="dv">02</span>,.<span class="dv">15</span>,.<span class="dv">28</span>,.<span class="dv">06</span>,.<span class="dv">13</span>,.<span class="dv">06</span>,.<span class="dv">2</span>)</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>grupoO<span class="ot">=</span><span class="fu">c</span>(.<span class="dv">67</span>,.<span class="dv">57</span>,.<span class="dv">64</span>,.<span class="dv">75</span>,.<span class="dv">67</span>,.<span class="dv">49</span>,.<span class="dv">64</span>,.<span class="dv">71</span>,.<span class="dv">63</span>,.<span class="dv">54</span>)</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>datos<span class="ot">=</span><span class="fu">data.frame</span>(poblacion,grupoA,grupoAB,grupoB,grupoO)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(philentropy)</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">distance</span>(datos[,<span class="sc">-</span><span class="dv">1</span>], <span class="at">method =</span> <span class="st">"bhattacharyya"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              v1          v2           v3          v4         v5         v6
+v1  0.0000000000 0.012324966 0.0009483429 0.007777165 0.04156128 0.08081738
+v2  0.0123249656 0.000000000 0.0066949713 0.035943482 0.02529075 0.03431210
+v3  0.0009483429 0.006694971 0.0000000000 0.013834658 0.03731750 0.06762516
+v4  0.0077771654 0.035943482 0.0138346582 0.000000000 0.05279229 0.11642553
+v5  0.0415612774 0.025290748 0.0373174959 0.052792291 0.00000000 0.01879186
+v6  0.0808173801 0.034312099 0.0676251647 0.116425530 0.01879186 0.00000000
+v7  0.0347713474 0.030975271 0.0343982089 0.034376078 0.01808704 0.04888218
+v8  0.0172057129 0.022070358 0.0157266766 0.032991841 0.03716560 0.07012655
+v9  0.0032054844 0.009334768 0.0030312958 0.011543973 0.03561201 0.06782787
+v10 0.0244823653 0.004028694 0.0160452869 0.057509566 0.03136123 0.02962590
+            v7         v8          v9         v10
+v1  0.03477135 0.01720571 0.003205484 0.024482365
+v2  0.03097527 0.02207036 0.009334768 0.004028694
+v3  0.03439821 0.01572668 0.003031296 0.016045287
+v4  0.03437608 0.03299184 0.011543973 0.057509566
+v5  0.01808704 0.03716560 0.035612005 0.031361231
+v6  0.04888218 0.07012655 0.067827866 0.029625898
+v7  0.00000000 0.06655156 0.020625956 0.052957776
+v8  0.06655156 0.00000000 0.030016960 0.020075979
+v9  0.02062596 0.03001696 0.000000000 0.024651208
+v10 0.05295778 0.02007598 0.024651208 0.000000000</code></pre>
+</div>
+</div>
+<p>Las poblaciones más cercanas (según la distancia de Battacharyya) son la francesa y la germánica con <span class="math inline">\(d_{1,3}=0.00095\)</span>. Mientras que los más alejados son las poblaciones francesa y ainu con <span class="math inline">\(d_{1,6}=0.08082\)</span>.</p>
+</section>
+<section id="distancias-para-variables-mixtas" class="level2" data-number="2.13">
+<h2 data-number="2.13" class="anchored" data-anchor-id="distancias-para-variables-mixtas"><span class="header-section-number">2.13</span> Distancias para variables mixtas</h2>
+<p>Cuando disponemos de un conjunto de observaciones sobre variables tanto cuantitativas como cualitativas.</p>
+<p>Se define la distancia de Gower como <span class="math inline">\(d^2_{ij}=1-s_{ij}\)</span>, donde <span class="math display">\[s_{ij}=\frac{\sum_{k=1}^{p_1}(1-|x_{ik}-x_{jk}|/G_k)+a+\alpha}{p_1+(p_2-d)+p_3}\]</span> es el coeficiente de similaridad de Gower,</p>
+<ul>
+<li><p><span class="math inline">\(p_1\)</span> es el número de variables cuantitativas continuas,</p></li>
+<li><p><span class="math inline">\(p_2\)</span> es el número de variables binarias,</p></li>
+<li><p><span class="math inline">\(p_3\)</span> es el número de variables cualitativas (no binarias),</p></li>
+<li><p><span class="math inline">\(a\)</span> es el número de coincidencias (1,1) en las variables binarias,</p></li>
+<li><p><span class="math inline">\(d\)</span> es el número de coincidencias (0,0) en las variables binarias,</p></li>
+<li><p><span class="math inline">\(\alpha\)</span> es el número de coincidencias en las variables cualitativas (no binarias) y</p></li>
+<li><p><span class="math inline">\(G_h\)</span> es el rango de la <span class="math inline">\(k\)</span>-ésima variable cuantitativa.</p></li>
+</ul>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Considera 7 variables registradas sobre 50 jugadores de la liga española de fútbol.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/tabla_futbol.PNG" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><span class="math inline">\(X_1\)</span> es el número de goles marcados, <span class="math inline">\(X_2\)</span> edad (en años),</p></li>
+<li><p><span class="math inline">\(X_3\)</span> altura (m), <span class="math inline">\(X_4\)</span> peso (kg),</p></li>
+<li><p><span class="math inline">\(X_5\)</span> pierna buena del jugador (1=drecha, 0=izquierda),</p></li>
+<li><p><span class="math inline">\(X_6\)</span> nacionalidad: (1=Argentina, 2=Brasil, 3=Camerun, 4=Italia, 5=España, 6=Francia, 7=Uruguay, 8=Portugal, 9=Inglaterra).</p></li>
+<li><p><span class="math inline">\(X_7\)</span> tipo de estudios (1=sin estudios, 2=básicos, 3=medios, 4=superiores)</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>futbol<span class="ot">=</span><span class="fu">read.table</span>(<span class="st">"datos/jugadores.txt"</span>)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(StatMatch)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>distancia<span class="ot">=</span><span class="fu">gower.dist</span>(futbol)</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(distancia,<span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          [,1]      [,2]      [,3]      [,4]      [,5]      [,6]      [,7]
+[1,] 0.0000000 0.2422439 0.4123377 0.3910534 0.3887085 0.2007576 0.3412698
+[2,] 0.2422439 0.0000000 0.3331530 0.3317100 0.2575758 0.3510101 0.1863276
+          [,8]      [,9]     [,10]     [,11]     [,12]     [,13]     [,14]
+[1,] 0.4585137 0.4370491 0.3645382 0.4132395 0.3329726 0.3098846 0.5128066
+[2,] 0.3555195 0.3181818 0.2334055 0.2229437 0.2736291 0.1747835 0.3419913
+         [,15]     [,16]     [,17]     [,18]     [,19]    [,20]     [,21]
+[1,] 0.3879870 0.3872655 0.3910534 0.3324315 0.3823954 0.333153 0.4880952
+[2,] 0.3088023 0.2323232 0.2321429 0.1659452 0.2869769 0.463925 0.3930375
+         [,22]     [,23]     [,24]     [,25]     [,26]     [,27]     [,28]
+[1,] 0.2436869 0.3890693 0.3311688 0.3154762 0.3551587 0.4462482 0.3059163
+[2,] 0.3715729 0.2341270 0.2718254 0.4462482 0.2521645 0.2754329 0.4366883
+         [,29]     [,30]     [,31]     [,32]     [,33]    [,34]     [,35]
+[1,] 0.3977273 0.1803752 0.2561328 0.3612915 0.3450577 0.247114 0.3481241
+[2,] 0.2427850 0.3309885 0.1369048 0.2063492 0.2500000 0.403860 0.4788961
+         [,36]     [,37]     [,38]     [,39]     [,40]     [,41]     [,42]
+[1,] 0.4202742 0.3151154 0.4197330 0.3250361 0.2247475 0.2023810 0.2676768
+[2,] 0.2783189 0.1969697 0.3405483 0.2061688 0.3786075 0.4446248 0.1484488
+         [,43]     [,44]     [,45]     [,46]     [,47]     [,48]     [,49]
+[1,] 0.1801948 0.3403680 0.3762626 0.1524170 0.4889971 0.3986291 0.2987013
+[2,] 0.4224387 0.2453102 0.2812049 0.3318903 0.3340548 0.2278139 0.1935426
+         [,50]
+[1,] 0.4224387
+[2,] 0.2516234</code></pre>
+</div>
+</div>
+<p>Con la librería <code>stats</code> de R base puedes calcular la distancia: “euclidean”, “maximum”, “manhattan”, “canberra”, “binary” o “minkowski”.</p>
+<p>La función <code>distance()</code>de la libreria <code>philentropy</code> es capaz de calcular 46 diferentes distancias/similaridades.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getDistMethods</span>()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "euclidean"         "manhattan"         "minkowski"        
+ [4] "chebyshev"         "sorensen"          "gower"            
+ [7] "soergel"           "kulczynski_d"      "canberra"         
+[10] "lorentzian"        "intersection"      "non-intersection" 
+[13] "wavehedges"        "czekanowski"       "motyka"           
+[16] "kulczynski_s"      "tanimoto"          "ruzicka"          
+[19] "inner_product"     "harmonic_mean"     "cosine"           
+[22] "hassebrook"        "jaccard"           "dice"             
+[25] "fidelity"          "bhattacharyya"     "hellinger"        
+[28] "matusita"          "squared_chord"     "squared_euclidean"
+[31] "pearson"           "neyman"            "squared_chi"      
+[34] "prob_symm"         "divergence"        "clark"            
+[37] "additive_symm"     "kullback-leibler"  "jeffreys"         
+[40] "k_divergence"      "topsoe"            "jensen-shannon"   
+[43] "jensen_difference" "taneja"            "kumar-johnson"    
+[46] "avg"              </code></pre>
+</div>
+</div>
+</section>
+<section id="visualización-de-matrices-de-distancias" class="level2" data-number="2.14">
+<h2 data-number="2.14" class="anchored" data-anchor-id="visualización-de-matrices-de-distancias"><span class="header-section-number">2.14</span> Visualización de matrices de distancias</h2>
+<p>Una solución sencilla para visualizar las matrices de distancia es utilizar la función <code>fviz_dist()</code> de la librería <code>factoextra</code>. Otros métodos especializados, como la agrupación jerárquica aglomerativa o el mapa de calor, las presentaremos más adelante.</p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Visualizamos la tabla de los jugadores de fútbol.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_dist</span>(<span class="fu">as.dist</span>(distancia))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="EM_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Si el color es rojo, la similitud es alta (es decir, distancia cero). Si el color es azul, la similitud es baja. El nivel de color es proporcional al valor de la distancia entre las observaciones. Se han ordenado a los jugadores por similitud.</p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Otro ejemplo que podéis consultar son los mapas de calor que utilizamos en BIOCOM (grupo de investigación de la UIB en Biología Computacional y Bioinformática) para presentar las diferencias entre kernels (“distancias”) para comparar grafos del metabolismo entre organismos <a href="https://journals.plos.org/plosone/article/figure?id=10.1371/journal.pone.0281047.g003">Figura 3 - Exploring the expressiveness of abstract metabolic networks</a></p>
+<p>Observamos una buena separación entre animales, plantas y hongos en todos los mapas de calor. Los protistas están separados, pero en general están más cerca de los hongos que del resto de Eucariotas. Además, en todos los mapas de calor, los animales están bien separados de los demás reinos y muestran un patrón interno adicional que merece un análisis más detallado. También cabe destacar que todos los kernels ponen de manifiesto una marcada diferencia entre los animales y las plantas. Las plantas están más cerca de los hongos que de los animales.</p>
 
 
 </section>

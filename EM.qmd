@@ -1015,5 +1015,335 @@ De las fuentes de datos que se citan abajo o de alguna otra fuente que sea de li
     
     * El peso de la evaluación es el siguiente: 0.8 $\cdot$ Nota de la Exposición + 0.2 $\cdot$ Nota del repositorio$. Para calcular la nota de la Exposición, se tomará la calificación media de vuestros compañeros (excluidos los integrantes del propio grupo) y la asignada por los profesores. Si la diferencia de notas entre los profesores y los compañeros es mayor a 2 puntos, contará únicamente la nota de los profesores.
     
-  
+## Distancias
 
+Como hemos mencionado, la información multivariante es una matriz de datos de orden $n \times p$, con $n$ el número de filas y $p$ el número de variables consideradas.  A veces, para determinar cuáles observaciones multivariantes son semejantes y cuáles no, se emplean matrices de distancias o similaridades. Dependiendo del contexto, hay que seleccionar la más apropiada para obtener resultados confiables. A continuación, presentamos algunas de las distancias más utilizadas.
+
+
+### Distancia euclídea
+
+La distancia euclídea entre dos realizaciones $\underline{X}=(x_1,\ldots,x_p)$ e $\underline{Y}=(y_1,\ldots,y_p)$ se define como 
+
+$$d_E(\underline{X},\underline{Y})=\sqrt{\displaystyle\sum_{k=1}^p (x_k-y_k)^2}$$ 
+
+Esta distancia equivale a la suma de las longitudes de los segmentos que unen cada par de posiciones. La siguiente imagen muestra el perfil de dos usuarios en base a las valoraciones que han hecho de 10 ítems.
+
+
+```{r, message=FALSE}
+library(tidyverse)
+usuario_a <- c(4, 4.5, 4, 7, 7, 6, 5, 5.5, 5, 6)
+usuario_b <- c(4, 4.5, 4, 7, 7, 6, 5, 5.5, 5, 6) + 3
+datos <- data.frame(usuario = rep(c("a", "b"), each = 10),
+                    valoracion = c(usuario_a, usuario_b),
+                    item = 1:10)
+ggplot(data = datos, aes(x = as.factor(item), y = valoracion,
+                         colour = usuario)) +
+  geom_path(aes(group = usuario)) +
+  geom_point() +
+  geom_line(aes(group = item), colour = "firebrick", linetype = "dashed") +
+  labs(x = "item") +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+La distancia euclideana entre los dos usuarios es:
+
+```{r}
+sqrt(sum((usuario_a-usuario_b)^2))
+```
+
+Las funciones `dist()` de R base y `get_dist` de la librería `factoextra` se pueden utilizar para calcular las distancias entre todas las filas (observaciones) de una matriz o data frame. Por defecto, las funciones devuelven una matriz triangular inferior.
+
+[*Ejemplo*]{style="color: blue;"}: Para el data frame de los pingüinos, calculamos las distancias euclideanas entre las ocho hembras de la especie Adelie que fueron registradas en Torgensen el año 2007.
+
+```{r, message=FALSE}
+p_ATf<- penguins %>% 
+  filter(species=="Adelie", 
+         island=="Torgersen",
+         sex=="female",
+         year==2007) %>% select(3:5)
+
+dist(p_ATf)
+
+library(factoextra)
+get_dist(p_ATf, stand=TRUE)
+```
+
+Las distancias grandes indican mayores disimilitudes entre las observaciones. 
+
+Observa que hemos calculado la distancia euclideana con la función `get_dist` pero estandarizando los datos especificando `stand=TRUE`, es decir, para cada variable (columna), restamos el valor medio de la columna y dividimos por la desviación típica de la columna, lo cual tiene sentido hacerlo cuando las variables del conjunto de datos están en escalas diferentes. El problema con la distancia euclideana es que no toma en cuenta la correlación entre las variables consideradas.
+
+
+### Distancia de Minkowski
+
+Otra distancia que podría ser considerada es la de Minkowski, cuya definición es la siguiente: 
+
+$$d_{M_q}(\underline{X}_i,\underline{X}_j)=\left(\displaystyle\sum_{k=1}^p|x_{ik}-x_{jk}|^q \right)^{1/q}, \;\; q>0$$
+Presenta los mismos inconvenientes que $d_E$ $(d_E = d_{M_2})$. 
+
+* Si $q=1$, se le llama distancia de Manhattan
+
+* Si $q \rightarrow \infty$, se le llama distancia dominante
+$$d_{M_\infty}(\underline{X}_i,\underline{X}_j)=\max\{ |x_{i1}-x_{j1}|,\ldots,|x_{ip}-y_{jp}|\}$$
+
+
+La siguiente imagen muestra una comparación entre la distancia euclídea (segmento azul) y la distancia de Manhattan (segmento rojo y verde) en un espacio bidimensional. Existen múltiples caminos para unir dos puntos con el mismo valor de distancia de Manhattan, ya que su valor es igual al desplazamiento total en cada una de las dimensiones.
+
+```{r, warning=FALSE}
+datos <- data.frame(observacion = c("a", "b"), x = c(2,7), y = c(2,7))
+manhattan <- data.frame(
+              x = rep(2:6, each = 2),
+              y = rep(2:6, each = 2) + rep(c(0,1), 5),
+              xend = rep(2:6, each = 2) + rep(c(0,1), 5),
+              yend = rep(3:7, each = 2))
+
+manhattan_2 <- data.frame(
+                x = c(2, 5, 5, 7),
+                y = c(2, 2, 4, 4),
+                xend = c(5, 5, 7, 7),
+                yend = c(2, 4, 4, 7))
+
+ggplot(data = datos, aes(x = x, y = y)) +
+geom_segment(aes(x = 2, y = 2, xend = 7, yend = 7), color = "blue", size = 1.2) +
+geom_segment(data = manhattan, aes(x = x, y = y, xend = xend, yend = yend),
+             color = "red", size = 1.2) +
+geom_segment(data = manhattan_2, aes(x = x, y = y, xend = xend, yend = yend),
+             color = "green3", size = 1.2) +
+geom_point(size = 3) +
+theme(panel.grid.minor = element_blank(),
+      panel.grid.major = element_line(size = 2),
+      panel.background = element_rect(fill = "gray",
+                                      colour = "white",
+                                      size = 0.5, linetype = "solid"))
+```
+
+
+## Distancias basadas en la correlación
+
+Las distancias basadas en la correlación son útiles utilizadas cuando la similitud queremos establecerla en términos del patrón o forma y no de desplazamiento o magnitud; por ejemplo en el análisis de datos de expresión génica. 
+
+$$d_{cor}(\underline{X}_i,\underline{X}_j)=1-Cor(\underline{X}_i,\underline{X}_j)$$
+
+donde la correlación puede ser de distintos tipos (Pearson, Spearman, Kendall…)
+
+
+En la siguiente imagen mostramos el perfil de 3 usuarios. Veamos qué ocurre si utilizamos la distancia euclideana y la de correlación de Pearson para compararlos.
+
+```{r}
+usuario_a <- c(4, 4.5, 4, 7.5, 7, 6, 5, 5.5, 5, 6)
+usuario_b <- c(4, 4.5, 4, 7.5, 7, 6, 5, 5.5, 5, 6) + 4
+usuario_c <- c(5, 5.5, 4.8, 5.4, 4.7, 5.6, 5.3, 5.5, 5.2, 4.8)
+
+datos <- data.frame(usuario = rep(c("a", "b", "c"), each = 10),
+                    valoracion = c(usuario_a, usuario_b, usuario_c),
+                    item = 1:10)
+
+ggplot(data = datos, aes(x = as.factor(item),
+                         y = valoracion, 
+                         colour = usuario)) +
+  geom_path(aes(group = usuario)) +
+  geom_point() +
+  labs(x = "item") +
+  theme_bw() +
+  theme(legend.position = "bottom")
+```
+
+```{r}
+dist(x = rbind(usuario_a, usuario_b, usuario_c), method = "euclidean")
+
+1 - cor(x = cbind(usuario_a, usuario_b, usuario_c), method = "pearson")
+```
+
+De acuerdo a la distancia euclideana, los usuarios a y c son los más similares, mientras que acorde a la correlación de Pearson, a y b son los más parecidos. Este ejemplo pone de manifiesto que no existe una única medida de distancia que sea mejor que las demás, sino que, dependiendo del contexto, una será más adecuada que otra.
+
+
+## Distancia de Mahalanobis
+
+$$d^2_M \left( \underline{X}_i,\underline{X}_j \right)= \left(\underline{X}_i-\underline{X}_j \right)^t {\bf S}^{-1}
+\left(\underline{X}_i-\underline{X}_j\right),$$
+
+donde ${\bf S}$ es la matriz de covarianzas muestrales de la matriz de datos ${\bf X}$.
+
+Es adecuada como medida de discrepancia entre datos, porque:
+
+* Es invariante frente a transformaciones lineales invertibles de las variables.
+
+* $d_E=d_M$ cuando ${\bf S}={\bf I}$ y $d_K = d_M$ cuando ${\bf S}=diag(s^2_1,\ldots,s^2_p),$ 
+
+* Esta distancia tiene en cuenta las correlaciones entre las variables. 
+
+* No aumenta por el simple hecho de aumentar el número de variables registradas, sino que solamente aumentará cuando las nuevas variables no sean redundantes con respecto de la información aportada por las anteriores.
+
+* Esta es la distancia más utilizada cuando todas las variables son cuantitativas.
+
+
+## Distancias para variables binarias:
+
+Si $X_1,\ldots,X_p$ son variables que toman valores $\{0,1\}$, existen muchos **coeficientes de similaridad** $s_{ij}$ entre dos observaciones $i,j$, calculados a partir de las frecuencias tales que $a+b+c+d=p$, donde:
+
+* $a$: el número de variables con respuesta 1 en ambos individuos,
+
+* $b$: el número de variables con respuesta 0 en la observación $i$ y con respuesta 1 en el individuo $j$,
+
+* $c$: el número de variables con respuesta 1 en la observación $i$ y con respuesta 0 en la observación $j$,
+
+* $d$: el número de variables con respuesta 0 en ambos individuos.
+
+
+Algunos coeficientes de similaridad son:
+
+**Sokal y Michener**: $s_{ij}=\frac{a+d}{p}$, \hspace{2in} **Jaccard**: $s_{ij} =\frac{a}{a+b+c}$
+
+Aplicando uno de estos coeficientes a un conjunto de $n$ objetos se obtiene una matriz de similaridades ${\bf S}=(s_{ij})_{n\times n}$
+
+
+[*Ejemplo*]{style="color: blue;"}: Se han medido 6 variables sobre 3 individuos:
+
+ind. | $X_1$ | $X_2$ |$X_3$ |$X_4$ |$X_5$ |$X_6$ |
+-----|-------|-------|------|------|------|------|
+1 | 1 | 1 |0 | 0 | 1 | 1
+2 | 1 | 1 | 1 | 0 | 0 | 1
+3 | 1 | 0 | 0 | 1 | 0 | 1
+
+```{r, echo=F, fig.align='center', out.width='80%'}
+knitr::include_graphics("Figuras/tabla_binaria.PNG")
+```
+
+
+Las matrices de similaridad son:
+$${\bf S}_{Sokal}=\left(\begin{array}{ccc} 
+1 & 0.6667 & 0.5\\
+0.667 & 1 & 0.5\\
+0.5 & 0.5 & 1
+\end{array}\right), \;\;\; {\bf S}_{Jaccard}=\left(\begin{array}{ccc} 
+1 & 0.6 & 0.4\\
+0.6 & 1 & 0.4\\
+0.4 & 0.4 & 1
+\end{array}\right) $$
+
+
+## Distancias para variables categóricas:
+
+Se mide una variable categórica nominal con $k$ niveles sobre una muestra de $n = n_1+\cdots+n_g$ observaciones provenientes de $g$ poblaciones diferentes. Se desea obtener una medida de disimilaridad entre estas poblaciones.
+
+En estas condiciones, el vector de frecuencias de cada población ${\bf n}_{\alpha}=(n_{\alpha1},\ldots,n_{\alpha k})$, para $\alpha=1,\ldots, g$, tiene una distribución
+conjunta multinomial con parámetros $(n_{\alpha}, {\bf p}_{\alpha})$, donde $n_{\alpha}=n_{\alpha1}+\ldots +n_{\alpha k}$ y ${\bf p}_{\alpha}=(p_{\alpha 1},\ldots,p_{\alpha k}$ es el vector de
+probabilidades de los $k$ niveles en la población $\alpha$ (con $p_{\alpha 1}+\ldots + p_{\alpha k}=1$).
+
+[*Ejemplo*]{style="color: blue;"}: La siguiente tabla contiene las proporciones génicas observadas entre 10 poblaciones. Observa que las filas suman 1.
+
+
+Población | grupo A | grupo AB | grupo B | grupo O
+----------|---------|----------|---------|--------
+francesa | 0.21 | 0.06 | 0.06 | 0.67
+checa | 0.25 | 0.04 | 0.14 | 0.57
+germánica | 0.22 | 0.06 | 0.08 | 0.64
+vasca | 0.19 | 0.04 | 0.02 | 0.75
+china | 0.18 | 0.00 | 0.15 | 0.67
+ainu | 0.23 | 0.00 | 0.28 | 0.49
+esquimal | 0.30 | 0.00 | 0.06 | 0.64
+negra USA | 0.10 | 0.06 | 0.13 | 0.71
+española | 0.27 | 0.04 | 0.06 | 0.63
+egipcia | 0.21 | 0.05 | 0.20 | 0.54
+
+
+Dos medidas de disimilaridad para este tipo de variables son:
+
+* **Distancia de Bhattacharyya**
+$$d^2_{ij}=arccos\left( \displaystyle\sum_{l=1}^k \sqrt{p_{il} \; p_{jl}}\right)$$
+
+* **Distancia de Balakrishnan-Sanghvi**
+$$d^2_{ij}= 2 \displaystyle\sum_{l=1}^k \frac{(p_{il}-p_{jl})^2}{p_{il}+p_{jl}} $$
+
+Para los datos del ejemplo, la matriz de distancias de Bhattacharyya es:
+```{r}
+poblacion=c("francesa","checa","germánica","vasca","china","ainu","esquimal","negra USA","española","egipcia")
+grupoA=c(0.21,0.25,.22,.19,.18,.23,.3,.1,.27,.21)
+grupoAB=c(.06,.04,.06,.04,.00,.00,.00,.06,.04,.05)
+grupoB=c(.06,.14,.08,.02,.15,.28,.06,.13,.06,.2)
+grupoO=c(.67,.57,.64,.75,.67,.49,.64,.71,.63,.54)
+datos=data.frame(poblacion,grupoA,grupoAB,grupoB,grupoO)
+```
+
+
+```{r,message=FALSE}
+library(philentropy)
+distance(datos[,-1], method = "bhattacharyya")
+```
+
+Las poblaciones más cercanas (según la distancia de Battacharyya) son la francesa y la germánica con $d_{1,3}=0.00095$. Mientras que los más alejados son las poblaciones francesa y ainu con $d_{1,6}=0.08082$.
+
+
+
+## Distancias para variables mixtas
+Cuando disponemos de un conjunto de observaciones sobre variables tanto cuantitativas como cualitativas.
+
+Se define la distancia de Gower como $d^2_{ij}=1-s_{ij}$, donde 
+$$s_{ij}=\frac{\sum_{k=1}^{p_1}(1-|x_{ik}-x_{jk}|/G_k)+a+\alpha}{p_1+(p_2-d)+p_3}$$
+es el coeficiente de similaridad de Gower,
+
+* $p_1$ es el número de variables cuantitativas continuas,
+
+* $p_2$ es el número de variables binarias,
+
+* $p_3$ es el número de variables cualitativas (no binarias),
+
+* $a$ es el número de coincidencias (1,1) en las variables binarias,
+
+* $d$ es el número de coincidencias (0,0) en las variables binarias,
+
+* $\alpha$ es el número de coincidencias en las variables cualitativas (no binarias) y
+
+* $G_h$ es el rango de la $k$-ésima variable cuantitativa.
+
+[*Ejemplo*]{style="color: blue;"}: Considera 7 variables registradas sobre 50 jugadores de la liga española de fútbol.
+
+```{r, echo=F, fig.align='center', out.width='80%'}
+knitr::include_graphics("Figuras/tabla_futbol.PNG")
+```
+
+
+* $X_1$ es el número de goles marcados, $X_2$ edad (en años),
+
+* $X_3$ altura (m), $X_4$ peso (kg),
+
+* $X_5$ pierna buena del jugador (1=drecha, 0=izquierda),
+
+* $X_6$ nacionalidad: (1=Argentina, 2=Brasil, 3=Camerun, 4=Italia, 5=España, 6=Francia, 7=Uruguay, 8=Portugal, 9=Inglaterra).
+
+* $X_7$ tipo de estudios (1=sin estudios, 2=básicos, 3=medios, 4=superiores)
+
+
+```{r,message=FALSE,warning=FALSE}
+futbol=read.table("datos/jugadores.txt")
+library(StatMatch)
+distancia=gower.dist(futbol)
+head(distancia,2)
+```
+
+
+
+Con la librería `stats` de R base puedes calcular la distancia: "euclidean", "maximum", "manhattan", "canberra", "binary" o "minkowski".
+
+La función `distance()`de la libreria `philentropy` es capaz de calcular 46 diferentes distancias/similaridades.
+
+
+```{r}
+getDistMethods()
+```
+
+## Visualización de matrices de distancias 
+
+Una solución sencilla para visualizar las matrices de distancia es utilizar la función `fviz_dist()` de la librería  `factoextra`. Otros métodos especializados, como la agrupación jerárquica aglomerativa o el mapa de calor, las presentaremos más adelante.
+
+[*Ejemplo*]{style="color: blue;"}: Visualizamos la tabla de los jugadores de fútbol.
+
+```{r}
+library(factoextra)
+fviz_dist(as.dist(distancia))
+```
+
+Si el color es rojo, la similitud es alta (es decir, distancia cero). Si el color es azul,  la similitud es baja. El nivel de color es proporcional al valor de la distancia entre las observaciones. Se han ordenado a los jugadores por similitud.
+
+[*Ejemplo*]{style="color: blue;"}: Otro ejemplo que podéis consultar son los mapas de calor que utilizamos en BIOCOM (grupo de investigación de la UIB en Biología Computacional y Bioinformática) para presentar las diferencias entre kernels ("distancias") para comparar grafos del metabolismo entre organismos [Figura 3 - Exploring the expressiveness of abstract metabolic networks](https://journals.plos.org/plosone/article/figure?id=10.1371/journal.pone.0281047.g003)
+
+Observamos una buena separación entre animales, plantas y hongos en todos los mapas de calor. Los protistas están separados, pero en general están más cerca de los hongos que del resto de Eucariotas. Además, en todos los mapas de calor, los animales están bien separados de los demás reinos y muestran un patrón interno adicional que merece un análisis más detallado. También cabe destacar que todos los kernels ponen de manifiesto una marcada diferencia entre los animales y las plantas. Las plantas están más cerca de los hongos que de los animales.
