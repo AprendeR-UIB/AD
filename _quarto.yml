@@ -23,6 +23,7 @@ book:
     - index.qmd
     - intro.qmd
     - EM.qmd
+    - Inferencia.qmd
     - references.qmd
     
     

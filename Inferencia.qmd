@@ -1,0 +1,19 @@
+## Inferencia multivariante en poblaciones normales
+
+Para la exploración de datos multivariantes, no empleamos modelos formales para dar respuestas a las preguntas formuladas, sin embargo, en algunas situaciones es posible ajustar modelos "formales" para probar una hipótesis  sobre los parámetros de la función de densidad de probabilidad de esa población. 
+
+La función de densidad de probabilidad asumida casi universalmente como
+la base de las inferencias para los datos multivariantes es la normal multivariante.
+
+En esta parte, nos apoyaremos en el libro "Nuevos Métodos de Análisis Multivariante" del profesor [Carles M. Cuadras](https://scholar.google.es/citations?user=1N2XrJ4AAAAJ&hl=es), catedrático de Estadística (1980-2009) y emérito (2009-2015) de la Universidad de Barcelona. Trabajaremos con la versión revisada en marzo de 2018, capítulos 2 y 3. 
+
+Específicamente, daremos una breve descripción de la función de densidad normal multivariante y de las formas de evaluar si un conjunto de datos multivariantes se ajusta a la densidad. 
+
+Hay características importantes de la distribución normal: 
+
+* Las distribuciones marginal y condicional de la normal multivariante también se distribuyen normalmente, al igual que las combinaciones lineales. 
+
+* Así como la distribución normal domina las técnicas univariantes, la distribución normal multivariante desempeña un papel importante en algunos procedimientos multivariantes. Estudiamos la estimación de medias y covarianzas en poblaciones normales y contrastes de hipótesis multivariantes.
+
+
+

@@ -2,18 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://aprender-uib.github.io/AD/index.html</loc>
-    <lastmod>2023-10-16T09:07:58.579Z</lastmod>
+    <lastmod>2023-10-31T15:41:28.835Z</lastmod>
   </url>
   <url>
     <loc>https://aprender-uib.github.io/AD/intro.html</loc>
-    <lastmod>2023-10-16T09:08:18.060Z</lastmod>
+    <lastmod>2023-10-31T15:41:29.164Z</lastmod>
   </url>
   <url>
     <loc>https://aprender-uib.github.io/AD/EM.html</loc>
-    <lastmod>2023-10-16T09:08:32.929Z</lastmod>
+    <lastmod>2023-10-31T15:41:29.304Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aprender-uib.github.io/AD/Inferencia.html</loc>
+    <lastmod>2023-10-31T15:41:29.319Z</lastmod>
   </url>
   <url>
     <loc>https://aprender-uib.github.io/AD/references.html</loc>
-    <lastmod>2023-10-16T09:07:58.713Z</lastmod>
+    <lastmod>2023-10-31T15:41:29.335Z</lastmod>
   </url>
 </urlset>
