@@ -6,14 +6,11 @@ Cuando nos enfrentamos a problemas que se desarrollan en espacios muestrales de 
 
 El análisis de componentes principales, PCA por sus siglas en inglés (**P**rincipal **C**omponent **A**nalysis), es uno de los métodos más populares del análisis multivariado.
 
-El PCA se utiliza cuando deseamos obtener una representación en menor dimensión para un conjunto de variables cuantitativas correlacionadas y queremos expresar la información importante como un conjunto de pocas variables nuevas llamadas **componentes principales** que se corresponden con una combinación lineal de las variables originales. 
+El PCA se utiliza cuando deseamos obtener una representación en menor dimensión para un conjunto de variables cuantitativas correlacionadas y queremos expresar la información importante como un conjunto de pocas variables nuevas llamadas **componentes principales**. Estas componentes se corresponden con una combinación lineal de las variables originales. 
 
 Dado que la información de un conjunto de datos se corresponde a la variación total que contiene, el objetivo del PCA es identificar direcciones (o componentes principales) a lo largo de las cuales la variación en los datos es máxima.
 
-La **reducción de la dimensionalidad**  consiste en  describir con cierta precisión los valores de las $p$ variables por un pequeño subconjunto $r<p$ de ellas con una pérdida mínima de información. Por lo tanto, proyectaremos la muestra original en el nuevo subespacio pero conservando algunas características. En particular, vamos a realizar un  **ajuste ortogonal por mínimos cuadrados**. 
-
-
-Si un número pequeño de dichas primeras componentes resume la mayor parte de la variación de los datos, podría pensarse que la dimensionalidad de los datos es menor que $p$. 
+La **reducción de la dimensionalidad**  consiste en  describir con cierta precisión los valores de las $p$ variables por un pequeño subconjunto $r<p$ de ellas con una pérdida mínima de información. Por lo tanto, proyectaremos la muestra original en el nuevo subespacio pero conservando algunas características. En particular, vamos a realizar un  ajuste ortogonal por mínimos cuadrados. 
 
 
 Algunos ámbitos importantes en los que es frecuente la utilización de la Reducción de la dimensionalidad podrían ser:
@@ -29,7 +26,7 @@ Algunos ámbitos importantes en los que es frecuente la utilización de la Reduc
 
 ### Matriz (tabla) de datos
 
-Supongamos que disponemos de los valores de $p$-variables en $n$ elementos de una población arreglados en una matriz $\mathbf{X}$ de la siguiente forma:
+Supongamos que disponemos de una tabla de datos con los valores de $p$-variables en $n$ elementos de una población arreglados en una matriz $\mathbf{X}$ de la siguiente forma:
 
 | ID | $\bf{x}_1$ | $\bf{x}_2$ | $\ldots$ | $\bf{x}_p$ | $\bf{v}_1$ | $\bf{v}_2$ |
 |:--------:|:---------:|:---------:|:------------:|:---------:|:---------:|:---------:|
@@ -50,14 +47,13 @@ interpretar la variabilidad de los datos.
 
 
 
-* El objetivo del análisis es la **Reducción de la dimensionalidad** (factorialidad). Buscamos es un `r **espacio de variables más reducido y fácil de interpretar**.
+El objetivo del análisis es la **reducción de la dimensionalidad**. Buscamos  un **espacio de variables más reducido y fácil de interpretar**.
 
 
-* El problema es que si reducimos el número de variables es posible
-que **"perdamos parte toda la variabilidad de los datos originales"**.
+El problema es que si reducimos el número de variables es posible que "perdamos parte toda la variabilidad de los datos originales".
 
 
-* Así **la idea básica es consentir una pérdida de información para lograr una ganancia en la significación**.
+Así la idea básica es consentir una pérdida de información para lograr una ganancia en la significación.
 
 
 
@@ -167,7 +163,7 @@ knitr::include_graphics("Figuras/acp_1.PNG")
 
 <!-- **Interpretación geométrica** -->
 
-Supongamos que  $p=2$ y que la nube de puntos de nuestra tabla de datos es la de la siguiente figura:
+Supongamos que  $p=2$ y que la nube de puntos de nuestra matriz de datos es la de la siguiente figura:
 ```{r ,fig=TRUE,fig.align="center",fig.width=7,fig.height=7,echo=FALSE}
 n=20
 m=10
@@ -210,7 +206,7 @@ La siguiente figura muestra las dos  **componentes principales**, es decir, las 
 knitr::include_graphics("Figuras/eje_CP.PNG")
 ```
 
-Si projectamos en la dirección de la **primera componente** obtendremos las proyecciones siguientes (en **azul**):
+Si proyectamos en la dirección de la **primera componente** obtendremos las proyecciones siguientes (en color azul):
 
 
 ```{r inter3,fig=TRUE,fig.align="center",fig.width=8,fig.height=8,echo=FALSE}
@@ -254,12 +250,10 @@ knitr::include_graphics("Figuras/eje_CP_2.PNG")
 
 Lo que significa  que la varianza de los puntos azules  es máxima; en el sentido de que cualquier  otra dirección o recta, las proyecciones sobre ésta tendrán a lo más igual varianza.
 
-<br><br>
-
-Los puntos  azules  representan las coordenadas que tienen los puntos de nuestra tabla de datos (centrada) tomando como eje de abcisas el **primer componente** $CP_1$.
+Los puntos  azules  representan las coordenadas que tienen los puntos de nuestra tabla de datos (centrada) tomando como eje de abcisas la **primera componente** $CP_1$.
 
 
-Si projectamos en la dirección del **"segundo componente"**, obtendremos las proyecciones siguientes (en **"verde"**):
+Si proyectamos en la dirección de la **"segunda componente"**, obtendremos las proyecciones siguientes (en color verde):
 
 ```{r inter4.1,fig=TRUE,fig.align="center",fig.width=8,fig.height=8,echo=FALSE}
 # n=20
@@ -325,7 +319,7 @@ cuya solución es:
 
 que implica que $\mathbf{a_1}$ es un vector propio de la matriz $\mathbf{S}$, y $\lambda$ su correspondiente valor propio. 
 
-Para determinar qué valor propio de $\mathbf{S}$ es la solución de (2), multiplicamos por la izquierda por $\mathbf{a_1^t}$ esta ecuación,
+Para determinar qué valor propio de $\mathbf{S}$ es la solución de (2), multiplicamos por la izquierda por $\mathbf{a_1^t}$ a esta ecuación,
 
 \begin{equation}
 \mathbf{a_1^t S a_1}= \lambda \mathbf{a_1^t a_1}= \lambda
@@ -344,14 +338,14 @@ Calcula la primera componente principal con los logaritmos del fichero `acciones
 
 ### Cálculo de la segunda componente
 
-Vamos a obtener el mejor plano de proyección de las variables $\mathbf{X}$. Lo calcularemos estableciendo como función objetivo que la suma de las varianzas de $\mathbf{z_1}=\mathbf{Xa_1}$ y \mathbf{z_2}=\mathbf{Xa_2}$
-sea máxima, donde $\mathbf{a_1}$ y $\mathbf{a_2}$ son los vectores que definen el plano. La función objetivo será:
+Vamos a obtener el mejor plano de proyección de l matriz $\mathbf{X}$. Lo calcularemos estableciendo como función objetivo que la suma de las varianzas de $\mathbf{z_1}=\mathbf{Xa_1}$ y $\mathbf{z_2}=\mathbf{Xa_2}$
+sean máximas, donde $\mathbf{a_1}$ y $\mathbf{a_2}$ son los vectores que definen el plano. La función objetivo será:
 
 \begin{equation} \tag{3}
 \phi=\mathbf{a_1^t S}\mathbf{a_1} + \mathbf{a_2^t S}\mathbf{a_2} - \lambda_1 (\mathbf{a_1^t}\mathbf{a_1}-1) - \lambda_2 (\mathbf{a_2^t}\mathbf{a_2}-1)
 \end{equation}
 
-que incorpora las restricciones de que las direcciones deben de tener módulo unitario. Derivando e igualando a cer:
+que incorpora las restricciones de que las direcciones deben de tener módulo unitario. Derivando e igualando a cero:
 $$\frac{\partial \phi}{\partial \mathbf{a_1}}=2\mathbf{Sa_1}-2 \lambda_1 \mathbf{a_1}=0$$
 
 $$\frac{\partial \phi}{\partial \mathbf{a_2}}=2\mathbf{Sa_2}-2 \lambda_2 \mathbf{a_1}=0$$
@@ -364,16 +358,16 @@ La solución del sistema es:
 \mathbf{Sa_2}= \lambda \mathbf{a_2},
 \end{equation}
 
-que indica que $a_1$ y $a_2$ deben ser vectores propios de $\mathbf{S}$. 
+que indica que $\mathbf{a_1}$ y $\mathbf{a_2}$ deben ser vectores propios de $\mathbf{S}$. 
 
 Tomando los vectores propios de norma uno y sustituyendo en (3), se obtiene que, en el máximo, la función objetivo es
 \begin{equation} \tag{6}
 \phi=\lambda_1+\lambda_2
 \end{equation}
 
-es claro que $\lambda_1$ y $\lambda_2$ deben ser los dos valores propios mayores de la matriz $\mathbf{S}$ y $a_1$ y $a_2$ sus correspondientes vectores propios. 
+es claro que $\lambda_1$ y $\lambda_2$ deben ser los dos valores propios mayores de la matriz $\mathbf{S}$ y $\mathbf{a_1}$ y $\mathbf{a_2}$ sus correspondientes vectores propios. 
 
-Observemos que la covarianza entre $\mathbf{z_1}$ y $\mathbf{z_2}$, dada
+Observad que la covarianza entre $\mathbf{z_1}$ y $\mathbf{z_2}$, dada
 por $\mathbf{a_1^t S a_2}$ es cero ya que \mathbf{a_1^t a_2}=0, y las variables$\mathbf{z_1}$ y $\mathbf{z_2}$ estarán incorreladas.
 
 Se puede demostrarse que si en lugar de maximizar la suma de
@@ -408,9 +402,9 @@ Llamando $\mathbf{Z}$ a la matriz cuyas columnas son los valores de las $p$ comp
 
 donde $\mathbf{A^t A}=\mathbf{I}$. Calcular las componentes principales equivale a aplicar una transformación ortogonal $\mathbf{A}$ a las variables $\mathbf{X}$ (ejes originales) para obtener unas nuevas variables $\mathbf{Z}$ incorreladas entre sí. Esta operación puede interpretarse como elegir unos nuevos ejes coordenados, que coincidan con los “ejes naturales” de los datos.
 
-[*Ejemplo:* ]{style="color: blue;"}
+## Ejemplo
 
-Vamos a realizar un análisis de componentes principales (PCA) sobre un ejemplo de la estatura de niños recién nacidos. 
+Vamos a realizar un análisis de componentes principales (PCA) sobre un conjunto de datos con la estatura de niños recién nacidos. 
 
 | $\bf{x}_1$ | $\bf{x}_2$ | $\bf{x}_3$ | $\bf{x}_4$ | Sexo |
 |:-----:|:-----:|:-----:|:-----:|:----:|

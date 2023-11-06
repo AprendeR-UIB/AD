@@ -201,6 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cálculo-de-la-segunda-componente" id="toc-cálculo-de-la-segunda-componente" class="nav-link" data-scroll-target="#cálculo-de-la-segunda-componente"><span class="header-section-number">4.2.2</span> Cálculo de la segunda componente</a></li>
   <li><a href="#generalización" id="toc-generalización" class="nav-link" data-scroll-target="#generalización"><span class="header-section-number">4.2.3</span> Generalización</a></li>
   </ul></li>
+  <li><a href="#ejemplo" id="toc-ejemplo" class="nav-link" data-scroll-target="#ejemplo"><span class="header-section-number">4.3</span> Ejemplo</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/ACP.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
@@ -228,10 +229,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="4.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">4.1</span> Introducción</h2>
 <p>Cuando nos enfrentamos a problemas que se desarrollan en espacios muestrales de altas dimensiones, puede interesar considerar el estudio de dichos problemas en espacios de menor dimensión.</p>
 <p>El análisis de componentes principales, PCA por sus siglas en inglés (<strong>P</strong>rincipal <strong>C</strong>omponent <strong>A</strong>nalysis), es uno de los métodos más populares del análisis multivariado.</p>
-<p>El PCA se utiliza cuando deseamos obtener una representación en menor dimensión para un conjunto de variables cuantitativas correlacionadas y queremos expresar la información importante como un conjunto de pocas variables nuevas llamadas <strong>componentes principales</strong> que se corresponden con una combinación lineal de las variables originales.</p>
+<p>El PCA se utiliza cuando deseamos obtener una representación en menor dimensión para un conjunto de variables cuantitativas correlacionadas y queremos expresar la información importante como un conjunto de pocas variables nuevas llamadas <strong>componentes principales</strong>. Estas componentes se corresponden con una combinación lineal de las variables originales.</p>
 <p>Dado que la información de un conjunto de datos se corresponde a la variación total que contiene, el objetivo del PCA es identificar direcciones (o componentes principales) a lo largo de las cuales la variación en los datos es máxima.</p>
-<p>La <strong>reducción de la dimensionalidad</strong> consiste en describir con cierta precisión los valores de las <span class="math inline">\(p\)</span> variables por un pequeño subconjunto <span class="math inline">\(r&lt;p\)</span> de ellas con una pérdida mínima de información. Por lo tanto, proyectaremos la muestra original en el nuevo subespacio pero conservando algunas características. En particular, vamos a realizar un <strong>ajuste ortogonal por mínimos cuadrados</strong>.</p>
-<p>Si un número pequeño de dichas primeras componentes resume la mayor parte de la variación de los datos, podría pensarse que la dimensionalidad de los datos es menor que <span class="math inline">\(p\)</span>.</p>
+<p>La <strong>reducción de la dimensionalidad</strong> consiste en describir con cierta precisión los valores de las <span class="math inline">\(p\)</span> variables por un pequeño subconjunto <span class="math inline">\(r&lt;p\)</span> de ellas con una pérdida mínima de información. Por lo tanto, proyectaremos la muestra original en el nuevo subespacio pero conservando algunas características. En particular, vamos a realizar un ajuste ortogonal por mínimos cuadrados.</p>
 <p>Algunos ámbitos importantes en los que es frecuente la utilización de la Reducción de la dimensionalidad podrían ser:</p>
 <ul>
 <li><strong>Reconocimiento facial</strong>: Al partir de una proyección facial de tamaño <span class="math inline">\(M \times N\)</span> píxeles puede resultar complicado el estudio completo de dicha imagen, puesto que da lugar a un vector con dimensión excesivamente alta. De modo que debemos reducir la dimensionalidad pero de forma que nos permita generar un sistema de clasificación facial de un individuo entre el resto de la población.</li>
@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="matriz-tabla-de-datos" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="matriz-tabla-de-datos"><span class="header-section-number">4.1.1</span> Matriz (tabla) de datos</h3>
-<p>Supongamos que disponemos de los valores de <span class="math inline">\(p\)</span>-variables en <span class="math inline">\(n\)</span> elementos de una población arreglados en una matriz <span class="math inline">\(\mathbf{X}\)</span> de la siguiente forma:</p>
+<p>Supongamos que disponemos de una tabla de datos con los valores de <span class="math inline">\(p\)</span>-variables en <span class="math inline">\(n\)</span> elementos de una población arreglados en una matriz <span class="math inline">\(\mathbf{X}\)</span> de la siguiente forma:</p>
 <table class="table">
 <colgroup>
 <col style="width: 12%">
@@ -315,10 +315,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>Donde las variables <span class="math inline">\(x_1,\ldots, x_n\)</span> describen a los <span class="math inline">\(n\)</span> individuos observados.</p></li>
 <li><p>Las variables <span class="math inline">\(v_1\)</span>, <span class="math inline">\(v_2\)</span> son de perfil (o explicativas) y ayudan a interpretar la variabilidad de los datos.</p></li>
-<li><p>El objetivo del análisis es la <strong>Reducción de la dimensionalidad</strong> (factorialidad). Buscamos es un `r <strong>espacio de variables más reducido y fácil de interpretar</strong>.</p></li>
-<li><p>El problema es que si reducimos el número de variables es posible que <strong>“perdamos parte toda la variabilidad de los datos originales”</strong>.</p></li>
-<li><p>Así <strong>la idea básica es consentir una pérdida de información para lograr una ganancia en la significación</strong>.</p></li>
 </ul>
+<p>El objetivo del análisis es la <strong>reducción de la dimensionalidad</strong>. Buscamos un <strong>espacio de variables más reducido y fácil de interpretar</strong>.</p>
+<p>El problema es que si reducimos el número de variables es posible que “perdamos parte toda la variabilidad de los datos originales”.</p>
+<p>Así la idea básica es consentir una pérdida de información para lograr una ganancia en la significación.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -377,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- * Así en el ACP de covarianzas cada variable interviene con su propia -->
 <!-- varianza mientras que el ACP de correlaciones todas las variables tienen varianza 1. -->
 <!-- **Interpretación geométrica** -->
-<p>Supongamos que <span class="math inline">\(p=2\)</span> y que la nube de puntos de nuestra tabla de datos es la de la siguiente figura:</p>
+<p>Supongamos que <span class="math inline">\(p=2\)</span> y que la nube de puntos de nuestra matriz de datos es la de la siguiente figura:</p>
 <div class="cell" data-layout-align="center" data-fig="true">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -397,7 +397,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Si projectamos en la dirección de la <strong>primera componente</strong> obtendremos las proyecciones siguientes (en <strong>azul</strong>):</p>
+<p>Si proyectamos en la dirección de la <strong>primera componente</strong> obtendremos las proyecciones siguientes (en color azul):</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -409,9 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p><br><br></p>
 <p>Lo que significa que la varianza de los puntos azules es máxima; en el sentido de que cualquier otra dirección o recta, las proyecciones sobre ésta tendrán a lo más igual varianza.</p>
-<p><br><br></p>
-<p>Los puntos azules representan las coordenadas que tienen los puntos de nuestra tabla de datos (centrada) tomando como eje de abcisas el <strong>primer componente</strong> <span class="math inline">\(CP_1\)</span>.</p>
-<p>Si projectamos en la dirección del <strong>“segundo componente”</strong>, obtendremos las proyecciones siguientes (en <strong>“verde”</strong>):</p>
+<p>Los puntos azules representan las coordenadas que tienen los puntos de nuestra tabla de datos (centrada) tomando como eje de abcisas la <strong>primera componente</strong> <span class="math inline">\(CP_1\)</span>.</p>
+<p>Si proyectamos en la dirección de la <strong>“segunda componente”</strong>, obtendremos las proyecciones siguientes (en color verde):</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -438,7 +437,7 @@ Var(\mathbf{z_1})=\frac{1}{n}\mathbf{z_1^t}\mathbf{z_1}=\frac{1}{n}\mathbf{a_1^t
 \mathbf{Sa_1}= \lambda \mathbf{a_1},
 \end{equation}\]</span></p>
 <p>que implica que <span class="math inline">\(\mathbf{a_1}\)</span> es un vector propio de la matriz <span class="math inline">\(\mathbf{S}\)</span>, y <span class="math inline">\(\lambda\)</span> su correspondiente valor propio.</p>
-<p>Para determinar qué valor propio de <span class="math inline">\(\mathbf{S}\)</span> es la solución de (2), multiplicamos por la izquierda por <span class="math inline">\(\mathbf{a_1^t}\)</span> esta ecuación,</p>
+<p>Para determinar qué valor propio de <span class="math inline">\(\mathbf{S}\)</span> es la solución de (2), multiplicamos por la izquierda por <span class="math inline">\(\mathbf{a_1^t}\)</span> a esta ecuación,</p>
 <p><span class="math display">\[\begin{equation}
 \mathbf{a_1^t S a_1}= \lambda \mathbf{a_1^t a_1}= \lambda
 \end{equation}\]</span></p>
@@ -453,23 +452,23 @@ Var(\mathbf{z_1})=\frac{1}{n}\mathbf{z_1^t}\mathbf{z_1}=\frac{1}{n}\mathbf{a_1^t
 </section>
 <section id="cálculo-de-la-segunda-componente" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="cálculo-de-la-segunda-componente"><span class="header-section-number">4.2.2</span> Cálculo de la segunda componente</h3>
-<p>Vamos a obtener el mejor plano de proyección de las variables <span class="math inline">\(\mathbf{X}\)</span>. Lo calcularemos estableciendo como función objetivo que la suma de las varianzas de <span class="math inline">\(\mathbf{z_1}=\mathbf{Xa_1}\)</span> y =$ sea máxima, donde <span class="math inline">\(\mathbf{a_1}\)</span> y <span class="math inline">\(\mathbf{a_2}\)</span> son los vectores que definen el plano. La función objetivo será:</p>
+<p>Vamos a obtener el mejor plano de proyección de l matriz <span class="math inline">\(\mathbf{X}\)</span>. Lo calcularemos estableciendo como función objetivo que la suma de las varianzas de <span class="math inline">\(\mathbf{z_1}=\mathbf{Xa_1}\)</span> y <span class="math inline">\(\mathbf{z_2}=\mathbf{Xa_2}\)</span> sean máximas, donde <span class="math inline">\(\mathbf{a_1}\)</span> y <span class="math inline">\(\mathbf{a_2}\)</span> son los vectores que definen el plano. La función objetivo será:</p>
 <p><span class="math display">\[\begin{equation} \tag{3}
 \phi=\mathbf{a_1^t S}\mathbf{a_1} + \mathbf{a_2^t S}\mathbf{a_2} - \lambda_1 (\mathbf{a_1^t}\mathbf{a_1}-1) - \lambda_2 (\mathbf{a_2^t}\mathbf{a_2}-1)
 \end{equation}\]</span></p>
-<p>que incorpora las restricciones de que las direcciones deben de tener módulo unitario. Derivando e igualando a cer: <span class="math display">\[\frac{\partial \phi}{\partial \mathbf{a_1}}=2\mathbf{Sa_1}-2 \lambda_1 \mathbf{a_1}=0\]</span></p>
+<p>que incorpora las restricciones de que las direcciones deben de tener módulo unitario. Derivando e igualando a cero: <span class="math display">\[\frac{\partial \phi}{\partial \mathbf{a_1}}=2\mathbf{Sa_1}-2 \lambda_1 \mathbf{a_1}=0\]</span></p>
 <p><span class="math display">\[\frac{\partial \phi}{\partial \mathbf{a_2}}=2\mathbf{Sa_2}-2 \lambda_2 \mathbf{a_1}=0\]</span></p>
 <p>La solución del sistema es: <span class="math display">\[\begin{equation} \tag{4}
 \mathbf{Sa_1}= \lambda \mathbf{a_1},
 \end{equation}\]</span> <span class="math display">\[\begin{equation} \tag{5}
 \mathbf{Sa_2}= \lambda \mathbf{a_2},
 \end{equation}\]</span></p>
-<p>que indica que <span class="math inline">\(a_1\)</span> y <span class="math inline">\(a_2\)</span> deben ser vectores propios de <span class="math inline">\(\mathbf{S}\)</span>.</p>
+<p>que indica que <span class="math inline">\(\mathbf{a_1}\)</span> y <span class="math inline">\(\mathbf{a_2}\)</span> deben ser vectores propios de <span class="math inline">\(\mathbf{S}\)</span>.</p>
 <p>Tomando los vectores propios de norma uno y sustituyendo en (3), se obtiene que, en el máximo, la función objetivo es <span class="math display">\[\begin{equation} \tag{6}
 \phi=\lambda_1+\lambda_2
 \end{equation}\]</span></p>
-<p>es claro que <span class="math inline">\(\lambda_1\)</span> y <span class="math inline">\(\lambda_2\)</span> deben ser los dos valores propios mayores de la matriz <span class="math inline">\(\mathbf{S}\)</span> y <span class="math inline">\(a_1\)</span> y <span class="math inline">\(a_2\)</span> sus correspondientes vectores propios.</p>
-<p>Observemos que la covarianza entre <span class="math inline">\(\mathbf{z_1}\)</span> y <span class="math inline">\(\mathbf{z_2}\)</span>, dada por <span class="math inline">\(\mathbf{a_1^t S a_2}\)</span> es cero ya que =0, y las variables<span class="math inline">\(\mathbf{z_1}\)</span> y <span class="math inline">\(\mathbf{z_2}\)</span> estarán incorreladas.</p>
+<p>es claro que <span class="math inline">\(\lambda_1\)</span> y <span class="math inline">\(\lambda_2\)</span> deben ser los dos valores propios mayores de la matriz <span class="math inline">\(\mathbf{S}\)</span> y <span class="math inline">\(\mathbf{a_1}\)</span> y <span class="math inline">\(\mathbf{a_2}\)</span> sus correspondientes vectores propios.</p>
+<p>Observad que la covarianza entre <span class="math inline">\(\mathbf{z_1}\)</span> y <span class="math inline">\(\mathbf{z_2}\)</span>, dada por <span class="math inline">\(\mathbf{a_1^t S a_2}\)</span> es cero ya que =0, y las variables<span class="math inline">\(\mathbf{z_1}\)</span> y <span class="math inline">\(\mathbf{z_2}\)</span> estarán incorreladas.</p>
 <p>Se puede demostrarse que si en lugar de maximizar la suma de varianzas, que es la traza de la matriz de covarianzas de la proyección, se maximiza la varianza generalizada (el determinante de la matriz de covarianzas) se obtiene el mismo resultado.</p>
 </section>
 <section id="generalización" class="level3" data-number="4.2.3">
@@ -489,8 +488,11 @@ Var(\mathbf{z_1})=\frac{1}{n}\mathbf{z_1^t}\mathbf{z_1}=\frac{1}{n}\mathbf{a_1^t
 \mathbf{Z}=\mathbf{X}\mathbf{A}
 \end{equation}\]</span></p>
 <p>donde <span class="math inline">\(\mathbf{A^t A}=\mathbf{I}\)</span>. Calcular las componentes principales equivale a aplicar una transformación ortogonal <span class="math inline">\(\mathbf{A}\)</span> a las variables <span class="math inline">\(\mathbf{X}\)</span> (ejes originales) para obtener unas nuevas variables <span class="math inline">\(\mathbf{Z}\)</span> incorreladas entre sí. Esta operación puede interpretarse como elegir unos nuevos ejes coordenados, que coincidan con los “ejes naturales” de los datos.</p>
-<p><span style="color: blue;"><em>Ejemplo:</em></span></p>
-<p>Vamos a realizar un análisis de componentes principales (PCA) sobre un ejemplo de la estatura de niños recién nacidos.</p>
+</section>
+</section>
+<section id="ejemplo" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="ejemplo"><span class="header-section-number">4.3</span> Ejemplo</h2>
+<p>Vamos a realizar un análisis de componentes principales (PCA) sobre un conjunto de datos con la estatura de niños recién nacidos.</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -700,7 +702,6 @@ CP_4 = &amp; 0.247 \cdot \tilde{X}_1 - 0.568\cdot \tilde{X}_2 - 0.785\cdot
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
