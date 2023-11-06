@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -409,7 +443,7 @@ Var(\mathbf{z_1})=\frac{1}{n}\mathbf{z_1^t}\mathbf{z_1}=\frac{1}{n}\mathbf{a_1^t
 \mathbf{a_1^t S a_1}= \lambda \mathbf{a_1^t a_1}= \lambda
 \end{equation}\]</span></p>
 <p>y concluimos, por (1) que <span class="math inline">\(\lambda\)</span> es la varianza de <span class="math inline">\(\mathbf{z_1}\)</span>. Como esta es la cantidad que queremos maximizar, <span class="math inline">\(\lambda\)</span> será el mayor valor propio de la matriz <span class="math inline">\(\mathbf{S}\)</span>. Su vector asociado, <span class="math inline">\(\mathbf{a_1}\)</span>, define los coeficientes de cada variable en la primera componente principal.</p>
-<p><span style="color: blue;"><em>Ejercicio:</em></span> Calcula la primera componente principal con los logaritmos del fichero <code>acciones.txt</code> que podéis descargad en Aula Digital. Las observaciones corresponden a distintas acciones que cotizan en el mercado español y las variables son:</p>
+<p><span style="color: red;"><em>Ejercicio:</em></span> Calcula la primera componente principal con los logaritmos del fichero <code>acciones.txt</code> que podéis descargad en Aula Digital. Las observaciones corresponden a distintas acciones que cotizan en el mercado español y las variables son:</p>
 <ul>
 <li><code>V1</code> la rentabilidad efectiva por dividendos,</li>
 <li><code>V2</code> la proporción de beneficios que va a dividendos</li>
@@ -455,6 +489,215 @@ Var(\mathbf{z_1})=\frac{1}{n}\mathbf{z_1^t}\mathbf{z_1}=\frac{1}{n}\mathbf{a_1^t
 \mathbf{Z}=\mathbf{X}\mathbf{A}
 \end{equation}\]</span></p>
 <p>donde <span class="math inline">\(\mathbf{A^t A}=\mathbf{I}\)</span>. Calcular las componentes principales equivale a aplicar una transformación ortogonal <span class="math inline">\(\mathbf{A}\)</span> a las variables <span class="math inline">\(\mathbf{X}\)</span> (ejes originales) para obtener unas nuevas variables <span class="math inline">\(\mathbf{Z}\)</span> incorreladas entre sí. Esta operación puede interpretarse como elegir unos nuevos ejes coordenados, que coincidan con los “ejes naturales” de los datos.</p>
+<p><span style="color: blue;"><em>Ejemplo:</em></span></p>
+<p>Vamos a realizar un análisis de componentes principales (PCA) sobre un ejemplo de la estatura de niños recién nacidos.</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span class="math inline">\(\bf{x}_1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\bf{x}_2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\bf{x}_3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\bf{x}_4\)</span></th>
+<th style="text-align: center;">Sexo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">78</td>
+<td style="text-align: center;">48.2</td>
+<td style="text-align: center;">2.75</td>
+<td style="text-align: center;">29.5</td>
+<td style="text-align: center;">Niña</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">69</td>
+<td style="text-align: center;">45.5</td>
+<td style="text-align: center;">2.15</td>
+<td style="text-align: center;">26.3</td>
+<td style="text-align: center;">Niña</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">77</td>
+<td style="text-align: center;">46.3</td>
+<td style="text-align: center;">4.41</td>
+<td style="text-align: center;">32.2</td>
+<td style="text-align: center;">Niña</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">88</td>
+<td style="text-align: center;">49</td>
+<td style="text-align: center;">5.52</td>
+<td style="text-align: center;">36.5</td>
+<td style="text-align: center;">Niño</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">67</td>
+<td style="text-align: center;">43</td>
+<td style="text-align: center;">3.21</td>
+<td style="text-align: center;">27.2</td>
+<td style="text-align: center;">Niña</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">4.32</td>
+<td style="text-align: center;">27.7</td>
+<td style="text-align: center;">Niña</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">74</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">2.31</td>
+<td style="text-align: center;">28.3</td>
+<td style="text-align: center;">Niña</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">53</td>
+<td style="text-align: center;">4.3</td>
+<td style="text-align: center;">30.3</td>
+<td style="text-align: center;">Niño</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">102</td>
+<td style="text-align: center;">58</td>
+<td style="text-align: center;">3.71</td>
+<td style="text-align: center;">28.7</td>
+<td style="text-align: center;">Niño</td>
+</tr>
+</tbody>
+</table>
+<p>donde:</p>
+<ul>
+<li><p><span class="math inline">\(\bf{x}_1:\)</span> edad en días</p></li>
+<li><p><span class="math inline">\(\bf{x}_2:\)</span> estatura al nacer en cm</p></li>
+<li><p><span class="math inline">\(\bf{x}_3:\)</span> peso en Kg. al nacer</p></li>
+<li><p><span class="math inline">\(\bf{x}_4:\)</span> aumento porcentual de su peso con respecto de su peso al nacer.</p></li>
+<li><p><strong>Sexo</strong> es una variable de perfil que podría ayudarnos a explicar algunos de los resultados del análisis de componentes principales.</p></li>
+</ul>
+<p>El código para la carga de datos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">9</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">78</span>,<span class="fl">48.2</span>,<span class="fl">2.75</span>,<span class="fl">29.5</span>,<span class="dv">69</span>,<span class="fl">45.5</span>,<span class="fl">2.15</span>,<span class="fl">26.3</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="dv">77</span>,<span class="fl">46.3</span>,<span class="fl">4.41</span>,<span class="fl">32.2</span>, <span class="dv">88</span>,<span class="dv">49</span>,<span class="fl">5.52</span>,<span class="fl">36.5</span>, <span class="dv">67</span>,<span class="dv">43</span>,<span class="fl">3.21</span>,<span class="fl">27.2</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="dv">80</span>,<span class="dv">48</span>,<span class="fl">4.32</span>,<span class="fl">27.7</span>, <span class="dv">74</span>,<span class="dv">48</span>,<span class="fl">2.31</span>,<span class="fl">28.3</span>, <span class="dv">94</span>,<span class="dv">53</span>,<span class="fl">4.3</span>,<span class="fl">30.3</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="dv">102</span>,<span class="dv">58</span>,<span class="fl">3.71</span>,<span class="fl">28.7</span>),<span class="at">nrow=</span>n,<span class="at">byrow=</span>T)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>Datos<span class="ot">=</span> <span class="fu">as.data.frame</span>(X)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(Datos) <span class="ot">=</span> <span class="fu">paste</span>(<span class="st">"x"</span>,<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>p),<span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Sexo <span class="ot">=</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">"Niña"</span>,<span class="st">"Niña"</span>,<span class="st">"Niña"</span>,<span class="st">"Niño"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="st">"Niña"</span>,<span class="st">"Niña"</span>,<span class="st">"Niña"</span>,<span class="st">"Niño"</span>,<span class="st">"Niño"</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>Datos<span class="sc">$</span>Sexo<span class="ot">=</span>Sexo</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Análisis exploratorio</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/cor_multi.PNG" class="img-fluid figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>El código de R para realizar el cálculo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(X)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 81.000000 48.777778  3.631111 29.633333</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Hn<span class="ot">=</span><span class="fu">diag</span>(n)<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>n <span class="co"># matriz de centrado</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cX<span class="ot">=</span>Hn<span class="sc">%*%</span>X <span class="co"># matriz centrada</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cX,<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      [,1]   [,2]   [,3]   [,4]
+ [1,]   -3 -0.578 -0.881 -0.133
+ [2,]  -12 -3.278 -1.481 -3.333
+ [3,]   -4 -2.478  0.779  2.567
+ [4,]    7  0.222  1.889  6.867
+ [5,]  -14 -5.778 -0.421 -2.433
+ [6,]   -1 -0.778  0.689 -1.933
+ [7,]   -7 -0.778 -1.321 -1.333
+ [8,]   13  4.222  0.669  0.667
+ [9,]   21  9.222  0.079 -0.933</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>S<span class="ot">&lt;-</span>(<span class="dv">1</span><span class="sc">/</span>n)<span class="sc">*</span><span class="fu">t</span>(X)<span class="sc">%*%</span>Hn<span class="sc">%*%</span>X <span class="co">#estimador sesgado de la matriz de covarianza</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(S,<span class="dv">3</span>) <span class="co"># daría igual cov(X)*(n-1)/n</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        [,1]   [,2]  [,3]   [,4]
+[1,] 119.333 43.133 6.148 12.511
+[2,]  43.133 17.193 1.148  1.886
+[3,]   6.148  1.148 1.111  2.428
+[4,]  12.511  1.886 2.428  8.624</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eigen</span>(S)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>eigen() decomposition
+$values
+[1] 136.61529623   8.86125966   0.73789460   0.04677667
+
+$vectors
+           [,1]        [,2]       [,3]        [,4]
+[1,] 0.93439437 -0.02238785  0.2555755  0.24715806
+[2,] 0.33947477  0.35413519 -0.6610845 -0.56772562
+[3,] 0.04701065 -0.24770838  0.5656945 -0.78512437
+[4,] 0.09723192 -0.90151407 -0.4214714 -0.01342527</code></pre>
+</div>
+</div>
+<ul>
+<li>Los valores propios son:</li>
+</ul>
+<p><span class="math display">\[\lambda_1=136.615,\quad \lambda_2=8.861,\quad \lambda_3 = 0.738,\quad \lambda_4 = 0.047.\]</span></p>
+<ul>
+<li>Los vectores propios ortonormales correspondientes a los valores propios, son los que aparecen con el nombre: <code>$vectors</code></li>
+</ul>
+<p>Las expresiones de las variables nuevas <span class="math inline">\(CP_i\)</span> en función de las antiguas, notemos que se calculan sobre los datos centrados, son:</p>
+<p><span class="math display">\[\begin{array}{rl}
+CP_1 = &amp; 0.934\cdot \tilde{X}_1 + 0.339\cdot \tilde{X}_2 + 0.047\cdot
+\tilde{X}_3\\ &amp; + 0.097 \cdot \tilde{X}_4, \\
+CP_2 = &amp; -0.022\cdot \tilde{X}_1 +0.354\cdot \tilde{X}_2 -0.248 \cdot
+\tilde{X}_3 \\ &amp; -0.902 \cdot \tilde{X}_4, \\
+CP_3 = &amp; 0.256\cdot \tilde{X}_1 -0.661 \cdot \tilde{X}_2 +0.566\cdot \tilde{X}_3\\ &amp;-0.421\cdot \tilde{X}_4, \\
+CP_4 = &amp; 0.247 \cdot \tilde{X}_1 - 0.568\cdot \tilde{X}_2 - 0.785\cdot
+\tilde{X}_3 \\ &amp; - 0.013 \cdot \tilde{X}_4.
+\end{array}\]</span></p>
+<p>La nueva matriz de datos respecto de las nuevas variables será:</p>
+<p><br><br></p>
+<p><span class="math display">\[\mathbf{CP}= \tilde{\mathbf{X}} \mathbf{u} =
+\left(
+\begin{array}{rrrr}
+-3.054 &amp; 0.201 &amp; -0.827 &amp; 0.280 \\
+-12.719 &amp; 2.480 &amp; -0.333 &amp; 0.103 \\
+-4.293 &amp; -3.295 &amp; -0.025 &amp; -0.228 \\
+7.373 &amp; -6.736 &amp; -0.183 &amp; 0.029 \\
+-15.299 &amp; 0.565 &amp; 1.029 &amp; 0.183 \\
+-1.354 &amp; 1.319 &amp; 1.463 &amp; -0.321 \\
+-6.997 &amp; 1.411 &amp; -1.460 &amp; -0.233 \\
+13.677 &amp; 0.437 &amp; 0.629 &amp; 0.282 \\
+22.666 &amp; 3.618 &amp; -0.292 &amp; -0.095 \\
+\end{array}
+\right)\]</span></p>
+<p>Podéis revisar que si se multiplican escalarmente dos columnas cualesquiera, el resultado es nulo. Es decir, las columnas de la nueva matriz de datos son ortogonales dos a dos.</p>
+<p>Si representamos gráficamente las dos primeras componentes, podemos observar que se puede distinguir entre niños y niñas con las dos primeras componentes.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="ACP_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/pairs_2.PNG" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
