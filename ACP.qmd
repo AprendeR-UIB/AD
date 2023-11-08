@@ -663,4 +663,157 @@ seleccionar aquel que conduzca a conclusiones más informativas.
 
 ## Análisis de Componentes Principales en R
 
+Vamos a explicar las funciones de R para hacer el PCA, para ello utilizaremos los famosos datos de las flores iris.
+
+<p align="center">
+![](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png){width=70%}
+
+```{recho=FALSE}
+head(iris,2)
+tail(iris,2)
+```
+
+Lo primero que hacemos es revisar si las variables están correlacionadas, requisito necesario para obtener una representación más simple de éstas.
+
+```{r}
+cov(iris[,1:4])
+cor(iris[,1:4])
+```
+
+Comparamos las funciones de R para hacer el PCA
+
+```{r estinf,echo=FALSE,out.width="80%", fig.align ="center"}
+knitr::include_graphics("Figuras/tabla_comparacion.png")
+```
+
+Calculamos las componentes con los datos escalados con la librería `factoextra` 
+
+```{r,message=FALSE}
+library(ggplot2)
+library("factoextra")
+iris.acp=prcomp(iris[,1:4], scale = TRUE)
+```
+
+Los valores propios muestran el porcentaje de varianza explicada por cada componente principal.
+
+```{r}
+lambdas=get_eigenvalue(iris.acp)
+lambdas
+```
+
+Observamos que las dos primeras componentes principales explican aproximadamente el 96% de la variación total. Puede ser razonable, trabajar con esas dos componentes para el análisis posterior de estos datos.
+
+Un método alternativo para determinar el número de componentes principales es observar el diagrama de valores propios ordenados de mayor a menor. El número de componentes se determina en el punto, más allá del cual los valores propios restantes son todos relativamente pequeños y de tamaño comparable.
+
+```{r,fig.height=3,fig.height=4}
+fviz_eig(iris.acp, addlabels = TRUE, ylim=c(0,100))
+```
+
+La representación de variables difiere de la gráfica de las observaciones: Las observaciones están representadas por sus proyecciones, pero las variables están representados por sus correlaciones.
+
+```{r}
+fviz_pca_var(iris.acp, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+             repel = TRUE) 
+```
+
+El gráfico anterior también se conoce como círculo de correlación variable. Muestra las relaciones entre todas las variables. Se puede interpretar de la siguiente manera:
+
+* Las variables correlacionadas positivamente se agrupan.
+
+* Las variables correlacionadas negativamente se colocan en lados opuestos del origen de la trama (cuadrantes opuestos).
+
+* La distancia entre variables y el origen mide la calidad de la representación de las variables, las que están alejadas del origen están bien representadas.
+
+La calidad de representación de las variables se llama cos2 (coseno cuadrado, coordenadas cuadradas). Es posible crear un diagrama de barras de las variables `cos2`:
+
+```{r}
+var <- get_pca_var(iris.acp)
+fviz_cos2(iris.acp, choice = "var", axes = 1:2)
+```
+
+* Un cos2 alto indica una buena representación de la variable en el componente principal. En este caso, la variable se coloca cerca de la circunferencia del círculo de correlación.
+
+* Un cos2 bajo indica que la variable no está perfectamente representada por los PC. En este caso, la variable está cerca del centro del círculo.
+
+
+Para ver como se relacionan las componentes principales con los datos
+originales, veamos los autovectores. 
+
+```{r}
+iris.acp$rotation
+```
+
+
+La primera componente principal da aproximadamente el mismo peso a la longitud del sépalo, la longitud del pétalo y el ancho del pétalo, pero da peso de signo contrario al ancho del sépalo. 
+
+La segunda componente principal se refiere principalmente al sépalo.
+
+
+El biplot es un gráfico que permite representar las variables originales y las observaciones transformadas en los ejes de componentes principales. 
+
+
+* Cada flecha corresponde a una variable.
+
+* Nos fijamos primeramente en las direcciones de las flechas y su sentido.
+
+* Dos flechas que apunten al mismo lugar indica  correlación alta. 
+
+* Dos flechas con sentidos diferentes pero en la misma dirección indican una correlación negativa.
+
+* Cuando dos variables no están correladas en absoluto, se observan dos flechas apuntando en direcciones totalmente perpendiculares. 
+
+* En cuanto a la diferencia en la longitud de las flechas, una menos larga informa que su variable está peor representada que una de largo mayor. Es una forma de medir la calidad de representación. 
+
+
+```{r}
+fviz_pca_biplot(iris.acp, repel = TRUE,
+                col.var = "#2E9FDF", # color para las variables
+                col.ind = "#696969"  # color para las observaciones
+                )
+```
+
+
+En el gráfico anterior podemos observar lo siguiente:
+
+* Todas las variables originales tienen influencia en las componentes principales (lo cual se evidencia en el tamaño de las flechas).
+
+* La flecha más larga corresponde al ancho del sépalo, ya que tiene una fuerte influencia (loading) sobre la segunda componente.
+
+* La dirección de esta última flecha indica que el “loading” del ancho del sépalo para la primera componente es negativo.
+
+* Los “loadings” de las variables longitud del pétalo y ancho del pétalo con respecto a la segunda componente son muy bajos (las flechas son prácticamente horizontales).
+
+* La variable longitud del sépalo tiene loadings relativamente altos en las dos componentes principales.
+
+**Acceso a los resultados del ACP**
+
+```{r}
+# Resultados por Variables
+res.var=get_pca_var(iris.acp)
+res.var$contrib        # Contribuciones a las CP 
+res.var$cos2           # Calidad de la representación
+```
+
+ 
+```{r}
+# Resultados por observaciones
+res.obs=get_pca_ind(iris.acp)
+head(res.obs$coord,3)  #Coordenadas
+head(res.obs$contrib,3)  #Contribuciones a las CP
+head(res.obs$cos2,3)  # Calidad de la representación
+```
+
+**¿Qué tan bien lo hace el ACP?**
+```{r,fig.height=4,warning=FALSE, message=FALSE}
+library("ggfortify")
+autoplot(iris.acp, data = iris, colour = 'Species',
+         loadings = TRUE, loadings.colour = 'blue',
+         loadings.label = TRUE, loadings.label.size = 3)
+```
+
+
+## Ejercicio:
+
+Considera los datos `europa.dat` que están disponibles en Aula Digital. Los datos corresponden a los porcentajes de población empleados en diferentes actividades económicas en Europa para el año 1979. Las variables consideradas son: Agricultura, Minas, Fábricas, Suministro Eléctrico, Construcción, Industrias de Servicio, Finanzas, Servicios Sociales y Personales y, Transporte y Comunicaciones. Utiliza el método de componentes principales para reducir el número de variables, y tratar de determinar grupos de países con comportamientos semejantes en la distribución de su fuerza de trabajo. En este caso, usa la matriz de covarianza para el cálculo de las componentes principales, ya que todos los datos están medidos en la misma escala (porcentaje de la población) y por las caractersticas de los datos, no parece una buena idea considerarlos todos de igual manera.
 

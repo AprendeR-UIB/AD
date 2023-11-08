@@ -208,6 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#propiedades-pca-con-la-matriz-de-covarianzas." id="toc-propiedades-pca-con-la-matriz-de-covarianzas." class="nav-link" data-scroll-target="#propiedades-pca-con-la-matriz-de-covarianzas."><span class="header-section-number">4.5</span> Propiedades PCA con la matriz de covarianzas.</a></li>
   <li><a href="#pca-normado-o-con-matriz-de-correlaciones" id="toc-pca-normado-o-con-matriz-de-correlaciones" class="nav-link" data-scroll-target="#pca-normado-o-con-matriz-de-correlaciones"><span class="header-section-number">4.6</span> PCA normado o con matriz de correlaciones</a></li>
   <li><a href="#análisis-de-componentes-principales-en-r" id="toc-análisis-de-componentes-principales-en-r" class="nav-link" data-scroll-target="#análisis-de-componentes-principales-en-r"><span class="header-section-number">4.7</span> Análisis de Componentes Principales en R</a></li>
+  <li><a href="#ejercicio" id="toc-ejercicio" class="nav-link" data-scroll-target="#ejercicio"><span class="header-section-number">4.8</span> Ejercicio:</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/ACP.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
@@ -819,6 +820,192 @@ Z_3 = &amp; 0.575 \cdot \log V_1 - 0.552 \cdot \log V_2 + 0.604 \cdot \log V_3, 
 </section>
 <section id="análisis-de-componentes-principales-en-r" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="análisis-de-componentes-principales-en-r"><span class="header-section-number">4.7</span> Análisis de Componentes Principales en R</h2>
+<p>Vamos a explicar las funciones de R para hacer el PCA, para ello utilizaremos los famosos datos de las flores iris.</p>
+<p align="center">
+</p><p><img src="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" class="img-fluid" style="width:70.0%"></p>
+<pre data-recho="FALSE"><code>head(iris,2)
+tail(iris,2)</code></pre>
+<p>Lo primero que hacemos es revisar si las variables están correlacionadas, requisito necesario para obtener una representación más simple de éstas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Sepal.Length Sepal.Width Petal.Length Petal.Width
+Sepal.Length    0.6856935  -0.0424340    1.2743154   0.5162707
+Sepal.Width    -0.0424340   0.1899794   -0.3296564  -0.1216394
+Petal.Length    1.2743154  -0.3296564    3.1162779   1.2956094
+Petal.Width     0.5162707  -0.1216394    1.2956094   0.5810063</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Sepal.Length Sepal.Width Petal.Length Petal.Width
+Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
+Sepal.Width    -0.1175698   1.0000000   -0.4284401  -0.3661259
+Petal.Length    0.8717538  -0.4284401    1.0000000   0.9628654
+Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000</code></pre>
+</div>
+</div>
+<p>Comparamos las funciones de R para hacer el PCA</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figuras/tabla_comparacion.png" class="img-fluid figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Calculamos las componentes con los datos escalados con la librería <code>factoextra</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"factoextra"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>iris.acp<span class="ot">=</span><span class="fu">prcomp</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Los valores propios muestran el porcentaje de varianza explicada por cada componente principal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>lambdas<span class="ot">=</span><span class="fu">get_eigenvalue</span>(iris.acp)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>lambdas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      eigenvalue variance.percent cumulative.variance.percent
+Dim.1 2.91849782       72.9624454                    72.96245
+Dim.2 0.91403047       22.8507618                    95.81321
+Dim.3 0.14675688        3.6689219                    99.48213
+Dim.4 0.02071484        0.5178709                   100.00000</code></pre>
+</div>
+</div>
+<p>Observamos que las dos primeras componentes principales explican aproximadamente el 96% de la variación total. Puede ser razonable, trabajar con esas dos componentes para el análisis posterior de estos datos.</p>
+<p>Un método alternativo para determinar el número de componentes principales es observar el diagrama de valores propios ordenados de mayor a menor. El número de componentes se determina en el punto, más allá del cual los valores propios restantes son todos relativamente pequeños y de tamaño comparable.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(iris.acp, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ACP_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La representación de variables difiere de la gráfica de las observaciones: Las observaciones están representadas por sus proyecciones, pero las variables están representados por sus correlaciones.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(iris.acp, <span class="at">col.var =</span> <span class="st">"contrib"</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>),</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ACP_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>El gráfico anterior también se conoce como círculo de correlación variable. Muestra las relaciones entre todas las variables. Se puede interpretar de la siguiente manera:</p>
+<ul>
+<li><p>Las variables correlacionadas positivamente se agrupan.</p></li>
+<li><p>Las variables correlacionadas negativamente se colocan en lados opuestos del origen de la trama (cuadrantes opuestos).</p></li>
+<li><p>La distancia entre variables y el origen mide la calidad de la representación de las variables, las que están alejadas del origen están bien representadas.</p></li>
+</ul>
+<p>La calidad de representación de las variables se llama cos2 (coseno cuadrado, coordenadas cuadradas). Es posible crear un diagrama de barras de las variables <code>cos2</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(iris.acp)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cos2</span>(iris.acp, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ACP_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p>Un cos2 alto indica una buena representación de la variable en el componente principal. En este caso, la variable se coloca cerca de la circunferencia del círculo de correlación.</p></li>
+<li><p>Un cos2 bajo indica que la variable no está perfectamente representada por los PC. En este caso, la variable está cerca del centro del círculo.</p></li>
+</ul>
+<p>Para ver como se relacionan las componentes principales con los datos originales, veamos los autovectores.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>iris.acp<span class="sc">$</span>rotation</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    PC1         PC2        PC3        PC4
+Sepal.Length  0.5210659 -0.37741762  0.7195664  0.2612863
+Sepal.Width  -0.2693474 -0.92329566 -0.2443818 -0.1235096
+Petal.Length  0.5804131 -0.02449161 -0.1421264 -0.8014492
+Petal.Width   0.5648565 -0.06694199 -0.6342727  0.5235971</code></pre>
+</div>
+</div>
+<p>La primera componente principal da aproximadamente el mismo peso a la longitud del sépalo, la longitud del pétalo y el ancho del pétalo, pero da peso de signo contrario al ancho del sépalo.</p>
+<p>La segunda componente principal se refiere principalmente al sépalo.</p>
+<p>El biplot es un gráfico que permite representar las variables originales y las observaciones transformadas en los ejes de componentes principales.</p>
+<ul>
+<li><p>Cada flecha corresponde a una variable.</p></li>
+<li><p>Nos fijamos primeramente en las direcciones de las flechas y su sentido.</p></li>
+<li><p>Dos flechas que apunten al mismo lugar indica correlación alta.</p></li>
+<li><p>Dos flechas con sentidos diferentes pero en la misma dirección indican una correlación negativa.</p></li>
+<li><p>Cuando dos variables no están correladas en absoluto, se observan dos flechas apuntando en direcciones totalmente perpendiculares.</p></li>
+<li><p>En cuanto a la diferencia en la longitud de las flechas, una menos larga informa que su variable está peor representada que una de largo mayor. Es una forma de medir la calidad de representación.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(iris.acp, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"#2E9FDF"</span>, <span class="co"># color para las variables</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">"#696969"</span>  <span class="co"># color para las observaciones</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ACP_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En el gráfico anterior podemos observar lo siguiente:</p>
+<ul>
+<li><p>Todas las variables originales tienen influencia en las componentes principales (lo cual se evidencia en el tamaño de las flechas).</p></li>
+<li><p>La flecha más larga corresponde al ancho del sépalo, ya que tiene una fuerte influencia (loading) sobre la segunda componente.</p></li>
+<li><p>La dirección de esta última flecha indica que el “loading” del ancho del sépalo para la primera componente es negativo.</p></li>
+<li><p>Los “loadings” de las variables longitud del pétalo y ancho del pétalo con respecto a la segunda componente son muy bajos (las flechas son prácticamente horizontales).</p></li>
+<li><p>La variable longitud del sépalo tiene loadings relativamente altos en las dos componentes principales.</p></li>
+</ul>
+<p><strong>Acceso a los resultados del ACP</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por Variables</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>res.var<span class="ot">=</span><span class="fu">get_pca_var</span>(iris.acp)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribuciones a las CP </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Dim.1       Dim.2     Dim.3     Dim.4
+Sepal.Length 27.150969 14.24440565 51.777574  6.827052
+Sepal.Width   7.254804 85.24748749  5.972245  1.525463
+Petal.Length 33.687936  0.05998389  2.019990 64.232089
+Petal.Width  31.906291  0.44812296 40.230191 27.415396</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>cos2           <span class="co"># Calidad de la representación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 Dim.1       Dim.2       Dim.3        Dim.4
+Sepal.Length 0.7924004 0.130198208 0.075987149 0.0014142127
+Sepal.Width  0.2117313 0.779188012 0.008764681 0.0003159971
+Petal.Length 0.9831817 0.000548271 0.002964475 0.0133055723
+Petal.Width  0.9311844 0.004095980 0.059040571 0.0056790544</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por observaciones</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>res.obs<span class="ot">=</span><span class="fu">get_pca_ind</span>(iris.acp)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>coord,<span class="dv">3</span>)  <span class="co">#Coordenadas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Dim.1      Dim.2      Dim.3      Dim.4
+1 -2.257141 -0.4784238  0.1272796 0.02408751
+2 -2.074013  0.6718827  0.2338255 0.10266284
+3 -2.356335  0.3407664 -0.0440539 0.02828231</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>contrib,<span class="dv">3</span>)  <span class="co">#Contribuciones a las CP</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Dim.1      Dim.2       Dim.3      Dim.4
+1 1.163769 0.16694510 0.073591567 0.01867287
+2 0.982590 0.32925696 0.248367113 0.33919842
+3 1.268304 0.08469576 0.008816151 0.02574286</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>cos2,<span class="dv">3</span>)  <span class="co"># Calidad de la representación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Dim.1      Dim.2        Dim.3        Dim.4
+1 0.9539975 0.04286032 0.0030335249 0.0001086460
+2 0.8927725 0.09369248 0.0113475382 0.0021874817
+3 0.9790410 0.02047578 0.0003422122 0.0001410446</code></pre>
+</div>
+</div>
+<p><strong>¿Qué tan bien lo hace el ACP?</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggfortify"</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(iris.acp, <span class="at">data =</span> iris, <span class="at">colour =</span> <span class="st">'Species'</span>,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">loadings =</span> <span class="cn">TRUE</span>, <span class="at">loadings.colour =</span> <span class="st">'blue'</span>,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">loadings.label =</span> <span class="cn">TRUE</span>, <span class="at">loadings.label.size =</span> <span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="ACP_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="ejercicio" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="ejercicio"><span class="header-section-number">4.8</span> Ejercicio:</h2>
+<p>Considera los datos <code>europa.dat</code> que están disponibles en Aula Digital. Los datos corresponden a los porcentajes de población empleados en diferentes actividades económicas en Europa para el año 1979. Las variables consideradas son: Agricultura, Minas, Fábricas, Suministro Eléctrico, Construcción, Industrias de Servicio, Finanzas, Servicios Sociales y Personales y, Transporte y Comunicaciones. Utiliza el método de componentes principales para reducir el número de variables, y tratar de determinar grupos de países con comportamientos semejantes en la distribución de su fuerza de trabajo. En este caso, usa la matriz de covarianza para el cálculo de las componentes principales, ya que todos los datos están medidos en la misma escala (porcentaje de la población) y por las caractersticas de los datos, no parece una buena idea considerarlos todos de igual manera.</p>
 
 
 </section>
