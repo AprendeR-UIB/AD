@@ -325,10 +325,10 @@ Para determinar qué valor propio de $\mathbf{S}$ es la solución de (2), multip
 \mathbf{a_1^t S a_1}= \lambda \mathbf{a_1^t a_1}= \lambda
 \end{equation}
 
-y concluimos, por (1) que $\lambda$ es la varianza de $\mathbf{z_1}$. Como esta es la cantidad que queremos maximizar, $\lambda$ será el mayor valor propio de la matriz $\mathbf{S}$. Su vector asociado, $\mathbf{a_1}$, define los coeficientes de cada variable en la primera componente principal.
+y **concluimos, por (1) que $\lambda$ es la varianza de $\mathbf{z_1}$**. Como esta es la cantidad que queremos maximizar, $\lambda$ será el mayor valor propio de la matriz $\mathbf{S}$. Su vector asociado, $\mathbf{a_1}$, define los coeficientes de cada variable en la primera componente principal.
 
-[*Ejercicio:* ]{style="color: red;"}
-Calcula la primera componente principal con los logaritmos del fichero `acciones.txt` que podéis descargad en Aula Digital. Las observaciones corresponden a distintas acciones que cotizan en el mercado español y las variables son: 
+## [*Ejemplo:* ]{style="color: blue;"}
+Calculad la primera componente principal con los logaritmos del fichero `acciones.txt` que podéis descargad en Aula Digital. Las observaciones corresponden a distintas acciones que cotizan en el mercado español y las variables son: 
 
 * `V1` la rentabilidad efectiva por dividendos,
 * `V2` la proporción de beneficios que va a dividendos
@@ -336,7 +336,122 @@ Calcula la primera componente principal con los logaritmos del fichero `acciones
 
 ¿Cuál de las variables está mejor representada por la componente principal 1?
 
-### Cálculo de la segunda componente
+**Solución**
+
+Cargamos los datos
+
+```{r}
+datos<-read.table("datos/acciones.txt")
+n=dim(datos)[1]
+n
+```
+
+La tabla presenta tres medidas de rentabilidad de 34 acciones en bolsa. Vamos a reescribirlas para ganar interpretabilidad. Llamamos $d$ a los dividendos por acción, $p$ al precio de la acción, $B$ al beneficio y $N$ al número de acciones. Entonces:
+
+* `V1` es la rentabilidad efectiva por dividendos, es decir, dividendos repartidos por acción divididos por precio de la acción. $V1=\frac{d}{p}$.
+
+* `V2` es la proporción de beneficios que va a dividendos. $V2=\frac{dN}{B}$.
+
+* `V3` es el cociente entre precio y beneficio por acción. $V3=\frac{p}{B/N}=\frac{pN}{B}$
+
+Exploramos los datos  
+
+```{r, message=FALSE, echo=FALSE}
+library(GGally)
+ggpairs(datos)
+```
+
+Las densidades indican un alejamiento de la distribución normal para las tres variables. Las dos primeras sugieren la presencia de dos grupos de datos distintos (acciones con comportamientos distintos), y la tercera tiene una densidad muy asimétrica, con al menos un valor atípico.
+
+Por la forma de cálculo de las variables, es lógico esperar alta correlación positiva entre `V1` y `v2`. La correlación negativa baja entre `V1` y `v3`, así como alta negativa entre `V2` y`v3`.
+
+
+Ahora, estimamos la matriz de varianzas-covarianzas de las variables originales `V1`, `v2` y `V3`, con el estimador sesgado:
+
+```{r}
+S0=round(((n-1)/n)*cov(datos),2)
+S0
+```
+
+Recordad que las densidades de las tres variables han mostrado una clara falta de normalidad y entre ellas hay relaciones no lineales. En estas condiciones, la matriz de varianzas-covarianzas no es un buen resumen de las relaciones de dependencia existentes.
+
+Para tratar de resolver el problema anterior, podemos usar el logaritmo que es una de las transformaciones más utilizadas para datos positivos en los siguientes casos:
+
+1. Los datos describen el tamaño de las cosas (renta de países o familias habitantes en las principales ciudades del mundo, tamaño de empresas, consumo de energía en hogares, etc), son generalmente muy asimétricas, pero se convierten en aproximadamente simétricas al expresar la variable en logaritmos.
+
+2. Cuando las diferencias relativas entre los valores de la variable son importantes, conviene expresar las variables en logaritmos, ya que las diferencias entre logaritmos equivalen a diferencias relativas en la escala original.
+
+3. **La variabilidad de las variables transformadas es independiente de las unidades de medida**. Para mostrar esta propiedad, supongamos que tenemos una sola variable aleatoria $X$ que transformamos con $Y = \log X$, la variable transformada tiene media $\mu_Y$ y varianza $\sigma^2_Y$. Si cambiamos las unidades de medida de $X$ multiplicando por una constante, $Z = kX$, entonces la variable $\log Z$ tiene media $Y + \log k$ y la misma varianza que la variable $\log X$. Por tanto, **al tomar logaritmos en las variables, las varianzas pueden compararse aunque los datos tengan distintas dimensiones**.
+
+De acuerdo a los anterior, aplicamos una transformación logarítmica a nuestros datos, con lo cual, la matriz de varianzas-covarianzas de las variables transformadas, sería:
+
+```{r}
+datos_l=log(datos)
+S=round(((n-1)/n)*cov(datos_l),2)
+S
+```
+
+Observad que los logaritmos modifican mucho los resultados. **Los datos ahora son más homogéneos** y la variable de mayor varianza pasa a ser la primera, el logaritmo de la rentabilidad efectiva, mientras que la menor es la segunda, el logaritmo de la proporción de beneficios que va a dividendos. La relación entre el logaritmo del ratio precio/beneficios y la rentabilidad efectiva es negativa. Las otras relaciones son débiles. 
+
+ 
+Calculamos los valores propios de la matriz de varianzas covarianzas de los datos transformados que son las raíces de la ecuación 
+
+$$
+\begin{equation} 
+\begin{split}
+|S-\lambda I| & =  \left| \begin{pmatrix}0.35 & 0.15 & -0.19\\ 0.15 & 0.13 & -0.03 \\ -0.19 & -0.03 & 0.16\end{pmatrix} -\begin{pmatrix} \lambda & 0 & 0\\ 0 & \lambda & 0 \\ 0 & 0 & \lambda\end{pmatrix}  \right| \\
+ & = 0.000382-0.0628\lambda+0.64 \lambda^2 -\lambda^3 =0
+\end{split}
+\end{equation}
+$$
+
+Buscamos las raíces de este polinomio son
+ 
+```{r}
+library(polynom)
+p=polynomial(coef=c(0.00038,-0.0628,0.64,-1))
+raices=round(solve(p),3)
+```
+
+Las raíces son $\lambda_1$=`r raices[3]`, $\lambda_2$=`r raices[2]` y $\lambda_3$=`r raices[1]`. 
+
+El vector propio asociado a $lambda_1$ nos da los pesos de la primera componente principal. Para calcularlo manualmente, debemos resolver el sistema
+$$S \mathbf{a_1}= \lambda_1 \mathbf{a_1}$$ 
+que conduce a
+
+$$
+\begin{equation} 
+\begin{split}
+\begin{pmatrix}0.35 & 0.15 & -0.19\\ 0.15 & 0.13 & -0.03 \\ -0.19 & -0.03 & 0.16\end{pmatrix} \begin{pmatrix} a_{11} \\a_{12} \\ a_{131} \end{pmatrix} &=0.521 \cdot \begin{pmatrix} a_{11} \\a_{12} \\ a_{131} \end{pmatrix}
+\end{split}
+\end{equation}
+$$
+$$
+\begin{equation} 
+\begin{split}
+\begin{pmatrix}-0.171 a_{11}+0.15 a_{12} -0.19 a_{13} \\ 0.15 a_{11}-0.391 a_{12} -0.03 a_{13}\\ -0.19 a_{11}-0.03 a_{12} -0.361 a_{13}\end{pmatrix} \begin{pmatrix} a_{11} \\a_{12} \\ a_{131} \end{pmatrix} &= \begin{pmatrix} 0 \\0 \\ 0 \end{pmatrix}
+\end{split}
+\end{equation}
+$$
+Este sistema es compatible indeterminado. Para encontrar una de las infinitas soluciones tomemos la primera variable como parámetro, $x$, y resolvemos el sistema en función de $x$. La solución es,
+
+$$\{a_{11}=x,\; a_{12}=0.427x,\; a_{13}=-0.562x$$
+
+El valor de $x$ lo obtenemos imponiendo que el vector tenga norma uno, con lo que resulta:
+
+$$\mathbf{a_1}=\begin{pmatrix} -0.817 \\-0.349 \\ 0.459 \end{pmatrix}$$
+
+Por lo tanto, la primera componente es
+$$CP_1=-0.817 \log(d/p)-0.349 \log(p/d)+0.459 \log(pN/b)$$
+
+es decir,
+
+$$CP_1 \approx -1.17 \log(d/p) + 0.46 \log(pN/b)$$
+
+que indica que este primer componente depende básicamente de la rentabilidad por dividendos. Esta variable es la que mejor explica la variabilidad conjunta de las acciones.
+
+
+## Cálculo de la segunda componente
 
 Vamos a obtener el mejor plano de proyección de l matriz $\mathbf{X}$. Lo calcularemos estableciendo como función objetivo que la suma de las varianzas de $\mathbf{z_1}=\mathbf{Xa_1}$ y $\mathbf{z_2}=\mathbf{Xa_2}$
 sean máximas, donde $\mathbf{a_1}$ y $\mathbf{a_2}$ son los vectores que definen el plano. La función objetivo será:
@@ -402,134 +517,150 @@ Llamando $\mathbf{Z}$ a la matriz cuyas columnas son los valores de las $p$ comp
 
 donde $\mathbf{A^t A}=\mathbf{I}$. Calcular las componentes principales equivale a aplicar una transformación ortogonal $\mathbf{A}$ a las variables $\mathbf{X}$ (ejes originales) para obtener unas nuevas variables $\mathbf{Z}$ incorreladas entre sí. Esta operación puede interpretarse como elegir unos nuevos ejes coordenados, que coincidan con los “ejes naturales” de los datos.
 
-## Ejemplo
 
-Vamos a realizar un análisis de componentes principales (PCA) sobre un conjunto de datos con la estatura de niños recién nacidos. 
 
-| $\bf{x}_1$ | $\bf{x}_2$ | $\bf{x}_3$ | $\bf{x}_4$ | Sexo |
-|:-----:|:-----:|:-----:|:-----:|:----:|
-| 78    | 48.2  | 2.75  | 29.5  | Niña |
-| 69    | 45.5  | 2.15  | 26.3  | Niña |
-| 77    | 46.3  | 4.41  | 32.2  | Niña |
-| 88    | 49    | 5.52  | 36.5  | Niño |
-| 67    | 43    | 3.21  | 27.2  | Niña |
-| 80    | 48    | 4.32  | 27.7  | Niña |
-| 74    | 48    | 2.31  | 28.3  | Niña |
-| 94    | 53    | 4.3   | 30.3  | Niño |
-| 102   | 58    | 3.71  | 28.7  | Niño |
+### [*Ejemplo:* ]{style="color: blue;"}
 
-donde:
+Vamos a realizar el análisis de componentes principales (PCA) sobre el conjunto de datos de las acciones del mercado español, esta vez utilizando a R para calcular los valores y vectores propios.
 
-* $\bf{x}_1:$ edad en días
-
-* $\bf{x}_2:$ estatura al nacer en cm
-
-* $\bf{x}_3:$ peso en Kg. al nacer 
-
-* $\bf{x}_4:$ aumento porcentual de su peso con respecto de su peso al nacer. 
-
-* **Sexo** es una variable de perfil que podría ayudarnos a explicar algunos  de los resultados del análisis de componentes principales.
-
-El código para la carga de datos
+Recordad que ya hemos calculado la matriz de varianzas-covarianzas muestral sesgada de los datos transformados, $S$=`r S`.
 
 ```{r}
-n = 9
-p = 4
-X = matrix(c(78,48.2,2.75,29.5,69,45.5,2.15,26.3,
-77,46.3,4.41,32.2, 88,49,5.52,36.5, 67,43,3.21,27.2,
-80,48,4.32,27.7, 74,48,2.31,28.3, 94,53,4.3,30.3,
-102,58,3.71,28.7),nrow=n,byrow=T)
-Datos= as.data.frame(X)
-names(Datos) = paste("x",c(1:p),sep="")
-Sexo = as.factor(c("Niña","Niña","Niña","Niño",
-"Niña","Niña","Niña","Niño","Niño"))
-Datos$Sexo=Sexo
+sol=eigen(S)
 ```
 
+Los valores propios son: 
 
-**Análisis exploratorio**
+$$\lambda_1=0.521,\quad \lambda_2=0.113,\quad \lambda_3 = 0.007.$$
+
+* Los vectores propios ortonormales correspondientes a los valores propios,  son los que aparecen con el nombre: `$vectors`
 
 
-```{r echo=FALSE, out.width = "70%",fig.align='center'}
-knitr::include_graphics("Figuras/cor_multi.PNG")
+Las expresiones de las variables nuevas $CP_i$ en función de los logaritmos de las originales son:
+
+$$\begin{array}{rl}
+Z_1 = & 0.817 \cdot \log V_1 + 0.349\cdot \log V_2 - 0.459 \cdot \log V_3, \\
+Z_2 = & 0.043 \cdot \log V_1 + 0.758\cdot \log V_2 + 0.651 \cdot \log V_3, \\
+Z_3 = & 0.575 \cdot \log V_1 - 0.552 \cdot \log V_2 + 0.604 \cdot \log V_3, \\
+\end{array}$$
+
+La nueva matriz de datos respecto de las componentes principales será:
+
+```{r}
+X=matrix(c(datos_l$V1,datos_l$V2,datos_l$V3),nrow=34)
+Z=X %*% sol$vectors # Z=XA  con A la matriz de vectores propios
+Z
 ```
 
-El código de R para realizar el cálculo:
+Si representamos gráficamente las dos primeras componentes, podemos observar que se puede distinguir entre los dos grupos de acciones.
 
-```{r matrizcentradaACP1,echo=TRUE,size="tiny"}
+```{r}
+plot(Z[,1],Z[,2])
+```
+
+**¿Qué hubiese pasado si centramos los datos?**
+
+Aunque no es obligatorio centrar la matriz de datos para PCA, es una práctica común y recomendada, ya que ayuda a garantizar que las componentes principales reflejen de manera más precisa la estructura de variabilidad en los datos.
+
+Si no se centran los datos, la primera componente principal estaría influenciada por la ubicación de los datos en el espacio original, es decir, por la media de los datos. En nuestro ejemplo, esto está minimizado por el efecto de la transformación logarítmica.
+
+
+Veamos los resultados centrando los datos
+
+```{r}
 colMeans(X)
 Hn=diag(n)-1/n # matriz de centrado
 cX=Hn%*%X # matriz centrada
 round(cX,3)
 ```
 
-
 ```{r}
-S<-(1/n)*t(X)%*%Hn%*%X #estimador sesgado de la matriz de covarianza
-round(S,3) # daría igual cov(X)*(n-1)/n
-eigen(S)
+Sc<-(1/n)*t(cX)%*%Hn%*%cX # estimador sesgado de la matriz de covarianza
+round(Sc,3) # daría igual cov(cX)*(n-1)/n
+solc<-eigen(Sc)
 ```
 
-* Los valores propios son: 
+```{r}
+Zc=cX %*% solc$vectors 
+Zc
+```
 
-$$\lambda_1=136.615,\quad \lambda_2=8.861,\quad \lambda_3 = 0.738,\quad \lambda_4 = 0.047.$$
+```{r}
+plot(Zc[,1],Zc[,2])
+```
 
-* Los vectores propios ortonormales correspondientes a los valores propios,  son los que aparecen con el nombre: `$vectors`
+## Propiedades PCA con la matriz de covarianzas.
 
+Los componentes principales como nuevas variables tienen las propiedades siguientes:
 
-Las expresiones de las variables nuevas $CP_i$ en función de las antiguas, notemos que se calculan sobre los datos centrados, son:
+1. Las componentes principales reproducen la varianza total. 
+$$\sum_{i=1}^p Var(\mathbf{Z}_i)=\sum_{i=1}^p \lambda_i=tr(\mathbf{S})=\sum_{i=1}^p s_i^2$$. 
 
+2. Los componentes principales tienen correlación cero entre sí
+(son *incorrelados*) por lo tanto su matriz de covarianzas es
 
-$$\begin{array}{rl}
-CP_1 = & 0.934\cdot \tilde{X}_1 + 0.339\cdot \tilde{X}_2 + 0.047\cdot
-\tilde{X}_3\\ & + 0.097 \cdot \tilde{X}_4, \\
-CP_2 = & -0.022\cdot \tilde{X}_1 +0.354\cdot \tilde{X}_2 -0.248 \cdot
-\tilde{X}_3 \\ & -0.902 \cdot \tilde{X}_4, \\
-CP_3 = & 0.256\cdot \tilde{X}_1 -0.661 \cdot \tilde{X}_2 +0.566\cdot \tilde{X}_3\\ &-0.421\cdot \tilde{X}_4, \\
-CP_4 = & 0.247 \cdot \tilde{X}_1 - 0.568\cdot \tilde{X}_2 - 0.785\cdot
-\tilde{X}_3 \\ & - 0.013 \cdot \tilde{X}_4.
-\end{array}$$
-
-
-La nueva matriz de datos respecto de las nuevas variables será:
-
-<br><br>
-
-$$\mathbf{CP}= \tilde{\mathbf{X}} \mathbf{u} =
-\left(
-\begin{array}{rrrr}
--3.054 & 0.201 & -0.827 & 0.280 \\
--12.719 & 2.480 & -0.333 & 0.103 \\
--4.293 & -3.295 & -0.025 & -0.228 \\
-7.373 & -6.736 & -0.183 & 0.029 \\
--15.299 & 0.565 & 1.029 & 0.183 \\
--1.354 & 1.319 & 1.463 & -0.321 \\
--6.997 & 1.411 & -1.460 & -0.233 \\
-13.677 & 0.437 & 0.629 & 0.282 \\
-22.666 & 3.618 & -0.292 & -0.095 \\
+$$\mathbf{S}_{Z}=\left(\begin{array}{cccc}
+\lambda_1& 0 &\ldots &0\\
+0& \lambda_{2}&\ldots & 0\\
+\vdots & \vdots & & \vdots\\
+0 & 0&\ldots &\lambda_{p}
 \end{array}
 \right)$$
 
-
-Podéis revisar que si se multiplican escalarmente dos columnas
-cualesquiera, el resultado es nulo. Es decir, las columnas de la nueva matriz de datos son ortogonales dos a dos.
+$\det(\mathbf{S}_{Z})=\prod_{i=1}^p \lambda_i =\det(\mathbf{S})$. Luego los componentes principales conservan la varianza generalizada.
 
 
-Si representamos gráficamente las dos primeras componentes, podemos observar que se puede distinguir entre niños y niñas con las dos primeras componentes.
- 
-
-```{r,echo=F,fig.align='center', fig.height=6, fig.width=6}
-S=cov(X)*(n-1)/n
-sol<-eigen(S)
-CP=cX%*%sol$vectors
-princomp(X)-> solacp
-plot(solacp$scores[,c(1:2)],pch=21,bg = c("red", "blue")[unclass(Datos$Sexo)],
-main="Dos primeras componentes principales")
-legend(15,-4,legend=levels(Datos$Sexo),pch=21,pt.bg=c("red", "blue"),title="Sexo")
-```
+2. La proporción de varianza explicada por la componente $j$-ésima es
+$$\frac{\lambda_j}{\sum_{i=1}^p \lambda_i}.$$
 
 
-```{r echo=FALSE, out.width = "80%",fig.align='center'}
-knitr::include_graphics("Figuras/pairs_2.PNG")
-```
+Además al ser *incorrelados* la proporción de varianza explicada por los $k$ primeros componentes es $$\frac{\sum_{i=1}^k \lambda_i}{\sum_{i=1}^p \lambda_i}.$$
+<br>
+
+$\mbox{Cov}(\tilde{\mathbf{X}}_i, \mathbf{Z}_j)=\frac{\sqrt{\lambda_j} a_{j i}}{s_i}$, donde $a_{j i}$ es la $i$-ésima componente del vector propio $\mathbf{a}_j$.
+
+## PCA normado o con matriz de correlaciones
+
+Las componentes principales se obtienen maximizando la varianza de la proyección. En términos de las variables originales esto supone maximizar:
+
+$$M=\displaystyle \sum_{i=1}^p a_i^2s_i^2+ 2 \displaystyle \sum_{i=1}^p  \displaystyle \sum_{j=i+1}^p a_i a_j s_{ij}$$
+con la restricción $\mathbf{a^ta}=1$. Si alguna de las variables, por ejemplo la primera, tiene una varianza $s^2_1$, mayor que las demás, la manera de aumentar $M$ es hacer tan grande como podamos la coordenada $a_1$ asociada a esta variable. En el límite si una variable tiene una varianza mucho mayor que las demás el primer componente principal coincidirá muy aproximadamente
+con esta variable.
+
+Cuando las variables tienen unidades distintas esta propiedad no es conveniente: si disminuimos la escala de medida de una variable cualquiera, de manera que aumenten en magnitud sus valores numéricos (pasamos por ejemplo de medir en km. a medir en metros), el peso de esa variable en el análisis aumentará, ya que en la ecuación anterior:
+
+(1) su varianza será mayor y aumentará su coeficiente en el componente, $a_1$, ya que contribuye más a aumentar M;
+
+(2) sus covarianzas con todas las variables aumentarán, con el consiguiente efecto de incrementar $a_i$.
+
+En resumen, **cuando las escalas de medida de las variables son muy distintas, la maximización de $M$ dependerá decisivamente de estas escalas de medida y las variables con valores más grandes tendrán más peso en el análisis.** 
+
+Si queremos evitar este problema, **conviene estandarizar las variables antes de calcular los componentes, de manera que las magnitudes de los valores numéricos de las variables $X$ sean similares.**
+
+La estandarización resuelve otro posible problema. Si las variabilidades de la $X$ son muy distintas, las variables con mayor varianza van a influir más en la determinación de la primera componente. Este problema se evita al estandarizar las variables, ya que entonces las varianzas son la unidad, y las covarianzas son los coeficientes de correlación. La ecuación
+a maximizar se transforma en:
+
+$$M'=1 + 2 \displaystyle \sum_{i=1}^p  \displaystyle \sum_{j=i+1}^p a_i a_j r_{ij}$$
+siendo $r_{ij}$ el coeficiente de correlación lineal entre las variables $i$, $j$. En consecuencia la solución depende de la correlaciones y no de las varianzas.
+
+**Las componentes principales normados se obtiene calculando los vectores y valores propios de la matriz R, de coeficientes de correlación**. Llamando $\lambda_p^R$ a las raíces características de esa matriz, que suponemos no singular, se verifica que:
+$${\sum_{i=1}^p \lambda_i^R}=traza(R)=p$$
+Las propiedades de las componentes extraídos de $R$ son:
+
+1. La proporción de variación explicada por $\lambda_p^R$ será $\frac{\lambda_p^R}{p}$.
+
+2. Las correlaciones entre cada componente $z_j$ y las variables $X$ originales vienen dadas directamente por $a^t_j \sqrt{\lambda_j}$, siendo $\mathbf{z_j}=\mathbf{Xa_j}$.
+
+Estas propiedades son consecuencia inmediata de los resultados de la sección anterior.
+
+* **Cuando las variables X originales están en distintas unidades conviene aplicar el análisis de la matriz de correlaciones o análisis normado**. 
+
+* Cuando las variables tienen las mismas unidades, ambas alternativas son posibles. 
+
+* Si las diferencias entre las varianzas de las variables son informativas y queremos tenerlas en cuenta en el análisis no debemos estandarizar las variables: por ejemplo, supongamos dos índices con la misma base pero uno fluctua mucho y el otro es casi constante. Este hecho es informativo, y para tenerlo en cuenta en el análisis, no se deben estandarizar las variables, de manera que el índice de mayor variabilidad tenga más peso. Por el contrario, si las diferencias de variabilidad no son relevantes podemos eliminarlas con el análisis normado. En caso de duda, conviene realizar ambos análisis, y
+seleccionar aquel que conduzca a conclusiones más informativas. 
+
+
+## Análisis de Componentes Principales en R
+
 
