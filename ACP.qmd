@@ -399,7 +399,7 @@ Calculamos los valores propios de la matriz de varianzas covarianzas de los dato
 $$
 \begin{equation} 
 \begin{split}
-|S-\lambda I| & =  \left| \begin{pmatrix}0.35 & 0.15 & -0.19\\ 0.15 & 0.13 & -0.03 \\ -0.19 & -0.03 & 0.16\end{pmatrix} -\begin{pmatrix} \lambda & 0 & 0\\ 0 & \lambda & 0 \\ 0 & 0 & \lambda\end{pmatrix}  \right| \\
+|S-\lambda I| & =  \left| \begin{pmatrix}0.35 & 0.15 & -0.19\\ 0.15 & 0.13 & -0.03 \\ -0.19 & -0.03 & 0.16\end{pmatrix} -\begin{pmatrix} \lambda & 0 & 0\\ 0 & \lambda & 0 \\ 0 & 0 & \lambda\end{pmatrix}  \right| \\ \\
  & = 0.000382-0.0628\lambda+0.64 \lambda^2 -\lambda^3 =0
 \end{split}
 \end{equation}
@@ -407,7 +407,7 @@ $$
 
 Buscamos las raíces de este polinomio son
  
-```{r}
+```{r,warning=FALSE}
 library(polynom)
 p=polynomial(coef=c(0.00038,-0.0628,0.64,-1))
 raices=round(solve(p),3)
@@ -429,7 +429,7 @@ $$
 $$
 \begin{equation} 
 \begin{split}
-\begin{pmatrix}-0.171 a_{11}+0.15 a_{12} -0.19 a_{13} \\ 0.15 a_{11}-0.391 a_{12} -0.03 a_{13}\\ -0.19 a_{11}-0.03 a_{12} -0.361 a_{13}\end{pmatrix} \begin{pmatrix} a_{11} \\a_{12} \\ a_{131} \end{pmatrix} &= \begin{pmatrix} 0 \\0 \\ 0 \end{pmatrix}
+\begin{pmatrix}-0.171 a_{11}+0.15 a_{12} -0.19 a_{13} \\ 0.15 a_{11}-0.391 a_{12} -0.03 a_{13}\\ -0.19 a_{11}-0.03 a_{12} -0.361 a_{13}\end{pmatrix}  &= \begin{pmatrix} 0 \\0 \\ 0 \end{pmatrix}
 \end{split}
 \end{equation}
 $$
@@ -442,11 +442,8 @@ El valor de $x$ lo obtenemos imponiendo que el vector tenga norma uno, con lo qu
 $$\mathbf{a_1}=\begin{pmatrix} -0.817 \\-0.349 \\ 0.459 \end{pmatrix}$$
 
 Por lo tanto, la primera componente es
-$$CP_1=-0.817 \log(d/p)-0.349 \log(p/d)+0.459 \log(pN/b)$$
+$$Z_1=-0.817 \log(d/p)-0.349 \log(dN/p)+0.459 \log(pN/B)$$
 
-es decir,
-
-$$CP_1 \approx -1.17 \log(d/p) + 0.46 \log(pN/b)$$
 
 que indica que este primer componente depende básicamente de la rentabilidad por dividendos. Esta variable es la que mejor explica la variabilidad conjunta de las acciones.
 
@@ -549,7 +546,7 @@ La nueva matriz de datos respecto de las componentes principales será:
 ```{r}
 X=matrix(c(datos_l$V1,datos_l$V2,datos_l$V3),nrow=34)
 Z=X %*% sol$vectors # Z=XA  con A la matriz de vectores propios
-Z
+head(Z)
 ```
 
 Si representamos gráficamente las dos primeras componentes, podemos observar que se puede distinguir entre los dos grupos de acciones.
@@ -582,10 +579,6 @@ solc<-eigen(Sc)
 
 ```{r}
 Zc=cX %*% solc$vectors 
-Zc
-```
-
-```{r}
 plot(Zc[,1],Zc[,2])
 ```
 
@@ -668,7 +661,7 @@ Vamos a explicar las funciones de R para hacer el PCA, para ello utilizaremos lo
 <p align="center">
 ![](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png){width=70%}
 
-```{recho=FALSE}
+```{r}
 head(iris,2)
 tail(iris,2)
 ```

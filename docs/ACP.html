@@ -519,19 +519,16 @@ V3 -0.19 -0.03  0.16</code></pre>
 <p><span class="math display">\[
 \begin{equation}
 \begin{split}
-|S-\lambda I| &amp; =  \left| \begin{pmatrix}0.35 &amp; 0.15 &amp; -0.19\\ 0.15 &amp; 0.13 &amp; -0.03 \\ -0.19 &amp; -0.03 &amp; 0.16\end{pmatrix} -\begin{pmatrix} \lambda &amp; 0 &amp; 0\\ 0 &amp; \lambda &amp; 0 \\ 0 &amp; 0 &amp; \lambda\end{pmatrix}  \right| \\
+|S-\lambda I| &amp; =  \left| \begin{pmatrix}0.35 &amp; 0.15 &amp; -0.19\\ 0.15 &amp; 0.13 &amp; -0.03 \\ -0.19 &amp; -0.03 &amp; 0.16\end{pmatrix} -\begin{pmatrix} \lambda &amp; 0 &amp; 0\\ 0 &amp; \lambda &amp; 0 \\ 0 &amp; 0 &amp; \lambda\end{pmatrix}  \right| \\ \\
 &amp; = 0.000382-0.0628\lambda+0.64 \lambda^2 -\lambda^3 =0
 \end{split}
 \end{equation}
 \]</span></p>
 <p>Buscamos las raíces de este polinomio son</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(polynom)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'polynom' was built under R version 4.3.2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fu">polynomial</span>(<span class="at">coef=</span><span class="fu">c</span>(<span class="fl">0.00038</span>,<span class="sc">-</span><span class="fl">0.0628</span>,<span class="fl">0.64</span>,<span class="sc">-</span><span class="dv">1</span>))</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>raices<span class="ot">=</span><span class="fu">round</span>(<span class="fu">solve</span>(p),<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(polynom)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p<span class="ot">=</span><span class="fu">polynomial</span>(<span class="at">coef=</span><span class="fu">c</span>(<span class="fl">0.00038</span>,<span class="sc">-</span><span class="fl">0.0628</span>,<span class="fl">0.64</span>,<span class="sc">-</span><span class="dv">1</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>raices<span class="ot">=</span><span class="fu">round</span>(<span class="fu">solve</span>(p),<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Las raíces son <span class="math inline">\(\lambda_1\)</span>=0.521, <span class="math inline">\(\lambda_2\)</span>=0.113 y <span class="math inline">\(\lambda_3\)</span>=0.006.</p>
 <p>El vector propio asociado a <span class="math inline">\(lambda_1\)</span> nos da los pesos de la primera componente principal. Para calcularlo manualmente, debemos resolver el sistema <span class="math display">\[S \mathbf{a_1}= \lambda_1 \mathbf{a_1}\]</span> que conduce a</p>
@@ -544,16 +541,14 @@ V3 -0.19 -0.03  0.16</code></pre>
 \]</span> <span class="math display">\[
 \begin{equation}
 \begin{split}
-\begin{pmatrix}-0.171 a_{11}+0.15 a_{12} -0.19 a_{13} \\ 0.15 a_{11}-0.391 a_{12} -0.03 a_{13}\\ -0.19 a_{11}-0.03 a_{12} -0.361 a_{13}\end{pmatrix} \begin{pmatrix} a_{11} \\a_{12} \\ a_{131} \end{pmatrix} &amp;= \begin{pmatrix} 0 \\0 \\ 0 \end{pmatrix}
+\begin{pmatrix}-0.171 a_{11}+0.15 a_{12} -0.19 a_{13} \\ 0.15 a_{11}-0.391 a_{12} -0.03 a_{13}\\ -0.19 a_{11}-0.03 a_{12} -0.361 a_{13}\end{pmatrix}  &amp;= \begin{pmatrix} 0 \\0 \\ 0 \end{pmatrix}
 \end{split}
 \end{equation}
 \]</span> Este sistema es compatible indeterminado. Para encontrar una de las infinitas soluciones tomemos la primera variable como parámetro, <span class="math inline">\(x\)</span>, y resolvemos el sistema en función de <span class="math inline">\(x\)</span>. La solución es,</p>
 <p><span class="math display">\[\{a_{11}=x,\; a_{12}=0.427x,\; a_{13}=-0.562x\]</span></p>
 <p>El valor de <span class="math inline">\(x\)</span> lo obtenemos imponiendo que el vector tenga norma uno, con lo que resulta:</p>
 <p><span class="math display">\[\mathbf{a_1}=\begin{pmatrix} -0.817 \\-0.349 \\ 0.459 \end{pmatrix}\]</span></p>
-<p>Por lo tanto, la primera componente es <span class="math display">\[CP_1=-0.817 \log(d/p)-0.349 \log(p/d)+0.459 \log(pN/b)\]</span></p>
-<p>es decir,</p>
-<p><span class="math display">\[CP_1 \approx -1.17 \log(d/p) + 0.46 \log(pN/b)\]</span></p>
+<p>Por lo tanto, la primera componente es <span class="math display">\[Z_1=-0.817 \log(d/p)-0.349 \log(dN/p)+0.459 \log(pN/B)\]</span></p>
 <p>que indica que este primer componente depende básicamente de la rentabilidad por dividendos. Esta variable es la que mejor explica la variabilidad conjunta de las acciones.</p>
 </section>
 <section id="cálculo-de-la-segunda-componente" class="level2" data-number="4.4">
@@ -599,7 +594,7 @@ V3 -0.19 -0.03  0.16</code></pre>
 <p>Vamos a realizar el análisis de componentes principales (PCA) sobre el conjunto de datos de las acciones del mercado español, esta vez utilizando a R para calcular los valores y vectores propios.</p>
 <p>Recordad que ya hemos calculado la matriz de varianzas-covarianzas muestral sesgada de los datos transformados, <span class="math inline">\(S\)</span>=0.35, 0.15, -0.19, 0.15, 0.13, -0.03, -0.19, -0.03, 0.16.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sol<span class="ot">=</span><span class="fu">eigen</span>(S)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sol<span class="ot">=</span><span class="fu">eigen</span>(S)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Los valores propios son:</p>
 <p><span class="math display">\[\lambda_1=0.521,\quad \lambda_2=0.113,\quad \lambda_3 = 0.007.\]</span></p>
@@ -614,50 +609,22 @@ Z_3 = &amp; 0.575 \cdot \log V_1 - 0.552 \cdot \log V_2 + 0.604 \cdot \log V_3, 
 \end{array}\]</span></p>
 <p>La nueva matriz de datos respecto de las componentes principales será:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(datos_l<span class="sc">$</span>V1,datos_l<span class="sc">$</span>V2,datos_l<span class="sc">$</span>V3),<span class="at">nrow=</span><span class="dv">34</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Z<span class="ot">=</span>X <span class="sc">%*%</span> sol<span class="sc">$</span>vectors <span class="co"># Z=XA  con A la matriz de vectores propios</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>Z</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(datos_l<span class="sc">$</span>V1,datos_l<span class="sc">$</span>V2,datos_l<span class="sc">$</span>V3),<span class="at">nrow=</span><span class="dv">34</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Z<span class="ot">=</span>X <span class="sc">%*%</span> sol<span class="sc">$</span>vectors <span class="co"># Z=XA  con A la matriz de vectores propios</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Z)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]     [,2]       [,3]
- [1,] 1.003343 5.678343 0.28103506
- [2,] 1.680545 4.608193 0.10346897
- [3,] 1.487526 4.652723 0.15673341
- [4,] 1.257073 4.543832 0.05520223
- [5,] 1.866053 4.187286 0.12455276
- [6,] 1.637393 3.919281 0.21592221
- [7,] 1.566250 4.828093 0.07009129
- [8,] 1.647748 4.520523 0.12213717
- [9,] 1.109991 4.827906 0.08723964
-[10,] 1.148159 4.628372 0.15325040
-[11,] 2.058018 3.946416 0.03812857
-[12,] 1.297870 4.568340 0.39336157
-[13,] 1.610861 4.630558 0.20080737
-[14,] 1.800437 4.294533 0.18008367
-[15,] 1.405537 4.807355 0.29995319
-[16,] 2.129879 4.593853 0.06582348
-[17,] 2.092394 4.491169 0.12670180
-[18,] 1.484889 4.769759 0.11271217
-[19,] 2.123836 5.008890 0.18278338
-[20,] 3.036295 4.747124 0.15525724
-[21,] 3.026231 4.857471 0.23582291
-[22,] 3.044578 4.618009 0.06387958
-[23,] 3.064111 4.858711 0.26328365
-[24,] 3.027838 4.734497 0.18981119
-[25,] 2.935723 4.832579 0.14443502
-[26,] 3.019542 4.760497 0.10027286
-[27,] 2.974267 4.864615 0.21278267
-[28,] 3.168857 4.717874 0.20265908
-[29,] 3.036009 4.784612 0.14197707
-[30,] 3.019028 4.726087 0.19218363
-[31,] 2.479119 4.814952 0.07152596
-[32,] 2.100289 4.327869 0.05360165
-[33,] 2.982972 4.577837 0.06036698
-[34,] 2.732439 3.804434 0.53307099</code></pre>
+<pre><code>         [,1]     [,2]       [,3]
+[1,] 1.003343 5.678343 0.28103506
+[2,] 1.680545 4.608193 0.10346897
+[3,] 1.487526 4.652723 0.15673341
+[4,] 1.257073 4.543832 0.05520223
+[5,] 1.866053 4.187286 0.12455276
+[6,] 1.637393 3.919281 0.21592221</code></pre>
 </div>
 </div>
 <p>Si representamos gráficamente las dos primeras componentes, podemos observar que se puede distinguir entre los dos grupos de acciones.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Z[,<span class="dv">1</span>],Z[,<span class="dv">2</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Z[,<span class="dv">1</span>],Z[,<span class="dv">2</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ACP_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -667,13 +634,13 @@ Z_3 = &amp; 0.575 \cdot \log V_1 - 0.552 \cdot \log V_2 + 0.604 \cdot \log V_3, 
 <p>Si no se centran los datos, la primera componente principal estaría influenciada por la ubicación de los datos en el espacio original, es decir, por la media de los datos. En nuestro ejemplo, esto está minimizado por el efecto de la transformación logarítmica.</p>
 <p>Veamos los resultados centrando los datos</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(X)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(X)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.071865 4.178913 2.117252</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Hn<span class="ot">=</span><span class="fu">diag</span>(n)<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>n <span class="co"># matriz de centrado</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>cX<span class="ot">=</span>Hn<span class="sc">%*%</span>X <span class="co"># matriz centrada</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cX,<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Hn<span class="ot">=</span><span class="fu">diag</span>(n)<span class="sc">-</span><span class="dv">1</span><span class="sc">/</span>n <span class="co"># matriz de centrado</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>cX<span class="ot">=</span>Hn<span class="sc">%*%</span>X <span class="co"># matriz centrada</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(cX,<span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        [,1]   [,2]   [,3]
  [1,] -0.848  0.318  1.291
@@ -713,61 +680,21 @@ Z_3 = &amp; 0.575 \cdot \log V_1 - 0.552 \cdot \log V_2 + 0.604 \cdot \log V_3, 
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Sc<span class="ot">&lt;-</span>(<span class="dv">1</span><span class="sc">/</span>n)<span class="sc">*</span><span class="fu">t</span>(cX)<span class="sc">%*%</span>Hn<span class="sc">%*%</span>cX <span class="co"># estimador sesgado de la matriz de covarianza</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Sc,<span class="dv">3</span>) <span class="co"># daría igual cov(cX)*(n-1)/n</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Sc<span class="ot">&lt;-</span>(<span class="dv">1</span><span class="sc">/</span>n)<span class="sc">*</span><span class="fu">t</span>(cX)<span class="sc">%*%</span>Hn<span class="sc">%*%</span>cX <span class="co"># estimador sesgado de la matriz de covarianza</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(Sc,<span class="dv">3</span>) <span class="co"># daría igual cov(cX)*(n-1)/n</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       [,1]   [,2]   [,3]
 [1,]  0.352  0.147 -0.188
 [2,]  0.147  0.131 -0.031
 [3,] -0.188 -0.031  0.158</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>solc<span class="ot">&lt;-</span><span class="fu">eigen</span>(Sc)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>solc<span class="ot">&lt;-</span><span class="fu">eigen</span>(Sc)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Zc<span class="ot">=</span>cX <span class="sc">%*%</span> solc<span class="sc">$</span>vectors </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>Zc</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>             [,1]         [,2]         [,3]
- [1,] -1.17283927  1.044534345  0.138261924
- [2,] -0.49782373 -0.023485694 -0.059329989
- [3,] -0.69056376  0.020428225 -0.004563782
- [4,] -0.92157644 -0.086509506 -0.106895497
- [5,] -0.31280529 -0.444918303 -0.045804304
- [6,] -0.54145586 -0.714067732  0.042161526
- [7,] -0.61195478  0.197072931 -0.088684738
- [8,] -0.53066399 -0.111403595 -0.041945591
- [9,] -1.06813953  0.197200519 -0.069673892
-[10,] -1.02997453 -0.003423481 -0.007050119
-[11,] -0.12152205 -0.684610045 -0.136891351
-[12,] -0.87936953 -0.067519648  0.231445598
-[13,] -0.56708012 -0.002605101  0.038641287
-[14,] -0.37804818 -0.338497335  0.011719074
-[15,] -0.77175817  0.172833004  0.141468393
-[16,] -0.04866704 -0.037797852 -0.099041319
-[17,] -0.08604380 -0.141403156 -0.039675860
-[18,] -0.69322080  0.138163963 -0.046678513
-[19,] -0.05366869  0.375303349  0.024628036
-[20,]  0.85831336  0.112832965 -0.010856156
-[21,]  0.84872801  0.221877739  0.071521138
-[22,]  0.86604894 -0.014799307 -0.104339665
-[23,]  0.88672096  0.222624855  0.098843010
-[24,]  0.84998002  0.099660648  0.023523751
-[25,]  0.75781477  0.198582068 -0.019885434
-[26,]  0.84135474  0.127114017 -0.065548414
-[27,]  0.79668039  0.229460534  0.048812176
-[28,]  0.99102726  0.082650248  0.035524166
-[29,]  0.85802491  0.150531260 -0.023528053
-[30,]  0.84116888  0.091224819  0.025796143
-[31,]  0.30089391  0.182726741 -0.091199671
-[32,] -0.07866906 -0.303511125 -0.115434740
-[33,]  0.80437382 -0.054829702 -0.108248157
-[34,]  0.55471463 -0.835440648  0.352929024</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Zc[,<span class="dv">1</span>],Zc[,<span class="dv">2</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Zc<span class="ot">=</span>cX <span class="sc">%*%</span> solc<span class="sc">$</span>vectors </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Zc[,<span class="dv">1</span>],Zc[,<span class="dv">2</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="ACP_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<p><img src="ACP_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -823,11 +750,23 @@ Z_3 = &amp; 0.575 \cdot \log V_1 - 0.552 \cdot \log V_2 + 0.604 \cdot \log V_3, 
 <p>Vamos a explicar las funciones de R para hacer el PCA, para ello utilizaremos los famosos datos de las flores iris.</p>
 <p align="center">
 </p><p><img src="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/Machine+Learning+R/iris-machinelearning.png" class="img-fluid" style="width:70.0%"></p>
-<pre data-recho="FALSE"><code>head(iris,2)
-tail(iris,2)</code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris,<span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(iris,<span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Sepal.Length Sepal.Width Petal.Length Petal.Width   Species
+149          6.2         3.4          5.4         2.3 virginica
+150          5.9         3.0          5.1         1.8 virginica</code></pre>
+</div>
+</div>
 <p>Lo primero que hacemos es revisar si las variables están correlacionadas, requisito necesario para obtener una representación más simple de éstas.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Sepal.Length Sepal.Width Petal.Length Petal.Width
 Sepal.Length    0.6856935  -0.0424340    1.2743154   0.5162707
@@ -835,7 +774,7 @@ Sepal.Width    -0.0424340   0.1899794   -0.3296564  -0.1216394
 Petal.Length    1.2743154  -0.3296564    3.1162779   1.2956094
 Petal.Width     0.5162707  -0.1216394    1.2956094   0.5810063</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Sepal.Length Sepal.Width Petal.Length Petal.Width
 Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
@@ -856,14 +795,14 @@ Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000</code></pre>
 </div>
 <p>Calculamos las componentes con los datos escalados con la librería <code>factoextra</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"factoextra"</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>iris.acp<span class="ot">=</span><span class="fu">prcomp</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"factoextra"</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>iris.acp<span class="ot">=</span><span class="fu">prcomp</span>(iris[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Los valores propios muestran el porcentaje de varianza explicada por cada componente principal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>lambdas<span class="ot">=</span><span class="fu">get_eigenvalue</span>(iris.acp)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>lambdas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>lambdas<span class="ot">=</span><span class="fu">get_eigenvalue</span>(iris.acp)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>lambdas</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      eigenvalue variance.percent cumulative.variance.percent
 Dim.1 2.91849782       72.9624454                    72.96245
@@ -875,16 +814,16 @@ Dim.4 0.02071484        0.5178709                   100.00000</code></pre>
 <p>Observamos que las dos primeras componentes principales explican aproximadamente el 96% de la variación total. Puede ser razonable, trabajar con esas dos componentes para el análisis posterior de estos datos.</p>
 <p>Un método alternativo para determinar el número de componentes principales es observar el diagrama de valores propios ordenados de mayor a menor. El número de componentes se determina en el punto, más allá del cual los valores propios restantes son todos relativamente pequeños y de tamaño comparable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(iris.acp, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_eig</span>(iris.acp, <span class="at">addlabels =</span> <span class="cn">TRUE</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ACP_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>La representación de variables difiere de la gráfica de las observaciones: Las observaciones están representadas por sus proyecciones, pero las variables están representados por sus correlaciones.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(iris.acp, <span class="at">col.var =</span> <span class="st">"contrib"</span>,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>),</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_var</span>(iris.acp, <span class="at">col.var =</span> <span class="st">"contrib"</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">gradient.cols =</span> <span class="fu">c</span>(<span class="st">"#00AFBB"</span>, <span class="st">"#E7B800"</span>, <span class="st">"#FC4E07"</span>),</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">repel =</span> <span class="cn">TRUE</span>) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ACP_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -897,8 +836,8 @@ Dim.4 0.02071484        0.5178709                   100.00000</code></pre>
 </ul>
 <p>La calidad de representación de las variables se llama cos2 (coseno cuadrado, coordenadas cuadradas). Es posible crear un diagrama de barras de las variables <code>cos2</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(iris.acp)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cos2</span>(iris.acp, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>var <span class="ot">&lt;-</span> <span class="fu">get_pca_var</span>(iris.acp)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cos2</span>(iris.acp, <span class="at">choice =</span> <span class="st">"var"</span>, <span class="at">axes =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ACP_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -909,7 +848,7 @@ Dim.4 0.02071484        0.5178709                   100.00000</code></pre>
 </ul>
 <p>Para ver como se relacionan las componentes principales con los datos originales, veamos los autovectores.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>iris.acp<span class="sc">$</span>rotation</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>iris.acp<span class="sc">$</span>rotation</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                    PC1         PC2        PC3        PC4
 Sepal.Length  0.5210659 -0.37741762  0.7195664  0.2612863
@@ -930,10 +869,10 @@ Petal.Width   0.5648565 -0.06694199 -0.6342727  0.5235971</code></pre>
 <li><p>En cuanto a la diferencia en la longitud de las flechas, una menos larga informa que su variable está peor representada que una de largo mayor. Es una forma de medir la calidad de representación.</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(iris.acp, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"#2E9FDF"</span>, <span class="co"># color para las variables</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">"#696969"</span>  <span class="co"># color para las observaciones</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_pca_biplot</span>(iris.acp, <span class="at">repel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.var =</span> <span class="st">"#2E9FDF"</span>, <span class="co"># color para las variables</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.ind =</span> <span class="st">"#696969"</span>  <span class="co"># color para las observaciones</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ACP_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -948,9 +887,9 @@ Petal.Width   0.5648565 -0.06694199 -0.6342727  0.5235971</code></pre>
 </ul>
 <p><strong>Acceso a los resultados del ACP</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por Variables</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>res.var<span class="ot">=</span><span class="fu">get_pca_var</span>(iris.acp)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribuciones a las CP </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por Variables</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>res.var<span class="ot">=</span><span class="fu">get_pca_var</span>(iris.acp)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>contrib        <span class="co"># Contribuciones a las CP </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 Dim.1       Dim.2     Dim.3     Dim.4
 Sepal.Length 27.150969 14.24440565 51.777574  6.827052
@@ -958,7 +897,7 @@ Sepal.Width   7.254804 85.24748749  5.972245  1.525463
 Petal.Length 33.687936  0.05998389  2.019990 64.232089
 Petal.Width  31.906291  0.44812296 40.230191 27.415396</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>cos2           <span class="co"># Calidad de la representación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>res.var<span class="sc">$</span>cos2           <span class="co"># Calidad de la representación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 Dim.1       Dim.2       Dim.3        Dim.4
 Sepal.Length 0.7924004 0.130198208 0.075987149 0.0014142127
@@ -968,23 +907,23 @@ Petal.Width  0.9311844 0.004095980 0.059040571 0.0056790544</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por observaciones</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>res.obs<span class="ot">=</span><span class="fu">get_pca_ind</span>(iris.acp)</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>coord,<span class="dv">3</span>)  <span class="co">#Coordenadas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultados por observaciones</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>res.obs<span class="ot">=</span><span class="fu">get_pca_ind</span>(iris.acp)</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>coord,<span class="dv">3</span>)  <span class="co">#Coordenadas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Dim.1      Dim.2      Dim.3      Dim.4
 1 -2.257141 -0.4784238  0.1272796 0.02408751
 2 -2.074013  0.6718827  0.2338255 0.10266284
 3 -2.356335  0.3407664 -0.0440539 0.02828231</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>contrib,<span class="dv">3</span>)  <span class="co">#Contribuciones a las CP</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>contrib,<span class="dv">3</span>)  <span class="co">#Contribuciones a las CP</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Dim.1      Dim.2       Dim.3      Dim.4
 1 1.163769 0.16694510 0.073591567 0.01867287
 2 0.982590 0.32925696 0.248367113 0.33919842
 3 1.268304 0.08469576 0.008816151 0.02574286</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>cos2,<span class="dv">3</span>)  <span class="co"># Calidad de la representación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(res.obs<span class="sc">$</span>cos2,<span class="dv">3</span>)  <span class="co"># Calidad de la representación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Dim.1      Dim.2        Dim.3        Dim.4
 1 0.9539975 0.04286032 0.0030335249 0.0001086460
@@ -994,10 +933,10 @@ Petal.Width  0.9311844 0.004095980 0.059040571 0.0056790544</code></pre>
 </div>
 <p><strong>¿Qué tan bien lo hace el ACP?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggfortify"</span>)</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(iris.acp, <span class="at">data =</span> iris, <span class="at">colour =</span> <span class="st">'Species'</span>,</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">loadings =</span> <span class="cn">TRUE</span>, <span class="at">loadings.colour =</span> <span class="st">'blue'</span>,</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">loadings.label =</span> <span class="cn">TRUE</span>, <span class="at">loadings.label.size =</span> <span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggfortify"</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(iris.acp, <span class="at">data =</span> iris, <span class="at">colour =</span> <span class="st">'Species'</span>,</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">loadings =</span> <span class="cn">TRUE</span>, <span class="at">loadings.colour =</span> <span class="st">'blue'</span>,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">loadings.label =</span> <span class="cn">TRUE</span>, <span class="at">loadings.label.size =</span> <span class="dv">3</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="ACP_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid" width="672"></p>
 </div>
