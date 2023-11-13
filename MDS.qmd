@@ -1,0 +1,277 @@
+## Escalamiento multidimensional (MDS)
+
+## Introducción
+
+Las técnicas de escalado multidimensional son una generalización de la idea de componentes principales cuando en lugar de disponer de una matriz de observaciones por variables, como en componentes principales, se dispone de una matriz, $\mathbf{D}$, cuadrada $n \times n$ de distancias
+o disimilaridades entre los $n$ elementos de un conjunto.
+
+Estas distancias pueden haberse obtenido a partir de ciertas variables, o pueden ser el resultado de una
+estimación directa, por ejemplo preguntando a un grupo de evaluadores por sus opiniones sobre las similaridades entre los elementos considerados.
+
+El objetivo del $MDS$ es representar las distancias observadas mediante unas variables $y_1,\dots, y_k$, donde $k < n$, tales que las distancias Euclídeas entre las coordenadas de los elementos respecto a estas variables sean iguales (o lo más próximas posibles) a las distancias o disimilaridades de la matriz partida. De esta manera, la representación gráfica en $k$ dimensiones será una reproducción fiel de la estructura observada.
+
+
+El escalado multidimensional comparte con componentes principales el objetivo de describir e interpretar los datos. Si existen muchos elementos, la matriz de similaridades será muy grande y la representación por unas pocas variables de los elementos nos permitirá
+entender su estructura: qué elementos tienen propiedades similares, si aparecen grupos entre los elementos, si hay elementos atípicos, etc. 
+
+
+El escalado multidimensional representa un enfoque complementario a componentes principales en el sentido siguiente. 
+
+* Componentes principales considera la matriz $p \times p$ de correlaciones (o covarianzas) entre variables, e investiga su estructura. 
+
+* El escalado multidimensional considera la matriz $n \times n$ de correlaciones (o covarianzas) entre individuos, e investiga su estructura. Los métodos existentes se dividen en métricos, cuando la matriz inicial es propiamente de distancias, y no métricos, cuando la matriz es de similaridades. 
+
+Los métodos métricos, utilizan las diferencias entre similitudes mientras que los no métricos parten de que si $A$ es más similar a $B$ que a $C$, entonces $A$ esta más cerca de $B$ que de $C$, pero las diferencias entre las similitudes $AB$ y $AC$ no tienen interpretación.
+
+## Reconstrucción de las variables a partir de las distancias entre puntos
+
+Dado un conjunto $p$ de variables en $n$ individuos representados en la matriz $\mathbf{X}_{n \times p}$, podemos construir dos tipos de matrices cuadradas y semidefinidas positivas: la matriz de covarianzas muestral $\mathbf{S}$ (definida por $\frac{1}{n}\mathbf{X}^t \mathbf{X}$), si las variables tienen media cero, y la matriz de productos cruzados $\mathbf{Q} = \mathbf{XX}^t$.
+
+El $MDS$ puede verse como un análisis de la matriz $\mathbf{Q}$ y esta puede  interpretarse como una matriz de similitudes entre las observaciones ya que sus términos, $q_{ij}$, contienen el producto escalar de las observaciones de dos elementos dados:
+$$q_{ij} = \sum_{p=1}^k x_{ip}x_{jp} = \mathbf{x}_i^t \mathbf{x}_j \;\; \;\;  \; (1)$$
+En efecto, como $q_{ij}=|\mathbf{x}_i||\mathbf{x}_j|\cos \theta_{ij}$, si los dos elementos tienen coordenadas similares, $\cos \theta_{ij}\approx 1$ y $q_{ij}$ será grande. Por el contrario, si los dos elementos tienen valores distintos $\cos \theta_{ij}\approx 0$ y $q_{ij}$ será pequeño.
+
+La distancia Euclídea al cuadrado entre dos elementos se define por:
+
+$$d^2_{ij}=\sum_{p=1}^k (x_{ip}-x_{jp})^2=\sum_{p}x_{ip}^2+\sum_{p}x_{jp}^2-2\sum_{p}x_{ip}x_{jp}$$
+y la podemos escribir en función de los términos de la matriz $\mathbf{Q}$,
+
+$$d^2_{ij}=q_{ii}+q_{jj}-2q_{ij} \;\; \;\;  \; (2)$$
+  
+  
+Por tanto, dada la matriz $\mathbf{X}$ podemos construir la matriz $\mathbf{Q}$ y a partir de esta matriz es fácil obtener la matriz de distancias al cuadrado con ayuda de las expresiones (1) y (2).
+
+El problema que se aborda en MDS es el inverso: dada una matriz de distancias al cuadrado, $\mathbf{D}$, con elementos $d^2_{ij}$ se trata de reconstruir la matrix $\mathbf{X}$.
+
+Lo primero que se plantea es obtener la matriz $\mathbf{Q}$ dada la matriz $\mathbf{D}$. Para ello, observemos, que sin pérdida de generalidad, siempre podemos suponer que las variables $X$ tienen media cero. En efecto, las distancias entre los puntos, $d^2_{ij}$ no varían si expresamos las variables en desviaciones a la media, ya que:
+
+$$d^2_{ij}=\sum_{p=1}^k (x_{ip}-x_{jp})^2=\sum_{p}\left[ (x_{ip}-\bar{x}_p)-(x_{jp}-\bar{x}_p) \right]^2 \;\; \;\;  \; (3)$$
+y, por tanto, podemos suponer siempre que las variables que buscamos tienen media cero.
+
+Por ello, como resulta que $\mathbf{X}^t \mathbf{1} = 0$ se debe verificar que $\mathbf{Q}\mathbf{1} = 0$, es decir, la suma de
+todos los elementos de una fila de la matriz $\mathbf{Q}$ (y de una columna ya que la matriz es simétrica) debe de ser cero.
+
+Luego, sumamos en (2) por filas:
+$$\sum_{i=1}^n d^2_{ij}=\sum_{i=1}^n q_{ii}+nq_{jj}=t+nq_{jj} \;\; \;\;  \; (4)$$
+donde $t=\sum_{i=1}^n q_{ii}=traza(\mathbf{Q})$, y sabiendo que $\sum_{i=1}^n q_{ij}=0$. 
+
+Sumando (2) por columnas se tiene:
+$$\sum_{j=1}^n d^2_{ij}=n q_{ii}+t \;\; \;\;  \; (5)$$
+y sumando ahora (4) por filas de nuevo se tiene:
+
+
+$$\sum_{i=1}^n \sum_{j=1}^n d^2_{ij}=2nt$$
+
+Sustituyendo (4) y (5) en (2), tenemos que
+
+$$d^2_{ij}=\frac{1}{n}\sum_{p=1}^k d^2_{ij} - \frac{t}{n} + \frac{1}{n}\sum_{p=1}^k d^2_{ij} - \frac{t}{n} -2 q_{ij},  $$
+y llamando $d^2_{i.}$ y $d^2_{.j}$ a las medias por filas y por columnas y utilizando (5), tenemos que
+
+$$ d^2_{ij}= d^2_{i.}+ d^2_{.j}-d^2_{..}-2 q_{ij} \;\; \;\;  \; (6) $$
+donde  $d^2_{..}=\frac{1}{n^2}\sum_{i=1}^n \sum_{j=1}^n d^2_{ij}$
+
+Finalmente, despejando de (6) resulta que
+$$q_{ij}=-\frac{1}{2}\left( d^2_{ij}-d^2_{i.}-d^2_{.j}+d^2_{..}\right)$$
+expresión que indica cómo construir la matriz $\mathbf{Q}$ a partir de la matriz de distancias $\mathbf{D}$.
+
+
+De una manera equivalente, se puede obtener la matriz $\mathbf{X}$ a partir de la matriz $\mathbf{Q}$. Si ésta es definida positiva de rango $k$ entonces puede expresarse por
+$$\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$$
+donde $\mathbf{V}$ es una matriz $n \times k$ y $\mathbf{\Lambda}$ es una matriz diagonal $k \times k$ y contiene los vectores propios no nulos de $\mathbf{Q}$. Entonces, podemos escribir
+$$\mathbf{Q}=\left(\mathbf{V} \mathbf{\Lambda}^{1/2} \right) \left( \mathbf{\Lambda}^{1/2} \mathbf{V}^t \right)$$
+y tomando 
+
+$$\mathbf{Y}=\mathbf{V}\mathbf{\Lambda}^{1/2}$$
+se obtienen $k$ variables incorreladas que reproducen la métrica.
+
+Observa que las variables $\mathbf{Y}$ no son las variables originales $\mathbf{X}$, sino sus componentes principales.
+
+## Construcción de las coordenadas principales
+
+En general, la matriz de disimilaridades o distancias no será compatible con una métrica Euclídea, pero es frecuente que la matriz $\mathbf{Q}$ tenga $k$ valores propios positivos y más grandes que el resto. 
+
+Si los restantes $n-k$ valores propios no nulos son mucho menores que los demás, podemos obtener una representación aproximada de los puntos utilizando los $k$ vectores propios asociados a valores propios positivos. En este caso, las representaciones gráficas conservarán aproximadamente la distancia entre los puntos.
+
+
+El procedimiento para obtener las coordenadas principales es el siguiente:
+
+1.- Formar la matriz de distancias al cuadrado, $\mathbf{D}$, cuyos elementos son los cuadrados de las distancias.
+
+2.- Construir la matriz $\mathbf{Q}$ de productos cruzados.
+
+
+3.- Obtener los valores y vectores propios de $\mathbf{Q}$. Tomar los $k$ mayores si podemos suponer que los restantes $n \times k$ son próximos a cero.
+
+4.- Obtener las coordenadas de los puntos en las variables mediante $\sqrt{{\lambda_i}} \mathbf{v}_i$, donde $\mathbf{\lambda}_i$ es el valor propio y $\mathbf{v}_i$ el vector propio.
+
+El método puede aplicarse también cuando la matriz de partida $\mathbf{Q}$ es una matriz de similaridades cualquiera. Entonces $q_{ii}=1$, $q_{ij}=q_{ji}$ y $0 \leq q_{ij} \leq 1$. De acuerdo a (2), la matriz de distancias asociadas será:
+$$d^2_{ij}= q_{ii}+ q_{jj}-2 q_{ij}=2(1-q_{ij})$$
+y puede comprobarse que $\sqrt{2(1-q_{ij})}$ es una distancia y verifica la desigualdad triangular al corresponder a la distancia euclídea para cierta configuración de puntos.
+
+
+Se ha propuesto como medida de la precisión en la aproximación mediante los $k$ valores propios positivos, los coeficientes:
+
+$$m_{1,K}=\frac{\sum_{i=1}^K |\lambda_i|}{\sum_{i=1}^p |\lambda_i|} \cdot 100$$
+ó 
+
+$$m_{2,K}=\frac{\sum_{i=1}^K \lambda_i^2}{\sum_{i=1}^p \lambda_i^2} \cdot 100$$
+
+
+## Ejemplo a mano
+
+Sobre el siguiente conjunto de animales $\varepsilon=\{león, jirafa, vaca, oveja, gato, hombre \} $ se han medido las siguientes variables binarias:
+
+* $X_1$: ¿tiene cola?
+
+* $X_2$: ¿es salvaje?
+
+* $X_3$: ¿tiene el cuello largo?
+
+* $X_4$: ¿es animal de granja?
+
+* $X_5$: ¿es carnívoro?
+
+* $X_6$: ¿camina sobre cuatro patas?
+
+La matriz de datos es :
+
+$$\mathbf{X}=\begin{pmatrix}
+1 & 1 & 0 & 0 & 1 & 1\\
+1 & 1 & 1 & 0 & 0 & 1\\
+1 & 0 & 0 & 1 & 0 & 1\\
+1 & 0 & 0 & 1 & 0 & 1\\
+1 & 0 & 0 & 0 & 1 & 1\\
+0 & 0 & 0 & 0 & 1 & 0\\ 
+\end{pmatrix}= \begin{matrix}
+león\\
+jirafa \\
+vaca \\
+oveja \\
+gato \\
+hombre
+\end{matrix}$$
+
+A partir de esta matriz, construye las coordenadas principales y realiza una representación en 2 dimensiones. Calcula una medida de precisión de la representación que has realizado.
+
+
+En este caso tenemos $\mathbf{X}$, si no fuese el caso habría  que usar una medida de similiaridad como por ejemplo la de Sokal y Mikener (**Ejercicio**)
+
+```{r}
+X=matrix(c(1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1,1, 0, 0, 1, 0, 1,1, 0, 0, 1, 0, 1,1, 0, 0, 0, 1, 1,0, 0, 0, 0, 1, 0),
+nrow=6, byrow=TRUE)
+X
+
+Q=X %*% t(X)
+valores=eigen(Q)$values
+vectores=eigen(Q)$vectors
+y1=sqrt(valores[1])*vectores[,1]
+y2=sqrt(valores[2])*vectores[,2]
+```
+
+
+Calculamos una medida de precisión (variabilidad explicada) con 2 componentes y miramos la representación
+
+```{r}
+(m_12=(sum(abs(valores[1:2]))/sum(abs(valores)))*100)
+(m_22=(sum(valores[1:2]^2)/sum(valores^2))*100)
+```
+
+```{r,fig.height=3,echo=FALSE}
+x= c("león", "jirafa", "vaca", "oveja", "gato", "hombre")
+
+df <- data.frame(x,y1,y2)
+library(ggplot2)
+library(ggrepel)
+
+p <- ggplot(df, aes(x=y1, y=y2, label= x)) +
+  geom_point(color="red")  
+  
+p1 <- p + geom_text() + labs(title = "geom_text()")
+
+p2 <- p + geom_text_repel() + labs(title = "") 
+
+p2
+```
+
+
+
+## MDS no métrico
+
+Partiendo de la matriz de disimilaridades $\mathbf{\Lambda}=(\delta_{ij})$, el Escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, **el Escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud**. El procedimiento es el siguiente:
+
+(1) Se calculan unas coordenadas iniciales $Z^{(0)}$, por ejemplo aplicando MDS métrico a $\mathbf{\Lambda}$. Esto es, calcular $\mathbf{Q}$, realizar la descomposición $\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$ y tomar $Z^{(0)} =\mathbf{V}_K \mathbf{\Lambda}_K^{1/2}$, donde $\mathbf{\Lambda}_K$ contiene los $k$ valores propios mayores y sus $\mathbf{V}_K$ vectores propios asociados en columnas. Así, obtenemos $D^{(0)}=(d^{(0)}_{ij})$ a partir de las coordenadas $Z^{(0)}$.
+
+(2) Se calculan disparidades $\hat{d}_{ij}$ que son una transformación de las distancias $d_{ij}$ que mantienen la misma ordenación que las disimilaridades $\delta_{ij}$, es decir $$\hat{d}_{ij}=f(d_{ij})$$ donde $f$ es una función monótona que verifica: Si $\delta_{ij} \leq \delta_{kl}$, entonces $\hat{d}_{ij} \leq \hat{d}_{kl}$.
+
+
+
+[*Ejemplo:* ]{style="color: blue;"}: Consideremos la matriz de disimilaridades $$\mathbf{\Lambda}=(\delta_{ij})=\begin{pmatrix}
+0 & 2.1 & 3 & 2.4\\
+  & 0  &  1.7 & 3.9 \\
+  &    &  0  & 3.2 \\
+  &    &     & 0
+\end{pmatrix} $$
+
+Supongamos que hemos obtenido una matriz de coordenadas inicial $Z^{(0)}$, cuya matriz de distancias es $$D^{(0)}=(d^{(0)}_{ij})=\begin{pmatrix}
+0 & 1.6 & 4.5 & 5.7\\
+  & 0  &  3.3 & 4.3 \\
+  &    &  0  & 1.3 \\
+  &    &     & 0
+\end{pmatrix}$$
+
+Obtener las disparidades:
+
+Escribimos las disimilaridades en órden creciente
+$$\delta_{23}=1.7, \delta_{12}=2.1, \delta_{14}=2.4, \delta_{13}=3, \delta_{34}=3.2, \delta_{24}=3.9$$
+
+
+Ahora escribimos las distancias correspondientes
+$$d_{23}= \ldots, d_{12}= \ldots, d_{14}= \ldots, d_{13}= \ldots, d_{34}= \ldots, d_{24}= \ldots$$
+
+Si mantuviesen el mismo órden que las disimilaridades, estarían ordenadas de menor a mayor, y en ese caso, las disparidades serían iguales a las distancias. Entonces $Z^{(0)}$ sería una solución válida.
+
+Una transformación monótona de estas distancias que preserva el órden de las disimilaridades se calcula de la siguiente forma: cuando existe una secuencia de distancias que están ordenadas al contrario de lo deseado, se reemplazan todas estas distancias por la media de las distancias de dicha secuencia. Así, las disparidades son:
+
+$$\begin{align*} 
+\hat{d}_{23} &= \hat{d}_{12}=\frac{1}{2} (d_{23}+d_{12}), \\ 
+\hat{d}_{14} &= \hat{d}_{13}=\hat{d}_{34}=\frac{1}{3} (d_{14}+d_{13}+d_{34}), \\
+\hat{d}_{24} &= d_{24}
+\end{align*}$$
+
+
+Para medir la bondad de ajuste de la solución obtenida:
+
+* **STRESS**: $S= \left[\frac{\sum_{i<j} (d_{ij}-\hat{d}_{ij})^2}{\sum_{i<j}d^2_{ij}} \right]^{1/2}$
+
+  + $S \in (0, 0.01] \implies$ Solución muy buena;
+  + $S \in (0.01, 0.05] \implies$ Solución buena;
+  + $S \in (0.05, 0.1] \implies$ Solución aceptable.
+  
+* **S-STRESS**: $S= \left[\frac{\sum_{i<j} (d_{ij}-\hat{d}_{ij})^2}{\sum_{i<j}d^4_{ij}} \right]^{1/2}$
+
+Esta medida está entre 0 y 1, siendo valores cercanos a cero indicadores de un buen ajuste, y valores cercanos a 1 indicadores
+de un mal ajuste.
+
+* **RSQ**: Es el coeficiente de correlación al cuadrado entre las distancias y las disparidades. El ajuste es aceptable para RSQ $\geq 0.6$.
+
+##
+Si para las coordenadas actuales, estas medidas no son satisfactorias, entonces pasamos a la búsqueda de una nueva solución. Esta
+solución se busca minimizando una de las medidas de ajuste respecto a las coordenadas, generalmente se utiliza el STRESS o el S-STRESS.
+
+**Minimización del STRESS**
+
+Sea $\mathbf{z}=(\mathbf{z}^t_1, \ldots, \mathbf{z}^t_n)$ el vector formado por las $n$ filas de $\mathbf(Z)$ (nuestras incógnitas). El problema es encontrar $\mathbf{z}$ que minimice
+$$S= \left[\frac{\sum_{i<j} (d_{ij}(\mathbf{z})-\hat{d}_{ij})^2}{\sum_{i<j}d^2_{ij}(\mathbf{z})} \right]^{1/2}$$
+donde
+$$d^2_{ij}(\mathbf{z})=d^2_e(\mathbf{z}_i,\mathbf{z}_j)=\sum_{k=1}^p (z_{ik}-z_{jk})^2.$$
+Este problema es no lineal, con lo cual es necesario recurrir a métodos de resolución numéricos.
+
+## Ejemplos en R 
+
+* Con R base:
+
+   https://www.statmethods.net/advstats/mds.html
+   
+* Con tidyverse 
+
+  http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/ 

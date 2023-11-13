@@ -25,6 +25,7 @@ book:
     - EM.qmd
     - Inferencia.qmd
     - ACP.qmd
+    - MDS.qmd
     - references.qmd
     
     
