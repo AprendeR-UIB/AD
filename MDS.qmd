@@ -19,21 +19,19 @@ El escalado multidimensional representa un enfoque complementario a componentes 
 
 * Componentes principales considera la matriz $p \times p$ de correlaciones (o covarianzas) entre variables, e investiga su estructura. 
 
-* El escalado multidimensional considera la matriz $n \times n$ de correlaciones (o covarianzas) entre individuos, e investiga su estructura. Los métodos existentes se dividen en métricos, cuando la matriz inicial es propiamente de distancias, y no métricos, cuando la matriz es de similaridades. 
-
-Los métodos métricos, utilizan las diferencias entre similitudes mientras que los no métricos parten de que si $A$ es más similar a $B$ que a $C$, entonces $A$ esta más cerca de $B$ que de $C$, pero las diferencias entre las similitudes $AB$ y $AC$ no tienen interpretación.
+* El escalado multidimensional considera la matriz $n \times n$ de correlaciones (o covarianzas) entre individuos, e investiga su estructura. Los métodos existentes se dividen en métricos, cuando la matriz inicial es propiamente de distancias, y no métricos, cuando la matriz es de similaridades. Los métodos métricos, utilizan las diferencias entre similitudes mientras que los no métricos parten de que si $A$ es más similar a $B$ que a $C$, entonces $A$ esta más cerca de $B$ que de $C$, pero las diferencias entre las similitudes $AB$ y $AC$ no tienen interpretación.
 
 ## Reconstrucción de las variables a partir de las distancias entre puntos
 
 Dado un conjunto $p$ de variables en $n$ individuos representados en la matriz $\mathbf{X}_{n \times p}$, podemos construir dos tipos de matrices cuadradas y semidefinidas positivas: la matriz de covarianzas muestral $\mathbf{S}$ (definida por $\frac{1}{n}\mathbf{X}^t \mathbf{X}$), si las variables tienen media cero, y la matriz de productos cruzados $\mathbf{Q} = \mathbf{XX}^t$.
 
 El $MDS$ puede verse como un análisis de la matriz $\mathbf{Q}$ y esta puede  interpretarse como una matriz de similitudes entre las observaciones ya que sus términos, $q_{ij}$, contienen el producto escalar de las observaciones de dos elementos dados:
-$$q_{ij} = \sum_{p=1}^k x_{ip}x_{jp} = \mathbf{x}_i^t \mathbf{x}_j \;\; \;\;  \; (1)$$
+$$q_{ij} = \sum_{k=1}^p x_{ik}x_{jk} = \mathbf{x}_i^t \mathbf{x}_j \;\; \;\;  \; (1)$$
 En efecto, como $q_{ij}=|\mathbf{x}_i||\mathbf{x}_j|\cos \theta_{ij}$, si los dos elementos tienen coordenadas similares, $\cos \theta_{ij}\approx 1$ y $q_{ij}$ será grande. Por el contrario, si los dos elementos tienen valores distintos $\cos \theta_{ij}\approx 0$ y $q_{ij}$ será pequeño.
 
 La distancia Euclídea al cuadrado entre dos elementos se define por:
 
-$$d^2_{ij}=\sum_{p=1}^k (x_{ip}-x_{jp})^2=\sum_{p}x_{ip}^2+\sum_{p}x_{jp}^2-2\sum_{p}x_{ip}x_{jp}$$
+$$d^2_{ij}=\sum_{k=1}^p (x_{ik}-x_{jk})^2=\sum_{k}x_{ik}^2+\sum_{k}x_{jk}^2-2\sum_{k}x_{ik}x_{jk}$$
 y la podemos escribir en función de los términos de la matriz $\mathbf{Q}$,
 
 $$d^2_{ij}=q_{ii}+q_{jj}-2q_{ij} \;\; \;\;  \; (2)$$
@@ -45,7 +43,7 @@ El problema que se aborda en MDS es el inverso: dada una matriz de distancias al
 
 Lo primero que se plantea es obtener la matriz $\mathbf{Q}$ dada la matriz $\mathbf{D}$. Para ello, observemos, que sin pérdida de generalidad, siempre podemos suponer que las variables $X$ tienen media cero. En efecto, las distancias entre los puntos, $d^2_{ij}$ no varían si expresamos las variables en desviaciones a la media, ya que:
 
-$$d^2_{ij}=\sum_{p=1}^k (x_{ip}-x_{jp})^2=\sum_{p}\left[ (x_{ip}-\bar{x}_p)-(x_{jp}-\bar{x}_p) \right]^2 \;\; \;\;  \; (3)$$
+$$d^2_{ij}=\sum_{k=1}^p (x_{ik}-x_{jk})^2=\sum_{k}\left[ (x_{ik}-\bar{x}_k)-(x_{jk}-\bar{x}_k) \right]^2 \;\; \;\;  \; (3)$$
 y, por tanto, podemos suponer siempre que las variables que buscamos tienen media cero.
 
 Por ello, como resulta que $\mathbf{X}^t \mathbf{1} = 0$ se debe verificar que $\mathbf{Q}\mathbf{1} = 0$, es decir, la suma de
@@ -64,7 +62,7 @@ $$\sum_{i=1}^n \sum_{j=1}^n d^2_{ij}=2nt$$
 
 Sustituyendo (4) y (5) en (2), tenemos que
 
-$$d^2_{ij}=\frac{1}{n}\sum_{p=1}^k d^2_{ij} - \frac{t}{n} + \frac{1}{n}\sum_{p=1}^k d^2_{ij} - \frac{t}{n} -2 q_{ij},  $$
+$$d^2_{ij}=\frac{1}{n}\sum_{j=1}^n d^2_{ij} - \frac{t}{n} + \frac{1}{n}\sum_{i=1}^n d^2_{ij} - \frac{t}{n} -2 q_{ij},  $$
 y llamando $d^2_{i.}$ y $d^2_{.j}$ a las medias por filas y por columnas y utilizando (5), tenemos que
 
 $$ d^2_{ij}= d^2_{i.}+ d^2_{.j}-d^2_{..}-2 q_{ij} \;\; \;\;  \; (6) $$
@@ -75,14 +73,14 @@ $$q_{ij}=-\frac{1}{2}\left( d^2_{ij}-d^2_{i.}-d^2_{.j}+d^2_{..}\right)$$
 expresión que indica cómo construir la matriz $\mathbf{Q}$ a partir de la matriz de distancias $\mathbf{D}$.
 
 
-De una manera equivalente, se puede obtener la matriz $\mathbf{X}$ a partir de la matriz $\mathbf{Q}$. Si ésta es definida positiva de rango $k$ entonces puede expresarse por
+De una manera equivalente, se puede obtener la matriz $\mathbf{X}$ a partir de la matriz $\mathbf{Q}$. Si ésta es definida positiva de rango $p$ entonces puede expresarse por
 $$\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$$
-donde $\mathbf{V}$ es una matriz $n \times k$ y $\mathbf{\Lambda}$ es una matriz diagonal $k \times k$ y contiene los vectores propios no nulos de $\mathbf{Q}$. Entonces, podemos escribir
+donde $\mathbf{V}$ es una matriz $n \times p$ y $\mathbf{\Lambda}$ es una matriz diagonal $p \times p$ y contiene los vectores propios no nulos de $\mathbf{Q}$. Entonces, podemos escribir
 $$\mathbf{Q}=\left(\mathbf{V} \mathbf{\Lambda}^{1/2} \right) \left( \mathbf{\Lambda}^{1/2} \mathbf{V}^t \right)$$
 y tomando 
 
 $$\mathbf{Y}=\mathbf{V}\mathbf{\Lambda}^{1/2}$$
-se obtienen $k$ variables incorreladas que reproducen la métrica.
+se obtienen $p$ variables incorreladas que reproducen la métrica.
 
 Observa que las variables $\mathbf{Y}$ no son las variables originales $\mathbf{X}$, sino sus componentes principales.
 
