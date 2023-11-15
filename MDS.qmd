@@ -140,7 +140,7 @@ $$\mathbf{X}=\begin{pmatrix}
 1 & 0 & 0 & 1 & 0 & 1\\
 1 & 0 & 0 & 0 & 1 & 1\\
 0 & 0 & 0 & 0 & 1 & 0\\ 
-\end{pmatrix}= \begin{matrix}
+\end{pmatrix} \begin{matrix}
 león\\
 jirafa \\
 vaca \\
@@ -155,8 +155,10 @@ A partir de esta matriz, construye las coordenadas principales y realiza una rep
 En este caso tenemos $\mathbf{X}$, si no fuese el caso habría  que usar una medida de similiaridad como por ejemplo la de Sokal y Mikener (**Ejercicio**)
 
 ```{r}
-X=matrix(c(1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1,1, 0, 0, 1, 0, 1,1, 0, 0, 1, 0, 1,1, 0, 0, 0, 1, 1,0, 0, 0, 0, 1, 0),
-nrow=6, byrow=TRUE)
+X=matrix(c(1, 1, 0, 0, 1, 1, 1, 1, 1, 0,
+           0, 1,1, 0, 0, 1, 0, 1,1, 0, 0,
+           1, 0, 1,1, 0, 0, 0, 1, 1,0, 0,
+           0, 0, 1, 0), nrow=6, byrow=TRUE)
 X
 
 Q=X %*% t(X)
@@ -195,7 +197,7 @@ p2
 
 ## MDS no métrico
 
-Partiendo de la matriz de disimilaridades $\mathbf{\Lambda}=(\delta_{ij})$, el Escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, **el Escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud**. El procedimiento es el siguiente:
+Partiendo de la matriz de disimilaridades $\mathbf{\Lambda}=(\delta_{ij})$, el escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, **el escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud**. El procedimiento es el siguiente:
 
 (1) Se calculan unas coordenadas iniciales $Z^{(0)}$, por ejemplo aplicando MDS métrico a $\mathbf{\Lambda}$. Esto es, calcular $\mathbf{Q}$, realizar la descomposición $\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$ y tomar $Z^{(0)} =\mathbf{V}_K \mathbf{\Lambda}_K^{1/2}$, donde $\mathbf{\Lambda}_K$ contiene los $k$ valores propios mayores y sus $\mathbf{V}_K$ vectores propios asociados en columnas. Así, obtenemos $D^{(0)}=(d^{(0)}_{ij})$ a partir de las coordenadas $Z^{(0)}$.
 
@@ -252,7 +254,6 @@ de un mal ajuste.
 
 * **RSQ**: Es el coeficiente de correlación al cuadrado entre las distancias y las disparidades. El ajuste es aceptable para RSQ $\geq 0.6$.
 
-##
 Si para las coordenadas actuales, estas medidas no son satisfactorias, entonces pasamos a la búsqueda de una nueva solución. Esta
 solución se busca minimizando una de las medidas de ajuste respecto a las coordenadas, generalmente se utiliza el STRESS o el S-STRESS.
 
@@ -266,10 +267,33 @@ Este problema es no lineal, con lo cual es necesario recurrir a métodos de reso
 
 ## Ejemplos en R 
 
-* Con R base:
+### Con R base:
 
-   https://www.statmethods.net/advstats/mds.html
+La función en R para llevar a cabo un MDS es `cmdscale(d,k,eig=FALSE)`, donde
+
+  * `d` es un objeto clase distancia como la producida por `dist` o una matriz simétrica que contiene disimilaridades.
+  
+  * `k` es la dimensión del espacio en cual queremos representar los datos.
+  
+  * `eig` es una variable lógica que indica si los valores propios deben ser presentados.
+  
+
+Consideremos como ejemplo un conjunto de datos de la librería `MVA` que contiene las distancias por carretera entre 21 ciudades europeas en km.  
+
+En base a estas distancias, deseamos "reconstruir" el mapa.
+  
+```{r}
+library(MVA)
+data("eurodist")
+str(eurodist)
+eur.mds<-cmdscale(eurodist,k=2)
+plot(eur.mds, type="n")
+text(eur.mds, labels = rownames(eur.mds))
+```
+
+Hemos obtenido una forma similar a lo que esperaríamos de un mapa de Europa, pero con norte y sur intercambiados.
+
    
-* Con tidyverse 
+### Con tidyverse 
 
   http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/ 

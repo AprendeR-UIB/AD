@@ -201,8 +201,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#construcción-de-las-coordenadas-principales" id="toc-construcción-de-las-coordenadas-principales" class="nav-link" data-scroll-target="#construcción-de-las-coordenadas-principales"><span class="header-section-number">5.3</span> Construcción de las coordenadas principales</a></li>
   <li><a href="#ejemplo-a-mano" id="toc-ejemplo-a-mano" class="nav-link" data-scroll-target="#ejemplo-a-mano"><span class="header-section-number">5.4</span> Ejemplo a mano</a></li>
   <li><a href="#mds-no-métrico" id="toc-mds-no-métrico" class="nav-link" data-scroll-target="#mds-no-métrico"><span class="header-section-number">5.5</span> MDS no métrico</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">5.6</span> </a></li>
-  <li><a href="#ejemplos-en-r" id="toc-ejemplos-en-r" class="nav-link" data-scroll-target="#ejemplos-en-r"><span class="header-section-number">5.7</span> Ejemplos en R</a></li>
+  <li><a href="#ejemplos-en-r" id="toc-ejemplos-en-r" class="nav-link" data-scroll-target="#ejemplos-en-r"><span class="header-section-number">5.6</span> Ejemplos en R</a>
+  <ul class="collapse">
+  <li><a href="#con-r-base" id="toc-con-r-base" class="nav-link" data-scroll-target="#con-r-base"><span class="header-section-number">5.6.1</span> Con R base:</a></li>
+  <li><a href="#con-tidyverse" id="toc-con-tidyverse" class="nav-link" data-scroll-target="#con-tidyverse"><span class="header-section-number">5.6.2</span> Con tidyverse</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/MDS.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
@@ -294,7 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 1\\
 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1\\
 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0\\
-\end{pmatrix}= \begin{matrix}
+\end{pmatrix} \begin{matrix}
 león\\
 jirafa \\
 vaca \\
@@ -305,9 +308,11 @@ hombre
 <p>A partir de esta matriz, construye las coordenadas principales y realiza una representación en 2 dimensiones. Calcula una medida de precisión de la representación que has realizado.</p>
 <p>En este caso tenemos <span class="math inline">\(\mathbf{X}\)</span>, si no fuese el caso habría que usar una medida de similiaridad como por ejemplo la de Sokal y Mikener (<strong>Ejercicio</strong>)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">nrow=</span><span class="dv">6</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>           <span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>           <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>,<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>,<span class="dv">0</span>, <span class="dv">0</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>           <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">nrow=</span><span class="dv">6</span>, <span class="at">byrow=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>X</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2] [,3] [,4] [,5] [,6]
 [1,]    1    1    0    0    1    1
@@ -342,7 +347,7 @@ hombre
 </section>
 <section id="mds-no-métrico" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="mds-no-métrico"><span class="header-section-number">5.5</span> MDS no métrico</h2>
-<p>Partiendo de la matriz de disimilaridades <span class="math inline">\(\mathbf{\Lambda}=(\delta_{ij})\)</span>, el Escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, <strong>el Escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud</strong>. El procedimiento es el siguiente:</p>
+<p>Partiendo de la matriz de disimilaridades <span class="math inline">\(\mathbf{\Lambda}=(\delta_{ij})\)</span>, el escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, <strong>el escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud</strong>. El procedimiento es el siguiente:</p>
 <ol type="1">
 <li><p>Se calculan unas coordenadas iniciales <span class="math inline">\(Z^{(0)}\)</span>, por ejemplo aplicando MDS métrico a <span class="math inline">\(\mathbf{\Lambda}\)</span>. Esto es, calcular <span class="math inline">\(\mathbf{Q}\)</span>, realizar la descomposición <span class="math inline">\(\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t\)</span> y tomar <span class="math inline">\(Z^{(0)} =\mathbf{V}_K \mathbf{\Lambda}_K^{1/2}\)</span>, donde <span class="math inline">\(\mathbf{\Lambda}_K\)</span> contiene los <span class="math inline">\(k\)</span> valores propios mayores y sus <span class="math inline">\(\mathbf{V}_K\)</span> vectores propios asociados en columnas. Así, obtenemos <span class="math inline">\(D^{(0)}=(d^{(0)}_{ij})\)</span> a partir de las coordenadas <span class="math inline">\(Z^{(0)}\)</span>.</p></li>
 <li><p>Se calculan disparidades <span class="math inline">\(\hat{d}_{ij}\)</span> que son una transformación de las distancias <span class="math inline">\(d_{ij}\)</span> que mantienen la misma ordenación que las disimilaridades <span class="math inline">\(\delta_{ij}\)</span>, es decir <span class="math display">\[\hat{d}_{ij}=f(d_{ij})\]</span> donde <span class="math inline">\(f\)</span> es una función monótona que verifica: Si <span class="math inline">\(\delta_{ij} \leq \delta_{kl}\)</span>, entonces <span class="math inline">\(\hat{d}_{ij} \leq \hat{d}_{kl}\)</span>.</p></li>
@@ -383,23 +388,52 @@ hombre
 <ul>
 <li><strong>RSQ</strong>: Es el coeficiente de correlación al cuadrado entre las distancias y las disparidades. El ajuste es aceptable para RSQ <span class="math inline">\(\geq 0.6\)</span>.</li>
 </ul>
-</section>
-<section id="section" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="section"><span class="header-section-number">5.6</span> </h2>
 <p>Si para las coordenadas actuales, estas medidas no son satisfactorias, entonces pasamos a la búsqueda de una nueva solución. Esta solución se busca minimizando una de las medidas de ajuste respecto a las coordenadas, generalmente se utiliza el STRESS o el S-STRESS.</p>
 <p><strong>Minimización del STRESS</strong></p>
 <p>Sea <span class="math inline">\(\mathbf{z}=(\mathbf{z}^t_1, \ldots, \mathbf{z}^t_n)\)</span> el vector formado por las <span class="math inline">\(n\)</span> filas de <span class="math inline">\(\mathbf(Z)\)</span> (nuestras incógnitas). El problema es encontrar <span class="math inline">\(\mathbf{z}\)</span> que minimice <span class="math display">\[S= \left[\frac{\sum_{i&lt;j} (d_{ij}(\mathbf{z})-\hat{d}_{ij})^2}{\sum_{i&lt;j}d^2_{ij}(\mathbf{z})} \right]^{1/2}\]</span> donde <span class="math display">\[d^2_{ij}(\mathbf{z})=d^2_e(\mathbf{z}_i,\mathbf{z}_j)=\sum_{k=1}^p (z_{ik}-z_{jk})^2.\]</span> Este problema es no lineal, con lo cual es necesario recurrir a métodos de resolución numéricos.</p>
 </section>
-<section id="ejemplos-en-r" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="ejemplos-en-r"><span class="header-section-number">5.7</span> Ejemplos en R</h2>
+<section id="ejemplos-en-r" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="ejemplos-en-r"><span class="header-section-number">5.6</span> Ejemplos en R</h2>
+<section id="con-r-base" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="con-r-base"><span class="header-section-number">5.6.1</span> Con R base:</h3>
+<p>La función en R para llevar a cabo un MDS es <code>cmdscale(d,k,eig=FALSE)</code>, donde</p>
 <ul>
-<li><p>Con R base:</p>
-<p>https://www.statmethods.net/advstats/mds.html</p></li>
-<li><p>Con tidyverse</p>
-<p>http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/</p></li>
+<li><p><code>d</code> es un objeto clase distancia como la producida por <code>dist</code> o una matriz simétrica que contiene disimilaridades.</p></li>
+<li><p><code>k</code> es la dimensión del espacio en cual queremos representar los datos.</p></li>
+<li><p><code>eig</code> es una variable lógica que indica si los valores propios deben ser presentados.</p></li>
 </ul>
+<p>Consideremos como ejemplo un conjunto de datos de la librería <code>MVA</code> que contiene las distancias por carretera entre 21 ciudades europeas en km.</p>
+<p>En base a estas distancias, deseamos “reconstruir” el mapa.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MVA)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: HSAUR2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: tools</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"eurodist"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(eurodist)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> 'dist' num [1:210] 3313 2963 3175 3339 2762 ...
+ - attr(*, "Size")= num 21
+ - attr(*, "Labels")= chr [1:21] "Athens" "Barcelona" "Brussels" "Calais" ...</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>eur.mds<span class="ot">&lt;-</span><span class="fu">cmdscale</span>(eurodist,<span class="at">k=</span><span class="dv">2</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(eur.mds, <span class="at">type=</span><span class="st">"n"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(eur.mds, <span class="at">labels =</span> <span class="fu">rownames</span>(eur.mds))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="MDS_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Hemos obtenido una forma similar a lo que esperaríamos de un mapa de Europa, pero con norte y sur intercambiados.</p>
+</section>
+<section id="con-tidyverse" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="con-tidyverse"><span class="header-section-number">5.6.2</span> Con tidyverse</h3>
+<p>http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
