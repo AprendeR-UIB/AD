@@ -198,14 +198,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">5.1</span> Introducción</a></li>
   <li><a href="#reconstrucción-de-las-variables-a-partir-de-las-distancias-entre-puntos" id="toc-reconstrucción-de-las-variables-a-partir-de-las-distancias-entre-puntos" class="nav-link" data-scroll-target="#reconstrucción-de-las-variables-a-partir-de-las-distancias-entre-puntos"><span class="header-section-number">5.2</span> Reconstrucción de las variables a partir de las distancias entre puntos</a></li>
-  <li><a href="#construcción-de-las-coordenadas-principales" id="toc-construcción-de-las-coordenadas-principales" class="nav-link" data-scroll-target="#construcción-de-las-coordenadas-principales"><span class="header-section-number">5.3</span> Construcción de las coordenadas principales</a></li>
-  <li><a href="#ejemplo-a-mano" id="toc-ejemplo-a-mano" class="nav-link" data-scroll-target="#ejemplo-a-mano"><span class="header-section-number">5.4</span> Ejemplo a mano</a></li>
-  <li><a href="#mds-no-métrico" id="toc-mds-no-métrico" class="nav-link" data-scroll-target="#mds-no-métrico"><span class="header-section-number">5.5</span> MDS no métrico</a></li>
-  <li><a href="#ejemplos-en-r" id="toc-ejemplos-en-r" class="nav-link" data-scroll-target="#ejemplos-en-r"><span class="header-section-number">5.6</span> Ejemplos en R</a>
-  <ul class="collapse">
-  <li><a href="#con-r-base" id="toc-con-r-base" class="nav-link" data-scroll-target="#con-r-base"><span class="header-section-number">5.6.1</span> Con R base:</a></li>
-  <li><a href="#con-tidyverse" id="toc-con-tidyverse" class="nav-link" data-scroll-target="#con-tidyverse"><span class="header-section-number">5.6.2</span> Con tidyverse</a></li>
-  </ul></li>
+  <li><a href="#coordenadas-principales-a-partir-de-distancias" id="toc-coordenadas-principales-a-partir-de-distancias" class="nav-link" data-scroll-target="#coordenadas-principales-a-partir-de-distancias"><span class="header-section-number">5.3</span> Coordenadas principales a partir de distancias</a></li>
+  <li><a href="#selección-del-número-de-dimensiones" id="toc-selección-del-número-de-dimensiones" class="nav-link" data-scroll-target="#selección-del-número-de-dimensiones"><span class="header-section-number">5.4</span> Selección del número de dimensiones</a></li>
+  <li><a href="#ejemplo-a-mano" id="toc-ejemplo-a-mano" class="nav-link" data-scroll-target="#ejemplo-a-mano"><span class="header-section-number">5.5</span> Ejemplo a mano</a></li>
+  <li><a href="#mds-no-métrico" id="toc-mds-no-métrico" class="nav-link" data-scroll-target="#mds-no-métrico"><span class="header-section-number">5.6</span> MDS no métrico</a></li>
+  <li><a href="#medidas-de-bondad-de-ajuste-de-la-solución-obtenida" id="toc-medidas-de-bondad-de-ajuste-de-la-solución-obtenida" class="nav-link" data-scroll-target="#medidas-de-bondad-de-ajuste-de-la-solución-obtenida"><span class="header-section-number">5.7</span> Medidas de bondad de ajuste de la solución obtenida</a></li>
+  <li><a href="#ejemplos-en-r" id="toc-ejemplos-en-r" class="nav-link" data-scroll-target="#ejemplos-en-r"><span class="header-section-number">5.8</span> Ejemplos en R</a></li>
+  <li><a href="#práctica" id="toc-práctica" class="nav-link" data-scroll-target="#práctica"><span class="header-section-number">5.9</span> <span style="color: red;"><em>Práctica</em></span></a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/MDS.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
     </div>
@@ -233,7 +232,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="5.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">5.1</span> Introducción</h2>
 <p>Las técnicas de escalado multidimensional son una generalización de la idea de componentes principales cuando en lugar de disponer de una matriz de observaciones por variables, como en componentes principales, se dispone de una matriz, <span class="math inline">\(\mathbf{D}\)</span>, cuadrada <span class="math inline">\(n \times n\)</span> de distancias o disimilaridades entre los <span class="math inline">\(n\)</span> elementos de un conjunto.</p>
 <p>Estas distancias pueden haberse obtenido a partir de ciertas variables, o pueden ser el resultado de una estimación directa, por ejemplo preguntando a un grupo de evaluadores por sus opiniones sobre las similaridades entre los elementos considerados.</p>
-<p>El objetivo del <span class="math inline">\(MDS\)</span> es representar las distancias observadas mediante unas variables <span class="math inline">\(y_1,\dots, y_k\)</span>, donde <span class="math inline">\(k &lt; n\)</span>, tales que las distancias Euclídeas entre las coordenadas de los elementos respecto a estas variables sean iguales (o lo más próximas posibles) a las distancias o disimilaridades de la matriz partida. De esta manera, la representación gráfica en <span class="math inline">\(k\)</span> dimensiones será una reproducción fiel de la estructura observada.</p>
+<p>El objetivo del <span class="math inline">\(MDS\)</span> es representar las distancias observadas mediante unas variables con dimensión menor a <span class="math inline">\(n\)</span>, tales que las distancias euclideanas entre las coordenadas de los elementos respecto a estas variables sean iguales (o lo más próximas posibles) a las distancias o disimilaridades de la matriz partida. De esta manera, la representación gráfica en menor dimensión será una reproducción fiel de la estructura observada.</p>
 <p>El escalado multidimensional comparte con componentes principales el objetivo de describir e interpretar los datos. Si existen muchos elementos, la matriz de similaridades será muy grande y la representación por unas pocas variables de los elementos nos permitirá entender su estructura: qué elementos tienen propiedades similares, si aparecen grupos entre los elementos, si hay elementos atípicos, etc.</p>
 <p>El escalado multidimensional representa un enfoque complementario a componentes principales en el sentido siguiente.</p>
 <ul>
@@ -245,7 +244,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="5.2" class="anchored" data-anchor-id="reconstrucción-de-las-variables-a-partir-de-las-distancias-entre-puntos"><span class="header-section-number">5.2</span> Reconstrucción de las variables a partir de las distancias entre puntos</h2>
 <p>Dado un conjunto <span class="math inline">\(p\)</span> de variables en <span class="math inline">\(n\)</span> individuos representados en la matriz <span class="math inline">\(\mathbf{X}_{n \times p}\)</span>, podemos construir dos tipos de matrices cuadradas y semidefinidas positivas: la matriz de covarianzas muestral <span class="math inline">\(\mathbf{S}\)</span> (definida por <span class="math inline">\(\frac{1}{n}\mathbf{X}^t \mathbf{X}\)</span>), si las variables tienen media cero, y la matriz de productos cruzados <span class="math inline">\(\mathbf{Q} = \mathbf{XX}^t\)</span>.</p>
 <p>El <span class="math inline">\(MDS\)</span> puede verse como un análisis de la matriz <span class="math inline">\(\mathbf{Q}\)</span> y esta puede interpretarse como una matriz de similitudes entre las observaciones ya que sus términos, <span class="math inline">\(q_{ij}\)</span>, contienen el producto escalar de las observaciones de dos elementos dados: <span class="math display">\[q_{ij} = \sum_{k=1}^p x_{ik}x_{jk} = \mathbf{x}_i^t \mathbf{x}_j \;\; \;\;  \; (1)\]</span> En efecto, como <span class="math inline">\(q_{ij}=|\mathbf{x}_i||\mathbf{x}_j|\cos \theta_{ij}\)</span>, si los dos elementos tienen coordenadas similares, <span class="math inline">\(\cos \theta_{ij}\approx 1\)</span> y <span class="math inline">\(q_{ij}\)</span> será grande. Por el contrario, si los dos elementos tienen valores distintos <span class="math inline">\(\cos \theta_{ij}\approx 0\)</span> y <span class="math inline">\(q_{ij}\)</span> será pequeño.</p>
-<p>La distancia Euclídea al cuadrado entre dos elementos se define por:</p>
+<p>La distancia euclideana al cuadrado entre dos elementos se define por:</p>
 <p><span class="math display">\[d^2_{ij}=\sum_{k=1}^p (x_{ik}-x_{jk})^2=\sum_{k}x_{ik}^2+\sum_{k}x_{jk}^2-2\sum_{k}x_{ik}x_{jk}\]</span> y la podemos escribir en función de los términos de la matriz <span class="math inline">\(\mathbf{Q}\)</span>,</p>
 <p><span class="math display">\[d^2_{ij}=q_{ii}+q_{jj}-2q_{ij} \;\; \;\;  \; (2)\]</span></p>
 <p>Por tanto, dada la matriz <span class="math inline">\(\mathbf{X}\)</span> podemos construir la matriz <span class="math inline">\(\mathbf{Q}\)</span> y a partir de esta matriz es fácil obtener la matriz de distancias al cuadrado con ayuda de las expresiones (1) y (2).</p>
@@ -260,27 +259,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math display">\[d^2_{ij}=\frac{1}{n}\sum_{j=1}^n d^2_{ij} - \frac{t}{n} + \frac{1}{n}\sum_{i=1}^n d^2_{ij} - \frac{t}{n} -2 q_{ij},  \]</span> y llamando <span class="math inline">\(d^2_{i.}\)</span> y <span class="math inline">\(d^2_{.j}\)</span> a las medias por filas y por columnas y utilizando (5), tenemos que</p>
 <p><span class="math display">\[ d^2_{ij}= d^2_{i.}+ d^2_{.j}-d^2_{..}-2 q_{ij} \;\; \;\;  \; (6) \]</span> donde <span class="math inline">\(d^2_{..}=\frac{1}{n^2}\sum_{i=1}^n \sum_{j=1}^n d^2_{ij}\)</span></p>
 <p>Finalmente, despejando de (6) resulta que <span class="math display">\[q_{ij}=-\frac{1}{2}\left( d^2_{ij}-d^2_{i.}-d^2_{.j}+d^2_{..}\right)\]</span> expresión que indica cómo construir la matriz <span class="math inline">\(\mathbf{Q}\)</span> a partir de la matriz de distancias <span class="math inline">\(\mathbf{D}\)</span>.</p>
-<p>De una manera equivalente, se puede obtener la matriz <span class="math inline">\(\mathbf{X}\)</span> a partir de la matriz <span class="math inline">\(\mathbf{Q}\)</span>. Si ésta es definida positiva de rango <span class="math inline">\(p\)</span> entonces puede expresarse por <span class="math display">\[\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t\]</span> donde <span class="math inline">\(\mathbf{V}\)</span> es una matriz <span class="math inline">\(n \times p\)</span> y <span class="math inline">\(\mathbf{\Lambda}\)</span> es una matriz diagonal <span class="math inline">\(p \times p\)</span> y contiene los vectores propios no nulos de <span class="math inline">\(\mathbf{Q}\)</span>. Entonces, podemos escribir <span class="math display">\[\mathbf{Q}=\left(\mathbf{V} \mathbf{\Lambda}^{1/2} \right) \left( \mathbf{\Lambda}^{1/2} \mathbf{V}^t \right)\]</span> y tomando</p>
-<p><span class="math display">\[\mathbf{Y}=\mathbf{V}\mathbf{\Lambda}^{1/2}\]</span> se obtienen <span class="math inline">\(p\)</span> variables incorreladas que reproducen la métrica.</p>
-<p>Observa que las variables <span class="math inline">\(\mathbf{Y}\)</span> no son las variables originales <span class="math inline">\(\mathbf{X}\)</span>, sino sus componentes principales.</p>
 </section>
-<section id="construcción-de-las-coordenadas-principales" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="construcción-de-las-coordenadas-principales"><span class="header-section-number">5.3</span> Construcción de las coordenadas principales</h2>
-<p>En general, la matriz de disimilaridades o distancias no será compatible con una métrica Euclídea, pero es frecuente que la matriz <span class="math inline">\(\mathbf{Q}\)</span> tenga <span class="math inline">\(k\)</span> valores propios positivos y más grandes que el resto.</p>
-<p>Si los restantes <span class="math inline">\(n-k\)</span> valores propios no nulos son mucho menores que los demás, podemos obtener una representación aproximada de los puntos utilizando los <span class="math inline">\(k\)</span> vectores propios asociados a valores propios positivos. En este caso, las representaciones gráficas conservarán aproximadamente la distancia entre los puntos.</p>
+<section id="coordenadas-principales-a-partir-de-distancias" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="coordenadas-principales-a-partir-de-distancias"><span class="header-section-number">5.3</span> Coordenadas principales a partir de distancias</h2>
+<p>Sea <span class="math inline">\(\mathbf{D}\)</span> una matriz de distancias euclídeas al cuadrado entre <span class="math inline">\(n\)</span> objetos. Las <strong>coordenadas principales</strong> son las coordenadas de dichos objetos en <span class="math inline">\(r &lt; n\)</span> dimensiones, <span class="math inline">\(Z_1 \ldots Z_r\)</span> (columnas de una matriz <span class="math inline">\(Z_{n \times r}\)</span>), de manera que la matriz de distancias euclídeas al cuadrado entre las coordenadas de dichos objetos coincida con <span class="math inline">\(\mathbf{D}\)</span>.</p>
+<p>Partimos de una matriz de distancias <span class="math inline">\(\mathbf{D}\)</span> obtenida de una matriz de coordenadas <span class="math inline">\(Y\)</span> . Vamos a ver que a partir de <span class="math inline">\(D\)</span> se puede obtener la matriz de productos escalares <span class="math inline">\(Q = Y Y^t\)</span>, y a partir de <span class="math inline">\(Q\)</span> se obtiene otra matriz de coordenadas <span class="math inline">\(Z\)</span>, cuya matriz de distancias coincide con <span class="math inline">\(D\)</span>.</p>
+<p>Vamos a suponer que las columnas de <span class="math inline">\(Z\)</span> están centradas.</p>
+<p>Si realizamos la descomposición espectral de <span class="math inline">\(\mathbf{Q}\)</span>, <span class="math display">\[\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t=\left(\mathbf{V} \mathbf{\Lambda}^{1/2} \right) \left( \mathbf{\Lambda}^{1/2} \mathbf{V}^t \right)\]</span> donde <span class="math inline">\(\mathbf{\Lambda}\)</span> es una matriz diagonal con los valores propios no nulos de <span class="math inline">\(\mathbf{Q}\)</span> y <span class="math inline">\(\mathbf{V}\)</span> es una matriz <span class="math inline">\(n \times r\)</span> con los <span class="math inline">\(r\)</span> vectores propios asociados a los valores propios de <span class="math inline">\(Q\)</span> en sus columnas. La matriz de coordenadas principales es: <span class="math display">\[Z= \mathbf{V} \mathbf{\Lambda}^{1/2}\]</span></p>
 <p>El procedimiento para obtener las coordenadas principales es el siguiente:</p>
 <p>1.- Formar la matriz de distancias al cuadrado, <span class="math inline">\(\mathbf{D}\)</span>, cuyos elementos son los cuadrados de las distancias.</p>
 <p>2.- Construir la matriz <span class="math inline">\(\mathbf{Q}\)</span> de productos cruzados.</p>
-<p>3.- Obtener los valores y vectores propios de <span class="math inline">\(\mathbf{Q}\)</span>. Tomar los <span class="math inline">\(k\)</span> mayores si podemos suponer que los restantes <span class="math inline">\(n \times k\)</span> son próximos a cero.</p>
+<p>3.- Obtener los valores y vectores propios de <span class="math inline">\(\mathbf{Q}\)</span>. Tomar los <span class="math inline">\(r\)</span> mayores si podemos suponer que los restantes <span class="math inline">\(n-r\)</span> son próximos a cero.</p>
 <p>4.- Obtener las coordenadas de los puntos en las variables mediante <span class="math inline">\(\sqrt{{\lambda_i}} \mathbf{v}_i\)</span>, donde <span class="math inline">\(\mathbf{\lambda}_i\)</span> es el valor propio y <span class="math inline">\(\mathbf{v}_i\)</span> el vector propio.</p>
-<p>El método puede aplicarse también cuando la matriz de partida <span class="math inline">\(\mathbf{Q}\)</span> es una matriz de similaridades cualquiera. Entonces <span class="math inline">\(q_{ii}=1\)</span>, <span class="math inline">\(q_{ij}=q_{ji}\)</span> y <span class="math inline">\(0 \leq q_{ij} \leq 1\)</span>. De acuerdo a (2), la matriz de distancias asociadas será: <span class="math display">\[d^2_{ij}= q_{ii}+ q_{jj}-2 q_{ij}=2(1-q_{ij})\]</span> y puede comprobarse que <span class="math inline">\(\sqrt{2(1-q_{ij})}\)</span> es una distancia y verifica la desigualdad triangular al corresponder a la distancia euclídea para cierta configuración de puntos.</p>
-<p>Se ha propuesto como medida de la precisión en la aproximación mediante los <span class="math inline">\(k\)</span> valores propios positivos, los coeficientes:</p>
-<p><span class="math display">\[m_{1,K}=\frac{\sum_{i=1}^K |\lambda_i|}{\sum_{i=1}^p |\lambda_i|} \cdot 100\]</span> ó</p>
-<p><span class="math display">\[m_{2,K}=\frac{\sum_{i=1}^K \lambda_i^2}{\sum_{i=1}^p \lambda_i^2} \cdot 100\]</span></p>
+<p>El método puede aplicarse también cuando la matriz de partida <span class="math inline">\(\mathbf{Q}\)</span> es una matriz de similaridades cualquiera. Entonces <span class="math inline">\(q_{ii}=1\)</span>, <span class="math inline">\(q_{ij}=q_{ji}\)</span> y <span class="math inline">\(0 \leq q_{ij} \leq 1\)</span>. De acuerdo a (2), la matriz de distancias asociadas será: <span class="math display">\[d^2_{ij}= q_{ii}+ q_{jj}-2 q_{ij}=2(1-q_{ij})\]</span> y puede comprobarse que <span class="math inline">\(\sqrt{2(1-q_{ij})}\)</span> es una distancia y verifica la desigualdad triangular al corresponder a la distancia euclideana para cierta configuración de puntos.</p>
 </section>
-<section id="ejemplo-a-mano" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="ejemplo-a-mano"><span class="header-section-number">5.4</span> Ejemplo a mano</h2>
-<p>Sobre el siguiente conjunto de animales $={león, jirafa, vaca, oveja, gato, hombre } $ se han medido las siguientes variables binarias:</p>
+<section id="selección-del-número-de-dimensiones" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="selección-del-número-de-dimensiones"><span class="header-section-number">5.4</span> Selección del número de dimensiones</h2>
+<p>Se ha propuesto como medida de la precisión en la aproximación mediante los <span class="math inline">\(r\)</span> valores propios positivos, los coeficientes:</p>
+<p><span class="math display">\[m_{1,r}=\frac{\sum_{i=1}^r |\lambda_i|}{\sum_{i=1}^p |\lambda_i|} \cdot 100\]</span> ó</p>
+<p><span class="math display">\[m_{2,r}=\frac{\sum_{i=1}^r \lambda_i^2}{\sum_{i=1}^p \lambda_i^2} \cdot 100\]</span></p>
+</section>
+<section id="ejemplo-a-mano" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="ejemplo-a-mano"><span class="header-section-number">5.5</span> Ejemplo a mano</h2>
+<p>Sobre el siguiente conjunto de animales <span class="math inline">\(\varepsilon=\{león, jirafa, vaca, oveja, gato, hombre \}\)</span> se han medido las siguientes variables binarias:</p>
 <ul>
 <li><p><span class="math inline">\(X_1\)</span>: ¿tiene cola?</p></li>
 <li><p><span class="math inline">\(X_2\)</span>: ¿es salvaje?</p></li>
@@ -305,7 +306,7 @@ oveja \\
 gato \\
 hombre
 \end{matrix}\]</span></p>
-<p>A partir de esta matriz, construye las coordenadas principales y realiza una representación en 2 dimensiones. Calcula una medida de precisión de la representación que has realizado.</p>
+<p>A partir de esta matriz, construimos las coordenadas principales y realizamos una representación en 2 dimensiones. Calcularemos una medida de precisión de la representación que hemos realizado.</p>
 <p>En este caso tenemos <span class="math inline">\(\mathbf{X}\)</span>, si no fuese el caso habría que usar una medida de similiaridad como por ejemplo la de Sokal y Mikener (<strong>Ejercicio</strong>)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>X<span class="ot">=</span><span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>,</span>
@@ -345,20 +346,20 @@ hombre
 </div>
 </div>
 </section>
-<section id="mds-no-métrico" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="mds-no-métrico"><span class="header-section-number">5.5</span> MDS no métrico</h2>
+<section id="mds-no-métrico" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="mds-no-métrico"><span class="header-section-number">5.6</span> MDS no métrico</h2>
 <p>Partiendo de la matriz de disimilaridades <span class="math inline">\(\mathbf{\Lambda}=(\delta_{ij})\)</span>, el escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, <strong>el escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud</strong>. El procedimiento es el siguiente:</p>
 <ol type="1">
-<li><p>Se calculan unas coordenadas iniciales <span class="math inline">\(Z^{(0)}\)</span>, por ejemplo aplicando MDS métrico a <span class="math inline">\(\mathbf{\Lambda}\)</span>. Esto es, calcular <span class="math inline">\(\mathbf{Q}\)</span>, realizar la descomposición <span class="math inline">\(\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t\)</span> y tomar <span class="math inline">\(Z^{(0)} =\mathbf{V}_K \mathbf{\Lambda}_K^{1/2}\)</span>, donde <span class="math inline">\(\mathbf{\Lambda}_K\)</span> contiene los <span class="math inline">\(k\)</span> valores propios mayores y sus <span class="math inline">\(\mathbf{V}_K\)</span> vectores propios asociados en columnas. Así, obtenemos <span class="math inline">\(D^{(0)}=(d^{(0)}_{ij})\)</span> a partir de las coordenadas <span class="math inline">\(Z^{(0)}\)</span>.</p></li>
+<li><p>Se calculan unas coordenadas iniciales <span class="math inline">\(Z^{(0)}\)</span>, por ejemplo aplicando MDS métrico a <span class="math inline">\(\mathbf{\Lambda}\)</span>. Esto es, calcular <span class="math inline">\(\mathbf{Q}\)</span>, realizar la descomposición <span class="math inline">\(\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t\)</span> y tomar <span class="math inline">\(Z^{(0)} =\mathbf{V}_r \mathbf{\Lambda}_r^{1/2}\)</span>, donde <span class="math inline">\(\mathbf{\Lambda}_r\)</span> contiene los <span class="math inline">\(r\)</span> valores propios mayores y sus <span class="math inline">\(\mathbf{V}_r\)</span> vectores propios asociados en columnas. Así, obtenemos <span class="math inline">\(D^{(0)}=(d^{(0)}_{ij})\)</span> a partir de las coordenadas <span class="math inline">\(Z^{(0)}\)</span>.</p></li>
 <li><p>Se calculan disparidades <span class="math inline">\(\hat{d}_{ij}\)</span> que son una transformación de las distancias <span class="math inline">\(d_{ij}\)</span> que mantienen la misma ordenación que las disimilaridades <span class="math inline">\(\delta_{ij}\)</span>, es decir <span class="math display">\[\hat{d}_{ij}=f(d_{ij})\]</span> donde <span class="math inline">\(f\)</span> es una función monótona que verifica: Si <span class="math inline">\(\delta_{ij} \leq \delta_{kl}\)</span>, entonces <span class="math inline">\(\hat{d}_{ij} \leq \hat{d}_{kl}\)</span>.</p></li>
 </ol>
-<p><span style="color: blue;"><em>Ejemplo:</em></span>: Consideremos la matriz de disimilaridades <span class="math display">\[\mathbf{\Lambda}=(\delta_{ij})=\begin{pmatrix}
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Consideremos la matriz de disimilaridades <span class="math display">\[\mathbf{\Lambda}=(\delta_{ij})=\begin{pmatrix}
 0 &amp; 2.1 &amp; 3 &amp; 2.4\\
   &amp; 0  &amp;  1.7 &amp; 3.9 \\
   &amp;    &amp;  0  &amp; 3.2 \\
   &amp;    &amp;     &amp; 0
 \end{pmatrix} \]</span></p>
-<p>Supongamos que hemos obtenido una matriz de coordenadas inicial <span class="math inline">\(Z^{(0)}\)</span>, cuya matriz de distancias es <span class="math display">\[D^{(0)}=(d^{(0)}_{ij})=\begin{pmatrix}
+<p>Supongamos que hemos obtenido una matriz de coordenadas inicial <span class="math inline">\(Z^{(0)},\)</span> cuya matriz de distancias es <span class="math display">\[D^{(0)}=(d^{(0)}_{ij})=\begin{pmatrix}
 0 &amp; 1.6 &amp; 4.5 &amp; 5.7\\
   &amp; 0  &amp;  3.3 &amp; 4.3 \\
   &amp;    &amp;  0  &amp; 1.3 \\
@@ -374,6 +375,9 @@ hombre
 \hat{d}_{14} &amp;= \hat{d}_{13}=\hat{d}_{34}=\frac{1}{3} (d_{14}+d_{13}+d_{34}), \\
 \hat{d}_{24} &amp;= d_{24}
 \end{align*}\]</span></p>
+</section>
+<section id="medidas-de-bondad-de-ajuste-de-la-solución-obtenida" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="medidas-de-bondad-de-ajuste-de-la-solución-obtenida"><span class="header-section-number">5.7</span> Medidas de bondad de ajuste de la solución obtenida</h2>
 <p>Para medir la bondad de ajuste de la solución obtenida:</p>
 <ul>
 <li><p><strong>STRESS</strong>: <span class="math inline">\(S= \left[\frac{\sum_{i&lt;j} (d_{ij}-\hat{d}_{ij})^2}{\sum_{i&lt;j}d^2_{ij}} \right]^{1/2}\)</span></p>
@@ -392,10 +396,8 @@ hombre
 <p><strong>Minimización del STRESS</strong></p>
 <p>Sea <span class="math inline">\(\mathbf{z}=(\mathbf{z}^t_1, \ldots, \mathbf{z}^t_n)\)</span> el vector formado por las <span class="math inline">\(n\)</span> filas de <span class="math inline">\(\mathbf(Z)\)</span> (nuestras incógnitas). El problema es encontrar <span class="math inline">\(\mathbf{z}\)</span> que minimice <span class="math display">\[S= \left[\frac{\sum_{i&lt;j} (d_{ij}(\mathbf{z})-\hat{d}_{ij})^2}{\sum_{i&lt;j}d^2_{ij}(\mathbf{z})} \right]^{1/2}\]</span> donde <span class="math display">\[d^2_{ij}(\mathbf{z})=d^2_e(\mathbf{z}_i,\mathbf{z}_j)=\sum_{k=1}^p (z_{ik}-z_{jk})^2.\]</span> Este problema es no lineal, con lo cual es necesario recurrir a métodos de resolución numéricos.</p>
 </section>
-<section id="ejemplos-en-r" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="ejemplos-en-r"><span class="header-section-number">5.6</span> Ejemplos en R</h2>
-<section id="con-r-base" class="level3" data-number="5.6.1">
-<h3 data-number="5.6.1" class="anchored" data-anchor-id="con-r-base"><span class="header-section-number">5.6.1</span> Con R base:</h3>
+<section id="ejemplos-en-r" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="ejemplos-en-r"><span class="header-section-number">5.8</span> Ejemplos en R</h2>
 <p>La función en R para llevar a cabo un MDS es <code>cmdscale(d,k,eig=FALSE)</code>, donde</p>
 <ul>
 <li><p><code>d</code> es un objeto clase distancia como la producida por <code>dist</code> o una matriz simétrica que contiene disimilaridades.</p></li>
@@ -427,13 +429,21 @@ hombre
 </div>
 </div>
 <p>Hemos obtenido una forma similar a lo que esperaríamos de un mapa de Europa, pero con norte y sur intercambiados.</p>
+<p>Un ejemplo de cómo trabajar con tidyverse, ver el siguiente <a href="http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/">link</a></p>
 </section>
-<section id="con-tidyverse" class="level3" data-number="5.6.2">
-<h3 data-number="5.6.2" class="anchored" data-anchor-id="con-tidyverse"><span class="header-section-number">5.6.2</span> Con tidyverse</h3>
-<p>http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/</p>
+<section id="práctica" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="práctica"><span class="header-section-number">5.9</span> <span style="color: red;"><em>Práctica</em></span></h2>
+<p>El metabolismo se caracteriza por reacciones químicas vinculadas entre sí, creando una compleja estructura de red. Una representación simplificada del metabolismo, que denominamos red metabólica abstracta, es un grafo en el que las vías metabólicas son nodos y existe una arista entre dos nodos si sus correspondientes vías comparten uno o más compuestos.</p>
+<p>Para explorar los potenciales y límites de una representación tan básica, hemos empleado tres tipos de kernels (distancias entre grafos):</p>
+<ul>
+<li><p>VH (Vertex histogram): solo tiene en cuenta si las etiquetas de los nodos de los grafos que se comparan son iguales o no.</p></li>
+<li><p>SP (Shortest-Path): compara los grafos en función de sus caminos más cortos. Intuitivamente, esto significa medir lo fácil o difícil que es conectar, a través de compuestos compartidos, parejas de caminos en los dos grafos.</p></li>
+<li><p>PM (Pyramid Match): mide la similitud de las características topológicas (por ejemplo, la conectividad) de los nodos con la misma etiqueta en los dos grafos comparados.</p></li>
+</ul>
+<p>La práctica consiste en representar gráficamente (con solo 2 coordenadas principales) las matrices de similitud generadas por cada kernel coloreando los puntos de acuerdo al grupo de animales de acuerdo a su phylum.</p>
+<p>Los ficheros necesarios para realizar la práctica los podéis descargar de la página del curso en Aula Digital.</p>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

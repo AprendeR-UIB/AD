@@ -8,7 +8,7 @@ o disimilaridades entre los $n$ elementos de un conjunto.
 Estas distancias pueden haberse obtenido a partir de ciertas variables, o pueden ser el resultado de una
 estimación directa, por ejemplo preguntando a un grupo de evaluadores por sus opiniones sobre las similaridades entre los elementos considerados.
 
-El objetivo del $MDS$ es representar las distancias observadas mediante unas variables $y_1,\dots, y_k$, donde $k < n$, tales que las distancias Euclídeas entre las coordenadas de los elementos respecto a estas variables sean iguales (o lo más próximas posibles) a las distancias o disimilaridades de la matriz partida. De esta manera, la representación gráfica en $k$ dimensiones será una reproducción fiel de la estructura observada.
+El objetivo del $MDS$ es representar las distancias observadas mediante unas variables con dimensión menor a $n$, tales que las distancias euclideanas entre las coordenadas de los elementos respecto a estas variables sean iguales (o lo más próximas posibles) a las distancias o disimilaridades de la matriz partida. De esta manera, la representación gráfica en menor dimensión será una reproducción fiel de la estructura observada.
 
 
 El escalado multidimensional comparte con componentes principales el objetivo de describir e interpretar los datos. Si existen muchos elementos, la matriz de similaridades será muy grande y la representación por unas pocas variables de los elementos nos permitirá
@@ -29,7 +29,7 @@ El $MDS$ puede verse como un análisis de la matriz $\mathbf{Q}$ y esta puede  i
 $$q_{ij} = \sum_{k=1}^p x_{ik}x_{jk} = \mathbf{x}_i^t \mathbf{x}_j \;\; \;\;  \; (1)$$
 En efecto, como $q_{ij}=|\mathbf{x}_i||\mathbf{x}_j|\cos \theta_{ij}$, si los dos elementos tienen coordenadas similares, $\cos \theta_{ij}\approx 1$ y $q_{ij}$ será grande. Por el contrario, si los dos elementos tienen valores distintos $\cos \theta_{ij}\approx 0$ y $q_{ij}$ será pequeño.
 
-La distancia Euclídea al cuadrado entre dos elementos se define por:
+La distancia euclideana al cuadrado entre dos elementos se define por:
 
 $$d^2_{ij}=\sum_{k=1}^p (x_{ik}-x_{jk})^2=\sum_{k}x_{ik}^2+\sum_{k}x_{jk}^2-2\sum_{k}x_{ik}x_{jk}$$
 y la podemos escribir en función de los términos de la matriz $\mathbf{Q}$,
@@ -73,22 +73,18 @@ $$q_{ij}=-\frac{1}{2}\left( d^2_{ij}-d^2_{i.}-d^2_{.j}+d^2_{..}\right)$$
 expresión que indica cómo construir la matriz $\mathbf{Q}$ a partir de la matriz de distancias $\mathbf{D}$.
 
 
-De una manera equivalente, se puede obtener la matriz $\mathbf{X}$ a partir de la matriz $\mathbf{Q}$. Si ésta es definida positiva de rango $p$ entonces puede expresarse por
-$$\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$$
-donde $\mathbf{V}$ es una matriz $n \times p$ y $\mathbf{\Lambda}$ es una matriz diagonal $p \times p$ y contiene los vectores propios no nulos de $\mathbf{Q}$. Entonces, podemos escribir
-$$\mathbf{Q}=\left(\mathbf{V} \mathbf{\Lambda}^{1/2} \right) \left( \mathbf{\Lambda}^{1/2} \mathbf{V}^t \right)$$
-y tomando 
+## Coordenadas principales a partir de distancias
 
-$$\mathbf{Y}=\mathbf{V}\mathbf{\Lambda}^{1/2}$$
-se obtienen $p$ variables incorreladas que reproducen la métrica.
+Sea $\mathbf{D}$ una matriz de distancias euclídeas al cuadrado entre $n$ objetos. Las **coordenadas principales** son las coordenadas de dichos objetos en $r < n$ dimensiones, $Z_1 \ldots Z_r$ (columnas de una matriz $Z_{n \times r}$), de manera que la matriz de distancias euclídeas al cuadrado entre las coordenadas de dichos objetos coincida con $\mathbf{D}$.
 
-Observa que las variables $\mathbf{Y}$ no son las variables originales $\mathbf{X}$, sino sus componentes principales.
+Partimos de una matriz de distancias $\mathbf{D}$ obtenida de una matriz de coordenadas $Y$ . Vamos a ver que a partir de $D$ se puede obtener la matriz de productos escalares $Q = Y Y^t$, y a partir de $Q$ se obtiene otra matriz de coordenadas $Z$, cuya matriz de distancias coincide con $D$.
 
-## Construcción de las coordenadas principales
+Vamos a suponer que las columnas de $Z$ están centradas.
 
-En general, la matriz de disimilaridades o distancias no será compatible con una métrica Euclídea, pero es frecuente que la matriz $\mathbf{Q}$ tenga $k$ valores propios positivos y más grandes que el resto. 
-
-Si los restantes $n-k$ valores propios no nulos son mucho menores que los demás, podemos obtener una representación aproximada de los puntos utilizando los $k$ vectores propios asociados a valores propios positivos. En este caso, las representaciones gráficas conservarán aproximadamente la distancia entre los puntos.
+Si realizamos la descomposición espectral de $\mathbf{Q}$,
+$$\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t=\left(\mathbf{V} \mathbf{\Lambda}^{1/2} \right) \left( \mathbf{\Lambda}^{1/2} \mathbf{V}^t \right)$$
+donde $\mathbf{\Lambda}$ es una matriz diagonal con los valores propios no nulos de $\mathbf{Q}$ y $\mathbf{V}$ es una matriz $n \times r$ con los $r$ vectores propios asociados a los valores propios de $Q$ en sus columnas. La matriz de coordenadas principales es: 
+$$Z= \mathbf{V} \mathbf{\Lambda}^{1/2}$$
 
 
 El procedimiento para obtener las coordenadas principales es el siguiente:
@@ -98,26 +94,27 @@ El procedimiento para obtener las coordenadas principales es el siguiente:
 2.- Construir la matriz $\mathbf{Q}$ de productos cruzados.
 
 
-3.- Obtener los valores y vectores propios de $\mathbf{Q}$. Tomar los $k$ mayores si podemos suponer que los restantes $n \times k$ son próximos a cero.
+3.- Obtener los valores y vectores propios de $\mathbf{Q}$. Tomar los $r$ mayores si podemos suponer que los restantes $n-r$ son próximos a cero.
 
 4.- Obtener las coordenadas de los puntos en las variables mediante $\sqrt{{\lambda_i}} \mathbf{v}_i$, donde $\mathbf{\lambda}_i$ es el valor propio y $\mathbf{v}_i$ el vector propio.
 
 El método puede aplicarse también cuando la matriz de partida $\mathbf{Q}$ es una matriz de similaridades cualquiera. Entonces $q_{ii}=1$, $q_{ij}=q_{ji}$ y $0 \leq q_{ij} \leq 1$. De acuerdo a (2), la matriz de distancias asociadas será:
 $$d^2_{ij}= q_{ii}+ q_{jj}-2 q_{ij}=2(1-q_{ij})$$
-y puede comprobarse que $\sqrt{2(1-q_{ij})}$ es una distancia y verifica la desigualdad triangular al corresponder a la distancia euclídea para cierta configuración de puntos.
+y puede comprobarse que $\sqrt{2(1-q_{ij})}$ es una distancia y verifica la desigualdad triangular al corresponder a la distancia euclideana para cierta configuración de puntos.
 
+## Selección del número de dimensiones
 
-Se ha propuesto como medida de la precisión en la aproximación mediante los $k$ valores propios positivos, los coeficientes:
+Se ha propuesto como medida de la precisión en la aproximación mediante los $r$ valores propios positivos, los coeficientes:
 
-$$m_{1,K}=\frac{\sum_{i=1}^K |\lambda_i|}{\sum_{i=1}^p |\lambda_i|} \cdot 100$$
+$$m_{1,r}=\frac{\sum_{i=1}^r |\lambda_i|}{\sum_{i=1}^p |\lambda_i|} \cdot 100$$
 ó 
 
-$$m_{2,K}=\frac{\sum_{i=1}^K \lambda_i^2}{\sum_{i=1}^p \lambda_i^2} \cdot 100$$
+$$m_{2,r}=\frac{\sum_{i=1}^r \lambda_i^2}{\sum_{i=1}^p \lambda_i^2} \cdot 100$$
 
 
 ## Ejemplo a mano
 
-Sobre el siguiente conjunto de animales $\varepsilon=\{león, jirafa, vaca, oveja, gato, hombre \} $ se han medido las siguientes variables binarias:
+Sobre el siguiente conjunto de animales $\varepsilon=\{león, jirafa, vaca, oveja, gato, hombre \}$ se han medido las siguientes variables binarias:
 
 * $X_1$: ¿tiene cola?
 
@@ -149,7 +146,7 @@ gato \\
 hombre
 \end{matrix}$$
 
-A partir de esta matriz, construye las coordenadas principales y realiza una representación en 2 dimensiones. Calcula una medida de precisión de la representación que has realizado.
+A partir de esta matriz, construimos las coordenadas principales y realizamos una representación en 2 dimensiones. Calcularemos una medida de precisión de la representación que hemos realizado.
 
 
 En este caso tenemos $\mathbf{X}$, si no fuese el caso habría  que usar una medida de similiaridad como por ejemplo la de Sokal y Mikener (**Ejercicio**)
@@ -199,20 +196,22 @@ p2
 
 Partiendo de la matriz de disimilaridades $\mathbf{\Lambda}=(\delta_{ij})$, el escalado no métrico consiste en encontrar unas coordenadas, cuyas distancias euclídeas al cuadrado mantengan el órden de las disimilaridades. Es decir, **el escalado no métrico solo tiene en cuenta la información referente al órden entre las disimilaridades, y no su magnitud**. El procedimiento es el siguiente:
 
-(1) Se calculan unas coordenadas iniciales $Z^{(0)}$, por ejemplo aplicando MDS métrico a $\mathbf{\Lambda}$. Esto es, calcular $\mathbf{Q}$, realizar la descomposición $\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$ y tomar $Z^{(0)} =\mathbf{V}_K \mathbf{\Lambda}_K^{1/2}$, donde $\mathbf{\Lambda}_K$ contiene los $k$ valores propios mayores y sus $\mathbf{V}_K$ vectores propios asociados en columnas. Así, obtenemos $D^{(0)}=(d^{(0)}_{ij})$ a partir de las coordenadas $Z^{(0)}$.
+(1) Se calculan unas coordenadas iniciales $Z^{(0)}$, por ejemplo aplicando MDS métrico a $\mathbf{\Lambda}$. Esto es, calcular $\mathbf{Q}$, realizar la descomposición $\mathbf{Q}=\mathbf{V} \mathbf{\Lambda}\mathbf{V}^t$ y tomar $Z^{(0)} =\mathbf{V}_r \mathbf{\Lambda}_r^{1/2}$, donde $\mathbf{\Lambda}_r$ contiene los $r$ valores propios mayores y sus $\mathbf{V}_r$ vectores propios asociados en columnas. Así, obtenemos $D^{(0)}=(d^{(0)}_{ij})$ a partir de las coordenadas $Z^{(0)}$.
 
 (2) Se calculan disparidades $\hat{d}_{ij}$ que son una transformación de las distancias $d_{ij}$ que mantienen la misma ordenación que las disimilaridades $\delta_{ij}$, es decir $$\hat{d}_{ij}=f(d_{ij})$$ donde $f$ es una función monótona que verifica: Si $\delta_{ij} \leq \delta_{kl}$, entonces $\hat{d}_{ij} \leq \hat{d}_{kl}$.
 
 
 
-[*Ejemplo:* ]{style="color: blue;"}: Consideremos la matriz de disimilaridades $$\mathbf{\Lambda}=(\delta_{ij})=\begin{pmatrix}
+[*Ejemplo* ]{style="color: blue;"}: Consideremos la matriz de disimilaridades $$\mathbf{\Lambda}=(\delta_{ij})=\begin{pmatrix}
 0 & 2.1 & 3 & 2.4\\
   & 0  &  1.7 & 3.9 \\
   &    &  0  & 3.2 \\
   &    &     & 0
 \end{pmatrix} $$
 
-Supongamos que hemos obtenido una matriz de coordenadas inicial $Z^{(0)}$, cuya matriz de distancias es $$D^{(0)}=(d^{(0)}_{ij})=\begin{pmatrix}
+
+
+Supongamos que hemos obtenido una matriz de coordenadas inicial $Z^{(0)},$ cuya matriz de distancias es $$D^{(0)}=(d^{(0)}_{ij})=\begin{pmatrix}
 0 & 1.6 & 4.5 & 5.7\\
   & 0  &  3.3 & 4.3 \\
   &    &  0  & 1.3 \\
@@ -238,6 +237,7 @@ $$\begin{align*}
 \hat{d}_{24} &= d_{24}
 \end{align*}$$
 
+## Medidas de bondad de ajuste de la solución obtenida
 
 Para medir la bondad de ajuste de la solución obtenida:
 
@@ -267,7 +267,6 @@ Este problema es no lineal, con lo cual es necesario recurrir a métodos de reso
 
 ## Ejemplos en R 
 
-### Con R base:
 
 La función en R para llevar a cabo un MDS es `cmdscale(d,k,eig=FALSE)`, donde
 
@@ -294,6 +293,20 @@ text(eur.mds, labels = rownames(eur.mds))
 Hemos obtenido una forma similar a lo que esperaríamos de un mapa de Europa, pero con norte y sur intercambiados.
 
    
-### Con tidyverse 
+Un ejemplo de cómo trabajar con tidyverse, ver el siguiente [link](http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/)
 
-  http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/122-multidimensional-scaling-essentials-algorithms-and-r-code/ 
+## [*Práctica* ]{style="color: red;"}
+
+El metabolismo se caracteriza por reacciones químicas vinculadas entre sí, creando una compleja estructura de red. Una representación simplificada del metabolismo, que denominamos red metabólica abstracta, es un grafo en el que las vías metabólicas son nodos y existe una arista entre dos nodos si sus correspondientes vías comparten uno o más compuestos. 
+
+Para explorar los potenciales y límites de una representación tan básica, hemos empleado tres tipos de kernels (distancias entre grafos):
+
+* VH (Vertex histogram): solo tiene en cuenta si las etiquetas de los nodos de los grafos que se comparan son iguales o no.
+
+* SP (Shortest-Path): compara los grafos en función de sus caminos más cortos. Intuitivamente, esto significa medir lo fácil o difícil que es conectar, a través de compuestos compartidos, parejas de caminos en los dos grafos.
+
+* PM (Pyramid Match): mide la similitud de las características topológicas (por ejemplo, la conectividad) de los nodos con la misma etiqueta en los dos grafos comparados.
+
+La práctica consiste en representar gráficamente (con solo 2 coordenadas principales) las matrices de similitud generadas por cada kernel coloreando los puntos de acuerdo al grupo de animales de acuerdo a su phylum. 
+
+Los ficheros necesarios para realizar la práctica los podéis descargar de la página del curso en Aula Digital. 
