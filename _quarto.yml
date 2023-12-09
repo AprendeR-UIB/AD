@@ -26,6 +26,8 @@ book:
     - Inferencia.qmd
     - ACP.qmd
     - MDS.qmd
+    - Clustering.qmd
+    - Series_temporales.qmd
     - references.qmd
     
     

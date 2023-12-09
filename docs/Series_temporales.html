@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Análisis de datos - 7&nbsp; Series temporales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./Clustering.html" rel="prev">
+<link href="./atlas.jpeg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Series_temporales.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Series temporales</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Análisis de datos</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/AprendeR-UIB/AD/Enlaces" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo lector">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Presentación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción al Análisis de Datos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./EM.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Análisis Multivariante</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Inferencia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferencia multivariante en poblaciones normales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ACP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análisis de Componentes Principales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./MDS.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Escalamiento multidimensional (MDS)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Agrupamiento (Clustering)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Series_temporales.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Series temporales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">7.1</span> Introducción</a></li>
+  <li><a href="#qué-es-una-serie-temporal" id="toc-qué-es-una-serie-temporal" class="nav-link" data-scroll-target="#qué-es-una-serie-temporal"><span class="header-section-number">7.2</span> ¿Qué es una serie temporal?</a></li>
+  <li><a href="#cómo-crear-una-serie-de-tiempo-en-r" id="toc-cómo-crear-una-serie-de-tiempo-en-r" class="nav-link" data-scroll-target="#cómo-crear-una-serie-de-tiempo-en-r"><span class="header-section-number">7.3</span> ¿Cómo crear una serie de tiempo en R?</a></li>
+  <li><a href="#series-temporales-y-procesos-estocásticos" id="toc-series-temporales-y-procesos-estocásticos" class="nav-link" data-scroll-target="#series-temporales-y-procesos-estocásticos"><span class="header-section-number">7.4</span> Series temporales y procesos estocásticos</a></li>
+  <li><a href="#ejemplos-para-clasificar" id="toc-ejemplos-para-clasificar" class="nav-link" data-scroll-target="#ejemplos-para-clasificar"><span class="header-section-number">7.5</span> Ejemplos para clasificar</a></li>
+  <li><a href="#descripción-de-series-temporales" id="toc-descripción-de-series-temporales" class="nav-link" data-scroll-target="#descripción-de-series-temporales"><span class="header-section-number">7.6</span> Descripción de series temporales</a>
+  <ul class="collapse">
+  <li><a href="#función-de-autocorrelación-simple" id="toc-función-de-autocorrelación-simple" class="nav-link" data-scroll-target="#función-de-autocorrelación-simple"><span class="header-section-number">7.6.1</span> Función de autocorrelación simple</a></li>
+  <li><a href="#función-de-autocorrelación-parcial" id="toc-función-de-autocorrelación-parcial" class="nav-link" data-scroll-target="#función-de-autocorrelación-parcial"><span class="header-section-number">7.6.2</span> Función de autocorrelación parcial</a></li>
+  </ul></li>
+  <li><a href="#serie-estacionaria" id="toc-serie-estacionaria" class="nav-link" data-scroll-target="#serie-estacionaria"><span class="header-section-number">7.7</span> Serie estacionaria</a></li>
+  <li><a href="#transformaciones-para-conseguir-estacionariedad" id="toc-transformaciones-para-conseguir-estacionariedad" class="nav-link" data-scroll-target="#transformaciones-para-conseguir-estacionariedad"><span class="header-section-number">7.8</span> Transformaciones para conseguir estacionariedad</a></li>
+  <li><a href="#descomposición-de-una-serie-con-r" id="toc-descomposición-de-una-serie-con-r" class="nav-link" data-scroll-target="#descomposición-de-una-serie-con-r"><span class="header-section-number">7.9</span> Descomposición de una serie con R</a></li>
+  <li><a href="#conductas-de-series-temporales" id="toc-conductas-de-series-temporales" class="nav-link" data-scroll-target="#conductas-de-series-temporales"><span class="header-section-number">7.10</span> Conductas de series temporales</a></li>
+  <li><a href="#métodos-armónicos" id="toc-métodos-armónicos" class="nav-link" data-scroll-target="#métodos-armónicos"><span class="header-section-number">7.11</span> Métodos armónicos</a></li>
+  <li><a href="#en-resumen" id="toc-en-resumen" class="nav-link" data-scroll-target="#en-resumen"><span class="header-section-number">7.12</span> En resumen</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/edit/main/Series_temporales.qmd" class="toc-action">Editar esta página</a></p><p><a href="https://github.com/AprendeR-UIB/AD/Enlaces/issues/new" class="toc-action">Informar de un problema</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Series temporales</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introducción" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">7.1</span> Introducción</h2>
+<p>El estudio de las series temporales es una rama fundamental en diversas disciplinas como la economía, la meteorología, la ingeniería, la medicina y muchas otras, ya que permite comprender la evolución y la variabilidad de una secuencia de observaciones registradas a lo largo del tiempo.</p>
+<p>La identificación de tendencias, patrones cíclicos y comportamientos estacionales en series temporales proporciona valiosa información para construir modelos predictivos que ayuden en la toma de decisiones, la planificación estratégica y la anticipación de eventos futuros.</p>
+</section>
+<section id="qué-es-una-serie-temporal" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="qué-es-una-serie-temporal"><span class="header-section-number">7.2</span> ¿Qué es una serie temporal?</h2>
+<p>Una serie temporal es una sucesión de observaciones de una variable realizadas a <strong>intervalos regulares</strong> de tiempo.</p>
+<p>El estudio de series temporales tiene por objeto analizar la evolución de una variable a través del tiempo.</p>
+<p>La diferencia esencial con los análisis temporales es que <strong>las observaciones sucesivas no son independientes entre sí, y el análisis debe llevarse a cabo teniendo en cuenta el orden temporal de las observaciones</strong>. Por lo tanto, es muy importante conocer la periodicidad de los datos de las series que se están analizando.</p>
+<p>La periodicidad puede ser:</p>
+<ul>
+<li><p>Anual: Se toma un dato cada año.</p></li>
+<li><p>Mensual: Se toma un dato cada mes.</p></li>
+<li><p>Semanal: Se toma un dato cada semana.</p></li>
+<li><p>Diaria: Se toma un dato cada día.</p></li>
+</ul>
+<p>Por supuesto, existen muchos más tipos de periodicidad, como semestral o trimestral. El tipo de periodicidad va a ser algo importante en el análisis de la serie.</p>
+<p><span style="color: blue;"><em>Ejemplos de series temporales</em></span></p>
+<ol type="1">
+<li><p>Serie del IPC en España. Esta serie puede ser anual o mensual.</p></li>
+<li><p>Serie de Temperaturas en Mallorca. Esta serie suele ser mensual. Si fuera anual perderíamos mucha información, pues un invierno extremadamente frío puede compensarse con un verano muy cálido, de modo que la temperatura media del año sea templada.</p></li>
+<li><p>Serie de ventas de una empresa. Este tipo de series puede ser anual, mensual o semanal.</p></li>
+<li><p>Demanda de energía eléctrica. Esta serie suele obtenerse con periodicidad horaria.</p></li>
+<li><p>Series de cotizaciones de bolsa. Este tipo de series se obtienen con la periodicidad que se quiera.</p></li>
+</ol>
+</section>
+<section id="cómo-crear-una-serie-de-tiempo-en-r" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="cómo-crear-una-serie-de-tiempo-en-r"><span class="header-section-number">7.3</span> ¿Cómo crear una serie de tiempo en R?</h2>
+<p>En R <code>ts</code> es la función genérica para que los datos tengan forma de serie temporal. Su sintaxis es la siguiente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="fu">numeric</span>(), <span class="at">frequency =</span> <span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>donde:</p>
+<ul>
+<li><p>data: Vector, “data frame” o matriz de datos.</p></li>
+<li><p>start: Referencia de la primera observacion, es un vector con dos valores numéricos, el primero relativo al año y el segundo relativo al trimestre y mes de inicio (1 para el primer trimestre y 1 para enero en series de datos mensuales).</p></li>
+<li><p>end: Referencia de la ultima observación.</p></li>
+<li><p>frequency: Número de observaciones por año (4 en series trimestrales, 12 en series mensuales).</p></li>
+</ul>
+<p>Un ejemplo de elaboración de un objeto “ts” es el siguiente:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">frequency =</span> <span class="dv">4</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1959</span>, <span class="dv">2</span>)) </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Qtr1 Qtr2 Qtr3 Qtr4
+1959         1    2    3
+1960    4    5    6    7
+1961    8    9   10     </code></pre>
+</div>
+</div>
+<p>Para importar datos a R, usa la función <code>ts</code> de la siguiente manera. El inputData usado aquí es idealmente un vector numérico de clase “numeric” or “integer”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts</span>(inputData, <span class="at">frequency =</span> <span class="dv">4</span>, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1959</span>, <span class="dv">2</span>)) <span class="co"># datos trimestrales</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ts</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">frequency =</span> <span class="dv">12</span>, <span class="at">start =</span> <span class="dv">1990</span>) <span class="co"># datos mensuales</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ts</span>(inputData, <span class="at">start=</span><span class="fu">c</span>(<span class="dv">2009</span>), <span class="at">end=</span><span class="fu">c</span>(<span class="dv">2014</span>), <span class="at">frequency=</span><span class="dv">1</span>) <span class="co"># datos anuales</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><span style="color: blue;"><em>Ejemplo</em></span></p>
+<p>Consideremos el gasto mensual por persona (en €) de los turistas con destino principal las Islas Baleares por país de residencia en el período junio 2017 a junio 2019. Fuente: IBESTAT.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gastos<span class="ot">=</span><span class="fu">read.table</span>(<span class="st">"datos/gastos_diarios_IB.txt"</span>,<span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(gastos) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'Fecha'</span>, <span class="st">'Uk'</span>,<span class="st">'Alemania'</span>, <span class="st">'Suiza'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gastos,<span class="dv">12</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Fecha     Uk Alemania  Suiza
+1  2017-06 563.52   748.37  89.51
+2  2017-07 734.13   751.15 143.11
+3  2017-08 702.46   785.59  70.78
+4  2017-09 546.31   703.69  36.39
+5  2017-10 301.46   561.62  60.01
+6  2017-11  19.80    86.72  10.24
+7  2017-12  17.55    46.23     NA
+8  2018-01  16.70    51.89     NA
+9  2018-02  14.80    77.56     NA
+10 2018-03  50.43   219.53  13.35
+11 2018-04 165.01   363.07  37.12
+12 2018-05 414.05   578.02  57.94</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>gastos.ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(gastos[<span class="sc">-</span><span class="dv">1</span>], <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">2017</span>,<span class="dv">6</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="series-temporales-y-procesos-estocásticos" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="series-temporales-y-procesos-estocásticos"><span class="header-section-number">7.4</span> Series temporales y procesos estocásticos</h2>
+<p>Los fenómenos dinámicos que observamos mediante series temporales pueden considerarse como una realización de un <strong>proceso aleatorio o estocástico</strong>.</p>
+<p>Un <span style="color: blue;"><em>proceso estocástico</em></span> (o aleatorio) es un conjunto de variables aleatorias <span class="math inline">\(\{X_t\}\)</span> donde el índice <span class="math inline">\(t\)</span> toma valores en un cierto conjunto <span class="math inline">\(C\)</span>. En el caso de las series temporales, este conjunto es ordenado y corresponde a los instantes temporales (días, meses, años, etc.).</p>
+<p>Para cada valor <span class="math inline">\(t\)</span> del conjunto <span class="math inline">\(C\)</span>, la variable aleatoria, <span class="math inline">\(X_t\)</span>, toma un valor y, el conjunto de los valores observados en distintos instantes forman una serie temporal.</p>
+<p align="center">
+<img src="Figuras/proceso.png" class="img-fluid" style="width:80.0%">
+</p>
+<p>Por tanto, una manera más formal de definir una serie temporal es como una sucesión de observaciones de una variable tomadas en varios instantes de tiempo. Estas observaciones provienen de una distribución que puede ser diferente en cada instante del tiempo.</p>
+<p align="center">
+<img src="Figuras/proceso2.jPG" class="img-fluid" style="width:80.0%">
+</p>
+<p>Dependiendo de los valores que toma la serie:</p>
+<ul>
+<li><p>Tiempo continuo: cuando el valor de la variable puede cambiar en cualquier momento (ej: velocidad del viento).</p></li>
+<li><p>Tiempo discreto: cuando el valor de la variable puede cambiar en una serie de momentos determinados del tiempo.</p></li>
+<li><p>Valores continuos: cada variable puede tomar cualquier valor comprendido en un rango (ej: temperatura).</p></li>
+<li><p>Valores discretos: cada variable sólo puede tomar determinados valores discretos. (ej: activos cuyos precios oscilan de céntimos de € en céntimos de €).</p></li>
+</ul>
+<p><strong>Ejemplo:</strong></p>
+<p>Consideremos un proceso estocástico que se conoce como “paseo aleatorio (ramdom walk)”, definido de la siguiente forma: <span class="math display">\[x_t=\sum_{j=0}^t a_j,\]</span> donde <span class="math inline">\(a_j \mathop {\sim}\limits^{iid} N(0, \sigma)\)</span> se conoce como <strong>ruido blanco Gaussiano</strong>.</p>
+<p><span style="color: red;"><em>Ejercicio</em></span>: Dibujad con <code>R</code>, tres trayectorias de tamaño 300 de un paseo aleatorio con <span class="math inline">\(\sigma^2= 1\)</span>. Agregad una leyenda al gráfico y las etiquetas de los ejes. Entregad el fichero y su compilación en Aula Digital.</p>
+<p>Un proceso estocástico queda caracterizado por el conjunto de todas las distribuciones finito-dimensionales.</p>
+<p><strong>La distribución n-dimensional de un proceso</strong>: Es la función de distribución de un conjunto de <span class="math inline">\(n\)</span> variables del proceso <span class="math inline">\((X_1,\ldots, X_n)\)</span>, es decir, <span class="math display">\[F(x_1,\ldots, x_n) = P(x_1 \leq x_1,\ldots, X_n ≤ x_n), \; \; n \in N \]</span></p>
+<p>No somos capaces de tratar cualquier tipo de serie temporal, ya que en cada instante tenemos una variable con distinta distribución de la que sólo observamos un dato.</p>
+<p>Para un proceso de tamaño <span class="math inline">\(T\)</span>, habría que estimar <span class="math inline">\(T\)</span>-medias, <span class="math inline">\(T\)</span>-varianzas, y <span class="math inline">\(T(T-1)/2\)</span>-autocovarianzas. No disponemos de información suficiente.</p>
+<p><strong>Necesitamos imponer condiciones a la serie</strong></p>
+<p>Un proceso estocástico <span class="math inline">\((Y_t)_{t\in Z}\)</span> es:</p>
+<ul>
+<li><p>Estable en media: si <span class="math inline">\(\mu_t=\mu=cte\)</span></p></li>
+<li><p>Estable en varianza: si <span class="math inline">\(\sigma^2_t=\sigma^2_y=cte\)</span></p></li>
+<li><p>`Estable en autocovarianza: si <span class="math inline">\(\gamma_{t_1,t_1+h}=\gamma_{t_2,t_2+h}=\gamma_h\)</span> para cualquier par de instantes <span class="math inline">\(t_1,t_2 \in Z\)</span> y cualquier <span class="math inline">\(h \in Z\)</span>.</p></li>
+<li><p>Estacionario en sentido débil: si es estable en media y en autocovarianza.</p></li>
+<li><p>Estacionario en sentido estricto: si las distribuciones marginales de todas las variables son idénticas y además la distribución finito-dimensional de cualquier conjunto de variables sólo depende de los retardos. Es decir, si <span class="math display">\[F_{t_1,\ldots,t_k}(y_1,\ldots,y_k)=F_{t_1+h,\ldots,t_k+h}(y_1,\ldots,y_k)\]</span> para cualquier <span class="math inline">\(k \in N\)</span>, <span class="math inline">\(t_1,\ldots,t_k\)</span>, <span class="math inline">\(h \in Z\)</span>, y <span class="math inline">\(y_1,\ldots,y_k \in R\)</span>, donde <span class="math inline">\(F_{t_1,\ldots,t_k}\)</span> denota la distribución conjunta de <span class="math inline">\(Y_{t_1},\ldots, Y_{t_k}\)</span>.</p></li>
+</ul>
+</section>
+<section id="ejemplos-para-clasificar" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="ejemplos-para-clasificar"><span class="header-section-number">7.5</span> Ejemplos para clasificar</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="descripción-de-series-temporales" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="descripción-de-series-temporales"><span class="header-section-number">7.6</span> Descripción de series temporales</h2>
+<p>Una vez que has leído una serie de tiempo en R, el siguiente paso suele ser hacer un gráfico que muestre la evolución de la serie en el tiempo. Esto se puede hacer con la función <code>plot.ts</code> de R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(gastos.ts)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Pero, en el caso en que tenemos varias series tomadas en el mismo instante de tiempo, podemos utilizar las siguientes instrucciones para visualizar mejor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gastos.ts, <span class="at">plot.type=</span><span class="st">"single"</span>, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(gastos.ts), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1000</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Fecha"</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">"Gasto mensual por persona en €"</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">colnames</span>(gastos.ts), <span class="at">col=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(gastos.ts), <span class="at">lty=</span><span class="dv">1</span>, <span class="at">cex=</span>.<span class="dv">65</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Si queremos ubicar dónde se producen los ciclos (movimientos de carácter periódico), podemos utilizar un gráfico de cajas y bigotes como el siguiente:</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Otras ideas para visualizar series temporales:</p>
+<ul>
+<li><p><a href="https://rkabacoff.github.io/datavis/Time.html#TimeSeries">ggplot</a></p></li>
+<li><p><a href="https://www.r-bloggers.com/2020/06/time-series-in-5-minutes-part-1-visualization-with-the-time-plot/">R-bloggers</a></p></li>
+</ul>
+<p>Además de identificar los ciclos, cuando visualizamos una(s) serie(s) temporal(es) se suele prestar atención a las siguientes características:</p>
+<ul>
+<li><span style="color: blue;"><em>Tendencia</em></span>: Se refiere a si la serie tiende a crecer o decrecer a largo plazo. Por ejemplo:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(co2)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(co2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Cuando una serie permanece más o menos constante, oscilando en torno a un valor, decimos que la serie no tiene tendencia.</p>
+<p><img src="Figuras/sin_tendencia.PNG" class="img-fluid"></p>
+<ul>
+<li><span style="color: blue;"><em>Variabilildad</em></span>: Decimos que una serie es <strong>Homocedástica</strong>, si su variabilidad se mantiene constante a lo largo de la serie. Cuando la variabilidad de la serie aumenta o disminuye a lo largo del tiempo, decimos que la serie es <strong>Heterocedástica</strong>. La siguiente figura muestra una serie heterocedástica en la que la varianza va aumentando con el tiempo.</li>
+</ul>
+<p><img src="Figuras/heterocedasticidad.PNG" class="img-fluid"></p>
+<p>Una serie puede tener tendencia y ser heterocedástica</p>
+<p><img src="Figuras/combinada.PNG" class="img-fluid"></p>
+<ul>
+<li><span style="color: blue;"><em>Estacionalidad</em></span>: Corresponde a aquellos <strong>comportamientos de tipo regular y repetitivo</strong> que se dan a lo largo de un período de tiempo, generalmente igual o inferior a un año, y que son producidos por factores tales como las variaciones climatológicas, las vacaciones, las fiestas, etc.</li>
+</ul>
+<p>No confundas estacionalidad con <strong>fluctuación cíclica</strong>, que refleja los movimientos de carácter periódico, pero no necesariamente regulares, a medio plazo en torno a la tendencia.</p>
+<p>Veamos si puedes identificar el tipo de comportamiento que presenta la siguiente serie</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Hasta ahora hemos descrito el aspecto de la serie. Sin embargo, cuando se quiere analizar la serie es necesario identificar la estructura que la genera, es decir <strong>cómo influyen las observaciones del pasado en las observaciones del futuro</strong>.</p>
+<section id="función-de-autocorrelación-simple" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="función-de-autocorrelación-simple"><span class="header-section-number">7.6.1</span> Función de autocorrelación simple</h3>
+<p>La función de autocovarianza de un proceso estocástico <span class="math inline">\((Y_t)\)</span> es una función de <span class="math inline">\(t\)</span> que proporciona las covarianzas entre las variables del proceso en cada par de instantes: <span class="math display">\[\gamma_{t_1,t_2}=Cov(Y_{t_1},Y_{t_2})=E[(Y_{t_1}-\mu_{t_1})(Y_{t_2}-\mu_{t_2})], \, \, t_1,t_2 \in I\]</span></p>
+<p>La <span style="color: blue;"><em>función de autocorrelación</em></span> de un proceso estocástico <span class="math inline">\((Y_t)\)</span> es una función de dos instantes de tiempo que describe las correlaciones entre las variables en un par de instantes $t_1,t_2 I: <span class="math display">\[\rho_{t_1,t_2}=Cor(Y_{t_1},Y_{t_2})=\frac{\gamma_{t_1,t_2}}{\sigma_{t_1}\sigma_{t_2}}, \; \;  t_1,t_2 \in I\]</span></p>
+<p>La función de autocorrelación simple es una serie que proporciona la estructura de dependencia lineal de la misma.</p>
+<p>Si los valores observados de la serie son: <span class="math inline">\(y_1,y_2,\ldots,y_{t-2},y_{t-1},y_{t}\)</span>. Entonces, <span class="math inline">\(y_{t+1}\)</span> representa el valor de la serie para próximo periodo, es decir un valor futuro.</p>
+<p>Luego, la función de autocorrelación proporciona el coeficiente de correlación entre las observaciones separadas un número determinado de periodos. Así la FAS (<code>ACF</code> en R), va a ser una sucesión de números:</p>
+<ul>
+<li><p><span class="math inline">\(\rho_1\)</span> indica cómo influye una observación sobre la siguiente: <span class="math inline">\(y_i \rightarrow y_{i+1}\)</span>.</p></li>
+<li><p><span class="math inline">\(\rho_2\)</span> indica cómo influye una observación sobre la que está dos periodos en adelante: <span class="math inline">\(y_i \rightarrow y_{i+2}\)</span>.</p></li>
+<li><p><span class="math inline">\(\rho_3\)</span> indica cómo influye una observación sobre la que está tres periodos en adelante: <span class="math inline">\(y_i \rightarrow y_{i+3}\)</span>.</p></li>
+<li><p>Y así sucesivamente</p></li>
+</ul>
+<p>Los coeficientes de la FAS, <span class="math inline">\(\rho_1, \cdots, \rho_k,\cdots\)</span> están acotados entre <span class="math inline">\([-1,1]\)</span>. Cuando un <span class="math inline">\(\rho_i\)</span> vale cero, quiere decir que no existe efecto entre una observación y la <span class="math inline">\(i\)</span> posiciones posteriores.</p>
+<p>Si <span class="math inline">\(\rho_i\)</span> es próximo a 1 indica que hay mucha relación entre una observación y la <span class="math inline">\(i\)</span> posiciones posteriores, y que esa relación es positiva.</p>
+<p>Si <span class="math inline">\(\rho_i\)</span> es próximo a -1 indica que hay mucha relación entre una observación y la <span class="math inline">\(i\)</span> posiciones posteriores, y que esa relación es negativa.</p>
+<p><strong>La FAS proporciona cómo una observación influye sobre las posteriores.</strong></p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>:</p>
+<p>Serie del consumo mensual de gasolina en España 1/1966 - 8/1977</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En el gráfico de la FAS anterior (ACF) se observa que los coeficientes (o barras) son significativos para retardos 1,2,3 y luego esto se repite para 11,12,13.</p>
+<p>Las bandas horizontales que se observan proporcionan los límites para considerar significativo un retardo.</p>
+<p>Pero, la FAS tiene un problema, y es que si por ejemplo <span class="math inline">\(\rho_1\)</span> es distinto de cero, entonces: <span class="math display">\[y_1 \rightarrow y_2  \rightarrow \cdots \rightarrow y_{t-1} \rightarrow y_{t} \rightarrow y_{t+1} \cdots \]</span> es decir existe una cadena de influencia separada por un retardo. Pero si <span class="math inline">\(y_1 \rightarrow y_2\)</span> y <span class="math inline">\(y_2 \rightarrow y_3\)</span>, entonces <span class="math inline">\(y_1 \rightarrow y_3\)</span>.</p>
+<p>Por tanto, la ACF en general, si <span class="math inline">\(\rho_1\)</span> es distinto de cero, encontrará que <span class="math inline">\(\rho_2, \rho_3, \cdots\)</span> serán distintos de cero.</p>
+<p>Pero, es necesario distinguir la cadena de influencia general, a través de <span class="math inline">\(\rho_1\)</span> y las cadenas de influencia directa. Es decir cómo influye <span class="math inline">\(y_1\)</span> sobre <span class="math inline">\(y_3\)</span> directamente, es decir <strong>SIN PASAR A TRAVÉS DE</strong> <span class="math inline">\(y_2\)</span>.</p>
+</section>
+<section id="función-de-autocorrelación-parcial" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="función-de-autocorrelación-parcial"><span class="header-section-number">7.6.2</span> Función de autocorrelación parcial</h3>
+<p>La Función de autocorrelación parcial, que en R es la función <code>PACF</code> proporciona la relación directa que existe entre observaciones separadas por <span class="math inline">\(k\)</span> retardos.</p>
+<p>Esta es una información muy valiosa sobre la estructura de la serie, ya que elimina el problema que presentaba la función de autocorrelación simple.</p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>y<span class="ot">=</span><span class="fu">cumsum</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(y)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(y)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-12-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(y)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-12-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="serie-estacionaria" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="serie-estacionaria"><span class="header-section-number">7.7</span> Serie estacionaria</h2>
+<p>En general, diremos que una serie es estacionaria cuando cumple las siguientes características:</p>
+<ul>
+<li><p>No tiene tendencia</p></li>
+<li><p>Es homocedástica.</p></li>
+<li><p>No tiene ciclos estacionales</p></li>
+<li><p>La estructura de dependencia se mantiene constante, es decir si una observación influye sobre la posterior, ésto ocurre SIEMPRE. Esta condición es importante para modelizar la serie, pues si el fenómeno que genera la serie cambia, es imposible que podamos prever la evolución de la serie.</p></li>
+<li><p>La influencia de las observaciones sobre las posteriores decrece con el tiempo.</p></li>
+</ul>
+</section>
+<section id="transformaciones-para-conseguir-estacionariedad" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="transformaciones-para-conseguir-estacionariedad"><span class="header-section-number">7.8</span> Transformaciones para conseguir estacionariedad</h2>
+<p>Cuando la serie no les estacionaria, es preciso transformarla.</p>
+<p><strong>Para eliminar la tendencia</strong> se toman una o varias diferencias en la serie. Una serie se diferencia restando a cada observación la observación anterior: <span class="math display">\[w_t= y_t - y_{t-1}\]</span></p>
+<p>Evidentemente la serie diferenciada <span class="math inline">\(w\)</span> tiene una observación menos que la serie original, ya que la primera observación se pierde.</p>
+<p>Si el gráfico de una serie muestra tendencia, se diferencia la serie y se comprueba si ha perdido la tendencia. En caso de que no la haya perdido se diferencia una segunda vez. Es muy raro necesitar más de una o dos diferencias para eliminar la tendencia de una serie.</p>
+<p>Normalmente se utiliza la nomenclatura <span class="math inline">\(\Delta y_t= w_t\)</span> para representar la serie con una diferencia.</p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>gas.ts <span class="ot">=</span> <span class="fu">ts</span>(gas, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1966</span>,<span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(gas.ts)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(gas.ts)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>En la ACF se observa una pauta que aparece cuando la serie tiene tendencia y por tanto no es estacionaria: las barras disminuyen muy lentamente.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">=</span> <span class="fu">diff</span>(x)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(w)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(w)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>La serie ya no tiene tendencia, y su ACF decrece rápidamente.</p>
+<p><strong>Estabilización de la varianza</strong>:</p>
+<p>Para estabilizar la variabilidad se suelen tomar logaritmos antes de aplicar diferencias en la serie</p>
+<p>Posteriormente, cuando vayamos a hacer la predicción de la serie habrá que deshacer las diferencias y aplicando antilogaritmos según convenga.</p>
+<p><strong>Eliminar una tendencia no constante</strong></p>
+<p><span style="color: blue;"><em>Ejemplo</em></span>: Si tenemos una serie mensual, podemos usar una media móvil de 12 meses: <span class="math display">\[\hat{\mu_t}=\frac{z_{t-5}+ \cdots + z_{t+5}+ z_{t+6}}{12},\]</span></p>
+<p>Aplicando este método se obtiene una estimación del nivel de la serie en los instantes <span class="math inline">\(t=6, \ldots, T-6\)</span>.</p>
+<p>Para obtener los valores del nivel en los extremos se ajusta una recta a los últimos valores y de esta manera se completa la serie de niveles.</p>
+<p>Una vez identificados los componentes determinísticos (tendencia y estacionalidad) y después de haberlos eliminado, <strong>persisten unos valores que son aleatorios</strong>.</p>
+<p>Se pretende estudiar qué tipo de comportamiento aleatorio presentan estos residuos, utilizando algún tipo de modelo probabilístico que los describa.</p>
+</section>
+<section id="descomposición-de-una-serie-con-r" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="descomposición-de-una-serie-con-r"><span class="header-section-number">7.9</span> Descomposición de una serie con R</h2>
+<p>Los métodos de descomposición tratan de separar la serie en subseries correspondientes a la tendencia, la estacionalidad y el ruido (componente aleatorio).</p>
+<p>El primer paso a seguir a la hora de descomponer una serie es determinar cómo se combinan sus componentes.</p>
+<p><span style="color: blue;"><em>Caso aditivo</em></span>:</p>
+<p><span class="math display">\[y_t= \mu_t + S_t + a_t\]</span></p>
+<p><span style="color: blue;"><em>Caso multiplicativo</em></span>:</p>
+<p>El efecto estacional tiende a aumentar al aumentar la tendencia. <span class="math display">\[y_t= \mu_t \times S_t \times a_t\]</span></p>
+</section>
+<section id="conductas-de-series-temporales" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="conductas-de-series-temporales"><span class="header-section-number">7.10</span> Conductas de series temporales</h2>
+<p><img src="Figuras/conductas_st.JPG" class="img-fluid" style="width:100.0%"></p>
+<p>El procedimiento de construcción del modelo se realiza en tres etapas:</p>
+<ol type="1">
+<li>Se estima el nivel de la serie observada con el modelo de tendencias deterministas que se fundamenta en modelar la dependencia temporal mediante las ideas de regresión.</li>
+</ol>
+<p><span style="color: blue;"><em>Modelo</em></span>:</p>
+<p>Suponemos que la serie se puede descomponer de la siguiente forma: <span class="math display">\[ y_t=\mu_t+a_t, \;\;\;  t=1,\ldots,n\]</span></p>
+<ul>
+<li><p><span class="math inline">\(\mu_t=f(t,\mathbf{\beta})\)</span> es el nivel de la serie depende del tiempo y de un vector de parámetros, <span class="math inline">\(\mathbf{\beta}\)</span> que se estiman a partir de los datos.</p></li>
+<li><p><span class="math inline">\(a_t\)</span>, se denomina error aleatorio (o innovación) en el instante <span class="math inline">\(t\)</span>: recoge todos los demás efectos que actuan sobre la serie. Se supone que tiene una estructura estable a lo largo del tiempo: <span class="math inline">\(a_t \mathop {\sim}\limits^{iid} N(0, \sigma)\)</span>.</p></li>
+</ul>
+<p>Habitualmente <span class="math inline">\(\mathbf{\beta}\)</span> se obtiene utilizando el método de mínios cuadrados; es decir, resolviendo el problema: <span class="math display">\[\min_{\mathbf{\beta}}\sum_{t=0}^n [y_t-f(t,\mathbf{\beta})]^2\]</span></p>
+<p>Derivando la función <span class="math inline">\(f(t,\mathbf{\beta})=\sum_{t=0}^n [y_t-f(t,\mathbf{\beta})]^2\)</span> respecto de los elementos de <span class="math inline">\(\mathbf{\beta}\)</span> e igualando a cero, se obtienen las ecuaciones normales. El estimador mínimo cuadrático <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> es la solución a dichas ecuaciones.</p>
+<p>La tendencia estimada es <span class="math inline">\(\hat{\mu_t}=f(t,\hat{\mathbf{\beta}})\)</span>, donde <span class="math inline">\(\hat{\mathbf{\beta}}\)</span> es un estimador de <span class="math inline">\(\mathbf{\beta}\)</span></p>
+<ol start="2" type="1">
+<li>A continuación se resta a la serie el nivel estimado para obtener una serie residual, que se denomina <strong>serie sin tendencia</strong>: <span class="math display">\[E_t=y_t - \hat{\mu}_t=S_t + a_t\]</span></li>
+</ol>
+<p>Una forma sencilla de estimar el efecto de las <span class="math inline">\(l\)</span> distintas estaciones es:</p>
+<ul>
+<li><p>Calcular la media de la serie sin tendencia: <span class="math inline">\(\bar{e}=n^{-1}\sum_{t=1}^{n}e_t\)</span>.</p></li>
+<li><p>Calcular las medias de cada estación: <span class="math inline">\(\bar{e}_j=m^{-1}\sum_{k=1}^{m}e_{(k-1)l+j}, \;\; j=1,\ldots,l\)</span>.</p></li>
+<li><p>Las componentes estacionales se estiman mediante: <span class="math display">\[\widehat{s}_j=\overline{e}_j - \overline{e}  \;\; j=1,\ldots,l\]</span> y verifican que <span class="math inline">\(\sum_{j=1}^{l}\widehat{s}_j=0\)</span></p></li>
+</ul>
+<p>Se obtiene la serie de residuos restando la serie sin tendencia el factor estacional de cada observación: <span class="math display">\[ \hat{a}_t=E_t- \hat{S}_j\]</span>.</p>
+<p>La predicción de la serie se realiza sumando las estimaciones de la tendencia y el factor estacional que corresponde a cada observación.</p>
+<p>Si la variabilidad de los datos parece crecer con su nivel, podemos suponer un `<span style="color: blue;"><em>Caso multiplicativo</em></span>:.</p>
+<p>Tomando logaritmos y renombrando las componentes se obtiene un modelo aditivo.</p>
+<p><span style="color: blue;"><em>Ejemplo de descomposición de una serie</em></span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>datos<span class="ot">=</span><span class="fu">read.table</span>(<span class="st">"datos/precio_vestido.txt"</span>,<span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajustamos una tendencia lineal</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>x<span class="ot">=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(datos<span class="sc">$</span>vestido)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>tendencia<span class="ot">=</span><span class="fu">lm</span>(datos<span class="sc">$</span>vestido <span class="sc">~</span> x)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Restamos esta recta a la serie</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>e<span class="ot">=</span>datos<span class="sc">$</span>vestido<span class="sc">-</span>tendencia<span class="sc">$</span>fitted.values</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>e_ts<span class="ot">=</span><span class="fu">ts</span>(e,<span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1993</span>,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>precio_vestido<span class="ot">=</span><span class="fu">ts</span>(datos<span class="sc">$</span>vestido,<span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1993</span>,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(precio_vestido,<span class="at">xlab=</span><span class="st">"Tiempo"</span>,<span class="at">ylab=</span><span class="st">"Precios vestidos"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(e_ts,<span class="at">xlab=</span><span class="st">"Tiempo"</span>,<span class="at">ylab=</span><span class="st">"Serie sin tendencia"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>El comando <code>cycle</code> determina la unidad de tiempo a la que pertenece cada observación de la serie.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cycle</span>(e_ts)  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+1993   1   2   3   4   5   6   7   8   9  10  11  12
+1994   1   2   3   4   5   6   7   8   9  10  11  12
+1995   1   2   3   4   5   6   7   8   9  10  11  12
+1996   1   2   3   4   5   6   7   8   9  10  11  12
+1997   1   2   3   4   5   6   7   8   9  10  11  12
+1998   1   2   3   4   5   6   7   8   9  10  11  12
+1999   1   2   3   4   5   6   7   8   9  10  11  12
+2000   1   2   3   4   5   6   7   8   9  10  11  12
+2001   1   2   3   4   5   6   7   8   9  10  11  12</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>e_barra<span class="ot">=</span><span class="fu">mean</span>(e_ts) <span class="co">#media de la serie sin tendencia</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>s<span class="ot">=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">12</span>) <span class="co">#vector para los coeficientes estacionales</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  indice_j<span class="ot">=</span><span class="fu">seq</span>(j,<span class="dv">108</span>,<span class="at">by=</span><span class="dv">12</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  s[j]<span class="ot">=</span><span class="fu">mean</span>(e_ts[indice_j])<span class="sc">-</span>e_barra</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculamos los residuos</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>s_compl<span class="ot">=</span><span class="fu">rep</span>(s,<span class="dv">9</span>) </span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span>e_ts<span class="sc">-</span>s_compl</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.ts</span>(a,<span class="at">xlab=</span><span class="st">"Tiempo"</span>,<span class="at">ylab=</span><span class="st">"Residuos"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>serie<span class="ot">=</span><span class="fu">ts</span>(datos<span class="sc">$</span>vestido,<span class="at">start=</span><span class="fu">c</span>(<span class="dv">1993</span>,<span class="dv">1</span>),<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">decompose</span>(serie))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Series_temporales_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Los valores estimados de los componentes estacionales, de tendencia e irregulares ahora se almacenan en variables: <code>descompose(serie)$trend</code>, <code>descompose(serie)$seasonal</code> y <code>descompose(serie)$random</code>.</p>
+<p>Por ejemplo, podemos imprimir los valores estimados del componente estacional escribiendo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">decompose</span>(serie)<span class="sc">$</span>seasonal</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              Jan          Feb          Mar          Apr          May
+1993  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+1994  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+1995  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+1996  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+1997  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+1998  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+1999  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+2000  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+2001  0.078689236 -0.092664931 -0.077039931  0.186501736  0.172960069
+              Jun          Jul          Aug          Sep          Oct
+1993  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+1994  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+1995  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+1996  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+1997  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+1998  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+1999  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+2000  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+2001  0.008897569 -0.152560764 -0.325477431 -0.348394097  0.016710069
+              Nov          Dec
+1993  0.307855903  0.224522569
+1994  0.307855903  0.224522569
+1995  0.307855903  0.224522569
+1996  0.307855903  0.224522569
+1997  0.307855903  0.224522569
+1998  0.307855903  0.224522569
+1999  0.307855903  0.224522569
+2000  0.307855903  0.224522569
+2001  0.307855903  0.224522569</code></pre>
+</div>
+</div>
+</section>
+<section id="métodos-armónicos" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="métodos-armónicos"><span class="header-section-number">7.11</span> Métodos armónicos</h2>
+<p>Un procedimiento alternativo para modelar la estacionalidad es representar la serie por una función armónica de su periodo <span class="math inline">\(l\)</span>.</p>
+<p>Suponiendo que hemos eliminado la tendencia, si la huviese, consideremos series que tienen sólo componente estacional <span style="color: ;"><em>con cliclo único</em></span>:red`, es decir: <span class="math display">\[y_t=S_t+a_t\]</span></p>
+<p>La estacionalidad se puede capturar con una función seno o coseno, de la siguiente forma:</p>
+<p><span class="math display">\[S_t=A \sin((2\pi/l)t+\theta),\]</span> donde:</p>
+<ul>
+<li><p><span class="math inline">\(l\)</span> es el periodo: número de observaciones hasta que la serie se repite.</p></li>
+<li><p><span class="math inline">\(A\)</span> es la amplitud de la oscilación.</p></li>
+<li><p><span class="math inline">\(\theta\)</span> es el ángulo de desfase con relación al comienzo del ciclo.</p></li>
+<li><p><span class="math inline">\(f=1/l\)</span> se denomina <strong>frecuencia</strong> de la serie. Es la fracción de ciclo completado entre dos observaciones de la serie. Si <span class="math inline">\(l&lt;1\)</span>, entonces <span class="math inline">\(f&gt;1\)</span> es el número de ciclos que pasan entre dos observaciones.</p></li>
+</ul>
+<p><strong>Ejemplo</strong>:</p>
+<p>Una serie trimestral (<span class="math inline">\(l=4\)</span>), la frecuencia es <span class="math inline">\(f=\frac{1}{4}=0.25\)</span>, indicando que entre dos observaciones, un trimestre, ha transcurrido 0.25 del periodo de la función o un 25% de un ciclo completo.</p>
+<ul>
+<li><span class="math inline">\(w=2 \pi /l=2 \pi f\)</span> es la frecuencia angular, o ángulo (en radianes) recorrido entre dos observaciones de la serie. Para <span class="math inline">\(l=365 \implies w=0.0172\)</span>.</li>
+</ul>
+<p>Para capturar series de múltiples ciclos, usaremos la representación de Fourier: toda función periódica puede representarse como suma de funciones sinusoidales de distinta amplitud y frecuencia.</p>
+<p>Dada una serie de longitud <span class="math inline">\(n\)</span>, se denomina <strong>periodos básicos o de Fourier</strong> a los que son fracciones exactas completas del tamaño muestral. Es decir, <span class="math display">\[s_j=\frac{n}{j}, \; \; para \; \;  j=1,2,\ldots n/2\]</span></p>
+<p>Podemos obtener una representación general de una función periódica como suma de ondas asociadas a todas las frecuencias básicas, mediante: <span class="math display">\[y_t=\mu+\displaystyle\sum_{j=1}^{n/2} A_j sen(w_j t) + \displaystyle\sum_{j=1}^{n/2} B_j cos(w_j t)\]</span></p>
+<p>Para la ecuación anterior se usan los siguientes estimadores:</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\mu}=\frac{1}{n} \displaystyle\sum_{t=1}^{T} y_t\)</span></p></li>
+<li><p><span class="math inline">\(\hat{A}= \frac{2}{n} \displaystyle\sum_{t=1}^{n} sen(w_jt) y_t\)</span></p></li>
+<li><p><span class="math inline">\(\hat{B}= \frac{2}{n} \displaystyle\sum_{t=1}^{n} cos(w_jt) y_t\)</span></p></li>
+</ul>
+<p>Un boxplot nos podría ayudar a ver cómo se comporta la serie por ciclos.</p>
+</section>
+<section id="en-resumen" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="en-resumen"><span class="header-section-number">7.12</span> En resumen</h2>
+<p>Finalizamos la discusión sobre el análisis descriptivo de una serie temporal. En general, deberíamos revisar:</p>
+<ul>
+<li><p>El gráfico de la serie.</p></li>
+<li><p>Tendencia: si la hubiera, estimarla (modelo de tendencia deteminista, suavizado o tendencia evolutiva).</p></li>
+<li><p>Estacionalidad: revisar el boxplot de la serie en función del ciclo y estimarla con los coeficientes estacionales (tal como lo hace R) o con funciones armónicas.</p></li>
+<li><p>La predicción de la serie se realiza sumando las estimaciones de la tendencia y el factor estacional que corresponde a cada observación.</p>
+<ul>
+<li><p>En el caso de que estemos trabajando con el caso aditivo: <span class="math inline">\(y_t=\mu_t + S_t +a_t\)</span>.</p></li>
+<li><p>En caso que el efecto estacional tienda a aumentar con la tendencia, usamos el caso multiplicativo: <span class="math inline">\(z_t=\mu_t \times S_t \times a_t\)</span></p></li>
+</ul></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Clustering.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Agrupamiento (Clustering)</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Análisis de Datos UIB</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">Este libro se ha creado con <a href="https://quarto.org/">Quarto</a>.</div>
+  </div>
+</footer>
+
+
+
+</body></html>
