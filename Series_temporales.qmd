@@ -88,6 +88,7 @@ gastos=read.table("datos/gastos_diarios_IB.txt",header=TRUE)
 colnames(gastos) <- c('Fecha', 'Uk','Alemania', 'Suiza')
 head(gastos,12)
 gastos.ts <- ts(gastos[-1], start = c(2017,6), frequency = 12)
+head(gastos.ts)
 ```
 
 ## Series temporales y procesos estocásticos
@@ -539,7 +540,7 @@ decompose(serie)$seasonal
 
 Un procedimiento alternativo para modelar la estacionalidad es representar la serie por una función armónica de su periodo $l$.
 
-Suponiendo que hemos eliminado la tendencia, si la huviese, consideremos series que tienen sólo componente estacional [*con cliclo único*]{style="color: ;"}:red`, es decir:
+Suponiendo que hemos eliminado la tendencia, si la huviese, consideremos series que tienen sólo componente estacional [*con cliclo único*]{style="color: ;"}:red, es decir:
 $$y_t=S_t+a_t$$
 
 La estacionalidad se puede capturar con una función seno o coseno, de la siguiente forma:
@@ -600,3 +601,903 @@ Finalizamos la discusión sobre el análisis descriptivo de una serie temporal. 
     + En el caso de que estemos trabajando con el caso aditivo: $y_t=\mu_t + S_t +a_t$. 
     
     + En caso que el efecto estacional tienda a aumentar con la tendencia, usamos el caso multiplicativo: $z_t=\mu_t \times S_t  \times a_t$
+
+## Modelización univariante de series temporales
+
+Ya hemos discutido cómo hacer el análisis descriptivo de una serie temporal para establecer si tiene tendencia, si es homocedástica o detectar con los gráficos de las funciones de autocorrelación (simple y parcial)  si presenta estructura que depende del rezago de la serie.
+
+Ahora, la idea es proponer modelos que introduzcan las correlaciones que se generan entre relaciones lineales rezagadas y que funcionan bien para [*series estacionarias*]{style="color: ;"}:blue}.
+
+
+La representación formal de los procesos aleatorios que generan series reales se puede realizar mediante modelos lineales de series temporales. Para ello se considera la serie temporal ha sido generada por un proceso estocástico, en este parte vamos a describir los posibles modelos teóricos que permiten explicar el comportamiento de la misma y, por tanto, el de su proceso generador.
+
+Las estructuras estocásticas estacionarias lineales que se tratarán de asociar a una serie de datos se clasifican en tres tipos: 
+
+* **Modelos autoregresivos (AR)** , 
+
+* **Modelos de medias móviles (MA)**, 
+
+* **Modelos mixtos (ARMA)**
+
+
+Luego, los modelos mixtos se pueden extender a modelos para [*series no estacionarias*]{style="color: ;"}:blue}, popularizados por Box y Jenkins (1970), que conducen a los:
+
+* **Modelos autorregresivos de media móvil integrados (ARIMA)**,
+
+
+### Procesos autorregresivos (AR)
+
+Los procesos autorregresivos forman una familia de procesos tales que una observación depende de las observaciones anteriores. Se denominan procesos AR y se caracterizan por su
+orden.
+
+Los modelos autorregresivos se basan en la idea de que el valor actual de la serie, $y_t$, puede explicarse como una función de $p$ valores anteriores, $y_{t-1}, y_{t-2},\ldots, y_{t-p}$, donde $p$ determina el número de pasos hacia el pasado necesarios para pronosticar el valor actual.
+
+
+Por ejemplo, diremos que una serie $y_t$ sigue un [*proceso autoregresivo de primer orden, o un AR(1)*]{style="color: ;"}:blue} si ha sido generado por:
+$$y_t=c+\phi y_{t-1}+a_t,$$
+donde $c$ y $-1<\phi < 1$ son constantes a determinar y $a_t$ es un proceso de ruido blanco con varianza $\sigma^2$.
+
+
+La condición $-1<\phi < 1$ es necesaria para que el proceso sea estacionario. Veamos por qué... 
+
+
+Supongamos que la serie comienza con $y_0=h$, siendo $h$ un valor cualquiera fijo. El siguiente valor será: $y_1= c + \phi h + a_1$. Luego:
+$$
+\begin{aligned}
+ y_2&= c + \phi y_1 + a_2 \\
+    &= c(1+\phi)+\phi^2 h + \phi a_1+a_2
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+ y_3&= c + \phi y_2 + a_3 \\
+    &= c+\phi[c(1+\phi)+ \phi^2 h + \phi a_1+a_2]+a_3 \\
+    &=c(1+\phi+\phi^2)+\phi^3 h+\phi^2 a_1+\phi a_2+a_2
+\end{aligned}
+$$
+$$\vdots$$
+
+$$y_t= c \sum_{i=0}^{t-1} \phi^i + \phi^t h+ \sum_{i=0}^{t-1} \phi^i a_{t-i}$$
+
+Luego, como $E[a_t]=0$, nos queda: $E[y_t]=c \sum_{i=0}^{t-1} \phi^i + \phi^t h$.
+Entonces, si $|\phi|<1$, la serie geométrica $\sum_{i=0}^{t-1} \phi^i$ converge a $\frac{1}{1-\phi}$ y $\phi^t$ converge a cero.
+
+
+Con esta condición, depués de un periodo transcurrido inicial, cuando $t \rightarrow \infty$, todas las variables $y_t$ tendrán la misma esperanza, independientemente de las condiciones iniciales. $$E[y_t]=\frac{c}{1-\phi}$$
+
+
+Observemos también que en este proceso la innovación $a_t$ está incorrelada con los valores previos del proceso, $y_{t-k}$ para $k$ positivo. En efecto:
+
+El valor $y_{t-k}$ depende de los valores de las innovaciones hasta ese instante, $a_1, \ldots, a_{t-k}$ pero no de sus valores futuros. 
+
+Como la innovación es un proceso de ruido blanco, sus valores futuros están incorrelados con los pasados y, por tanto, con los valores previos de proceso, $y_{t-k}$
+
+**ACF y PACF del proceso AR(1)**
+
+La función de autocorrelación simple y la parcial del proceso AR(1) tienen un aspecto muy característico. 
+
+Se puede demostrar que la ACF del proceso AR(1) tiene la expresión:
+$$\rho_k=\phi^k,$$
+
+es decir que la barra $k$, de la ACF es igual al coeficiente $\phi$ elevado a la potencia $k$. Esto implica que la ACF de un proceso AR(1) pueda tener el siguiente aspecto:
+
+* $\phi$ positivo: La ACF será una función positiva y decreciente.
+
+* $\phi$ negativo: La ACf será una función alternada, y tendrá barras pares positivas, y barras impares negativas.
+
+En cuanto a la PACF, como indica la expresión AR(1), sólo existe influencia de primer orden, ya que si $y_t$ depende de $y_{t-2}$, es a través de z_{t-1}. Las PACF será por tanto:
+
+* $\phi$ positivo: La PACF tendrá una única barra, la primera. Esta barra será positiva.
+
+* $\phi$ negativo: La PACF tendrá una única barra y será negativa.
+
+[*Ejemplos AR(1)*]{style="color: ;"}: blue;}
+
+
+Vamos a simular dos AR(1), uno con $\phi=0.8$ 
+
+```{r}
+AR<-arima.sim(list(order=c(1,0,0),ar=+.8),n=100)
+plot(AR,main=(expression(AR(1)~~~~phi==0.8)))
+acf(AR,main="autocorrelacion simple de orden 1")
+pacf(AR,main="autocorrelacion parcial")
+```
+
+Simulamos un Ar(1) con $\phi=-0.8$
+
+```{r}
+AR<-arima.sim(list(order=c(1,0,0),ar=-.8),n=100)
+plot(AR,main=(expression(AR(1)~~~~phi==-0.8)))
+acf(AR,main="autocorrelacion simple de orden 1")
+pacf(AR,main="autocorrelacion parcial")
+```
+
+**Operador de retardo**
+
+El proceso AR(1) puede escribirse utilizando la notación de operador de retardo, $B$, definido por:
+$$By_t=y_{t-1},$$
+El operador de retardo es:
+
+* Lineal: $\;\;\; Bay_{t}=aBy_t=ay_{t-1}$
+
+* Puede aplicarse sucesivamente: $\;\;\; B^ky_t=\underbrace{B \cdots B}_{k-veces}y_t=y_{t-k}$
+
+Definiendo $\tilde{y}_t= y_t-\mu$, como $B \tilde{y}_t= \tilde{y}_{t-1}$, tenemos que:
+$$(1-\phi B)\tilde{y}_t=a_t$$
+Es decir, una serie centrada sigue un proceso AR(1) si al aplicarle el operador $(1-\phi B)$ se obtiene un proceso de ruido blanco. Alternativamente, $1-\phi B =0 \implies B=1/\phi$. La condición de estacionaridad es entonces que la raíz del operador sea, en valor absoluto, mayor que uno.
+
+
+La condición de estacionaridad es que este factor sea menor que la unidad en valor absoluto.
+
+Alternativamente, podemos hablar de la raíz de la ecuación del operador:$1-\phi B =0 \implies B=1/\phi$. La condición de estacionaridad es entonces que la raíz del operador sea, en valor absoluto, mayor que uno.
+
+**Características AR(1)**
+
+En resumen, las características de un AR(1)
+
+* [*Esperanza*]{style="color: blue;"}:` Si $|\phi|<1$, entonces $E(y_t)=\mu=\frac{c}{1-\phi}$.  Usando que $c=\mu (1-\phi)$, el proceso puede escribirse en desviaciones a su media $y_t-\mu=\phi(y_{t-1}-\mu)+a_t,$ y llamando $\tilde{y}_t=y_t-\mu$, podemos escribir:
+
+$$\tilde{y}_t=\phi \tilde{y}_{t-1}+a_t$$
+
+
+* [*Varianza*]{style="color: blue;"}: se obtiene calculando $E(\tilde{y}_t^2)$, de donde $\sigma_y^2=\frac{\sigma^2}{1-\phi^2}$
+
+
+* [*Autocovarianzas y correlación*]{style="color: blue;"}: se puede demostrar que:
+
+     +  $\gamma_k=\phi \gamma_{k-1}$, para $k=1,2,\ldots$, donde $\gamma_0=\sigma^2_y$
+     
+     + $\rho_k=\phi^k$
+
+
+
+
+### AR(p)
+
+Diremos que una serie temporal $y_t$ estacionaria sigue un proceso autoregresivo de orden $p$ si:
+$$\tilde{y}_t=\phi_1 \tilde{y}_{t-1}+ \cdots + \phi_p \tilde{y}_{t-p}+a_t,$$
+donde $\tilde{y}_t=y_t-\mu$, siendo $\mu$ la media del proceso $y_t$ y $a_t$ un proceso de ruido blanco. 
+
+
+Los parámetros se determinan a partir de las ecuaciones de Yule-Walker
+
+$$\begin{matrix}
+\rho_1 & = & \phi_1+\phi_2 \rho_1 + \cdots + \phi_p \rho_{p-1} \\
+\rho_2 & = & \phi_1 \rho_1 + \phi_2 + \cdots + \phi_p \rho_{p-2} \\
+ & \vdots & \\
+\rho_p & = & \phi_1 \rho_{p-1} + \phi_2 \rho_{p-2} + \cdots + \phi_p   
+\end{matrix}$$
+
+
+
+Definiendo:
+$$\boldsymbol{\phi}' = [\phi_1, \ldots, \phi_p],$$
+$$\boldsymbol{\varrho}'=[\rho_1, \ldots, \rho_p],$$
+
+$$R=\begin{bmatrix}
+{1}&{\rho_1}& \cdots & \rho_{p-1}\\
+{\vdots}&{\vdots} & & \vdots \\
+\rho_{p-1}& \rho_{p-2}& \cdots & 1
+\end{bmatrix}$$
+El sistema se escribe de manera matricialmente:
+$$\boldsymbol{\varrho}=R \boldsymbol{\phi} $$
+y los parámetros se determinan a partir de las autocorrelaciones mediante:
+
+$$\boldsymbol{\phi}=R^{-1}\boldsymbol{\varrho}$$
+
+[*Ejemplo AR(p) en R*]{style="color: blue;"}:
+
+```{r}
+set.seed(7122021)
+x<-rnorm(500)
+sim1<-arima.sim(list(ar=c(-0.5)),n=500,innov=x)
+sim2<-arima.sim(list(ar=c(.5,-0.5)),n=500,innov=x)
+sim3<-arima.sim(list(ar=c(.2,-.4,.6)),n=500,innov=x)
+sim4<-arima.sim(list(ar=c(.5,.4,-.6,.4)),n=500,innov=x)
+```
+
+```{r,echo=FALSE,fig.height=4}
+par(mfrow=c(2,2))
+ts.plot(sim1); ts.plot(sim2); ts.plot(sim3); ts.plot(sim4)
+```
+
+
+
+```{r,fig.height=4}
+par(mfrow=c(2,2));acf(sim1); acf(sim2); acf(sim3); acf(sim4)
+```
+
+
+```{r,fig.height=4}
+par(mfrow=c(2,2));pacf(sim1); pacf(sim2); pacf(sim3); pacf(sim4)
+```
+
+¿De qué orden será este AR?
+
+
+<p align="center">
+![](Figuras/reto.png){width=80%}
+</p>
+
+
+### Ejemplo práctico
+
+Usaremos un conjunto de datos incorporado de R llamado `AirPassengers`. El conjunto de datos consta de el número total de pasajeros de aerolíneas internacionales, de 1949 a 1960 por meses.
+
+```{r}
+data("AirPassengers")
+is.ts(AirPassengers)
+print(AirPassengers)
+summary(AirPassengers)
+start(AirPassengers)
+end(AirPassengers)
+time(AirPassengers)
+frequency(AirPassengers)
+```
+
+```{r}
+ts.plot(AirPassengers, xlab="Año", ylab="Número de pasajeros", main="Totales mensuales de pasajeros \n de aerolíneas internacionales, 1949-1960")
+
+# Ajustamos una recta de regresión para la tendencia
+abline(reg=lm(AirPassengers~time(AirPassengers)),col="red")
+
+acf(AirPassengers)
+pacf(AirPassengers)
+```
+
+Vamos a ajustar un modelo AR
+
+```{r}
+AR <- arima(AirPassengers, order = c(1,0,0))
+print(AR)
+
+#Dibujamos la serie y los valores ajustados
+ts.plot(AirPassengers)
+AR_fit <- AirPassengers - residuals(AR)
+points(AR_fit, type = "l", col = 2, lty = 2)
+```
+
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(forecast)
+AR %>% checkresiduals(test = F)
+```
+
+Los residuos muestran que aún hay estructura por capturar, por tanto, si hacemos predicciones con este modelo:
+
+
+```{r}
+#Usamos predict() para hacer una predicción de un paso adelante
+predict_AR <- predict(AR)
+
+#Obtenemos el valor de la predicción
+predict_AR$pred[1]
+
+#Si queremos más predicciones
+predict(AR, n.ahead = 10)
+
+#Dibujamos la serie y agregamos los pronósticos más los intervalos de predicción al 95%
+ts.plot(AirPassengers, xlim = c(1949, 1961))
+AR_forecast <- predict(AR, n.ahead = 10)$pred
+AR_forecast_se <- predict(AR, n.ahead = 10)$se
+points(AR_forecast, type = "l", col = "red")
+points(AR_forecast - 2*AR_forecast_se, type = "l", col = "green", lty = 2, pch=3)
+points(AR_forecast + 2*AR_forecast_se, type = "l", col = "green", lty = 2, pch=3)
+```
+
+**Ajustamos un AR(2)**
+
+```{r}
+AR2<-arima(x=AirPassengers,order=c(2,0,0))
+print(AR2)
+
+AR2 %>% checkresiduals(test = F)
+ts.plot(AirPassengers, xlim = c(1949, 1961))
+AR_forecast <- predict(AR2, n.ahead = 10)$pred
+AR_forecast_se <- predict(AR2, n.ahead = 10)$se
+points(AR_forecast, type = "l", col = "red")
+points(AR_forecast - 2*AR_forecast_se, type = "l", col = "green", lty = 2, pch=3)
+points(AR_forecast + 2*AR_forecast_se, type = "l", col = "green", lty = 2, pch=3)
+```
+
+
+### Modelos de Media Móvil (MA)
+
+Los procesos de media móvil, MA,  sirven para representan procesos de **memoria muy corta**. Son función de un número finito, y generalmente pequeño, de las innovaciones pasadas.
+
+Por ejemplo, diremos que una serie $y_t$ sigue un [*proceso de media móvil de primer orden, o un MA(1)*]{style="color: blue;"} si ha sido generado por:
+$$\tilde{y}_t=a_t - \theta a_{t-1},$$
+donde $\tilde{y}_t=y_t-\mu$, siendo $\mu$ la media del proceso y $a_t$ es un proceso de ruido blanco con varianza $\sigma^2$.
+
+[*Observa que*]{style="color: red;"} MA como parte de los modelos que estamos estudiando se refiere a retardos de errores, mientras que en el análisis descriptivo, se refiere a una técnica de suavizado de datos.
+
+**MA(1)**
+
+El proceso MA(1) puede escribirse con la notación de operadores:
+$$\tilde{z}_t=(1-\theta B)a_t$$
+
+Este proceso es la suma de dos procesos estacionarios, y por tanto, siempre será estacionario. A pesar de lo anterior, en las aplicaciones de MA, supondremos que $| \theta|<1$, de manera que la innovación pasada tenga menos peso que la presente.
+
+
+[*Propiedades teóricas del MA(1)*]{style="color: blue;"}
+Se puede demostrar que:
+
+*  $E(y_t)=\mu$.
+*  $Var(y_t)=\sigma_y^2 (1+\theta^2)$.
+*  $\rho_1=\frac{\theta}{1+\theta^2},$
+*  $\rho_k=0$ para $k>1$, por tanto, el ACF tendrá únicamente un valor distinto de cero en el primer retardo.
+
+**Ejemplo MA(1)**
+
+Considera el siguiente proceso:
+$y_t=10+0.7a_{t-1}+a_t,$
+donde $a_t \mathop {\sim}\limits^{iid} N(0, 1)$.
+
+```{r, echo=TRUE,fig.height=3.5}
+y_c=arima.sim(n=150,list(ma=0.7))
+y=y_c+10
+plot(y,type="l",main="")
+```
+
+
+De acuerdo a los resultados teóricos,
+$\rho_1=\frac{0.7}{1+(0.7)^2}=0.4698$ y $\rho_k=0$ para todo retardo mayor a 1.
+
+```{r, echo=TRUE,fig.height=3}
+par(mfrow=c(1,2))
+acf(y,lag.max = 10) # 10 retardos.
+pacf(y,lag.max=10)
+```
+
+### Proceso MA(q)
+
+Podemos escribir procesos cuyo valor actual depende no sólo de la última innovación, sino de las $q$ últimas innovaciones:
+$$\tilde{y}_t=a_t- \theta_1 a_{t-1}- \theta_2 a_{t-2} - \ldots - \theta_q a_{t-q}$$
+
+En notación de retardos:
+$$\tilde{y}_t=(1-\theta_1B-\theta_2B^2- \ldots \theta_qB^q) a_t$$
+
+[*Propiedades del MA(q)*]{style="color: blue;"}`
+
+* En general, tiene autocorrelaciones diferentes de cero para los primeros $q$ retardos, es decir, lags > $q$ tienen $\rho=0$.
+
+* $\rho_k=\frac{\sum_{i=0}^q \theta_i \theta_{k+i}}{\sum_{i=0}^q \theta_i}$, para $k=1,\ldots,q$. Además, $\theta_0=-1$.
+
+[*Ejemplo MA(q) en R*]{style="color: blue;"}
+
+
+```{r}
+x<-rnorm(500)
+sim1<-arima.sim(list(ma=c(1)),n=500,innov=x)
+sim2<-arima.sim(list(ma=c(1,-1)),n=500,innov=x)
+sim3<-arima.sim(list(ma=c(1,1,1)),n=500,innov=x)
+sim4<-arima.sim(list(ma=c(1/4,1/4,1/4,1/4)),n=500,innov=x)
+```
+```{r,echo=FALSE,fig.height=4}
+par(mfrow=c(2,2))
+ts.plot(sim1); ts.plot(sim2); ts.plot(sim3); ts.plot(sim4)
+```
+
+
+```{r,fig.height=4}
+par(mfrow=c(2,2));acf(sim1); acf(sim2); acf(sim3); acf(sim4)
+```
+
+
+```{r,fig.height=4}
+par(mfrow=c(2,2));pacf(sim1); pacf(sim2); pacf(sim3); pacf(sim4)
+```
+
+
+Para identificar si una serie se puede representar a través de un proceso $MA(q)$ podemos observar los gráficos de la función de autocorrelación simple (ACF) y la función de autocorrelación parcial (PACF).
+
+* La ACF presentará [*los primeros $q$ coeficientes no nulos*]{style="color: blue;"}.
+
+
+* En la PACF, [*muchos coeficientes serán no mulos*]{style="color: blue;"}`. Presenta una mezcla de decrecimientos geométricos y sinusoidales hacia 0.
+
+
+### Ajuste de un MA a la serie `AirPassengers`
+
+```{r}
+MA <- arima(AirPassengers, order = c(0,0,1))
+print(MA)
+
+#Diujamos la serie y los valores ajustados del MA
+ts.plot(AirPassengers)
+MA_fit <- AirPassengers - resid(MA)
+points(MA_fit, type = "l", col = 2, lty = 2)
+```
+
+Veamos qué tal sería la predicción
+
+```{r}
+#Predicción un paso adelante
+predict_MA <- predict(MA)
+predict_MA$pred[1]
+
+#Predicción 10 pasos adelante
+predict(MA,n.ahead=10)
+
+##Dibujamos la serie y agregamos los pronósticos más los intervalos de predicción al 95%
+ts.plot(AirPassengers, xlim = c(1949, 1961))
+MA_forecasts <- predict(MA, n.ahead = 10)$pred
+MA_forecast_se <- predict(MA, n.ahead = 10)$se
+points(MA_forecasts, type = "l", col = "red")
+points(MA_forecasts - 2*MA_forecast_se, type = "l", col = "green", lty = 2)
+points(MA_forecasts + 2*MA_forecast_se, type = "l", col = "green", lty = 2)
+```
+
+### ¿Qué es mejor para modelizar la serie de `AirPassengers` un AR o un MA?
+
+Para responder esta pregunta podemos utilizar o bien el criterio de información de Akaike ($AIC$) o el criterio de información bayesiano ($BIC$). 
+
+$$AIC=-2 \, log(\hat{\sigma}^2_e)+2\,k$$
+
+$$BIC=-2 \,log(\hat{\sigma}^2_e)+k \, log(n),$$
+donde $n$ es el número de observaciones, $k$ es el número de parámetros, $\hat{\sigma}^2_e$ es el estimador de la varianza del error.
+
+La fórmula del primer término de $BIC$ es la misma que la de $AIC$, solo difiere en el segundo término. En el
+segundo término, se puede ver que el valor $BIC$ está influenciado por el tamaño de muestra y parámetros en el modelo.
+
+La idea principal es que estos indicadores penalizan los modelos con el número de parámetros estimados, para evitar el sobreajuste, y se prefieren valores más pequeños. Si todos los factores son iguales, un modelo que produce un $AIC$ o $BIC$ más bajo que otro modelo se considera un mejor ajuste.
+
+```{r}
+AIC(AR)
+AIC(MA)
+BIC(AR)
+BIC(MA)
+```
+
+Dado el valor más bajo de $AIC$ y $BIC$ en el modelo AR, deberíamos preferir a este que al MA para el análisis de series de tiempo de los datos de AirPassenger.
+
+
+## ARMA(p,q)
+
+La ecuación para los procesos ARMA(p,q) es:
+$$(1-\phi_1B-\ldots - \phi_pB^p)\tilde{y}_t=(1-\theta_1B- \ldots \theta_qB^q)a_t,$$
+o en notación compacta:
+$$\Phi_p(B)\tilde{y}_t=\Theta_q(B)a_t$$
+La ACF y la PACF de los procesos ARMA es el resultado de la superposición de sus propiedades AR y MA. Por tanto, no es fácil identicar la estructura. Tanto la ACF como la PACF presentan muchos coeficientes no nulos. Sin embargo:
+
+* En la ACF los coeficientes presentan decrecimiento hacia 0 desde $q$.
+
+* En la PACF los coeficientes presentan decrecimiento hacia 0 desde $p$.
+
+
+[*Ejemplo ARMA(p,q) en R*]{style="color: blue;"}
+
+
+```{r}
+set.seed(1012)
+x<-rnorm(200)
+sim1<-arima.sim(list(ar=c(.1,.5,.2),ma=c(0.6,.4)),n=200,innov=x)
+sim2<-arima.sim(list(ar=c(-0.4),ma=c(0.6,.1)),n=200,innov=x)
+```
+```{r,echo=FALSE,fig.height=4}
+par(mfrow=c(1,2))
+ts.plot(sim1); ts.plot(sim2)
+```
+
+
+```{r,fig.height=4}
+par(mfrow=c(2,2));acf(sim1); pacf(sim1); acf(sim2); pacf(sim2)
+```
+
+
+No resulta nada sencillo en la práctica identificar un proceso ARMA a través de sus acf y pacf, ya que es fácil confundir dichas funciones con las de otros procesos.
+
+Se aconseja especificar y estimar inicialmente un modelo más sencillo, como por ejemplo un AR; posteriormente el análisis de los residuos obtenidos en dicha estimación pondrá de manifiesto la presencia de otras estructuras. 
+
+Si, por ejemplo, detectas en las funciones de autocorrelación simple y parcial de los residuos obtenidos una estructura de MA será necesario incorporar dicha estructura especificando un modelo ARMA, el cual sin duda tendrá una mayor capacidad explicativa.
+
+¿Cómo harías esto en el ejemplo anterior?
+
+```{r}
+ts.plot(sim1)
+pacf(sim1)
+x<-arima(sim1, order=c(3,0,0))
+print(x)
+y<-residuals(x)
+ts.plot(y)
+acf(y)
+y %>% checkresiduals(test = F)
+```
+
+
+## Procesos Integrados
+
+Los procesos no estacionarios más frecuentes son los **Procesos Integrados**, que tienen la propiedad de que al diferenciarlos se obtienen procesos estacionarios.
+
+Considera el proceso
+$$w_t = \nabla y_t = y_t − y_{t−1}$$
+
+Los valores de esta nueva serie oscilan alrededor de una media constante y parecen corresponder a una serie estacionaria. En este caso, diremos que la **serie es integrada de orden 1**.
+
+Ahora, ajustamos un ARMA a $w_t$ y luego integramos:
+$$y_t = w_t + y_{t−1}$$
+
+A veces es necesario diferenciar más de 1 vez para obtener estacionaridad.
+
+
+**Por ejemplo:**
+
+$w_t = \nabla y_t$ , no es estacionario. Entonces,
+$$z_t = \nabla w_t = w_t − w_{t−1} = y_t − \nabla y_{t−1} + y_{t−2} = \nabla^2 y_t$$
+
+Si $z_t$ es estacionario integramos dos veces para modelar a $y_t$ .
+
+
+[*Proceso integrado de orden $h$*]{style="color: blue;"}:
+
+En general, diremos que un procesos es integrado de orden $h\geq 0$ y lo representamos por $I(h)$ cuando, al diferenciarlo $h$ veces se obtiene un proceso estacionario.
+
+
+El modelo ARIMA($p$,$d$,$q$) puede ser considerado como el modelo estocástico lineal general, del cual derivan el resto de procesos que hemos visto. 
+
+Así, si $p=d=0$, estaremos ante un modelo ARIMA(0, 0, $q$) equivalente a un modelo MA($q$). Si $q=0$ tendríamos un modelo ARIMA($p$, $d$, $0$) ó ARI($p$,$d$) (es decir, un modelo autorregresivo en el que se han tomado $d$ diferencias para hacer estacionaria a la serie analizada).
+
+### Ejemplo demostrativo con R
+
+Vamos a trabajar de nuevo con datos simulados. 
+
+```{r}
+set.seed(250)
+ts=arima.sim(list(order = c(1,1,2), 
+                  ma=c(0.32,0.47), 
+                  ar=0.8), n = 50)+20
+```
+
+A continuación, dibujamos la serie temporal original y sus acf y pacf. 
+
+```{r}
+m <- matrix(c(1, 3, 2, 3), ncol = 2)
+nf <- layout(m)
+plot.ts(ts)
+acf(ts)
+pacf(ts)
+```
+
+
+La serie original muestra una clara no estacionariedad; el acf muestra una disminución lenta y el pacf indica un AR de orden uno. 
+
+Vamos a diferenciar la serie para ver si logramos eliminar la tencia.
+
+```{r}
+par(mfrow=c(1,2))
+y=diff(ts)
+plot(y)
+acf(y)
+```
+
+Los datos de la primera diferencia parecen estacionarios. El ACF se corta después de algunos rezagos. 
+
+Dado que se necesitó una diferenciación para obtener la estacionariedad, aquí $d$ = 1
+
+
+El siguiente paso es proponer los valores de $p$, el orden de la parte AR. Vemos que el PACF de la serie original se corta en uno y el ACF de la serie diferenciada se corta después del rezago 2. Así que proponemos tres modelos para los datos diferenciados: 
+
+* ARIMA(1,1,0)
+
+* ARIMA(0,1,2)
+
+* ARIMA(1,1,2)
+
+Ajustamos los tres modelos ARIMA con las primeras 40 observaciones y dejamos las últimas 10 para pronosticar
+
+```{r}
+## Partición en training y test
+train=ts[1:40]
+test=ts[41:50]
+
+## ajustamos los modelos
+arimaModel_1=arima(train, order=c(1,1,0))
+arimaModel_2=arima(train, order=c(0,1,2))
+arimaModel_3=arima(train, order=c(1,1,2))
+
+## revisamos los parámetros ajustados
+print(arimaModel_1);print(arimaModel_2);print(arimaModel_3)
+
+```
+
+Observa que el signo de los coeficientes estimados por R es consistente con la fórmula de la simulación del ARIMA. Observa las varianzas de los términos de error de cada modelo y el AIC, de acuerdo a estos, el mejor modelo es el 3.
+
+Veamos las predicciones sobre las observaciones que no hemos utilizado para ajustar los parámetros
+
+```{r}
+#Modelo 1
+ts.plot(ts)
+forecast1=predict(arimaModel_1, 10)$pred
+forecast1_se=predict(arimaModel_1, 10)$se
+points(forecast1, type = "l", col = "red")
+points(forecast1 - 2*forecast1_se, type = "l", col = "green", lty = 2)
+points(forecast1 + 2*forecast1_se, type = "l", col = "green", lty = 2)
+
+
+#Modelo 2
+ts.plot(ts)
+forecast2=predict(arimaModel_2, 10)$pred
+forecast2_se=predict(arimaModel_2, 10)$se
+points(forecast2, type = "l", col = "red")
+points(forecast2 - 2*forecast2_se, type = "l", col = "green", lty = 2)
+points(forecast2 + 2*forecast2_se, type = "l", col = "green", lty = 2)
+
+#Modelo 3
+ts.plot(ts)
+forecast3=predict(arimaModel_3, 10)$pred
+forecast3_se=predict(arimaModel_3, 10)$se
+points(forecast3, type = "l", col = "red")
+points(forecast3 - 2*forecast3_se, type = "l", col = "green", lty = 2)
+points(forecast3 + 2*forecast3_se, type = "l", col = "green", lty = 2)
+```
+
+
+Vemos que el segundo modelo tiene una ejecución similar al tres, a pesar de no tener el mejor valor de probabilidad de AIC. Por tanto, necesitamos medidas de la precisión de las estimaciones: 
+
+```{r}
+accuracy(forecast2, test)
+accuracy(forecast3, test)
+```
+
+Donde cada medida es:
+
+* ME error medio
+
+* RMSE error cuadrático medio
+
+* MAE error absoluto medio
+
+* MPE error porcentual medio
+
+* MAPE error porcentual absoluto medio
+
+ Depende de cada caso decidir, basándose en las medidas de precisión, si considera que el modelo es adecuado o no. Por ejemplo, el error porcentual medio de 14,4% no me parece grande, pero eso puede depender de cuáles son las series y cuánta previsibilidad podemos esperar de manera realista.
+ 
+ Pero cuidado! nos falta revisar los residuos !!!
+ 
+```{r}
+arimaModel_2 %>% checkresiduals(test = F)
+arimaModel_3 %>% checkresiduals(test = F)
+
+```
+ 
+Conclusión: Mejor es el modelo 3, tal como lo habíamos simulado ;-)
+
+
+### Ejemplo con datos reales
+
+Vamos a analizar un fichero de datos que contiene la edad en que murieron los reyes sucesivos de Inglaterra comenzando con William el conquistador, en total son 42 reyes. 
+
+Según otra fuente consultada, 
+[wikipedia](https://en.wikipedia.org/wiki/List_of_British_monarchs_by_longevity), William fue el sexto rey y murió en 1837 a los 71 años, sin embargo, el fichero indica 60 años.
+
+Los datos se obtuvieron de un fichero publicado en el artículo "Interactive Data Anlaysis: A Practical Primer" de Don McNeil, publicado el 4 de mayo de 1977.
+
+```{r, echo=FALSE}
+kings <- scan("datos/edad_muerte_reyes_Inglaterra.txt")
+```
+
+```{r}
+edad_muerte=ts(kings)
+edad_muerte
+```
+
+
+¿La serie es estacionaria?
+
+```{r, echo=TRUE,fig.height=4}
+plot.ts(edad_muerte, xlab= "Dinastía", 
+     ylab="Edad muerte del Rey",
+     main="Longevidad de los Reyes Británicos 
+     según la dinastía")
+```
+
+
+
+Vamos a diferenciar la serie:
+
+```{r, echo=TRUE,fig.height=4.5}
+diff_o1 <- diff(edad_muerte, differences=1)
+plot.ts(diff_o1)
+```
+
+
+La serie temporal de las primeras diferencias parece ser estacionaria en la media y la varianza, por lo que un modelo ARIMA($p$,1,$q$) es probablemente apropiado para la serie temporal de la edad de la muerte de los reyes de Inglaterra. 
+
+Al tomar las series de tiempo de las primeras diferencias, hemos eliminado el componente de tendencia y nos quedamos con un componente irregular. 
+
+Ahora podemos examinar si hay correlaciones entre los términos sucesivos de este componente irregular.  Si es así, esto podría ayudarnos a hacer un modelo predictivo para las edades de la muerte de los reyes.
+
+
+
+```{r, echo=TRUE,fig.height=5}
+par(mfrow=c(1,2))
+acf(diff_o1, lag.max = 20) # si especificamos plot=FALSE podemos obtener los valores
+pacf(diff_o1, lag.max = 20)
+```
+
+
+
+Los modelos posibles son:
+
+* ARMA(3,0) es decir, un modelo autorregresivo de orden $p = 3$, ya que el autocorrelograma parcial es cero después del retraso 3, y el autocorrelograma se reduce a cero (aunque quizás muy bruscamente para que este modelo sea apropiado).
+
+* ARMA(0,1) un modelo de media móvil de orden $q = 1$, ya que el autocorrelograma es cero después del desfase 1 y el autocorrelograma parcial se reduce a cero.
+
+* ARMA(p,q) un modelo mixto con $p$ y $q$ mayores que 0, ya que el autocorrelograma y el correlograma parcial se reducen a cero (aunque el correlograma probablemente se reduce a cero abruptamente para que este modelo sea apropiado)
+
+
+
+```{r}
+modelo1 = arima(diff_o1, order=c(3,0,0))
+modelo2 = arima(diff_o1, order=c(0,0,1))
+modelo3 = arima(diff_o1, order=c(3,0,1))
+AIC(modelo1,modelo2,modelo3)
+BIC(modelo1,modelo2,modelo3)
+```
+
+
+
+
+```{r,fig.align='center'}
+par(mfrow=c(1,2))
+plot(modelo2$residuals)
+qqnorm(modelo2$residuals)
+qqline(modelo2$residuals,col="red")
+```
+
+
+
+```{r, echo=FALSE, fig.height=3}
+par(mfrow=c(1,2))
+acf(modelo2$residuals, lag.max = 20)
+pacf(modelo2$residuals, lag.max = 20)
+```
+
+```{r}
+modelo2$coef
+```
+
+
+
+Un modelo de MA (promedio móvil) se usa generalmente para modelar una serie de tiempo que muestra dependencias a corto plazo entre observaciones sucesivas.
+
+De manera intuitiva, tiene sentido que se pueda usar un modelo de MA para describir el componente irregular en las series de tiempo de la muerte de los reyes ingleses, ya que podríamos esperar que la edad de un rey inglés en particular tenga algún efecto en las edades de muerte del próximo rey o dos, pero no mucho efecto en las edades en la muerte de los reyes que
+reinarán mucho más tiempo después de eso.
+
+Dado que un modelo ARMA(0,1) (con $p = 0$, $q = 1$) se considera el mejor modelo candidato para la serie temporal de las primeras diferencias de las edades de muerte de los reyes ingleses, la serie temporal original del las edades de muerte se pueden modelar con un  **ARIMA(0,1,1)**.
+
+Vamos a usar a función `auto.arima()` de la librería `forecast` para confirmar nuestra selección.
+
+
+
+```{r}
+library(forecast)
+auto.arima(edad_muerte)
+```
+
+
+
+Podemos usar el modelo ARIMA para hacer pronósticos de valores futuros de la serie de tiempo, usando la función ``forecast.Arima()`` del paquete ``forecast``. 
+
+Por ejemplo, para pronosticar las edades al morir de los próximos cinco reyes ingleses, escribimos:
+
+```{r}
+pronostico=forecast(arima(edad_muerte, order=c(0,1,1)), h=5)
+pronostico
+```
+
+
+```{r}
+plot(pronostico)
+```
+
+### Ljung Box test
+
+El test Ljung Box se utiliza para contrastar la ausencia de autocorrelación en una serie, hasta un retardo específico $k$.
+
+El test determina si los errores, luego de ajustar el modelo son independientes e idénticamente distribuidos (ruido blanco) o si existe alguna estructura más en ellos. En otras palabras, si las autocorrelaciones de los errores no son cero.
+
+Un $p$-valor significativo (< 0.05) indica rechazar la hipótesis nula, es decir la serie presenta autocorrelación.
+
+El estadístico del test para una serie de longitud $n$ es:
+$$Q(m)=n(n+2)\sum_{j=1}^{m} \frac{r_j^2}{n-j},$$
+donde:
+
+* $r_j$ son las autocorrelaciones muestrales
+
+* $m$ es el tiempo de retardo.
+
+
+Rechazamos $H_0$ si $Q > \chi_{1-\alpha,\nu}^2$, donde:
+
+* $\chi_{1-\alpha,\nu}^2$ es el cuantil de la distribución ji-cuadrado para el nivel de significancia $\alpha$ y $\nu$ los grados de libertad.
+
+Cuando se aplica el test Ljung Box a los residuos de un modelo ARIMA, los grados de libertad $\nu$ son $m-p-q$, donde $p$ y $q$  son los parámetros del  ARIMA(p,q) model. En `R` el test está implementaddo en la función `Box.test`.
+
+```{r}
+Box.test(residuals(modelo2),lag=2)
+```
+
+### Procesos estacionales: SARIMAs
+
+Otra causa de no estacionaridad es la estacionalidad. 
+
+Por ejemplo, en una serie mensual con estacionalidad anual, cada mes tiene una media distinta, con lo cual la media no es estable.
+
+En muchos casos, un proceso estacional se convierte en estacionario al tomar un número $D$ de diferencias estacionales.
+
+Para detectar un comportamiento estacional podemos analizar las ACF y PACF de la serie. 
+
+
+Si al representar dichas funciones se aprecian valores muy altos, significativamente distintos de cero, para los retardos estacionales podremos concluir que la serie presenta un componente estacional y debemos exigir que el componente estacional se mantenga constante a lo largo del tiempo.
+
+
+Así, si observamos que la ACF presenta un lento decaimiento en los valores correspondientes a los retardos estacionales y el valor del primer retardo estacional es próximo a uno tanto en ACF como PACF, es muy probable que el comportamiento estacional de la serie no presente un carácter estacionario, por lo que será necesario tomar diferencias de tipo estacional.
+
+
+
+Los ARIMAs estacionales tienen las siguientes características:
+
+* Contienen una componente ARIMA($P$,$D$,$Q$) que modeliza la dependencia estacional.
+
+* Contienen otra componente ARIMA($p$,$d$,$q$) que modeliza la dependencia regular, que es la dependencia asociada a observaciones consecutivas.
+
+* El proceso diferenciado $w_t=\nabla^D \nabla^d y_t$ es un proceso estacionario que sigue el modelo ARMA estacional.
+
+Este proceso se denota como 
+
+<p align="center">
+**ARIMA**$\underbrace{(p,d,q)}_{parte \,\, regular} \times \underbrace{(P,D,Q,)}_{parte \,\,estacional}$
+</p>
+
+[*Ejemplo de ajuste de un SARIMA*]{style="color: blue;"}
+
+Consideremos los datos del fichero `papel` que corresponden a las ventas mensuales de papel correspondiente a 10 años.
+
+```{r,fig.height=4}
+papel=scan("datos/papel.txt")
+plot(papel,ylab='Venta papel',xlab='Tiempo',type='o',pch=16)
+```
+
+
+```{r}
+dpapel = diff(papel,1)
+par(mfrow=c(2,1))
+plot(dpapel,ylab='Valores',xlab='Tiempo',type='l',pch=16,main="Serie sin tendencia")
+acf(dpapel,60,main="")
+```
+
+
+
+```{r}
+par(mfrow=c(2,1))
+d12dpapel = diff(dpapel,12)
+plot(d12dpapel,ylab='Serie',xlab='Tiempo',type='l',pch=16,
+     main="Serie sin tendencia y desestacionalizada")
+
+acf(d12dpapel,60,main="Ventas de papel desestacionalizada y diferenciada")
+pacf(d12dpapel,60,main="")
+```
+
+
+La PACF muestra decaimiento exponencial mientras que el acf muestra un pico
+bastante significativo y aislado en el retardo 1, entonces debe tratarse de un MA(1). Además de este pico, sigue apareciendo en el retardo 12 de ambas autocorrelaciones, aún hay un remanente de estacionalidad, lo que sugiere agregar un MA(1) estacional.
+
+```{r}
+a=c(0,1,1)
+(modelo=arima(papel,a,seasonal=list(order=a,period=12)))
+```
+
+
+```{r}
+pronostico=forecast(modelo, h=20)
+plot(pronostico)
+```
+
+
+```{r}
+tsdiag(modelo)
+```
