@@ -2,38 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://aprender-uib.github.io/AD/index.html</loc>
-    <lastmod>2023-12-11T12:57:25.030Z</lastmod>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/intro.html</loc>
-    <lastmod>2023-12-11T12:57:25.124Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/t1_intro.html</loc>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/EM.html</loc>
-    <lastmod>2023-12-11T12:57:25.189Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/t2_em.html</loc>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/Inferencia.html</loc>
-    <lastmod>2023-12-11T12:57:25.189Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/t3_inferencia.html</loc>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/ACP.html</loc>
-    <lastmod>2023-12-11T12:57:25.220Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/t4_trd.html</loc>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/MDS.html</loc>
-    <lastmod>2023-12-11T12:57:25.235Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/t5_clustering.html</loc>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/Clustering.html</loc>
-    <lastmod>2023-12-11T12:57:25.250Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/t6_series_temporales.html</loc>
+    <lastmod>2024-04-24T15:39:45.428Z</lastmod>
   </url>
   <url>
-    <loc>https://aprender-uib.github.io/AD/Series_temporales.html</loc>
-    <lastmod>2023-12-11T12:57:25.313Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aprender-uib.github.io/AD/references.html</loc>
-    <lastmod>2023-12-11T12:57:25.313Z</lastmod>
+    <loc>https://aprender-uib.github.io/AD/referencias.html</loc>
+    <lastmod>2024-03-18T13:04:33.858Z</lastmod>
   </url>
 </urlset>

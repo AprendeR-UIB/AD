@@ -1,38 +1,39 @@
 project:
   type: book
   output-dir: docs
-  
 
 book:
   title: "Análisis de datos"
-  author: "Irene García, Ricardo Alberich, Arnau Mir y Francesc Roselló"
-  date: "10/9/2023"
+  author:
+    - "Irene García"
+    - "Ricardo Alberich"
+    - "Arnau Mir"
+    - "Francesc Rosselló"
+    - "Marcos Oliva"
+  date: last-modified
   reader-mode: true
   page-footer:
     left: |
       Análisis de Datos UIB
     right: |
      Este libro se ha creado con  <a href="https://quarto.org/">Quarto</a>.
-  cover-image: atlas.jpeg
-  favicon: atlas.jpeg
+  cover-image: Figuras/atlas.jpeg
+  favicon: Figuras/atlas.jpeg
   site-url: https://aprender-uib.github.io/AD
-  repo-url: https://github.com/AprendeR-UIB/AD/Enlaces
+  repo-url: https://github.com/AprendeR-UIB/AD
   repo-branch: main
   repo-actions: [edit, issue]
   chapters:
     - index.qmd
-    - intro.qmd
-    - EM.qmd
-    - Inferencia.qmd
-    - ACP.qmd
-    - MDS.qmd
-    - Clustering.qmd
-    - Series_temporales.qmd
-    - references.qmd
-    
-    
+    - t1_intro.qmd
+    - t2_em.qmd
+    - t3_inferencia.qmd
+    - t4_trd.qmd
+    - t5_clustering.qmd
+    - t6_series_temporales.qmd
+    - referencias.qmd
 
-bibliography: references.bib
+bibliography: referencias.bib
 
 format:
   html:

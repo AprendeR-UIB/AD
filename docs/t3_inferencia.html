@@ -1,0 +1,2351 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ES" xml:lang="ES"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Análisis de datos - 3&nbsp; Inferencia multivariante en poblaciones normales</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./t4_trd.html" rel="next">
+<link href="./t2_em.html" rel="prev">
+<link href="./Figuras/atlas.jpeg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./t3_inferencia.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferencia multivariante en poblaciones normales</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Análisis de datos</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/AprendeR-UIB/AD" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo lector">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Presentación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./t1_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introducción al Análisis de Datos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./t2_em.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Análisis Multivariante</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./t3_inferencia.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferencia multivariante en poblaciones normales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./t4_trd.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de Dimensionalidad</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./t5_clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Agrupamiento (Clustering)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./t6_series_temporales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Series temporales</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#distribuciones-multivariantes" id="toc-distribuciones-multivariantes" class="nav-link active" data-scroll-target="#distribuciones-multivariantes"><span class="header-section-number">3.1</span> Distribuciones multivariantes</a>
+  <ul class="collapse">
+  <li><a href="#distribución-normal-multivariante" id="toc-distribución-normal-multivariante" class="nav-link" data-scroll-target="#distribución-normal-multivariante"><span class="header-section-number">3.1.1</span> Distribución normal multivariante</a></li>
+  <li><a href="#distribución-de-wishart" id="toc-distribución-de-wishart" class="nav-link" data-scroll-target="#distribución-de-wishart"><span class="header-section-number">3.1.2</span> Distribución de Wishart</a></li>
+  <li><a href="#distribución-de-hotelling" id="toc-distribución-de-hotelling" class="nav-link" data-scroll-target="#distribución-de-hotelling"><span class="header-section-number">3.1.3</span> Distribución de Hotelling</a></li>
+  <li><a href="#distribución-de-wilks" id="toc-distribución-de-wilks" class="nav-link" data-scroll-target="#distribución-de-wilks"><span class="header-section-number">3.1.4</span> Distribución de Wilks</a></li>
+  <li><a href="#relaciones-entre-wilks-hotelling-y-f" id="toc-relaciones-entre-wilks-hotelling-y-f" class="nav-link" data-scroll-target="#relaciones-entre-wilks-hotelling-y-f"><span class="header-section-number">3.1.5</span> Relaciones entre Wilks, Hotelling y F</a></li>
+  <li><a href="#distribución-multinomial" id="toc-distribución-multinomial" class="nav-link" data-scroll-target="#distribución-multinomial"><span class="header-section-number">3.1.6</span> Distribución multinomial</a></li>
+  </ul></li>
+  <li><a href="#distribuciones-con-marginales-dadas-opcional" id="toc-distribuciones-con-marginales-dadas-opcional" class="nav-link" data-scroll-target="#distribuciones-con-marginales-dadas-opcional"><span class="header-section-number">3.2</span> Distribuciones con marginales dadas (OPCIONAL)</a></li>
+  <li><a href="#introducción-a-la-inferencia-multivariante" id="toc-introducción-a-la-inferencia-multivariante" class="nav-link" data-scroll-target="#introducción-a-la-inferencia-multivariante"><span class="header-section-number">3.3</span> Introducción a la inferencia multivariante</a>
+  <ul class="collapse">
+  <li><a href="#conceptos-básicos" id="toc-conceptos-básicos" class="nav-link" data-scroll-target="#conceptos-básicos"><span class="header-section-number">3.3.1</span> Conceptos básicos</a></li>
+  <li><a href="#estimación-de-medias-y-covarianzas" id="toc-estimación-de-medias-y-covarianzas" class="nav-link" data-scroll-target="#estimación-de-medias-y-covarianzas"><span class="header-section-number">3.3.2</span> Estimación de medias y covarianzas</a></li>
+  </ul></li>
+  <li><a href="#contraste-de-hipótesis-multivariantes" id="toc-contraste-de-hipótesis-multivariantes" class="nav-link" data-scroll-target="#contraste-de-hipótesis-multivariantes"><span class="header-section-number">3.4</span> Contraste de hipótesis multivariantes</a>
+  <ul class="collapse">
+  <li><a href="#test-sobre-la-media-una-población" id="toc-test-sobre-la-media-una-población" class="nav-link" data-scroll-target="#test-sobre-la-media-una-población"><span class="header-section-number">3.4.1</span> Test sobre la media: una población</a></li>
+  <li><a href="#test-sobre-la-media-dos-poblaciones" id="toc-test-sobre-la-media-dos-poblaciones" class="nav-link" data-scroll-target="#test-sobre-la-media-dos-poblaciones"><span class="header-section-number">3.4.2</span> Test sobre la media: dos poblaciones</a></li>
+  <li><a href="#comparación-de-varias-medias" id="toc-comparación-de-varias-medias" class="nav-link" data-scroll-target="#comparación-de-varias-medias"><span class="header-section-number">3.4.3</span> Comparación de varias medias</a></li>
+  <li><a href="#teorema-de-cochran" id="toc-teorema-de-cochran" class="nav-link" data-scroll-target="#teorema-de-cochran"><span class="header-section-number">3.4.4</span> Teorema de Cochran</a></li>
+  </ul></li>
+  <li><a href="#construcción-de-contrastes-de-hipótesis" id="toc-construcción-de-contrastes-de-hipótesis" class="nav-link" data-scroll-target="#construcción-de-contrastes-de-hipótesis"><span class="header-section-number">3.5</span> Construcción de contrastes de hipótesis</a>
+  <ul class="collapse">
+  <li><a href="#razón-de-verosimilitud" id="toc-razón-de-verosimilitud" class="nav-link" data-scroll-target="#razón-de-verosimilitud"><span class="header-section-number">3.5.1</span> Razón de verosimilitud</a></li>
+  </ul></li>
+  <li><a href="#ejemplos" id="toc-ejemplos" class="nav-link" data-scroll-target="#ejemplos"><span class="header-section-number">3.6</span> Ejemplos</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/AprendeR-UIB/AD/edit/main/t3_inferencia.qmd" class="toc-action"><i class="bi bi-github"></i>Editar esta página</a></li><li><a href="https://github.com/AprendeR-UIB/AD/issues/new" class="toc-action"><i class="bi empty"></i>Informar de un problema</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Inferencia multivariante en poblaciones normales</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Para la exploración de datos multivariantes, no empleamos modelos formales para dar respuestas a las preguntas formuladas, sin embargo, en algunas situaciones es posible ajustar modelos “formales” para probar una hipótesis sobre los parámetros de la función de densidad de probabilidad de esa población.</p>
+<p>La función de densidad de probabilidad asumida casi universalmente como la base de las inferencias para los datos multivariantes es la normal multivariante.</p>
+<p>En esta parte, nos apoyaremos en el libro “Nuevos Métodos de Análisis Multivariante” del profesor <a href="https://scholar.google.es/citations?user=1N2XrJ4AAAAJ&amp;hl=es">Carles M. Cuadras</a>, catedrático de Estadística (1980-2009) y emérito (2009-2015) de la Universidad de Barcelona. Trabajaremos con la versión revisada en marzo de 2018, capítulos 2 y 3 <span class="citation" data-cites="cuadras">(véase <a href="referencias.html#ref-cuadras" role="doc-biblioref">Cuadras 2014</a>)</span>.</p>
+<!-- ## Introducción -->
+<!-- Los datos en AM suelen provenir de una población caracterizada por una distribución multivariante.  -->
+<!-- Como en el caso de una matriz de datos, es importante el vector de -->
+<!-- medias -->
+<!-- $$\boldsymbol{\mu}=(E(X_1),\ldots,E(X_p))',$$ -->
+<!-- donde $E(X_j)$ es la esperanza de la variable marginal $X_j$, y ma -->
+<!-- matriz de covarianzas $\mathbf{\Sigma}=(\sigma_{ij})$, siendo -->
+<!-- $\sigma_{ij}=cov(X_i,X_j), \sigma_{ii}=var(X_i)$. Teniendo en cuenta que -->
+<!-- los elementos de la matriz -->
+<!-- $(\mathbf{X}-\boldsymbol{\mu})(\mathbf{X}-\boldsymbol{\mu})'$, de orden -->
+<!-- $p\times p$, son $(X_i-\mu_i)(X_j-\mu_j)$ y que -->
+<!-- $cov(X_i,X_j)=E\left((X_i-\mu_i)(X_j-\mu_j)\right)$, la matriz de -->
+<!-- covarianzas $\mathbf{\Sigma}=(\sigma_{ij})$ es -->
+<!-- $$\mathbf{\Sigma}=E\left((\mathbf{X}-\boldsymbol{\mu})(\mathbf{X}-\boldsymbol{\mu})'\right).$$ -->
+<!-- En este capítulo introducimos y estudiamos la distribución normal -->
+<!-- multivariante y tres distribuciones relacionadas con las muestras -->
+<!-- multivariantes: Wishart, Hotelling y Wilks. -->
+<section id="distribuciones-multivariantes" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="distribuciones-multivariantes"><span class="header-section-number">3.1</span> Distribuciones multivariantes</h2>
+<section id="distribución-normal-multivariante" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="distribución-normal-multivariante"><span class="header-section-number">3.1.1</span> Distribución normal multivariante</h3>
+<section id="definición" class="level4" data-number="3.1.1.1">
+<h4 data-number="3.1.1.1" class="anchored" data-anchor-id="definición"><span class="header-section-number">3.1.1.1</span> Definición</h4>
+<p>Sea <span class="math inline">\(X\)</span> una variable aleatoria con distribución <span class="math inline">\(N(\mu,\sigma^2)\)</span>, es decir, con media <span class="math inline">\(\mu\)</span> y varianza <span class="math inline">\(\sigma^2\)</span>. La función de densidad es:</p>
+<p><span id="eq-1"><span class="math display">\[f(x;\mu,\sigma^2)=\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}(x-\mu)^2/\sigma^2}=\frac{(\sigma^2)^{-1/2}}{\sqrt{2\pi}}e^{-\frac{1}{2}(x-\mu)^2/\sigma^2}. \tag{3.1}\]</span></span></p>
+<p>Evidentemente se verifica</p>
+<p><span id="eq-2"><span class="math display">\[X=\mu+\sigma Y\quad\text{siendo}\quad Y\sim N(0,1), \tag{3.2}\]</span></span></p>
+<p>donde el símbolo <span class="math inline">\(\sim\)</span> significa “distribuido como”. Vamos a introducir la distribución normal multivariante <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> como una generalización de la normal univariante. Por una parte, <a href="#eq-1" class="quarto-xref">Ecuación&nbsp;<span>3.1</span></a> sugiere definir la densidad de <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_p)'\sim N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> según</p>
+<p><span id="eq-3"><span class="math display">\[f(\mathbf{x};\boldsymbol{\mu},\mathbf{\Sigma})=\frac{|\mathbf{\Sigma}|^{-1/2}}{\left(\sqrt{2\pi}\right)^p}e^{-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})}, \tag{3.3}\]</span></span></p>
+<p>siendo <span class="math inline">\(\mathbf{x}=(x_1,\ldots,x_p)'\)</span>, <span class="math inline">\(\boldsymbol{\mu}=(\mu_1,\ldots,\mu_p)\)</span> y <span class="math inline">\(\mathbf{\Sigma}=(\sigma_{ij})\)</span> una matriz definida positiva, que como veremos, es la matriz de covarianzas. Por otra parte, <a href="#eq-2" class="quarto-xref">Ecuación&nbsp;<span>3.2</span></a> sugiere definir la distribución <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_p)'\sim N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> como una combinación lineal de <span class="math inline">\(p\)</span> variables <span class="math inline">\(Y_1,\ldots,Y_p\)</span> independientes con distribución <span class="math inline">\(N(0,1)\)</span></p>
+<p><span id="eq-4"><span class="math display">\[\begin{align*}
+  X_1 &amp; = &amp; \mu_1+a_{11}Y_1&amp;+\cdots+a_{1p}Y_p,\\
+  \vdots &amp; &amp; &amp; \vdots \\
+  X_p &amp; = &amp; \mu_p+a_{p1}Y_1&amp;+\cdots+a_{pp}Y_p,
+\end{align*} \tag{3.4}\]</span></span></p>
+<p>que podemos escribir como</p>
+<p><span id="eq-5"><span class="math display">\[\mathbf{X}=\boldsymbol{\mu}+\mathbf{AY} \tag{3.5}\]</span></span></p>
+<p>siendo <span class="math inline">\(\mathbf{Y}=(Y_1,\ldots,Y_p)'\)</span> y <span class="math inline">\(A=(a_{ij})\)</span> una matriz <span class="math inline">\(p\times p\)</span> que verifica <span class="math inline">\(\mathbf{AA'}=\mathbf{\Sigma}\)</span>.</p>
+<div id="prp-1" class="theorem proposition">
+<p><span class="theorem-title"><strong>Proposición 3.1</strong></span> Las dos definiciones <a href="#eq-3" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a> y <a href="#eq-4" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a> son equivalentes.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Prueba</em>. </span>Según la fórmula del cambio de variable</p>
+<p><span class="math display">\[f_X(x_1,\ldots,x_p)=f_Y(y_1(x),\ldots,y_p(x))\left|\frac{\partial y}{\partial x}\right|,\]</span></p>
+<p>Siendo <span class="math inline">\(y_i=y_i(x_1,\ldots,x_p),\ i=1,\ldots,p\)</span>, el cambio y <span class="math inline">\(J=\frac{\partial y}{\partial x}\)</span> el jacobiano del cambio. De <a href="#eq-5" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a> tenemos</p>
+<p><span class="math display">\[\mathbf{y}=\mathbf{A}^{-1}(\mathbf{x}-\boldsymbol{\mu})\Rightarrow\left|\frac{\partial y}{\partial x}\right|=\left|\mathbf{A}^{-1}\right|\]</span></p>
+<p>y como las <span class="math inline">\(p\)</span> variable <span class="math inline">\(Y_i\)</span> son <span class="math inline">\(N(0,1)\)</span> independientes:</p>
+<p><span id="eq-6"><span class="math display">\[f_X(x_1,\ldots,x_p)=\left(1/\sqrt{2\pi}\right)^pe^{-\frac{1}{2}\sum^p_{i=1}y_i^2}|\mathbf{A}^{-1}|. \tag{3.6}\]</span></span></p>
+<p>Pero <span class="math inline">\(\mathbf{\Sigma}^{-1}=(\mathbf{A}^{-1})'(\mathbf{A}^{-1})\)</span> y por lo tanto</p>
+<p><span id="eq-7"><span class="math display">\[\mathbf{y'y}=(\mathbf{x}-\boldsymbol{\mu})'(\mathbf{A}^{-1})'(\mathbf{A}^{-1})(\mathbf{x}-\boldsymbol{\mu})=(\mathbf{x}-\boldsymbol{\mu})'(\mathbf{\Sigma}^{-1})(\mathbf{x}-\boldsymbol{\mu}). \tag{3.7}\]</span></span></p>
+<p>Sustituyendo <a href="#eq-7" class="quarto-xref">Ecuación&nbsp;<span>3.7</span></a> en <a href="#eq-6" class="quarto-xref">Ecuación&nbsp;<span>3.6</span></a> y de <span class="math inline">\(|\mathbf{A}|^{-1}=|\mathbf{\Sigma}|^{-1/2}\)</span> obtenemos <a href="#eq-3" class="quarto-xref">Ecuación&nbsp;<span>3.3</span></a>.</p>
+</div>
+</section>
+<section id="propiedades" class="level4" data-number="3.1.1.2">
+<h4 data-number="3.1.1.2" class="anchored" data-anchor-id="propiedades"><span class="header-section-number">3.1.1.2</span> Propiedades</h4>
+<ol type="1">
+<li>De <a href="#eq-5" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a> es inmediato que <span class="math inline">\(E(\mathbf{X})=\boldsymbol{\mu}\)</span> y que la matriz de covarianzas es</li>
+</ol>
+<p><span class="math display">\[E[(\mathbf{X}-\boldsymbol{\mu})(\mathbf{X}-\boldsymbol{\mu})']=E(\mathbf{AYY'A'})=\mathbf{AI}_p\mathbf{A'}=\mathbf{\Sigma}.\]</span></p>
+<ol start="2" type="1">
+<li>La distribución de cada marginal <span class="math inline">\(X_i\)</span> es normal multivariante:</li>
+</ol>
+<p><span class="math display">\[X_i\sim N(\mu_i,\sigma_{ii}),\quad i=1,\ldots,p.\]</span></p>
+<p>Es consecuencia de la definición <a href="#eq-4" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a>.</p>
+<ol start="3" type="1">
+<li>La combinación lineal de todas las variables <span class="math inline">\(X_1,\ldots,X_p\)</span></li>
+</ol>
+<p><span class="math display">\[Z=b_0+b_1X_1+\cdots+b_pX_p\]</span></p>
+<p>es también normal univariante. En efecto, de <a href="#eq-4" class="quarto-xref">Ecuación&nbsp;<span>3.4</span></a> resulta que <span class="math inline">\(Z\)</span> es combinación lineal de <span class="math inline">\(N(0,1)\)</span> independientes.</p>
+<ol start="4" type="1">
+<li>Si <span class="math inline">\(\mathbf{\Sigma}=diag(\sigma_{11},\ldots,\sigma_{pp})\)</span> es matriz diagonal, es decir, <span class="math inline">\(\sigma_{ij}=0,i\not=j\)</span>, entonces las variables <span class="math inline">\((X_1,\ldots,X_p)\)</span> son estocásticamente independientes. En efecto, la función de densidad conjunta resulta igual al producto de las funciones de densidad marginales:</li>
+</ol>
+<p><span class="math display">\[f(X_1,\ldots,x_p;\boldsymbol{\mu},\mathbf{\Sigma})=f(   x_1;\mu_1,\sigma_{11})\times\cdots\times f(x_p;\mu_p,\sigma_{pp})\]</span></p>
+<ol start="5" type="1">
+<li>La distribución de la forma cuadrática</li>
+</ol>
+<p><span class="math display">\[U=(\mathbf{x}-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\]</span></p>
+<p>es ji-cuadrado con <span class="math inline">\(p\)</span> grados de libertad. En efecto, de <a href="#eq-5" class="quarto-xref">Ecuación&nbsp;<span>3.5</span></a> <span class="math inline">\(U=\mathbf{Y'Y}=\sum_{i=1}^pY_i^2\)</span> es suma de los cuadrados de <span class="math inline">\(p\)</span> variables <span class="math inline">\(N(0,1)\)</span> independientes.</p>
+</section>
+<section id="caso-bivariante" class="level4" data-number="3.1.1.3">
+<h4 data-number="3.1.1.3" class="anchored" data-anchor-id="caso-bivariante"><span class="header-section-number">3.1.1.3</span> Caso bivariante</h4>
+<p>Cuando <span class="math inline">\(p=2\)</span>, la función de densidad de la normal bivariante se puede expresar en función de medias y varianzas <span class="math inline">\(\mu_1,\sigma^2_1,\mu_2,\sigma^2_2\)</span> y del coeficiente de correlación <span class="math inline">\(\rho=cor(X_1,X_2)\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+f(x_1,x_2) &amp; =\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}\\
+&amp; \times exp\left[-\frac{1}{2}\frac{1}{1-\rho^2}\left\{\frac{(x_1-\mu_1)^2}{\sigma^2_1}-2\rho\frac{(x_1-\mu_1)}{\sigma_1}\frac{(x_2-\mu_2)}{\sigma_2}+\frac{(x_2-\mu_2)^2}{\sigma^2_2}\right\}\right],
+\end{align*}\]</span></p>
+<p>siendo <span class="math inline">\(-1&lt;\rho&lt;+1\)</span> <a href="#fig-1" class="quarto-xref">Figura&nbsp;<span>3.1</span></a>. Se verifica:</p>
+<ol type="1">
+<li>Hay independencia estocástica si y sólo si <span class="math inline">\(\rho=0\)</span>.</li>
+<li>La distribución de la variable marginal <span class="math inline">\(X_i\)</span> es <span class="math inline">\(N(\mu_i,\sigma_i^2), i=1,2\)</span>.</li>
+<li>La función de densidad de <span class="math inline">\(X_2\)</span> condicionada a <span class="math inline">\(X_1=x_1\)</span> es</li>
+</ol>
+<p><span class="math display">\[f(x_2|x_1)=\frac{1}{\sigma_2\sqrt{2\pi(1-\rho^2)}}exp\left\{-\frac{[x_2-\mu_2-\rho(\sigma_2/\sigma_1)(x_1-\mu_1)]^2}{2\sigma_2^2(1-\rho^2)}\right\}\]</span></p>
+<p>densidad de la distribución normal <span class="math inline">\(N(\mu_2+\rho(\sigma_2/\sigma_1)(x_1-\mu_1),\sigma_2^2(1-\rho^2)).\)</span></p>
+<div id="fig-1" class="lightbox quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="Figuras/normalBivariante.png" class="lightbox" data-glightbox="description: .lightbox-desc-1" data-gallery="quarto-lightbox-gallery-1"><img src="Figuras/normalBivariante.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.1: Función de densidad de una distribución normal bivariante de medias 1 y 1, desviaciones típicas 2 y 2, coeficiente de correlación 0.8
+</figcaption>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>La regresión es de tipo lineal, es decir, las curvas de regresión de la media</li>
+</ol>
+<p><span class="math display">\[x_2=E(X_2|X_1=x_1),\qquad x_1=E(X_1|X_2=x_2),\]</span></p>
+<p>son las rectas de regresión.</p>
+</section>
+</section>
+<section id="distribución-de-wishart" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="distribución-de-wishart"><span class="header-section-number">3.1.2</span> Distribución de Wishart</h3>
+<p>La distribución de Wishart es la que sigue una matriz aleatoria simétrica definida positiva, generaliza la distribución ji-cuadrado y juega un papel importante en inferencia multivariante. Un ejemplo destacado lo constituye la distribución de la matriz de covarianzas <span class="math inline">\(\mathbf{S}\)</span>, calculada a partir de una matriz de datos donde las filas son observaciones normales multivariantes.</p>
+<div id="def-wishart" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.1</strong></span> Si las filas de la matriz <span class="math inline">\(\mathbf{Z}_{n\times p}\)</span> son independientes <span class="math inline">\(N_p(\mathbf{0},\mathbf{\Sigma})\)</span> entonces diremos que la matriz <span class="math inline">\(\mathbf{Q}=\mathbf{Z'Z}\)</span> es Wishart <span class="math inline">\(W_p(\mathbf{\Sigma},n)\)</span>, con parámetros <span class="math inline">\(\mathbf{\Sigma}\)</span> y <span class="math inline">\(n\)</span> grados de libertad. Cuando <span class="math inline">\(\mathbf{\Sigma}\)</span> es definida positiva y <span class="math inline">\(n\ge p\)</span>, la densidad de <span class="math inline">\(\mathbf{Q}\)</span> es</p>
+<p><span class="math display">\[f(\mathbf{Q})=c|\mathbf{Q}|^{(n-p-1)}exp\left[-\frac{1}{2}tr(\mathbf{\Sigma})^{-1}\mathbf{Q}\right],\]</span></p>
+<p>siendo</p>
+<p><span class="math display">\[c^{-1}=2^{np/2}\pi^{p(p-1)/4}|\mathbf{\Sigma}|^{n/2}\prod_{i=1}^p\Gamma\left[\frac{1}{2}(n+1-i)\right].\]</span></p>
+</div>
+<p><strong>Propiedades:</strong></p>
+<ol type="1">
+<li>Si <span class="math inline">\(\mathbf{Q}_1,\mathbf{Q}_2\)</span> son independientes Wishart <span class="math inline">\(W_p(\mathbf{\Sigma},m),W_p(\mathbf{\Sigma},n)\)</span>, entonces la suma <span class="math inline">\(\mathbf{Q}_1+\mathbf{Q}_2\)</span> también es Wishart <span class="math inline">\(W_p(\mathbf{\Sigma},m+n)\)</span>.</li>
+<li>Si <span class="math inline">\(\mathbf{Q}\)</span> es <span class="math inline">\(W_p(\mathbf{\Sigma},n)\)</span>, y separamos las <span class="math inline">\(p\)</span> variables en dos conjuntos de <span class="math inline">\(p_1\)</span> y <span class="math inline">\(p_2\)</span> variables, y consideramos las particiones correspondientes de <span class="math inline">\(\mathbf{\Sigma}\)</span> y <span class="math inline">\(\mathbf{Q}\)</span></li>
+</ol>
+<p><span class="math display">\[\mathbf{\Sigma}=\left( \begin{array}{cc}
+\mathbf{\Sigma}_{11} &amp; \mathbf{\Sigma}_{12} \\
+\mathbf{\Sigma}_{21} &amp; \mathbf{\Sigma}_{22}
+\end{array} \right),\qquad
+\mathbf{Q}=\left( \begin{array}{cc}
+\mathbf{Q}_{11} &amp; \mathbf{Q}_{12} \\
+\mathbf{Q}_{21} &amp; \mathbf{Q}_{22}
+\end{array} \right),\]</span></p>
+<p>entonces <span class="math inline">\(\mathbf{Q}_{11}\)</span> es <span class="math inline">\(W_{p_1}(\mathbf{\Sigma}_{11},n)\)</span> y <span class="math inline">\(\mathbf{Q}_{22}\)</span> es <span class="math inline">\(W_{p_2}(\mathbf{\Sigma}_{22},n)\)</span>.</p>
+<ol start="3" type="1">
+<li>Si <span class="math inline">\(\mathbf{Q}\)</span> es <span class="math inline">\(W_p(\mathbf{\Sigma},n)\)</span>, y <span class="math inline">\(\mathbf{T}\)</span> es una matriz <span class="math inline">\(p\times q\)</span> de constantes, entonces <span class="math inline">\(\mathbf{T'QT}\)</span> es <span class="math inline">\(W_q(\mathbf{T'\Sigma T}, n)\)</span>. En particular, si <span class="math inline">\(\mathbf{t}\)</span> es un vector, entonces</li>
+</ol>
+<p><span class="math display">\[\frac{\mathbf{t'Qt}}{\mathbf{t'\Sigma t}}\sim\chi_n^2.\]</span></p>
+</section>
+<section id="distribución-de-hotelling" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="distribución-de-hotelling"><span class="header-section-number">3.1.3</span> Distribución de Hotelling</h3>
+<p>Indiquemos por <span class="math inline">\(F^m_n\)</span> la distribución F de Fisher-Snedecor, con <span class="math inline">\(m\)</span> y <span class="math inline">\(n\)</span> grados de libertad en el numerador y denominador, respectivamente. La distribución de Hotelling es una generalización multivariante de la distribución t de Student.</p>
+<div id="def-hotelling" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.2</strong></span> Si <span class="math inline">\(\mathbf{y}\)</span> es <span class="math inline">\(N_p(\mathbf{0}, \mathbf{I})\)</span>, independiente de <span class="math inline">\(\mathbf{Q}\)</span> que es Wishart <span class="math inline">\(W_p(\mathbf{I}, m)\)</span>, entonces</p>
+<p><span class="math display">\[T^2 = m\mathbf{y'Q}^{-1}\mathbf{y}\]</span></p>
+<p>sigue la distribución <span class="math inline">\(T^2\)</span> de Hotelling, que se indica por <span class="math inline">\(T^2(p,m)\)</span>.</p>
+</div>
+<p><strong>Propiedades:</strong></p>
+<ol type="1">
+<li>Si <span class="math inline">\(\mathbf{x}\)</span> es <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> independiente de <span class="math inline">\(\mathbf{M}\)</span> que es <span class="math inline">\(W_p(\mathbf{\Sigma}, m)\)</span>, entonces</li>
+</ol>
+<p><span class="math display">\[T^2 = m(\mathbf{x}-\boldsymbol{\mu})'\mathbf{M}^{-1}(\mathbf{x}-\boldsymbol{\mu})\sim T^2(p,m).\]</span></p>
+<ol start="2" type="1">
+<li><span class="math inline">\(T^2\)</span> está directamente relacionada con la distribución F de Fisher-Snedecor</li>
+</ol>
+<p><span class="math display">\[T^2(p,m)\equiv\frac{mp}{m-p+1}F^p_{m-p+1}.\]</span></p>
+<ol start="3" type="1">
+<li>Si <span class="math inline">\(\mathbf{\overline{x}}, \mathbf{S}\)</span> son el vector de medias y la matriz de covarianzas de la matriz <span class="math inline">\(\mathbf{X}_{n\times p}\)</span> con filas independientes <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span>, entonces</li>
+</ol>
+<p><span class="math display">\[(n-1)(\mathbf{\overline{x}}-\boldsymbol{\mu})'\mathbf{S}^{-1}(\mathbf{\overline{x}}-\boldsymbol{\mu})\sim T^2(p,n-1)\]</span></p>
+<p>y por lo tanto</p>
+<p><span class="math display">\[\frac{n-p}{p}(\mathbf{\overline{x}}-\boldsymbol{\mu})'\mathbf{S}^{-1}(\mathbf{\overline{x}}-\boldsymbol{\mu})\sim F^p_{n-p}.\]</span></p>
+<ol start="4" type="1">
+<li>Si <span class="math inline">\(\mathbf{\overline{x}}, \mathbf{S}_1, \mathbf{\overline{y}}, \mathbf{S}_2\)</span> son el vector de medias y la matriz de covarianzas de las matrices <span class="math inline">\(\mathbf{X}_{n_1\times p}, \mathbf{Y}_{n_2\times p}\)</span>, respectivamente, con filas independientes <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span>, y consideramos la estimación conjunta centrada (o insesgada) de <span class="math inline">\(\mathbf{\Sigma}\)</span></li>
+</ol>
+<p><span class="math display">\[\mathbf{\widehat{S}}=(n_1\mathbf{S}_1+n_2\mathbf{S}_2)/(n_1+n_2-2),\]</span></p>
+<p>entonces</p>
+<p><span class="math display">\[T^2=\frac{n_1n_2}{n_1+n_2}(\mathbf{\overline{x}}-\mathbf{\overline{y}})'\mathbf{\widehat{S}}^{-1}(\mathbf{\overline{x}}-\mathbf{\overline{y}})\sim T^2(p,n_1+n_2-2)\]</span></p>
+<p>y por lo tanto</p>
+<p><span class="math display">\[\frac{n_1+n_2-1-p}{(n_1+n_2-2)p}T^2\sim F^p_{n_1+n_2-1-p}.\]</span></p>
+</section>
+<section id="distribución-de-wilks" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="distribución-de-wilks"><span class="header-section-number">3.1.4</span> Distribución de Wilks</h3>
+<p>La distribución F con <span class="math inline">\(m\)</span> y <span class="math inline">\(n\)</span> grados de libertad surge considerando el cociente <span class="math display">\[F=\frac{A/m}{B/n},\]</span> donde <span class="math inline">\(A, B\)</span> son ji-cuadrados estocásticamente independientes con <span class="math inline">\(m\)</span> y <span class="math inline">\(n\)</span> grados de libertad. Si consideramos la distribución</p>
+<p><span class="math display">\[\Lambda = \frac{A}{A+B},\]</span></p>
+<p>la relación entre <span class="math inline">\(\Lambda\)</span> y <span class="math inline">\(F^m_n\)</span>, así como la inversa <span class="math inline">\(F^n_m\)</span>, es</p>
+<p><span class="math display">\[F^m_n=\frac{n}{m}\frac{\Lambda}{1-\Lambda},\qquad F^m_n=\frac{m}{n}\frac{1-\Lambda}{\Lambda}.\]</span></p>
+<p>La distribución de Wilks generaliza esta relación.</p>
+<div id="def-wilks" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.3</strong></span> Si las matrices <span class="math inline">\(\mathbf{A}, \mathbf{B}\)</span> de orden <span class="math inline">\(p\times p\)</span> son independientes Wishart <span class="math inline">\(W_p(\mathbf{\Sigma}, m), W_p(\mathbf{\Sigma}, n)\)</span>, respectivamente, con <span class="math inline">\(m\ge p\)</span>, la distribución del cociente de determinantes</p>
+<p><span class="math display">\[\Lambda = \frac{|\mathbf{A}|}{|\mathbf{A}+\mathbf{B}|}\]</span></p>
+<p>es, por definición, la distribución lambda de Wilks, que indicaremos por <span class="math inline">\(\Lambda(p,m,n)\)</span>.</p>
+</div>
+<p><strong>Propiedades:</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(0\le\Lambda\le1\)</span> y además <span class="math inline">\(\Lambda\)</span> no depende de <span class="math inline">\(\mathbf{\Sigma}\)</span>. Por lo tanto, podemos estudiarla suponiendo <span class="math inline">\(\mathbf{\Sigma}=\mathbf{I}\)</span>.</p></li>
+<li><p>Su distribución es equivalente a la del producto de <span class="math inline">\(n\)</span> variables beta independientes:</p></li>
+</ol>
+<p><span class="math display">\[\Lambda(p,m,n)=\prod_{i=1}^nU_i,\]</span></p>
+<p>donde <span class="math inline">\(U_i\)</span> es beta <span class="math inline">\(B\left(\frac{1}{2}(m+i-p),\frac{1}{2}p\right)\)</span>. (Obsérvese que debe ser <span class="math inline">\(m\ge p\)</span>).</p>
+<ol start="3" type="1">
+<li><p>Los parámetros se pueden permutar manteniendo la misma distribución. Concretamente: <span class="math inline">\(\Lambda(p, m, n)\sim\Lambda(n,m+n-p,p)\)</span>.</p></li>
+<li><p>Para valores 1 y 2 de <span class="math inline">\(p\)</span> y <span class="math inline">\(n\)</span>; la distribución de <span class="math inline">\(\Lambda\)</span> equivale a la distribución F, según las fórmulas:</p></li>
+</ol>
+<p><span id="eq-8"><span class="math display">\[\begin{align*}
+  &amp; \frac{1-\Lambda}{\Lambda}\frac{m}{n} &amp; \sim\ &amp; F^n_m &amp; (p=1)\\
+  &amp; \frac{1-\Lambda}{\Lambda}\frac{m-p+1}{p} &amp; \sim\ &amp; F^p_{m-p+1} &amp; (n=1)\\
+  &amp; \frac{1-\sqrt{\Lambda}}{\sqrt{\Lambda}}\frac{m-1}{n} &amp; \sim\ &amp; F^{2n}_{2(m-1)} &amp; (p=2)\\
+  &amp; \frac{1-\sqrt{\Lambda}}{\sqrt{\Lambda}}\frac{m-p+1}{p} &amp; \sim\ &amp; F^{2p}_{2(m-p+1)} &amp; (n=2)
+\end{align*} \tag{3.8}\]</span></span></p>
+<ol start="5" type="1">
+<li>En general, una transformación de <span class="math inline">\(\Lambda\)</span> equivale, exacta o asintóticamente, a la distribución F. Si <span class="math inline">\(\Lambda(p,n-q,q)\)</span> es Wilks con <span class="math inline">\(n\)</span> relativamente grande, consideremos</li>
+</ol>
+<p><span id="eq-9"><span class="math display">\[F=\frac{ms-2\lambda}{pq}\frac{1-\Lambda^{1/s}}{\Lambda^{1/s}} \tag{3.9}\]</span></span></p>
+<p>con <span class="math inline">\(m=n-(p+q+1)/2,\lambda=(pq-2)/4,s=\sqrt{(p^2q^2-4)/(p^2+q^2-5)}\)</span>. Entonces <span class="math inline">\(F\)</span> sigue asintóticamente la distribución F con <span class="math inline">\(pq\)</span> y <span class="math inline">\((ms-2\lambda)\)</span> grados de libertad.</p>
+</section>
+<section id="relaciones-entre-wilks-hotelling-y-f" class="level3" data-number="3.1.5">
+<h3 data-number="3.1.5" class="anchored" data-anchor-id="relaciones-entre-wilks-hotelling-y-f"><span class="header-section-number">3.1.5</span> Relaciones entre Wilks, Hotelling y F</h3>
+<p><strong>A</strong>. Probemos la relación entre <span class="math inline">\(\Lambda\)</span> y <span class="math inline">\(F\)</span> cuando <span class="math inline">\(p=1\)</span>: Sean <span class="math inline">\(A\sim\chi^2_m,B\sim\chi^2_n\)</span> independientes. Entonces <span class="math inline">\(\Lambda=A/(A+B)\sim\Lambda(1,m,n)\)</span> y <span class="math inline">\(F=(n/m)A/B=(n/m)\overline{F}\sim F^m_n\)</span>. Tenemos que <span class="math inline">\(\Lambda=(A/B)/(A/B+1)=\overline{F}(1+\overline{F})\)</span>, luego <span class="math inline">\(\overline{F}=\Lambda(1-\Lambda)\Rightarrow(n/m)\Lambda/(1-\Lambda)\sim F^m_n\)</span>. Mas si <span class="math inline">\(f\sim F^m_n\)</span> entonces <span class="math inline">\(1/F\sim F^n_m\)</span>. Hemos demostrado que</p>
+<p><span id="eq-10"><span class="math display">\[\frac{1-\Lambda(1,m,n)}{\Lambda(1,m,n)}\frac{m}{n}\sim F^n_m \tag{3.10}\]</span></span></p>
+<p><strong>B</strong>. Recordemos que <span class="math inline">\(\mathbf{y}\)</span> es un vector columna y por lo tanto <span class="math inline">\(\mathbf{yy'}\)</span> es una matriz <span class="math inline">\(p\times p\)</span>. Probemos la relación entre las distribuciones <span class="math inline">\(T^2\)</span> y <span class="math inline">\(F\)</span>. Tenemos <span class="math inline">\(T^2=m\mathbf{y'Q}^{-1}\mathbf{y}\)</span>, donde <span class="math inline">\(\mathbf{Q}\)</span> es <span class="math inline">\(W_p(\mathbf{I},m)\)</span>, y <span class="math inline">\(\mathbf{yy'}\)</span> es <span class="math inline">\(W_p(\mathbf{I},1)\)</span>. Se cumple</p>
+<p><span class="math display">\[|\mathbf{Q}+\mathbf{yy'}|=|\mathbf{Q}||1+\mathbf{y'Q}^{-1}\mathbf{y}|,\]</span></p>
+<p>que implica</p>
+<p><span class="math display">\[1+\mathbf{y'Q}^{-1}\mathbf{y}=|\mathbf{Q}+\mathbf{yy'}|/|\mathbf{Q}|=1/\Lambda,\]</span></p>
+<p>donde <span class="math inline">\(\Lambda=|\mathbf{Q}|/|\mathbf{Q}+\mathbf{yy'}|=\Lambda(p,m,1)=\Lambda(1,m+1-p,p)\)</span>. Además, <span class="math inline">\(\mathbf{y'Q}^{-1}\mathbf{y}=1/\Lambda-1=(1-\Lambda)/\Lambda\)</span>. De <a href="#eq-10" class="quarto-xref">Ecuación&nbsp;<span>3.10</span></a> tenemos que <span class="math inline">\(\mathbf{y'Q}^{-1}\mathbf{y}(m+1-p)=F^p_{m+1-p}\)</span> y por lo tanto</p>
+<p><span class="math display">\[T^2=m\mathbf{y'Q}^{-1}\mathbf{y}=\frac{mp}{m+1-p}F^p_{m+1-p}.\]</span></p>
+</section>
+<section id="distribución-multinomial" class="level3" data-number="3.1.6">
+<h3 data-number="3.1.6" class="anchored" data-anchor-id="distribución-multinomial"><span class="header-section-number">3.1.6</span> Distribución multinomial</h3>
+<p>Supongamos que la población es la reunión disjunta de <span class="math inline">\(k\)</span> sucesos excluyentes <span class="math inline">\(A_1,\ldots,A_k\)</span>,</p>
+<p><span class="math display">\[\Omega=A_1+\cdots+A_k,\]</span></p>
+<p>con probabilidades positivas <span class="math inline">\(P(A_1)=p_1,\ldots,P(A_k)=p_k\)</span>; verificando</p>
+<p><span class="math display">\[p_1+\cdots+p_k=1.\]</span></p>
+<p>Consideremos <span class="math inline">\(n\)</span> observaciones independientes y sea <span class="math inline">\((f_1,\ldots,f_k)\)</span> el vector con las frecuencias observadas de <span class="math inline">\(A_1,\ldots,A_k\)</span>, siendo</p>
+<p><span id="eq-11"><span class="math display">\[f_1+\cdots+f_k=n. \tag{3.11}\]</span></span></p>
+<p>La distribución multinomial es la distribución de <span class="math inline">\(\mathbf{f}=(f_1,\ldots,f_k)\)</span> con función de densidad discreta</p>
+<p><span class="math display">\[f(f_1,\ldots,f_k) = \frac{n!}{f_1!\cdots f_k!}p_1^{f_1}\cdots p_k^{f_k}.\]</span></p>
+<p>En el caso <span class="math inline">\(k = 2\)</span> tenemos la distribución binomial.</p>
+<p>Indiquemos <span class="math inline">\(\mathbf{p}=(p_1,\ldots,p_k)'\)</span>. 1. El vector de medias de <span class="math inline">\(\mathbf{f}\)</span> es <span class="math inline">\(\boldsymbol{\mu}=n\mathbf{p}\)</span>. 2. La matriz de covarianzas de <span class="math inline">\(\mathbf{f}\)</span> es <span class="math inline">\(\mathbf{C} = n[diag(\mathbf{p})-\mathbf{pp'}]\)</span>. Es decir:</p>
+<p><span class="math display">\[\begin{align*}
+  c_{ii} &amp; = np_i(1-p_i),\\
+  c_{ij} &amp; = -p_ip_j\qquad \text{si } i\not=j.
+\end{align*}\]</span></p>
+<p>Puesto que <span class="math inline">\(\mathbf{C1}=\mathbf{0}\)</span>, la matriz <span class="math inline">\(\mathbf{C}\)</span> es singular. La singularidad se debe a que se verifica <a href="#eq-11" class="quarto-xref">Ecuación&nbsp;<span>3.11</span></a>. Una g-inversa de C es:</p>
+<p><span id="eq-12"><span class="math display">\[\mathbf{C}^-=\frac{1}{n}diag(p_1^{-1},\ldots,p_k^{-1}). \tag{3.12}\]</span></span></p>
+<p>Puesto que <span class="math inline">\(\mathbf{C}(\mathbf{I}-\mathbf{11'})=\mathbf{C}\)</span>, es fácil ver que otra g-inversa es</p>
+<p><span class="math display">\[\mathbf{C}^-=\frac{1}{n}diag(p_1^{-1},\ldots,p_k^{-1})(\mathbf{I}-\mathbf{11'}).\]</span></p>
+</section>
+</section>
+<section id="distribuciones-con-marginales-dadas-opcional" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="distribuciones-con-marginales-dadas-opcional"><span class="header-section-number">3.2</span> Distribuciones con marginales dadas (OPCIONAL)</h2>
+<p>Sea <span class="math inline">\(H(x,y)\)</span> la función de distribución bivariante de dos variables aleatorias <span class="math inline">\((X,Y)\)</span>. La función <span class="math inline">\(H\)</span> es</p>
+<p><span class="math display">\[H(x,y) = P(X\le x,Y\le y).\]</span></p>
+<p>Consideremos las distribuciones marginales, es decir, las distribuciones univariantes de <span class="math inline">\(X,Y\)</span>:</p>
+<p><span class="math display">\[\begin{align*}
+  F(x) &amp; = P(X\le x) = H(x,\infty),\\
+  G(y) &amp; = P(Y\le y) = H(\infty,y).
+\end{align*}\]</span></p>
+<p>Un procedimiento para la obtención de modelos de distribuciones bivariantes consiste en encontrar <span class="math inline">\(H\)</span> a partir de <span class="math inline">\(F,G\)</span> y posiblemente algún parámetro. Si suponemos <span class="math inline">\(X,Y\)</span> independientes, una primera distribución es</p>
+<p><span class="math display">\[H^0(x,y)=F(x)G(y).\]</span></p>
+<p>M. Fréchet introdujo las distribuciones bivariantes</p>
+<p><span class="math display">\[\begin{align*}
+  H^-(x,y) &amp; = max\{F(x)+G(y)-1,0\}, \\
+  H^+(x,y) &amp; = min\{F(x),G(y)\},
+\end{align*}\]</span></p>
+<p>y demostró la desigualdad</p>
+<p><span class="math display">\[H^-(x,y)\le H(x,y)\le H^+(x,y).\]</span></p>
+<p>Cuando la distribución es <span class="math inline">\(H^-\)</span>, entonces se cumple la relación funcional entre <span class="math inline">\(X, Y\)</span></p>
+<p><span class="math display">\[F(X)+G(Y)=1,\]</span></p>
+<p>y la correlación entre <span class="math inline">\(X,Y\)</span> (si existe) <span class="math inline">\(\rho^-\)</span> es mínima. Cuando la distribución es <span class="math inline">\(H^+\)</span>, entonces se cumple la relación funcional entre <span class="math inline">\(X,Y\)</span></p>
+<p><span class="math display">\[F(X)=G(Y),\]</span></p>
+<p>y la correlación entre X; Y (si existe) <span class="math inline">\(\rho^+\)</span> es máxima. Previamente W. Hoeffding había probado la siguiente formula para la covarianza</p>
+<p><span class="math display">\[cov(X,Y)=\int_{\mathbb{R}^2}[H(x,y)-F(x)G(y)]dxdy,\]</span></p>
+<p>y demostrado la desigualdad</p>
+<p><span class="math display">\[\rho^-\le\rho\le\rho^+,\]</span></p>
+<p>donde <span class="math inline">\(\rho^-,\rho\)</span> y <span class="math inline">\(\rho^+\)</span> son las correlaciones entre <span class="math inline">\(X,Y\)</span> cuando la distribución bivariante es <span class="math inline">\(H^-,H\)</span> y <span class="math inline">\(H^+\)</span> , respectivamente.</p>
+<p>Posteriormente, diversos autores han propuesto distribuciones bivariantes paramétricas a partir de las marginales F; G, que en algunos casos contienen a <span class="math inline">\(H^-,H^0\)</span> y <span class="math inline">\(H^+\)</span>. Escribiendo <span class="math inline">\(F,G,H\)</span> para indicar <span class="math inline">\(F(x),G(y),H(x,y)\)</span>, algunas familias son:</p>
+<ol type="1">
+<li><p>Farlie-Gumbel-Morgenstern: <span class="math display">\[H_\theta = FG[1+\theta(1-F)(1-G)],\quad-1\le\theta\le1.\]</span></p></li>
+<li><p>Clayton-Oakes: <span class="math display">\[H_\alpha=[max(F^{-\alpha}+G^{-\alpha}-1,0]^{-1/\alpha},\quad-1\le\alpha\le\infty.\]</span></p></li>
+<li><p>Ali-Mikhail-Haq: <span class="math display">\[H_\theta = FG/[1-\theta(1-F)(1-G)],\quad-1\le\theta\le1.\]</span></p></li>
+<li><p>Cuadras-Augé: <span class="math display">\[H_\theta=(min\{F,G\})^\theta(FG)^{1-\theta},\quad0\le\theta\le1.\]</span></p></li>
+<li><p>Familia de corrección <span class="math display">\[H_\theta(x,y) = \theta F(min\{x,y\})+(1-\theta)F(x)J(y),\quad-1\le\theta\le1.\]</span></p></li>
+</ol>
+<p>siendo <span class="math inline">\(J(y)=[G(y)-\theta F(y)]/(1-\theta)\)</span> una función de distribución univariante.</p>
+</section>
+<section id="introducción-a-la-inferencia-multivariante" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="introducción-a-la-inferencia-multivariante"><span class="header-section-number">3.3</span> Introducción a la inferencia multivariante</h2>
+<p>Para la exploración de datos multivariantes, no se suelen emplear modelos formales para dar respuestas a las preguntas formuladas, sin embargo, en algunas situaciones es posible ajustar modelos “formales” para probar una hipótesis sobre los parámetros de la función de densidad de probabilidad de esa población. La función de densidad de probabilidad asumida casi universalmente como la base de las inferencias para los datos multivariantes es la normal multivariante.</p>
+<section id="conceptos-básicos" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="conceptos-básicos"><span class="header-section-number">3.3.1</span> Conceptos básicos</h3>
+<p>Sea <span class="math inline">\(f(x,\boldsymbol{\theta})\)</span> un modelo estadístico. La función “score” se define como</p>
+<p><span class="math display">\[\mathbf{z}(\mathbf{x},\boldsymbol{\theta})=\frac{\partial}{\partial\boldsymbol{\theta}}log\: f(\mathbf{x},\boldsymbol{\theta}).\]</span></p>
+<p>Una muestra multivariante está formada por las <span class="math inline">\(n\)</span> filas <span class="math inline">\(\mathbf{x}_1',\ldots,\mathbf{x}_n'\)</span> independientes de una matriz de datos <span class="math inline">\(\mathbf{X}_{n\times p}\)</span>: La función de verosimilitud es</p>
+<p><span class="math display">\[L(\mathbf{X},\boldsymbol{\theta})=\prod_{i=1}^nf(x_i,\boldsymbol{\theta}).\]</span></p>
+<p>La función “score” de la muestra es</p>
+<p><span class="math display">\[\mathbf{z}(\mathbf{X},\boldsymbol{\theta})=\sum_{i=1}^n\:\frac{\partial}{\partial\boldsymbol{\theta}}log\:f(x_i,\boldsymbol{\theta}).\]</span></p>
+<p>La matriz de información de Fisher <span class="math inline">\(F(\boldsymbol{\theta})\)</span> es la matriz de covarianzas de <span class="math inline">\(\mathbf{z}(\mathbf{X},\boldsymbol{\theta})\)</span>. Cuando un modelo estadístico es regular se verifica:</p>
+<p><span class="math display">\[\text{a) }E[\mathbf{z}(\mathbf{X},\boldsymbol{\theta})]=\mathbf{0},\quad \text{b) }F(\boldsymbol{\theta})=E[\mathbf{z}(\mathbf{X},\boldsymbol{\theta})\mathbf{z}(\mathbf{X},\boldsymbol{\theta})'].\]</span></p>
+<p>Un estimador <span class="math inline">\(\mathbf{t}(\mathbf{X})\)</span> de <span class="math inline">\(\boldsymbol{\theta}\)</span> es insesgado si <span class="math inline">\(E[\mathbf{t}(\mathbf{X})]=\boldsymbol{\theta}\)</span>. La desigualdad de Cramér-Rao dice que si <span class="math inline">\(cov(\mathbf{t}(\mathbf{X}))\)</span> es la matriz de covarianzas de <span class="math inline">\(\mathbf{t}(\mathbf{X})\)</span>, entonces</p>
+<p><span class="math display">\[cov(\mathbf{t}(\mathbf{X}))\ge F(\boldsymbol{\theta})^{-1},\]</span></p>
+<p>en el sentido de que la diferencia <span class="math inline">\(cov(\mathbf{t}(\mathbf{X}))-F(\boldsymbol{\theta})^{-1}\)</span> es una matriz semidefinida positiva.</p>
+<p>Un estimador <span class="math inline">\(\widehat{\boldsymbol{\theta}}\)</span> del parámetro desconocido <span class="math inline">\(\boldsymbol{\theta}\)</span> es máximo verosímil si maximiza la función <span class="math inline">\(L(\mathbf{X},\boldsymbol{\theta})\)</span>. En condiciones de regularidad, podemos obtener <span class="math inline">\(\widehat{\boldsymbol{\theta}}\)</span> resolviendo la ecuación</p>
+<p><span class="math display">\[\sum_{i=1}^n\:\frac{\partial}{\partial\boldsymbol{\theta}}log\:f(x_i,\boldsymbol{\theta})=\mathbf{0}\]</span></p>
+<p>Entonces el estimador máximo verosímil <span class="math inline">\(\widehat{\boldsymbol{\theta}}_n\)</span> obtenido a partir de una muestra de tamaño <span class="math inline">\(n\)</span> satisface:</p>
+<ol type="a">
+<li><p>Es asintóticamente normal con vector de medias <span class="math inline">\(\boldsymbol{\theta}\)</span> y matriz de covarianzas <span class="math inline">\((nF_1(\boldsymbol{\theta}))^{-1}\)</span>, donde <span class="math inline">\(F_1(\boldsymbol{\theta})\)</span> es la matriz de información de Fisher para una sola observación.</p></li>
+<li><p>Si <span class="math inline">\(\mathbf{t}(\mathbf{X})\)</span> es estimador insesgado de <span class="math inline">\(\boldsymbol{\theta}\)</span> tal que <span class="math inline">\(cov(\mathbf{t}(\mathbf{X}))=(nF_1(\boldsymbol{\theta}))^{-1}\)</span>, entonces <span class="math inline">\(\widehat{\boldsymbol{\theta}}_n=\mathbf{t}(\mathbf{X})\)</span>.</p></li>
+<li><p><span class="math inline">\(\widehat{\boldsymbol{\theta}}_n\)</span> converge en probabilidad a <span class="math inline">\(\boldsymbol{\theta}\)</span>.</p></li>
+</ol>
+</section>
+<section id="estimación-de-medias-y-covarianzas" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="estimación-de-medias-y-covarianzas"><span class="header-section-number">3.3.2</span> Estimación de medias y covarianzas</h3>
+<p>Si las <span class="math inline">\(n\)</span> filas <span class="math inline">\(\mathbf{x}_1',\ldots,\mathbf{x}_n'\)</span> de <span class="math inline">\(\mathbf{X}_{n\times p}\)</span> son independientes <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> la función de verosimilitud es</p>
+<p><span class="math display">\[L(\mathbf{X},\boldsymbol{\mu},\mathbf{\Sigma})=det(2\pi\mathbf{\Sigma})^{-n/2}exp\left\{-\frac{1}{2}\sum_{i=1}^n(x_i-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(x_i-\boldsymbol{\mu})\right\}.\]</span></p>
+<p>Sea <span class="math inline">\(\mathbf{b}_i=\mathbf{x}_i-\overline{\mathbf{x}}\)</span>. Se verifica</p>
+<p><span class="math display">\[\begin{align*}
+  \sum_{i=1}^n(\mathbf{x}_i-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(\mathbf{x}_i-\boldsymbol{\mu}) &amp; =\sum_{i=1}^n\mathbf{d}_i'\mathbf{\Sigma}^{-1}\mathbf{d}_i+n(\mathbf{x}_i-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(\mathbf{x}_i-\boldsymbol{\mu})\\
+  &amp;=tr\left[\mathbf{\Sigma}^{-1}\sum_{i=1}^n\mathbf{d}_i\mathbf{d}_i'\right]+n(\mathbf{x}_i-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(\mathbf{x}_i-\boldsymbol{\mu}).
+\end{align*}\]</span></p>
+<p>Por la tanto el logaritmo de <span class="math inline">\(L\)</span> se puede expresar como</p>
+<p><span class="math display">\[log\ L(\mathbf{X},\boldsymbol{\mu},\mathbf{\Sigma})=-\frac{n}{2}log\ det(2\pi\mathbf{\Sigma})-\frac{n}{2}tr(\mathbf{\Sigma}^{-1}\mathbf{S})-\frac{n}{2}(\overline{\mathbf{x}}-\boldsymbol{\mu})'\mathbf{\Sigma}^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu}).\]</span></p>
+<p>Derivando matricialmente respecto de <span class="math inline">\(\boldsymbol{\mu}\)</span> y de <span class="math inline">\(\mathbf{\Sigma}^{-1}\)</span> tenemos</p>
+<p><span class="math display">\[\begin{align*}
+  &amp; \frac{\partial}{\partial\boldsymbol{\mu}}log\ L &amp; =\ &amp; n\mathbf{\Sigma}^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu})=\mathbf{0},\\
+  &amp; \frac{\partial}{\partial\mathbf{\Sigma}^{-1}}log\ L &amp; =\ &amp; \frac{n}{2}[\mathbf{\Sigma}-\mathbf{S}-(\overline{\mathbf{x}}-\boldsymbol{\mu})(\overline{\mathbf{x}}-\boldsymbol{\mu})']=\mathbf{0}.
+\end{align*}\]</span></p>
+<p>Las estimaciones máximo-verosímiles de <span class="math inline">\(\boldsymbol{\mu},\mathbf{\Sigma}\)</span> son pues</p>
+<p><span class="math display">\[\widehat{\boldsymbol{\mu}}=\overline{\mathbf{x}},\quad\widehat{\mathbf{\Sigma}}=\mathbf{S}.\]</span></p>
+<p>Sin embargo <span class="math inline">\(\mathbf{S}\)</span> no es estimador insesgado de <span class="math inline">\(\mathbf{\Sigma}\)</span>. La estimación centrada es <span class="math inline">\(\widehat{\mathbf{S}} = \mathbf{X}'\mathbf{HX}/(n-1)\)</span>.</p>
+<p>Si solo <span class="math inline">\(\boldsymbol{\mu}\)</span> es desconocido, la matriz de información de Fisher es</p>
+<p><span class="math display">\[F(\boldsymbol{\mu})=E\left[n\mathbf{\Sigma}^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu})n\Sigma^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu})'\right]=n\mathbf{\Sigma}^{-1},\]</span></p>
+<p>y como <span class="math inline">\(cov(\overline{\mathbf{x}})=\mathbf{\Sigma}/n\)</span>, tenemos que <span class="math inline">\(\overline{\mathbf{x}}\)</span> alcanza la cota de Cramér-Rao.</p>
+<p>Probaremos más adelante que:</p>
+<ol type="1">
+<li><span class="math inline">\(\overline{\mathbf{x}}\)</span> es <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma}/n)\)</span>.</li>
+<li><span class="math inline">\(\overline{\mathbf{x}}\)</span> y <span class="math inline">\(\mathbf{S}\)</span> son estocásticamente independientes.</li>
+<li><span class="math inline">\(n\mathbf{S}\)</span> sigue la distribución de Wishart.</li>
+</ol>
+</section>
+</section>
+<section id="contraste-de-hipótesis-multivariantes" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="contraste-de-hipótesis-multivariantes"><span class="header-section-number">3.4</span> Contraste de hipótesis multivariantes</h2>
+<p>Un primer método para construir contrastes sobre los parámetros de una población normal, se basa en las propiedades anteriores, que dan lugar a estadísticos con distribución conocida (ji-cuadrado, F).</p>
+<section id="test-sobre-la-media-una-población" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="test-sobre-la-media-una-población"><span class="header-section-number">3.4.1</span> Test sobre la media: una población</h3>
+<p>Supongamos que las filas de <span class="math inline">\(\mathbf{X}_{n\times p}\)</span> son independientes <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span>. Sea <span class="math inline">\(\boldsymbol{\mu}_0\)</span> un vector de medias conocido. Queremos realizar un test sobre la hipótesis</p>
+<p><span class="math display">\[H_0:\boldsymbol{\mu}=\boldsymbol{\mu}_0\]</span></p>
+<ol type="1">
+<li>Si <span class="math inline">\(\mathbf{\Sigma}\)</span> es conocida, como <span class="math inline">\(\overline{\mathbf{x}}\)</span> es <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma}/n)\)</span>, el estadístico de contraste es</li>
+</ol>
+<p><span class="math display">\[n(\overline{\mathbf{x}}-\boldsymbol{\mu}_0)'\Sigma^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu}_0)\sim\chi^2_p.\]</span></p>
+<ol start="2" type="1">
+<li>Si <span class="math inline">\(\mathbf{\Sigma}\)</span> es desconocida, como <span class="math inline">\((n-1)(\overline{\mathbf{x}}-\boldsymbol{\mu})'\mathbf{S}^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu})\sim T^2(p,n-1)\)</span>, el estadístico de contraste es</li>
+</ol>
+<p><span class="math display">\[\frac{n-p}{n}(\overline{\mathbf{x}}-\boldsymbol{\mu}_0)'\mathbf{S}^{-1}(\overline{\mathbf{x}}-\boldsymbol{\mu}_0)\sim F^p_{n-p}.\]</span> {#eq-13}</p>
+<p>En ambos casos se rechaza <span class="math inline">\(H_0\)</span> para valores grandes significativos del estadístico.</p>
+</section>
+<section id="test-sobre-la-media-dos-poblaciones" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="test-sobre-la-media-dos-poblaciones"><span class="header-section-number">3.4.2</span> Test sobre la media: dos poblaciones</h3>
+<p>Supongamos ahora que tenemos dos matrices de datos independientes <span class="math inline">\(\mathbf{X}_{n_1\times p},\mathbf{Y}_{n_2\times p}\)</span> que provienen de distribuciones <span class="math inline">\(N_p(\boldsymbol{\mu}_1,\mathbf{\Sigma}),N_p(\boldsymbol{\mu}_2,\mathbf{\Sigma})\)</span>. Queremos construir un test sobre la hipótesis</p>
+<p><span class="math display">\[H_0:\boldsymbol{\mu}_1=\boldsymbol{\mu}_2.\]</span></p>
+<ol type="1">
+<li>Si <span class="math inline">\(\mathbf{\Sigma}\)</span> es conocida, como <span class="math inline">\((\overline{\mathbf{x}}-\overline{\mathbf{y}})\)</span> es <span class="math inline">\(N_p(\boldsymbol{\mu}_1-\boldsymbol{\mu}_2,(1/n_1+1/n_2)\mathbf{\Sigma})\)</span> el estadístico de contraste es</li>
+</ol>
+<p><span class="math display">\[\frac{n_1n_2}{n_1+n_2}(\overline{\mathbf{x}}-\overline{\mathbf{y}})'\Sigma^{-1}(\overline{\mathbf{x}}-\overline{\mathbf{y}})\sim\chi^2_p.\]</span></p>
+<ol start="2" type="1">
+<li>Si <span class="math inline">\(\mathbf{\Sigma}\)</span> es desconocida, el estadístico de contraste es</li>
+</ol>
+<p><span class="math display">\[\frac{n_1+n_2-1-p}{(n_1+n_2-2)p}\frac{n_1n_2}{n_1+n_2}(\overline{\mathbf{x}}-\overline{\mathbf{y}})'\widehat{\mathbf{S}}^{-1}(\overline{\mathbf{x}}-\overline{\mathbf{y}})\sim F^p_{n_1+n_2-1-p}.\]</span></p>
+<p>Siendo <span class="math inline">\(\widehat{\mathbf{S}}=(n_1\mathbf{S}_1+n_2\mathbf{S}_2)/(n_1+n_2-2)\)</span> la estimación centrada (es decir, insesgada) de <span class="math inline">\(\mathbf{\Sigma}\)</span>.</p>
+</section>
+<section id="comparación-de-varias-medias" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="comparación-de-varias-medias"><span class="header-section-number">3.4.3</span> Comparación de varias medias</h3>
+<p>Supongamos que las filas de <span class="math inline">\(g\)</span> matrices de datos son independientes, y -que provienen de la observación de <span class="math inline">\(g\)</span> poblaciones normales multivariantes:</p>
+<div id="tbl-1" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3.1: Propiedades de las observaciones
+</figcaption>
+<div aria-describedby="tbl-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">matriz</th>
+<th style="text-align: center;">orden</th>
+<th style="text-align: center;">media</th>
+<th style="text-align: center;">covarianza</th>
+<th style="text-align: center;">distribución</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\mathbf{X}_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_1\times p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\overline{\mathbf{x}}_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbf{S}_1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N_p(\boldsymbol{\mu}_1,\mathbf{\Sigma})\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\mathbf{X}_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_2\times p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\overline{\mathbf{x}}_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbf{S}_2\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N_p(\boldsymbol{\mu}_2,\mathbf{\Sigma})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(\mathbf{X}_g\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n_g\times p\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\overline{\mathbf{x}}_g\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\mathbf{S}_g\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(N_p(\boldsymbol{\mu}_g,\mathbf{\Sigma})\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>El vector de medias generales y la estimación centrada (o insesgada) de la matriz de covarianzas común <span class="math inline">\(\mathbf{\Sigma}\)</span> son</p>
+<p><span class="math display">\[\overline{\mathbf{x}}=\frac{1}{n}\sum_{i=1}^gn_i\overline{\mathbf{x}}_i,\quad \widehat{\mathbf{S}}=\frac{1}{n-g}\sum_{i=1}^gn_i\mathbf{S}_i,\]</span></p>
+<p>siendo <span class="math inline">\(\mathbf{S}_i=n_i^{-1}\mathbf{X}_i'\mathbf{HX}_i\)</span> y <span class="math inline">\(n=\sum_{i=1}^gn_i\)</span>.</p>
+<p>Deseamos construir un test para decidir si podemos aceptar la hipótesis de igualdad de medias</p>
+<p><span class="math display">\[H_0:\boldsymbol{\mu}_1=\boldsymbol{\mu}_2=\cdots=\boldsymbol{\mu}_g.\]</span></p>
+<p>Introduciremos las siguientes matrices:</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{B}=\ &amp; \sum_{i=1}^gn_i(\overline{\mathbf{x}}_i-\overline{\mathbf{x}})(\overline{\mathbf{x}}_i-\overline{\mathbf{x}})'\quad &amp; (\text{dispersión entre grupos})\\
+\mathbf{W}=\ &amp; \sum_{i=1}^g\sum_{\alpha=1}^{n_i}(\mathbf{x}_{i\alpha}-\overline{\mathbf{x}}_i)(\mathbf{x}_{i\alpha}-\overline{\mathbf{x}}_i)'\quad &amp; (\text{dispersión dentro grupos})\\
+\mathbf{T}=\ &amp; \sum_{i=1}^g\sum_{\alpha=1}^{n_i}(\mathbf{x}_{i\alpha}-\overline{\mathbf{x}})(\mathbf{x}_{i\alpha}-\overline{\mathbf{x}})'\quad &amp; (\text{dispersión total})
+\end{align*}\]</span></p>
+<p>Se verifica que <span class="math inline">\(\mathbf{W}=(n-g)\widehat{\mathbf{S}}\)</span> y la relación:</p>
+<p><span class="math display">\[\mathbf{T}=\mathbf{B}+\mathbf{W}.\]</span></p>
+<p>Si la hipótesis nula es cierta, se verifica además</p>
+<p><span class="math display">\[\begin{align*}
+&amp; \mathbf{B}\sim W_p(\mathbf{\Sigma},g-1),\ \mathbf{W}\sim W_p(\mathbf{\Sigma},n-g),\ \mathbf{T}\sim W_p(\mathbf{\Sigma},n-1),\\
+&amp; \mathbf{B},\mathbf{W}\text{ son estocásticamente independientes.}
+\end{align*}\]</span></p>
+<p>Por lo tanto, si <span class="math inline">\(H_0\)</span> es cierta</p>
+<p><span class="math display">\[\Lambda=\frac{|\mathbf{W}|}{|\mathbf{W}+\mathbf{B}|}\sim\Lambda(p,n-g,n-1).\]</span></p>
+<p>Rechazaremos <span class="math inline">\(H_0\)</span> si <span class="math inline">\(\Lambda\)</span> es un valor pequeño y significativo, o si la transformación a una <span class="math inline">\(F\)</span> es grande y significativa.</p>
+</section>
+<section id="teorema-de-cochran" class="level3" data-number="3.4.4">
+<h3 data-number="3.4.4" class="anchored" data-anchor-id="teorema-de-cochran"><span class="header-section-number">3.4.4</span> Teorema de Cochran</h3>
+<p>Algunos resultados de la sección anterior son una consecuencia del <a href="#thm-1" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a>, conocido como teorema de Cochran.</p>
+<div id="lem-1" class="theorem lemma">
+<p><span class="theorem-title"><strong>Lema 3.1</strong></span> Sea <span class="math inline">\(\mathbf{X}(n\times p)\)</span> una matriz de datos <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> y <span class="math inline">\(\mathbf{u}\)</span>, <span class="math inline">\(\mathbf{v}\)</span> dos vectores <span class="math inline">\(n\times1\)</span> tales que <span class="math inline">\(\mathbf{u}'\mathbf{u}=\mathbf{v}'\mathbf{v}=1\)</span>, <span class="math inline">\(\mathbf{u}'\mathbf{v}=0\)</span>.</p>
+<ol type="1">
+<li>Si <span class="math inline">\(\boldsymbol{\mu}=\mathbf{0}\)</span> entonces <span class="math inline">\(\mathbf{y}'=\mathbf{u}'\mathbf{X}\)</span> es <span class="math inline">\(N_p(\mathbf{0},\mathbf{\Sigma})\)</span>.</li>
+<li><span class="math inline">\(\mathbf{y}'=\mathbf{u}'\mathbf{X}\)</span> es independiente de <span class="math inline">\(\mathbf{z}'=\mathbf{v}'\mathbf{X}\)</span></li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Prueba</em>. </span>Sean <span class="math inline">\(\mathbf{x}_1',\ldots,\mathbf{x}_n'\)</span> las filas (independientes) de <span class="math inline">\(\mathbf{X}\)</span>. Si <span class="math inline">\(\mathbf{u}=(u_1,\ldots,u_n)'\)</span> entonces <span class="math inline">\(\mathbf{y}'=\mathbf{u}'\mathbf{X}=\sum_{i=1}^nu_i\mathbf{x_i}\)</span> es normal multivariante con <span class="math inline">\(\boldsymbol{\mu}=\mathbf{0}\)</span> y matriz de covarianzas</p>
+<p><span class="math display">\[\begin{align*}
+E(\mathbf{y}\mathbf{y}') &amp; =\ E\left(\sum_{i=1}^nu_i\mathbf{x}_i\right)\left(\sum_{i=1}^nu_i\mathbf{x}_i\right)'=E\left(\sum_{i,j=1}^nu_iu_j\mathbf{x}_i\mathbf{x}_j'\right)\\
+&amp; =\ \sum_{i,j=1}^nu_iu_jE\left(\mathbf{x}_i\mathbf{x}_j'\right)=\sum_{i=1}^nu_i^2E\left(\mathbf{x}_i\mathbf{x}_i'\right)\\
+&amp; =\ \sum_{i=1}^nu_i^2\mathbf{\Sigma}=\mathbf{\Sigma}.
+\end{align*}\]</span></p>
+<p>Análogamente, si <span class="math inline">\(\mathbf{v}=(v_1,\ldots,v_n)'\)</span>, <span class="math inline">\(\mathbf{z}'=\mathbf{v}'\mathbf{X}\)</span> es también normal.</p>
+<p>Las esperanzas de <span class="math inline">\(\mathbf{y}\)</span>, <span class="math inline">\(\mathbf{z}\)</span> son: <span class="math inline">\(E(\mathbf{y})=\left(\sum_{i=1}^nu_i\right)\boldsymbol{\mu}\)</span>, <span class="math inline">\(E(\mathbf{z})=\left(\sum_{i=1}^nv_i\right)\boldsymbol{\mu}\)</span>. Las covarianzas entre <span class="math inline">\(\mathbf{y}\)</span> y <span class="math inline">\(\mathbf{z}\)</span> son:</p>
+<p><span class="math display">\[\begin{align*}
+E\left[(\mathbf{y}-E(\mathbf{y}))(\mathbf{z}-E(\mathbf{z}))'\right] &amp; =\ \sum_{i=1}^nu_iv_jE\left[(\mathbf{x}_i-\boldsymbol{\mu})(\mathbf{x}_j-\boldsymbol{\mu})'\right]\\
+&amp; =\ \sum_{i=1}^nu_iv_iE\left[(\mathbf{x}_i-\boldsymbol{\mu})(\mathbf{x}_i-\boldsymbol{\mu})'\right]=\mathbf{u}'\mathbf{v\Sigma}=\mathbf{0},
+\end{align*}\]</span></p>
+<p>lo que prueba la independencia estocástica entre <span class="math inline">\(\mathbf{y}\)</span> y <span class="math inline">\(\mathbf{z}\)</span>.</p>
+</div>
+<div id="thm-1" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.1</strong></span> Sea <span class="math inline">\(\mathbf{X}(n\times p)\)</span> una matriz de datos <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> y sea <span class="math inline">\(\mathbf{C}(n\times n)\)</span> una matriz simétrica.</p>
+<ol type="1">
+<li><span class="math inline">\(\mathbf{X}'\mathbf{CX}\)</span> tiene la misma distribución que una suma ponderada de matrices <span class="math inline">\(W_p(\mathbf{\Sigma}, 1)\)</span>, donde los pesos son valores propios de <span class="math inline">\(\mathbf{C}\)</span>.</li>
+<li><span class="math inline">\(\mathbf{X}'\mathbf{CX}\)</span> es Wishart <span class="math inline">\(W_p(\mathbf{\Sigma}, r)\)</span> si y solo si <span class="math inline">\(\mathbf{C}\)</span> es idempotente y <span class="math inline">\(rango(\mathbf{C})=r\)</span>.</li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Prueba</em>. </span>Sea</p>
+<p><span class="math display">\[\mathbf{C}=\sum_{i=1}^n\lambda_i\mathbf{u}_i\mathbf{u}_i'\]</span></p>
+<p>la descomposición espectral de <span class="math inline">\(\mathbf{C}\)</span>, es decir, <span class="math inline">\(\mathbf{Cu}_i=\lambda_i\mathbf{u}_i\)</span>. Entonces</p>
+<p><span class="math display">\[\mathbf{X}'\mathbf{CX}=\sum_{i=1}^n\lambda_i\mathbf{y}_i'\mathbf{y}_i\]</span>.</p>
+<p>Por <a href="#lem-1" class="quarto-xref">Lema&nbsp;<span>3.1</span></a>, las filas <span class="math inline">\(\mathbf{y}_i'\)</span> de la matriz</p>
+<p><span class="math display">\[\mathbf{Y}=\left( \begin{array}{c}
+\mathbf{y}_1'\\
+\vdots\\
+\mathbf{y}_n'
+\end{array} \right)
+=\left( \begin{array}{c}
+\mathbf{u}_1'\mathbf{X}\\
+\vdots\\
+\mathbf{u}_n'\mathbf{X}
+\end{array} \right),\]</span></p>
+<p>son también independientes <span class="math inline">\(N_p(\mathbf{0},\mathbf{\Sigma})\)</span> y cada <span class="math inline">\(\mathbf{y}_i\mathbf{y}_i'\)</span> es <span class="math inline">\(Wp(\mathbf{\Sigma}, 1)\)</span>.</p>
+<p>Si <span class="math inline">\(\mathbf{C}^2=\mathbf{C}\)</span> entonces <span class="math inline">\(\mathbf{Cu}_i=\lambda_i\mathbf{u}_i\)</span> siendo <span class="math inline">\(\lambda_i=0\)</span> ó <span class="math inline">\(1\)</span>. Por lo tanto <span class="math inline">\(r=tr(\mathbf{C})\)</span></p>
+<p><span class="math display">\[\mathbf{X}'\mathbf{CX}=\sum_{i=1}^r\mathbf{y}_i\mathbf{y}_i'\sim W_p(\mathbf{\Sigma},r).\]</span></p>
+<p>El siguiente resultado se conoce como teorema de Craig, y junto con el teorema de Cochran, permite construir contrastes sobre vectores de medias.</p>
+</div>
+<div id="thm-2" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.2</strong></span> Sea <span class="math inline">\(\mathbf{X}(n\times p)\)</span> una matriz de datos <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span> y sean <span class="math inline">\(\mathbf{C}_1(n\times n)\)</span>,<span class="math inline">\(\mathbf{C}_2(n\times n)\)</span> matrices simétrica. Entonces <span class="math inline">\(\mathbf{X}'\mathbf{C}_1\mathbf{X}\)</span> es independiente de <span class="math inline">\(\mathbf{X}'\mathbf{C}_1\mathbf{X}\)</span> si <span class="math inline">\(\mathbf{C}_1\mathbf{C}_2=\mathbf{0}\)</span>.</p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Prueba</em>. </span><span class="math display">\[\begin{align*}
+\mathbf{C}_1=\sum_{i=1}^n\lambda_i(1)\mathbf{u}_i\mathbf{u}_i',\quad \mathbf{X}'\mathbf{C}_1\mathbf{X}=\sum\lambda_i(1)\mathbf{y}_i\mathbf{y}_i',\\
+\mathbf{C}_2=\sum_{j=1}^n\lambda_j(2)\mathbf{u}_j\mathbf{u}_j',\quad \mathbf{X}'\mathbf{C}_2\mathbf{X}=\sum\lambda_j(2)\mathbf{y}_j\mathbf{y}_j',
+\end{align*}\]</span></p>
+<p>siendo <span class="math inline">\(\mathbf{y}_i'=\mathbf{u}_i'\mathbf{X}\)</span>, <span class="math inline">\(\mathbf{z}_j'=\mathbf{v}_j'\mathbf{X}\)</span>. Por otra parte</p>
+<p><span class="math display">\[\mathbf{C}_1\mathbf{C}_2=\sum_{i=1}^n\sum_{j=1}^n\lambda_i(1)\lambda_j(2)\mathbf{u}_i\mathbf{u}_i'\mathbf{v}_j\mathbf{v}_j'=\mathbf{0}\ \ \Rightarrow\ \ \lambda_i(1)\lambda_j(2)\mathbf{u}_i'\mathbf{v}_j=0,\quad\forall i,j.\]</span></p>
+<p>Si <span class="math inline">\(\lambda_i(1)\lambda_j(2)\not=0\)</span>, entonces por <a href="#lem-1" class="quarto-xref">Lema&nbsp;<span>3.1</span></a>, <span class="math inline">\(\mathbf{y}_i'(1\times p)=\mathbf{u}_i'\mathbf{X}\)</span> es independiente de <span class="math inline">\(\mathbf{z}_j'(1\times p)=\mathbf{v}_j'\mathbf{X}\)</span>. Así <span class="math inline">\(\mathbf{X}'\mathbf{C}_1\mathbf{X}\)</span> es independiente de <span class="math inline">\(\mathbf{X}'\mathbf{C}_1\mathbf{X}\)</span>.</p>
+</div>
+<p>Una primera consecuencia del teorema anterior es la independencia entre vectores de medias y matrices de covarianzas muestrales. En el caso univariante <span class="math inline">\(p = 1\)</span> es el llamado teorema de Fisher.</p>
+<div id="thm-3" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.3</strong></span> Sea <span class="math inline">\(\mathbf{X}(n\times p)\)</span> una matriz de datos <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span>. Entonces:</p>
+<ol type="1">
+<li>La media <span class="math inline">\(\overline{\mathbf{x}}\)</span> es <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma}/n)\)</span>.</li>
+<li>La matriz de covarianzas <span class="math inline">\(\mathbf{S}=\mathbf{X}'\mathbf{HX}/n\)</span> verifica que <span class="math inline">\(n\mathbf{S}\sim W_p(\Sigma,n-1)\)</span>.</li>
+<li><span class="math inline">\(\overline{\mathbf{x}}\)</span> y <span class="math inline">\(\mathbf{S}\)</span> son estocásticamente independientes.</li>
+</ol>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Prueba</em>. </span>Consideremos<span class="math inline">\(\mathbf{C}_1=n^{-1}\mathbf{11}'\)</span>. Tenemos <span class="math inline">\(rango(\mathbf{C}_1)=1,\mathbf{X}'\mathbf{C}_1\mathbf{X}=\overline{\mathbf{x}}\overline{\mathbf{x}}'\)</span>. Consideramos también <span class="math inline">\(\mathbf{C}_2=\mathbf{H}\)</span>. Como <span class="math inline">\(\mathbf{C}_1\mathbf{C}_2=\mathbf{0}\)</span> deducimos que <span class="math inline">\(\overline{\mathbf{x}}\)</span> es independiente de <span class="math inline">\(\mathbf{S}\)</span>.</p>
+<p>Por otra parte, <span class="math inline">\(\mathbf{H1}=\mathbf{0}\)</span> y <span class="math inline">\(\mathbf{H}\)</span> tiene el valor propio <span class="math inline">\(1\)</span> con multiplicidad <span class="math inline">\(n-1\)</span>. Así <span class="math inline">\(\mathbf{u}_i\)</span>, vector propio de valor 1, es ortogonal a <span class="math inline">\(\mathbf{1}\)</span>, resultando que <span class="math inline">\(\mathbf{y}_i'=\mathbf{u}_i'X\)</span> verifica que <span class="math inline">\(E(\mathbf{y}_i')=\left(\sum_{\alpha-1}^nu_{i\alpha}\right)\boldsymbol{\mu}=(\mathbf{u}_i'1)\boldsymbol{\mu}=0\boldsymbol{\mu}=\mathbf{0}\)</span>. Si <span class="math inline">\(\mathbf{u}_j\)</span> es otro vector propio, <span class="math inline">\(\mathbf{y}_i, \mathbf{y}_j\)</span> son independientes (<a href="#lem-1" class="quarto-xref">Lema&nbsp;<span>3.1</span></a>). Tenemos que <span class="math inline">\(n\mathbf{S}=\sum_{i=1}^{n-1}\mathbf{y}_i\mathbf{y}_i'\)</span>, donde los <span class="math inline">\(\mathbf{y}_i\mathbf{y}_i'\)</span> son <span class="math inline">\(W_p(\mathbf{\Sigma},1)\)</span> independientes.</p>
+</div>
+<div id="thm-4" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.4</strong></span> Sean <span class="math inline">\(\mathbf{X}_i\)</span>, matrices de datos independientes de orden <span class="math inline">\(n_i\times p\)</span> con distribución <span class="math inline">\(N_p(\boldsymbol{\mu}_i,\mathbf{\Sigma}), i=1,\ldots,g, n=\sum_{i=1}^gn_i\)</span>. Si la hipótesis nula</p>
+<p><span class="math display">\[H_0: \boldsymbol{\mu}_1=\boldsymbol{\mu}_2=\cdots=\boldsymbol{\mu}_g\]</span></p>
+<p>es cierta, entonces <span class="math inline">\(\mathbf{B}, \mathbf{W}\)</span> son independientes con distribuciones Wishart:</p>
+<p><span class="math display">\[\mathbf{B}\sim W_p(\mathbf{\Sigma},g-1),\quad\mathbf{W}\sim W_p(\mathbf{\Sigma},n-g).\]</span></p>
+</div>
+<div class="proof">
+<p><span class="proof-title"><em>Prueba</em>. </span>Escribimos las matrices de datos como una única matriz</p>
+<p><span class="math display">\[\mathbf{X}=\left[ \begin{array}{c}
+\mathbf{X}_1\\
+\vdots\\
+\mathbf{X}_g
+\end{array} \right].\]</span></p>
+<p>Sean</p>
+<p><span class="math display">\[\begin{align*}
+&amp; \mathbf{1}_1 &amp; =\ &amp; (1,\ldots,1,0,\ldots,0),\ldots,\mathbf{1}_g=(0,\ldots,0,1,\ldots,1), \\
+&amp; \mathbf{1} &amp; =\ &amp; \sum_{i=1}^g\mathbf{1}_i=(1,\ldots,1,\ldots,1,\ldots,1),
+\end{align*}\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{1}_1\)</span> tiene <span class="math inline">\(n_1\)</span> unos y el resto ceros, etc. Sean también</p>
+<p><span class="math display">\[\begin{align*}
+&amp; \mathbf{I}_i &amp; =\ &amp; diag(\mathbf{1}_i),\quad \mathbf{I}=\sum_{i=1}^g\mathbf{I}_i, \\
+&amp; \mathbf{H}_i &amp; =\ &amp; \mathbf{I}_i - n_i^{-1}\mathbf{1}_i\mathbf{1}_i' \\
+&amp; \mathbf{C}_1 &amp; =\ &amp; \sum_{i=1}^g\mathbf{H}_i,\quad \mathbf{C}_2=\sum_{i=1}^gn_i^{-1}\mathbf{1}_i\mathbf{1}_i'-n^{-1}\mathbf{1}\mathbf{1}'.
+\end{align*}\]</span></p>
+<p>Entonces</p>
+<p><span class="math display">\[\begin{align*}
+\mathbf{C}_1^2 &amp; =\mathbf{C}_1, &amp; \mathbf{C}_2^2 &amp; = \mathbf{C}_2,\qquad \mathbf{C}_1\mathbf{C}_2=\mathbf{0}, \\
+rango(\mathbf{C}_1) &amp; =\ n-g, &amp; rango(\mathbf{C}_2) &amp; = g-1, \\
+\mathbf{W} &amp; = \mathbf{X}'\mathbf{C}_1\mathbf{X}, &amp; \mathbf{B} &amp; = \mathbf{X}'\mathbf{C}_2\mathbf{X}.
+\end{align*}\]</span></p>
+<p>El resultado es consecuencia de <a href="#thm-1" class="quarto-xref">Teorema&nbsp;<span>3.1</span></a> y <a href="#thm-2" class="quarto-xref">Teorema&nbsp;<span>3.2</span></a>.</p>
+</div>
+</section>
+</section>
+<section id="construcción-de-contrastes-de-hipótesis" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="construcción-de-contrastes-de-hipótesis"><span class="header-section-number">3.5</span> Construcción de contrastes de hipótesis</h2>
+<section id="razón-de-verosimilitud" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="razón-de-verosimilitud"><span class="header-section-number">3.5.1</span> Razón de verosimilitud</h3>
+<p>Supongamos que la función de densidad de <span class="math inline">\((X_1,\ldots,X_p)\)</span> es <span class="math inline">\(f(\mathbf{x},\boldsymbol{\theta})\)</span>, donde <span class="math inline">\(\mathbf{x}\in\mathbb{R}^p\)</span> y <span class="math inline">\(\boldsymbol{\theta}\in\boldsymbol{\Theta}\)</span>, siendo <span class="math inline">\(\boldsymbol{\Theta}\)</span> una región paramétrica de dimensión geométrica <span class="math inline">\(r\)</span>. Sea <span class="math inline">\(\boldsymbol{\Theta}_0\subset\boldsymbol{\Theta}\)</span> una subregión paramétrica de dimensión <span class="math inline">\(s\)</span>, y planteamos el test de hipótesis</p>
+<p><span class="math display">\[H_0:\boldsymbol{\theta}\in\boldsymbol{\Theta}_0\quad\text{vs}\quad H_1:\boldsymbol{\theta}\in\boldsymbol{\Theta}\setminus\boldsymbol{\Theta}_0\]</span></p>
+<p>Sea <span class="math inline">\(\mathbf{x}_1,\ldots,\mathbf{x}_n\)</span> una muestra de valores independientes de <span class="math inline">\(\mathbf{X}\)</span>, consideremos la función de verosimilitud</p>
+<p><span class="math display">\[L(\mathbf{x}_1,\ldots,\mathbf{x}_n;\boldsymbol{\theta})=\prod_{i=1}^nf(\mathbf{x}_i,\boldsymbol{\theta})\]</span></p>
+<p>y sea <span class="math inline">\(\widehat{\boldsymbol{\theta}}\)</span> el estimador máximo verosímil de <span class="math inline">\(\boldsymbol{\theta}\in\boldsymbol{\Theta}\)</span>: Consideremos análogamente <span class="math inline">\(\widehat{\boldsymbol{\theta}}_0\)</span>, el estimador de máxima verosimilitud de <span class="math inline">\(\boldsymbol{\theta}\in\boldsymbol{\Theta}_0\)</span>. Tenemos que <span class="math inline">\(\widehat{\boldsymbol{\theta}}\)</span> maximiza <span class="math inline">\(L\)</span> sin restricciones y <span class="math inline">\(\widehat{\boldsymbol{\theta}}_0\)</span> maximiza <span class="math inline">\(L\)</span> cuando se impone la condición de que pertenezca a <span class="math inline">\(\boldsymbol{\Theta}_0\)</span>. La razón de verosimilitud es el estadístico</p>
+<p><span class="math display">\[\lambda_R=\frac{L\left(\mathbf{x}_1,\ldots,\mathbf{x}_n;\widehat{\boldsymbol{\theta}}_0\right)}{L\left(\mathbf{x}_1,\ldots,\mathbf{x}_n;\widehat{\boldsymbol{\theta}}\right)},\]</span></p>
+<p>que satisface <span class="math inline">\(0\le\lambda_R\le1\)</span>. Aceptamos la hipótesis <span class="math inline">\(H_0\)</span> si <span class="math inline">\(\lambda_R\)</span> es próxima a 1 y aceptamos la alternativa <span class="math inline">\(H_1\)</span> si <span class="math inline">\(\lambda_R\)</span> es significativamente próximo a 0.</p>
+<p>El test basado en <span class="math inline">\(\lambda_R\)</span> tiene muchas aplicaciones en AM, pero en la mayoría de los casos su distribución es desconocida. Existe un importante resultado (atribuido a Wilks), que dice que la distribución de <span class="math inline">\(-2\)</span> veces el logaritmo de <span class="math inline">\(\lambda_R\)</span> es ji-cuadrado con <span class="math inline">\(r-s\)</span> g.l. cuando el tamaño de la muestra <span class="math inline">\(n\)</span> es grande.</p>
+<div id="thm-5" class="theorem">
+<p><span class="theorem-title"><strong>Teorema 3.5</strong></span> Bajo ciertas condiciones de regularidad, se verifica:</p>
+<p><span class="math display">\[-2log\lambda_R\text{ es asintóticamente }\chi^2_{r-s},\]</span></p>
+<p>donde <span class="math inline">\(s=dim\left(\boldsymbol{\Theta}_0\right)&lt;r=dim\left(\boldsymbol{\Theta}\right)\)</span>.</p>
+</div>
+<p>Entonces rechazamos la hipótesis <span class="math inline">\(H_0\)</span> cuando <span class="math inline">\(-2log\lambda_R\)</span> sea grande y significativo. Veamos dos ejemplos.</p>
+<section id="test-de-independencia" class="level4" data-number="3.5.1.1">
+<h4 data-number="3.5.1.1" class="anchored" data-anchor-id="test-de-independencia"><span class="header-section-number">3.5.1.1</span> Test de independencia</h4>
+<p>Si <span class="math inline">\((X_1,\ldots,X_p)\)</span> es <span class="math inline">\(N_p(\boldsymbol{\mu},\mathbf{\Sigma})\)</span>, y queremos hacer un test sobre la independencia estocástica de las variables, entonces</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{\Theta}_0 &amp;=\{(\boldsymbol{\mu},\mathbf{\Sigma}_0)\}, &amp; s &amp; =2p \\
+\boldsymbol{\Theta} &amp;=\{(\boldsymbol{\mu},\mathbf{\Sigma})\}, &amp; r &amp; =p+p(p+1)/2,
+\end{align*}\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{\Sigma}_0\)</span> es la diagonal. <span class="math inline">\(\boldsymbol{\Theta}_0\)</span> contiene las <span class="math inline">\(p\)</span> medias de las variables y las <span class="math inline">\(p\)</span> varianzas. <span class="math inline">\(\mathbf{\Sigma}\)</span> es cualquier matriz definida positiva. Se demuestra que</p>
+<p><span class="math display">\[-2log\lambda_R=-n\,log|\mathbf{R}|,\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{R}\)</span> es la matriz de correlaciones. Es estadístico <span class="math inline">\(-n\,log|\mathbf{R}|\)</span> es asintóticamente ji-cuadrado con</p>
+<p><span class="math display">\[q=p+p(p+1)/2-2p=p(p-1)/2\quad\text{g.l.}\]</span></p>
+<p>Si las variables son independientes, tendremos que <span class="math inline">\(\mathbf{R}\approx\mathbf{I}\)</span>, <span class="math inline">\(-n\,log|\mathbf{R}|\approx0\)</span>, y es probable que <span class="math inline">\(\chi_q^2=-n\,log|\mathbf{R}|\)</span> no sea significativo.</p>
+</section>
+<section id="test-de-comparación-de-medias" class="level4" data-number="3.5.1.2">
+<h4 data-number="3.5.1.2" class="anchored" data-anchor-id="test-de-comparación-de-medias"><span class="header-section-number">3.5.1.2</span> Test de comparación de medias</h4>
+<p>Consideremos ahora el test de comparación de medias planteado en la <a href="inferencia.html#comparación-de-varias-medias">Sección 3.12.3</a>. Ahora</p>
+<p><span class="math display">\[\begin{align*}
+\boldsymbol{\Theta}_0 &amp;=\{(\boldsymbol{\mu},\mathbf{\Sigma})\}, &amp; s &amp; =p+p(p+1)/2 \\
+\boldsymbol{\Theta} &amp;=\{((\boldsymbol{\mu}_1,\ldots,\boldsymbol{\mu}_g),\mathbf{\Sigma})\}, &amp; r &amp; =gp+p(p+1)/2,
+\end{align*}\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{\Sigma}\)</span> es matriz definida positiva y <span class="math inline">\(\boldsymbol{\mu}\)</span> (vector) es la media común cuando <span class="math inline">\(H_0\)</span> es cierta. Hay <span class="math inline">\(gp+p(p+1)/2\)</span> parámetros bajo <span class="math inline">\(H_1\)</span>, y <span class="math inline">\(p+p(p+1)/2\)</span> bajo <span class="math inline">\(H_0\)</span>. Se demuestra la relación</p>
+<p><span class="math display">\[\lambda_R=\Lambda^{n/2},\]</span></p>
+<p>donde <span class="math inline">\(\Lambda=|\mathbf{W}|/|\mathbf{T}|\)</span> es la lambda de Wilks y <span class="math inline">\(n=n_1+\cdots+n_g\)</span>. Por lo tanto <span class="math inline">\(-n\,log\Lambda\)</span> es asintóticamente ji-cuadrado con <span class="math inline">\(r-s=(g-1)p\)</span> g.l. cuando la hipótesis <span class="math inline">\(H_0\)</span> es cierta.</p>
+</section>
+</section>
+</section>
+<section id="ejemplos" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="ejemplos"><span class="header-section-number">3.6</span> Ejemplos</h2>
+<div id="exm-1" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.1 (Moscas)</strong></span> Se desean comparar dos especies de moscas de agua: <em>Amerohelea fascinata</em>, <em>Amerohelea pseudofascinata</em>. En relación a las variables <span class="math inline">\(X_1=\)</span> long. antena, <span class="math inline">\(X_2=\)</span> long. ala (en mm), para dos muestras de tamaños <span class="math inline">\(n_1=9\)</span> y <span class="math inline">\(n_2=6\)</span>, se han obtenido las matrices de datos de la <a href="#tbl-2" class="quarto-xref">Tabla&nbsp;<span>3.2</span></a>.</p>
+<p>Vectores de medias (valores multiplicados por 100):</p>
+<p><span class="math display">\[\overline{\mathbf{x}}=(141.33,180.44)',\quad\overline{\mathbf{y}}=(122.67,192.67)'.\]</span></p>
+<p>Matrices (no centradas) de covarianzas:</p>
+<p><span class="math display">\[\mathbf{S}_1=\left( \begin{array}{cc}
+87.11 &amp; 71.85\\
+71.85 &amp; 150.03
+\end{array} \right)\quad
+\mathbf{S}_2=\left( \begin{array}{cc}
+32.88 &amp; 36.22 \\
+36.22 &amp; 64.89
+\end{array} \right).\]</span></p>
+<p>Estimación centrada de la matriz de covarianzas común:</p>
+<p><span class="math display">\[\widehat{\mathbf{S}}=\frac{1}{13}(9\mathbf{S}_1+6\mathbf{S}_2)=\left( \begin{array}{cc}
+75.49 &amp; 66.46 \\
+66.46 &amp; 133.81
+\end{array} \right).\]</span></p>
+<p>Distancia de Mahalanobis entre las dos muestras:</p>
+<p><span class="math display">\[D^2=(\overline{\mathbf{x}}-\overline{\mathbf{y}})'\widehat{\mathbf{S}}^{-1}(\overline{\mathbf{x}}-\overline{\mathbf{y}})=15.52.\]</span></p>
+<p>Estadístico <span class="math inline">\(T^2\)</span>:</p>
+<p><span class="math display">\[T^2=\frac{6\times9}{6+9}D^2=55.87\]</span></p>
+<p>Estadístico <span class="math inline">\(F\)</span>:</p>
+<p><span class="math display">\[\frac{9+6-1-2}{2(9+6-2)}T^2=25.78\sim F^2_{12}\]</span></p>
+<p>Decisión: rechazamos la hipótesis de que las dos especies son iguales (nivel de significación <span class="math inline">\(=0.001\)</span>).</p>
+</div>
+<div id="tbl-2" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3.2: <span class="math inline">\(X_1=\)</span> long. antena, <span class="math inline">\(X_2=\)</span> long. ala (en mm), para dos muestras de tamaños <span class="math inline">\(n_1=9\)</span> y <span class="math inline">\(n_2=6\)</span>
+</figcaption>
+<div aria-describedby="tbl-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<thead>
+<tr class="header">
+<th><em>Amerohelea fascinata</em></th>
+<th></th>
+<th><em>A. pseudofascinata</em></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n_1=9\)</span></td>
+<td></td>
+<td><span class="math inline">\(n_2=6\)</span></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X_1\)</span></td>
+<td><span class="math inline">\(X_2\)</span></td>
+<td><span class="math inline">\(X_1\)</span></td>
+<td><span class="math inline">\(X_2\)</span></td>
+</tr>
+<tr class="odd">
+<td>1.38</td>
+<td>1.64</td>
+<td>1.14</td>
+<td>1.78</td>
+</tr>
+<tr class="even">
+<td>1.40</td>
+<td>1.70</td>
+<td>1.20</td>
+<td>1.86</td>
+</tr>
+<tr class="odd">
+<td>1.24</td>
+<td>1.72</td>
+<td>1.18</td>
+<td>1.96</td>
+</tr>
+<tr class="even">
+<td>1.36</td>
+<td>1.74</td>
+<td>1.30</td>
+<td>1.96</td>
+</tr>
+<tr class="odd">
+<td>1.38</td>
+<td>1.82</td>
+<td>1.26</td>
+<td>2.00</td>
+</tr>
+<tr class="even">
+<td>1.48</td>
+<td>1.82</td>
+<td>1.28</td>
+<td>2.00</td>
+</tr>
+<tr class="odd">
+<td>1.54</td>
+<td>1.82</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>1.38</td>
+<td>1.90</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>1.56</td>
+<td>2.08</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="exm-2" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.2 (Flores)</strong></span> Comparación de las especies <em>virginica</em>, <em>versicolor</em>, <em>setosa</em> de flores del género Iris (datos de R. A. Fisher, <a href="#tbl-3" class="quarto-xref">Tabla&nbsp;<span>3.3</span></a>), respecto a las variables que miden longitud y anchura de sépalos y pétalos:</p>
+<p><span class="math display">\[\begin{align*}
+X_1 = \text{longitud de sépalo},\quad X_2 = \text{anchura de sépalo},\\
+X_3 = \text{longitud de pétalo},\quad X_4 = \text{anchura de pétalo}.
+\end{align*}\]</span></p>
+<p>Vectores de medias y tamaños muestrales:</p>
+<p><span class="math display">\[\begin{align*}
+&amp; I. setosa &amp; (5.006,3.428,1.462,0.246)\quad n_1=50\\
+&amp; I. versicolor &amp; (5.936,2.770,4.260,1.326)\quad n_2=50\\
+&amp; I. virginica &amp; (6.588,2.974,5.550,2.026)\quad n_3=50
+\end{align*}\]</span></p>
+<p>Matriz dispersión entre grupos:</p>
+<p><span class="math display">\[\mathbf{B}=\left( \begin{array}{cccc}
+63.212 &amp; -19.953 &amp; 165.17 &amp; 71.278\\
+&amp; 11.345 &amp; -57.23 &amp; -22.932\\
+&amp; &amp; 436.73 &amp; 186.69\\
+&amp; &amp; &amp; 80.413
+\end{array} \right)\]</span></p>
+<p>Matriz dispersión dentro grupos:</p>
+<p><span class="math display">\[\mathbf{W}=\left( \begin{array}{cccc}
+38.956 &amp; 13.630 &amp; 24.703 &amp; 5.645\\
+&amp; 16.962 &amp; 8.148 &amp; 4.808\\
+&amp; &amp; 27.322 &amp; 6.284\\
+&amp; &amp; &amp; 6.156
+\end{array} \right)\]</span></p>
+<p>Lambda de Wilks:</p>
+<p><span class="math display">\[\Lambda=\frac{|\mathbf{W}|}{|\mathbf{W}|+|\mathbf{B}|}=0.02344\sim\Lambda(4,147,2).\]</span> Transformando a una <span class="math inline">\(F\)</span> aplicando <a href="#eq-9" class="quarto-xref">Ecuación&nbsp;<span>3.9</span></a>:</p>
+<p><span class="math display">\[\Lambda\rightarrow F=198.95\sim F_{288}^8.\]</span></p>
+<p>Decisión: las diferencias entre las tres especies son muy significativas.</p>
+</div>
+<div id="tbl-3" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3.3: Longitud y anchura de sépalos y pétalos de 3 especies del género Iris: Setosa, Versicolor, Virginica.
+</figcaption>
+<div aria-describedby="tbl-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th><span class="math inline">\(X_3\)</span></th>
+<th><span class="math inline">\(X_4\)</span></th>
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th><span class="math inline">\(X_3\)</span></th>
+<th><span class="math inline">\(X_4\)</span></th>
+<th><span class="math inline">\(X_1\)</span></th>
+<th><span class="math inline">\(X_2\)</span></th>
+<th><span class="math inline">\(X_3\)</span></th>
+<th><span class="math inline">\(X_4\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5.1</td>
+<td>3.5</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>7.0</td>
+<td>3.2</td>
+<td>4.7</td>
+<td>1.4</td>
+<td>6.3</td>
+<td>3.3</td>
+<td>6.0</td>
+<td>2.5</td>
+</tr>
+<tr class="even">
+<td>4.9</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>6.4</td>
+<td>3.2</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>5.8</td>
+<td>2.7</td>
+<td>5.1</td>
+<td>1.9</td>
+</tr>
+<tr class="odd">
+<td>4.7</td>
+<td>3.2</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>6.9</td>
+<td>3.1</td>
+<td>4.9</td>
+<td>1.5</td>
+<td>7.1</td>
+<td>3.0</td>
+<td>5.9</td>
+<td>2.1</td>
+</tr>
+<tr class="even">
+<td>4.6</td>
+<td>3.1</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>5.5</td>
+<td>2.3</td>
+<td>4.0</td>
+<td>1.3</td>
+<td>6.3</td>
+<td>2.9</td>
+<td>5.6</td>
+<td>1.8</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>3.6</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>6.5</td>
+<td>2.8</td>
+<td>4.6</td>
+<td>1.5</td>
+<td>6.5</td>
+<td>3.0</td>
+<td>5.8</td>
+<td>2.2</td>
+</tr>
+<tr class="even">
+<td>5.4</td>
+<td>3.9</td>
+<td>1.7</td>
+<td>0.4</td>
+<td>5.7</td>
+<td>2.8</td>
+<td>4.5</td>
+<td>1.3</td>
+<td>7.6</td>
+<td>3.0</td>
+<td>6.6</td>
+<td>2.1</td>
+</tr>
+<tr class="odd">
+<td>4.6</td>
+<td>3.4</td>
+<td>1.4</td>
+<td>0.3</td>
+<td>6.3</td>
+<td>3.3</td>
+<td>4.7</td>
+<td>1.6</td>
+<td>4.9</td>
+<td>2.5</td>
+<td>4.5</td>
+<td>1.7</td>
+</tr>
+<tr class="even">
+<td>5.0</td>
+<td>3.4</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>4.9</td>
+<td>2.4</td>
+<td>3.3</td>
+<td>1.0</td>
+<td>7.3</td>
+<td>2.9</td>
+<td>6.3</td>
+<td>1.8</td>
+</tr>
+<tr class="odd">
+<td>4.4</td>
+<td>2.9</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>6.6</td>
+<td>2.9</td>
+<td>4.6</td>
+<td>1.3</td>
+<td>6.7</td>
+<td>2.5</td>
+<td>5.8</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<td>4.9</td>
+<td>3.1</td>
+<td>1.5</td>
+<td>0.1</td>
+<td>5.2</td>
+<td>2.7</td>
+<td>3.9</td>
+<td>1.4</td>
+<td>7.2</td>
+<td>3.6</td>
+<td>6.1</td>
+<td>2.5</td>
+</tr>
+<tr class="odd">
+<td>5.4</td>
+<td>3.7</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>5.0</td>
+<td>2.0</td>
+<td>3.5</td>
+<td>1.0</td>
+<td>6.5</td>
+<td>3.2</td>
+<td>5.1</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>4.8</td>
+<td>3.4</td>
+<td>1.6</td>
+<td>0.2</td>
+<td>5.9</td>
+<td>3.0</td>
+<td>4.2</td>
+<td>1.5</td>
+<td>6.4</td>
+<td>2.7</td>
+<td>5.3</td>
+<td>1.9</td>
+</tr>
+<tr class="odd">
+<td>4.8</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.1</td>
+<td>6.0</td>
+<td>2.2</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>6.8</td>
+<td>3.0</td>
+<td>5.5</td>
+<td>2.1</td>
+</tr>
+<tr class="even">
+<td>4.3</td>
+<td>3.0</td>
+<td>1.1</td>
+<td>0.1</td>
+<td>6.1</td>
+<td>2.9</td>
+<td>4.7</td>
+<td>1.4</td>
+<td>5.7</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>5.8</td>
+<td>4.0</td>
+<td>1.2</td>
+<td>0.2</td>
+<td>5.6</td>
+<td>2.9</td>
+<td>3.6</td>
+<td>1.3</td>
+<td>5.8</td>
+<td>2.8</td>
+<td>5.1</td>
+<td>2.4</td>
+</tr>
+<tr class="even">
+<td>5.7</td>
+<td>4.4</td>
+<td>1.5</td>
+<td>0.4</td>
+<td>6.7</td>
+<td>3.1</td>
+<td>4.4</td>
+<td>1.4</td>
+<td>6.4</td>
+<td>3.2</td>
+<td>5.3</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td>5.4</td>
+<td>3.9</td>
+<td>1.3</td>
+<td>0.4</td>
+<td>5.6</td>
+<td>3.0</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>6.5</td>
+<td>3.0</td>
+<td>5.5</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<td>5.1</td>
+<td>3.5</td>
+<td>1.4</td>
+<td>0.3</td>
+<td>5.8</td>
+<td>2.7</td>
+<td>4.1</td>
+<td>1.0</td>
+<td>7.7</td>
+<td>3.8</td>
+<td>6.7</td>
+<td>2.2</td>
+</tr>
+<tr class="odd">
+<td>5.7</td>
+<td>3.8</td>
+<td>1.7</td>
+<td>0.3</td>
+<td>6.2</td>
+<td>2.2</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>7.7</td>
+<td>2.6</td>
+<td>6.9</td>
+<td>2.3</td>
+</tr>
+<tr class="even">
+<td>5.1</td>
+<td>3.8</td>
+<td>1.5</td>
+<td>0.3</td>
+<td>5.6</td>
+<td>2.5</td>
+<td>3.9</td>
+<td>1.1</td>
+<td>6.0</td>
+<td>2.2</td>
+<td>5.0</td>
+<td>1.5</td>
+</tr>
+<tr class="odd">
+<td>5.4</td>
+<td>3.4</td>
+<td>1.7</td>
+<td>0.2</td>
+<td>5.9</td>
+<td>3.2</td>
+<td>4.8</td>
+<td>1.8</td>
+<td>6.9</td>
+<td>3.2</td>
+<td>5.7</td>
+<td>2.3</td>
+</tr>
+<tr class="even">
+<td>5.1</td>
+<td>3.7</td>
+<td>1.5</td>
+<td>0.4</td>
+<td>6.1</td>
+<td>2.8</td>
+<td>4.0</td>
+<td>1.3</td>
+<td>5.6</td>
+<td>2.8</td>
+<td>4.9</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>4.6</td>
+<td>3.6</td>
+<td>1.0</td>
+<td>0.2</td>
+<td>6.3</td>
+<td>2.5</td>
+<td>4.9</td>
+<td>1.5</td>
+<td>7.7</td>
+<td>2.8</td>
+<td>6.7</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>5.1</td>
+<td>3.3</td>
+<td>1.7</td>
+<td>0.5</td>
+<td>6.1</td>
+<td>2.8</td>
+<td>4.7</td>
+<td>1.2</td>
+<td>6.3</td>
+<td>2.7</td>
+<td>4.9</td>
+<td>1.8</td>
+</tr>
+<tr class="odd">
+<td>4.8</td>
+<td>3.4</td>
+<td>1.9</td>
+<td>0.2</td>
+<td>6.4</td>
+<td>2.9</td>
+<td>4.3</td>
+<td>1.3</td>
+<td>6.7</td>
+<td>3.3</td>
+<td>5.7</td>
+<td>2.1</td>
+</tr>
+<tr class="even">
+<td>5.0</td>
+<td>3.0</td>
+<td>1.6</td>
+<td>0.2</td>
+<td>6.6</td>
+<td>3.0</td>
+<td>4.4</td>
+<td>1.4</td>
+<td>7.2</td>
+<td>3.2</td>
+<td>6.0</td>
+<td>1.8</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>3.4</td>
+<td>1.6</td>
+<td>0.4</td>
+<td>6.8</td>
+<td>2.8</td>
+<td>4.8</td>
+<td>1.4</td>
+<td>6.2</td>
+<td>2.8</td>
+<td>4.8</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<td>5.2</td>
+<td>3.5</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>6.7</td>
+<td>3.0</td>
+<td>5.0</td>
+<td>1.7</td>
+<td>6.1</td>
+<td>3.0</td>
+<td>4.9</td>
+<td>1.8</td>
+</tr>
+<tr class="odd">
+<td>5.2</td>
+<td>3.4</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>6.0</td>
+<td>2.9</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>6.4</td>
+<td>2.8</td>
+<td>5.6</td>
+<td>2.1</td>
+</tr>
+<tr class="even">
+<td>4.7</td>
+<td>3.2</td>
+<td>1.6</td>
+<td>0.2</td>
+<td>5.7</td>
+<td>2.6</td>
+<td>3.5</td>
+<td>1.0</td>
+<td>7.2</td>
+<td>3.0</td>
+<td>5.8</td>
+<td>1.6</td>
+</tr>
+<tr class="odd">
+<td>4.8</td>
+<td>3.1</td>
+<td>1.6</td>
+<td>0.2</td>
+<td>5.5</td>
+<td>2.4</td>
+<td>3.8</td>
+<td>1.1</td>
+<td>7.4</td>
+<td>2.8</td>
+<td>6.1</td>
+<td>1.9</td>
+</tr>
+<tr class="even">
+<td>5.4</td>
+<td>3.4</td>
+<td>1.5</td>
+<td>0.4</td>
+<td>5.5</td>
+<td>2.4</td>
+<td>3.7</td>
+<td>1.0</td>
+<td>7.9</td>
+<td>3.8</td>
+<td>6.4</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>5.2</td>
+<td>4.1</td>
+<td>1.5</td>
+<td>0.1</td>
+<td>5.8</td>
+<td>2.7</td>
+<td>3.9</td>
+<td>1.2</td>
+<td>6.4</td>
+<td>2.8</td>
+<td>5.6</td>
+<td>2.2</td>
+</tr>
+<tr class="even">
+<td>5.5</td>
+<td>4.2</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>6.0</td>
+<td>2.7</td>
+<td>5.1</td>
+<td>1.6</td>
+<td>6.3</td>
+<td>2.8</td>
+<td>5.1</td>
+<td>1.5</td>
+</tr>
+<tr class="odd">
+<td>4.9</td>
+<td>3.1</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>5.4</td>
+<td>3.0</td>
+<td>4.5</td>
+<td>1.5</td>
+<td>6.1</td>
+<td>2.6</td>
+<td>5.6</td>
+<td>1.4</td>
+</tr>
+<tr class="even">
+<td>5.0</td>
+<td>3.2</td>
+<td>1.2</td>
+<td>0.2</td>
+<td>6.0</td>
+<td>3.4</td>
+<td>4.5</td>
+<td>1.6</td>
+<td>7.7</td>
+<td>3.0</td>
+<td>6.1</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td>5.5</td>
+<td>3.5</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>6.7</td>
+<td>3.1</td>
+<td>4.7</td>
+<td>1.5</td>
+<td>6.3</td>
+<td>3.4</td>
+<td>5.6</td>
+<td>2.4</td>
+</tr>
+<tr class="even">
+<td>4.9</td>
+<td>3.6</td>
+<td>1.4</td>
+<td>0.1</td>
+<td>6.3</td>
+<td>2.3</td>
+<td>4.4</td>
+<td>1.3</td>
+<td>6.4</td>
+<td>3.1</td>
+<td>5.5</td>
+<td>1.8</td>
+</tr>
+<tr class="odd">
+<td>4.4</td>
+<td>3.0</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>5.6</td>
+<td>3.0</td>
+<td>4.1</td>
+<td>1.3</td>
+<td>6.0</td>
+<td>3.0</td>
+<td>4.8</td>
+<td>1.8</td>
+</tr>
+<tr class="even">
+<td>5.1</td>
+<td>3.4</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>5.5</td>
+<td>2.5</td>
+<td>4.0</td>
+<td>1.3</td>
+<td>6.9</td>
+<td>3.1</td>
+<td>5.4</td>
+<td>2.1</td>
+</tr>
+<tr class="odd">
+<td>5.0</td>
+<td>3.5</td>
+<td>1.3</td>
+<td>0.3</td>
+<td>5.5</td>
+<td>2.6</td>
+<td>4.4</td>
+<td>1.2</td>
+<td>6.7</td>
+<td>3.1</td>
+<td>5.6</td>
+<td>2.4</td>
+</tr>
+<tr class="even">
+<td>4.5</td>
+<td>2.3</td>
+<td>1.3</td>
+<td>0.3</td>
+<td>6.1</td>
+<td>3.0</td>
+<td>4.6</td>
+<td>1.4</td>
+<td>6.9</td>
+<td>3.1</td>
+<td>5.1</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td>4.4</td>
+<td>3.2</td>
+<td>1.3</td>
+<td>0.2</td>
+<td>5.8</td>
+<td>2.6</td>
+<td>4.0</td>
+<td>1.2</td>
+<td>5.8</td>
+<td>2.7</td>
+<td>5.1</td>
+<td>1.9</td>
+</tr>
+<tr class="even">
+<td>5.0</td>
+<td>3.5</td>
+<td>1.6</td>
+<td>0.6</td>
+<td>5.0</td>
+<td>2.3</td>
+<td>3.3</td>
+<td>1.0</td>
+<td>6.8</td>
+<td>3.2</td>
+<td>5.9</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td>5.1</td>
+<td>3.8</td>
+<td>1.9</td>
+<td>0.4</td>
+<td>5.6</td>
+<td>2.7</td>
+<td>4.2</td>
+<td>1.3</td>
+<td>6.7</td>
+<td>3.3</td>
+<td>5.7</td>
+<td>2.5</td>
+</tr>
+<tr class="even">
+<td>4.8</td>
+<td>3.0</td>
+<td>1.4</td>
+<td>0.3</td>
+<td>5.7</td>
+<td>3.0</td>
+<td>4.2</td>
+<td>1.2</td>
+<td>6.7</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.3</td>
+</tr>
+<tr class="odd">
+<td>5.1</td>
+<td>3.8</td>
+<td>1.6</td>
+<td>0.2</td>
+<td>5.7</td>
+<td>2.9</td>
+<td>4.2</td>
+<td>1.3</td>
+<td>6.3</td>
+<td>2.5</td>
+<td>5.0</td>
+<td>1.9</td>
+</tr>
+<tr class="even">
+<td>4.6</td>
+<td>3.2</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>6.2</td>
+<td>2.9</td>
+<td>4.3</td>
+<td>1.3</td>
+<td>6.5</td>
+<td>3.0</td>
+<td>5.2</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td>5.3</td>
+<td>3.7</td>
+<td>1.5</td>
+<td>0.2</td>
+<td>5.1</td>
+<td>2.5</td>
+<td>3.0</td>
+<td>1.1</td>
+<td>6.2</td>
+<td>3.4</td>
+<td>5.4</td>
+<td>2.3</td>
+</tr>
+<tr class="even">
+<td>5.0</td>
+<td>3.3</td>
+<td>1.4</td>
+<td>0.2</td>
+<td>5.7</td>
+<td>2.8</td>
+<td>4.1</td>
+<td>1.3</td>
+<td>5.9</td>
+<td>3.0</td>
+<td>5.1</td>
+<td>1.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="exm-3" class="theorem example">
+<p><span class="theorem-title"><strong>Ejemplo 3.3 (Paradoja de Rao)</strong></span> Consideremos los siguientes datos (tamaños muestrales, medias, desviaciones típicas, matrices de covarianzas) de <span class="math inline">\(p=2\)</span> variables <span class="math inline">\(X\)</span> (longitud del fémur), <span class="math inline">\(Y\)</span> (longitud del húmero), obtenidas sobre dos poblaciones (Anglo-indios, Indios).</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<table class="table">
+<thead>
+<tr class="header">
+<th>Medias</th>
+<th><span class="math inline">\(X\)</span></th>
+<th><span class="math inline">\(Y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(n_1=27\)</span></td>
+<td>460.4</td>
+<td>335.1</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n_2=20\)</span></td>
+<td>444.3</td>
+<td>323.2</td>
+</tr>
+<tr class="odd">
+<td>Diferencia</td>
+<td>16.1</td>
+<td>11.9</td>
+</tr>
+<tr class="even">
+<td>Desv. típicas</td>
+<td>23.7</td>
+<td>18.2</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<table class="table">
+<colgroup>
+<col style="width: 100%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Matriz covarianzas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">\[\widehat{\mathbf{S}}=\left( \begin{array}{cc}
+561.7 &amp; 374.2\\
+374.2 &amp; 331.24
+\end{array}\right)\]</span></td>
+</tr>
+<tr class="even">
+<td>Correlación: <span class="math inline">\(r=0.867\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Suponiendo normalidad, los contrastes <span class="math inline">\(t\)</span> de comparación de medias para cada variable por separado son:</p>
+<p><span class="math display">\[\begin{align*}
+Variable\ X\quad t=2.302\quad(45 g.l.)\quad(p=0.0259),\\
+Variable\ Y\quad t=2.215\quad(45 g.l.)\quad(p=0.0318).
+\end{align*}\]</span></p>
+<p>A un nivel de significación del 0,05 se concluye que hay diferencias significativas para cada variable por separado.</p>
+<p>Utilicemos ahora las dos variables conjuntamente. La distancia de Mahalanobis entre las dos poblaciones es <span class="math inline">\(\mathbf{d}'\widehat{\mathbf{S}}^{-1}\mathbf{d}=0.4777\)</span>, siendo <span class="math inline">\(\mathbf{d}=(16.1,11.9)\)</span>. La <span class="math inline">\(T^2\)</span> de Hotelling es</p>
+<p><span class="math display">\[T^2=\frac{27\times20}{27+20}0.4777=5.488\]</span></p>
+<p>que convertida a una <span class="math inline">\(F\)</span> da:</p>
+<p><span class="math display">\[F=\frac{27+20-1-2}{2(27+20-2)}5.488=2.685\quad(2\text{ y }44\text{ g.l.})\quad(p=0.079).\]</span></p>
+<p>Esta F no es significativa al nivel 0,05. Por lo tanto ambos contrastes univariantes resultan significativos, pero el test bivariante no, contradiciendo la creencia de que un test multivariante debería proporcionar mayor significación que un test univariante.</p>
+<p>Interpretemos geométricamente esta paradoja (conocida como paradoja de Rao). Con nivel de significación 0,05, y aplicando el test <span class="math inline">\(T^2\)</span> de Hotelling, aceptaremos la hipótesis nula bivariante si el vector diferencia <span class="math inline">\(d=(x\ y)'\)</span> pertenece a la elipse</p>
+<p><span class="math display">\[\frac{n_1n_2}{n_1+n_2}\mathbf{d}'\left( \begin{array}{cc}
+561.7 &amp; 374.2\\
+374.2 &amp; 331.24
+\end{array}\right)^{-1}\mathbf{d}\le3.2\]</span></p>
+<p>donde 3.2 es el punto crítico para una <span class="math inline">\(F_{44}^2\)</span>. Así pues no hay significación si <span class="math inline">\(x,y\)</span> verifican la inecuación</p>
+<p><span class="math display">\[0.040369x^2-0.09121xy+0.068456y^2\le3.2.\]</span></p>
+<p>Análogamente, en el test univariante y para la primera variable <span class="math inline">\(x\)</span>, la diferencia <span class="math inline">\(d=\overline{x}_1-\overline{x}_2\)</span> debe verificar</p>
+<p><span class="math display">\[\left|\sqrt{\frac{n_1n_2}{n_1+n_2}}\left(\frac{d}{s_1}\right)\right|\le2,\]</span></p>
+<p>siendo 2 el valor crítico para una <span class="math inline">\(t\)</span> con 45 g.l. Procederíamos de forma similar para la segunda variable <span class="math inline">\(y\)</span>. Obtenemos así las cuatro rectas</p>
+<p><span class="math display">\[\text{Variable }x:\quad0.143x=\pm2,\qquad\text{Variable }y:\quad0.1862=\pm2.\]</span></p>
+<p>En la <a href="#fig-2" class="quarto-xref">Figura&nbsp;<span>3.2</span></a> podemos visualizar la paradoja. Los valores de la diferencia que están a la derecha de la recta vertical <span class="math inline">\(\mathbf{r}_x\)</span> son significativos para la variable <span class="math inline">\(x\)</span>: Análogamente los que están por encima de la recta horizontal <span class="math inline">\(\mathbf{r}_y\)</span> lo son para la <span class="math inline">\(y\)</span>: Por otra parte, todos los valores que están fuera de la elipse (región <span class="math inline">\(\mathbf{F}\)</span>) son significativos para las dos variables. Hay casos en que <span class="math inline">\(x,y\)</span> por separado no son significativos, pero conjuntamente sí. No obstante, existe una pequeña región por encima de <span class="math inline">\(\mathbf{r}_y\)</span> y a la derecha de <span class="math inline">\(\mathbf{r}_x\)</span> que cae dentro de la elipse. Para los datos del ejemplo, se obtiene el punto señalado con el signo <span class="math inline">\(\textbf{+}\)</span>, para el cual <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> son significativas pero no <span class="math inline">\((x,y)\)</span>: Así <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> son significativas si el punto se encuentra en el cuadrante <span class="math inline">\(\mathbf{A}\)</span>. (Una simetría con respecto al origen nos permitiría considerar otras dos rectas y la región <span class="math inline">\(\mathbf{B}\)</span>).</p>
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="t3_inferencia_files/figure-html/plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3.2: Un test de comparación de poblaciones bivariante puede resultar menos significativo que dos test univariantes con las variables marginales.
+</figcaption>
+</figure>
+</div>
+<p>Pues bien, el test con <span class="math inline">\(x\)</span> y el test con <span class="math inline">\(y\)</span> por separado, son contrastes <span class="math inline">\(t\)</span> distintos del test <span class="math inline">\(T^2\)</span> empleado con <span class="math inline">\((x,y)\)</span>, equivalente a una <span class="math inline">\(F\)</span>. Tales contrastes no tienen por qué dar resultados compatibles. Las probabilidades de las regiones de rechazo son distintas. Además, la potencia del test con <span class="math inline">\((x,y)\)</span> es superior, puesto que la probabilidad de la región <span class="math inline">\(\mathbf{F}\)</span> es mayor que las probabilidades sumadas de las regiones <span class="math inline">\(\mathbf{A}\)</span> y <span class="math inline">\(\mathbf{B}\)</span>.</p>
+</div>
+
+
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-1">Figura&nbsp;3.1: Función de densidad de una distribución normal bivariante de medias 1 y 1, desviaciones típicas 2 y 2, coeficiente de correlación 0.8</span>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-cuadras" class="csl-entry" role="listitem">
+Cuadras, Carles M. 2014. <em>Nuevos Métodos de Análisis Multivariante</em>. <a href="https://gc.scalahed.com/recursos/files/r161r/w24899w/Semana5/METODOS_S5.pdf">https://gc.scalahed.com/recursos/files/r161r/w24899w/Semana5/METODOS_S5.pdf</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/aprender-uib\.github\.io\/AD");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./t2_em.html" class="pagination-link" aria-label="Análisis Multivariante">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Análisis Multivariante</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./t4_trd.html" class="pagination-link" aria-label="Técnicas de reducción de Dimensionalidad">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Técnicas de reducción de Dimensionalidad</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Análisis de Datos UIB</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/AprendeR-UIB/AD/edit/main/t3_inferencia.qmd" class="toc-action"><i class="bi bi-github"></i>Editar esta página</a></li><li><a href="https://github.com/AprendeR-UIB/AD/issues/new" class="toc-action"><i class="bi empty"></i>Informar de un problema</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Este libro se ha creado con <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom","descPosition":"bottom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
+
+
+
+</body></html>
