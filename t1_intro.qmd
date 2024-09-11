@@ -387,17 +387,21 @@ Os dejamos el material [Aprender R1](https://aprender-uib.github.io/AprendeR1/) 
 
 ## [*Práctica 1*]{style="color: red;"}:
 
-* Formad grupos de 3 integrantes.
+* Formad grupos de mínimo 2 y máximo 3 integrantes.
 
-* Trabajaréis con los datos [pingüinos](https://allisonhorst.github.io/palmerpenguins/), leed la documentación y seguid las siguientes instrucciones:
+* Trabajaréis con datos del repositorio de [Datos abiertos del Gobierno de España](https://datos.gob.es/). Entrad al catálogo de datos y seleccionad un conjunto de datos que os interese. El conjunto de datos debe tener datos cuantitativos y cualtitativos (mejor si contiene datos ordinales), por ejemplo, [Alumnado matriculado en Escuelas Oficiales de Idiomas 2023](https://datos.gob.es/es/catalogo/a10002983-alumnado-matriculado-en-escuelas-oficiales-de-idiomas-20231)
 
-  * Cread un repositorio en Github para vuestro grupo con un nombre que sea fácilmente identificable para los profesores de la asignatura, por ejemplo,"Entrega_1_AD".
+
+  * Cread un repositorio en Github para vuestro grupo con un nombre que sea fácilmente identificable, por ejemplo,"Entrega_1_AD".
   
   * Cread un proyecto nuevo en RStudio conectado al repositorio que habéis creado en el paso anterior. Agregad un documento  de quarto donde trabajaréis.
   
-  * Instalad y cargad en RStudio la librería `palmerpenguins` , así como el conjunto de datos `penguins` 
-  
 
+  * Realizad un análisis exploratorio de los datos, redactad un informe con los hallazgos más importantes y entregadlo en la tarea de Aula Digital disponible. Revisad la fecha en que cierra la tarea.
+  
+Más adelante, en la asignatura, algunas técnicas que explicaremos se ejemplificarán haciendo uso del conjunto de datos:
+[pingüinos](https://allisonhorst.github.io/palmerpenguins/), leed la documentación, instalad y cargad en RStudio la librería `palmerpenguins` , así como el conjunto de datos `penguins` 
+  
 ```{r, warning=FALSE}
 #install.packages("palmerpenguins",dep=TRUE)
 library("palmerpenguins")
