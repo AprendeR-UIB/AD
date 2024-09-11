@@ -385,7 +385,7 @@ Así, para datos cualitativos sólo tiene interés estudiar y representar las fr
 Os dejamos el material [Aprender R1](https://aprender-uib.github.io/AprendeR1/) para que repaséis los capítulos 10 al 14 correspondientes a la parte de Estadística descriptiva.
 
 
-## [*Práctica 1*]{style="color: red;"}:
+## [*Práctica 1*]{style="color: red;"}
 
 * Formad grupos de mínimo 2 y máximo 3 integrantes.
 
@@ -459,13 +459,13 @@ print(penguins, width = 50)
   * `forcats`: Conjunto de herramientas útiles que resuelven problemas comunes con factores. R utiliza factores para manejar variables categóricas, variables que tienen un conjunto fijo y conocido de posibles valores.
   
   
-  Hay muchos otros paquetes que se integran sin problemas, por ejemplo, `lubridate` (para manejar datos tomados en el tiempo), `stringr` (texto), `forcats` (factores), etc.
+  Hay muchos otros paquetes que se integran sin problemas, por ejemplo, `lubridate` (para manejar datos tomados en el tiempo).
 
 
 * Para instalar y cargar `tidyverse`
 
 ```{r,warning=FALSE, message=TRUE}
-#install.packages("tidyverse")
+#install.packages("tidyverse", dep=TRUE)
 library(tidyverse)
 ```
 
@@ -486,7 +486,6 @@ Se puede ver la versión del paquete tidyverse y la de los paquetes base.
 
   * Cada tipo de unidad de observación forma una tabla.
 
-![Imagen de [Allison Horst](https://allisonhorst.com)](Figuras/tidy_data.png){width="60%" fig-align="center"}
 
 <!-- ```{r plot_tidy, echo=F,fig.align="center",include=FALSE, out.width="30%"} -->
 <!-- png("Figuras/plot_tidy.png") -->
@@ -694,14 +693,10 @@ c(x = "a", y = "b", z = 1) %>%
   
   * Un tibble puede tener columnas que son listas.
 
-  * Un tibble puede tener nombres de variables no estándar. Pueden  empezar por  un número o contener espacios. Para utilizarlo se refiere a estos en un backtick, por ejemplo,  `peso en Kg`.
+  * Un tibble puede tener nombres de variables no estándar. Pueden  empezar por  un número o contener espacios. Para utilizarlo se refiere a estos en un backtick, por ejemplo, \`peso en Kg \`.
   
-  * Sólo recicla vectores de longitud 1.
-
-  * No tiene como atributo nombres de filas `row.names`.
-
-
-
+  * Un tibble no tiene filas de nombres. Si se necesita una fila de nombres, se puede añadir una columna de nombres explícitamente.
+  
   * Por defecto, `tibble()` imprime sólo las diez primeras filas, todas las columnas que caben en la pantalla, y las clases de las columnas
 
 ```{r}
@@ -710,7 +705,7 @@ penguins
 ```
 
 
-  * `glimpse` nos da la versión transpuesta de `print()`
+  * `glimpse` nos da la versión transpuesta de `str()`
 
 ```{r}
 penguins %>% glimpse
@@ -1516,7 +1511,10 @@ penguins %>%
 
 * **Escalas**: Permiten asignar los valores que hay en los datos a los valores visuales de una estética (anulando los valores por defecto de esa estética). La sintáxis es **`scale_*()`**. Existen escalas para asignar valores de manera discreta, continua o manual. También escalas de localización, para color, relleno; tamaño y figuras. 
 
-![](Figuras/escalas.png){height="60%" width="70%" fig-align="center"}
+```{r, echo=F, out.height='60%', out.width='70%', fig.align='center'}
+knitr::include_graphics("Figuras/escalas.png")
+```
+
 
 *	**Resúmenes**: Permiten construir nuevas variables de resumen para hacer un gráfico. Por ejemplo: conteo, cuantiles, proporciones, curvas ajustadas. Se especifica con **`stat_*()`**. 
 
