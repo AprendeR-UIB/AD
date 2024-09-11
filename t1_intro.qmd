@@ -459,10 +459,6 @@ print(penguins, width = 50)
   * `forcats`: Conjunto de herramientas útiles que resuelven problemas comunes con factores. R utiliza factores para manejar variables categóricas, variables que tienen un conjunto fijo y conocido de posibles valores.
   
   
-  
-  * `purrr`: programación funcional (pipes)
-
-
   Hay muchos otros paquetes que se integran sin problemas, por ejemplo, `lubridate` (para manejar datos tomados en el tiempo), `stringr` (texto), `forcats` (factores), etc.
 
 
